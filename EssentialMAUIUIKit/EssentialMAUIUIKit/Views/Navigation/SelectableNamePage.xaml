@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Navigation.SelectableNamePage"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+    <ContentView.BindingContext>
+        <local:NameListViewModel/>
+    </ContentView.BindingContext>
+    <ContentView.Content>
+
+        <Grid RowDefinitions="{OnPlatform Default=*, MacCatalyst=Auto}"
+              ColumnSpacing="0"
+              RowSpacing="0">
+            <Border StrokeShape="RoundRectangle 10"
+                    WidthRequest="{OnPlatform WinUI=550, MacCatalyst=550}"
+                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                    Margin="20"
+                    IsVisible="{OnPlatform Android=False, iOS=False}">
+                <Grid>
+                    <listView:SfListView
+                        AllowGroupExpandCollapse="False"
+                        AllowSwiping="True"
+                        AutoFitMode="Height"
+                        ScrollBarVisibility="Never"
+                        ItemSpacing="0"
+                        ItemsSource="{Binding NamesList}"
+                        SelectionBackground="Transparent"
+                        SelectionGesture="Tap"
+                        SelectionMode="Single"
+                        VerticalOptions="Fill">
+                        <listView:SfListView.GroupHeaderTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <ViewCell.View>
+                                        <StackLayout
+                                            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                            HeightRequest="40"
+                                            Orientation="Horizontal"
+                                            Spacing="0">
+                                            <Label
+                                                Margin="16,8"
+                                                FontFamily="Roboto-Regular"
+                                                FontSize="16"
+                                                HorizontalOptions="Start"
+                                                Text="{Binding Name}"
+                                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                VerticalOptions="Center"/>
+
+                                        </StackLayout>
+                                    </ViewCell.View>
+                                </ViewCell>
+                            </DataTemplate>
+                        </listView:SfListView.GroupHeaderTemplate>
+
+                        <listView:SfListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <ViewCell.View>
+                                        <Grid
+                                            ColumnSpacing="0"
+                                            RowDefinitions="Auto, Auto"
+                                            RowSpacing="0">
+
+                                            <buttons:SfCheckBox
+                                                Grid.Row="0"
+                                                Margin="16,0"
+                                                StrokeThickness="1"
+                                                CornerRadius="2"
+                                                FontFamily="Roboto-Regular"
+                                                FontSize="16"
+                                                HeightRequest="48"
+                                                HorizontalOptions="Start"
+                                                IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                                Text="{Binding Name}"
+                                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                VerticalOptions="Center"/>
+                                        </Grid>
+                                    </ViewCell.View>
+                                </ViewCell>
+                            </DataTemplate>
+                        </listView:SfListView.ItemTemplate>
+                    </listView:SfListView>
+                </Grid>
+            </Border>
+
+            <Grid Grid.Row="2"
+                  IsVisible="{OnPlatform WinUI=False, MacCatalyst=False}">
+                <listView:SfListView
+                    AllowGroupExpandCollapse="False"
+                    AllowSwiping="True"
+                    AutoFitMode="Height"
+                    ScrollBarVisibility="Never"
+                    ItemSpacing="0"
+                    ItemsSource="{Binding NamesList}"
+                    SelectionBackground="Transparent"
+                    SelectionGesture="Tap"
+                    SelectionMode="Single"
+                    VerticalOptions="Fill">
+
+                    <!--  Group Header  -->
+                    <listView:SfListView.GroupHeaderTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <StackLayout
+                                        BackgroundColor="{DynamicResource Gray-100}"
+                                        HeightRequest="40"
+                                        Orientation="Horizontal"
+                                        Spacing="0">
+                                        <Label
+                                            Margin="16,8"
+                                            FontFamily="Roboto-Regular"
+                                            FontSize="16"
+                                            HorizontalOptions="Start"
+                                            Text="{Binding Name}"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                            VerticalOptions="Center"/>
+
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </listView:SfListView.GroupHeaderTemplate>
+
+                    <listView:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <Grid
+                                        ColumnSpacing="0"
+                                        RowDefinitions="Auto, Auto"
+                                        RowSpacing="0">
+
+                                        <buttons:SfCheckBox
+                                            Grid.Row="0"
+                                            Margin="16,0"
+                                            StrokeThickness="1"
+                                            CornerRadius="2"
+                                            FontFamily="Roboto-Regular"
+                                            FontSize="16"
+                                            HeightRequest="48"
+                                            HorizontalOptions="Start"
+                                            IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                            Text="{Binding Name}"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                            VerticalOptions="Center"/>
+                                    </Grid>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </listView:SfListView.ItemTemplate>
+                </listView:SfListView>
+            </Grid>
+
+        </Grid>
+    </ContentView.Content>
+</ContentView>

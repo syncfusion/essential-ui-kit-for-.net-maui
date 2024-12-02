@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Profile.ContactProfilePage"
+             xmlns:button="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:controls="clr-namespace:EssentialMAUIUIKit.Controls"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+    <ContentView.BindingContext>
+        <local:ContactProfileViewModel/>
+    </ContentView.BindingContext>
+    <ContentView.Content>
+        <ScrollView>
+
+            <StackLayout BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                         Spacing="0"
+                    WidthRequest="{OnPlatform WinUI=800, MacCatalyst=800}">
+
+                <Grid ColumnDefinitions="Auto, *, Auto"
+                      VerticalOptions="Fill">
+
+                    <Image
+                        x:Name="ProfileImage"
+                        Grid.Row="0"
+                        Grid.ColumnSpan="3"
+                        Aspect="AspectFit"
+                        BackgroundColor="{DynamicResource Gray-200}">
+                        <Image.Source>
+                            <UriImageSource
+                                CacheValidity="14"
+                                CachingEnabled="True"
+                                Uri="{Binding ProfileImage}"/>
+                        </Image.Source>
+                    </Image>
+
+                    <!--  OverLay Effect  -->
+                    <Border
+                        Grid.Row="0"
+                        Grid.ColumnSpan="3"
+                            Stroke="Transparent"
+                        BackgroundColor="{DynamicResource Gray-Black}"
+                        Opacity="0.25"/>
+
+                    <!--  Edit  -->
+                    <button:SfButton
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        Margin="8"
+                        Padding="0"
+                        FontSize="20"
+                        HorizontalOptions="End"
+                        Style="{DynamicResource IconButtonStyle}"
+                        Text="{DynamicResource Edit}"
+                        TextColor="{DynamicResource Gray-White}"
+                        VerticalOptions="Start"/>
+
+                    <!--  Back button command  -->
+                    <button:SfButton
+                        x:Name="backButton"
+                        Margin="8"
+                        HorizontalOptions="Start"
+                        Style="{DynamicResource IconButtonStyle}"
+                        Text="{DynamicResource Back}"
+                        TextColor="{DynamicResource Gray-White}"
+                        VerticalOptions="Start"/>
+
+                    <!--  Profile name and status with border  -->
+                    <Border
+                        x:Name="ProfileNameLabel"
+                        Grid.Row="0"
+                        Grid.ColumnSpan="3"
+                        Margin="0,0,0,-1"
+                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                        StrokeThickness="0"
+                        VerticalOptions="End">
+                        <Border.Content>
+                            <controls:TapAnimationGrid
+                                Padding="16,32,16,7"
+                                ColumnDefinitions="Auto, *, Auto"
+                                ColumnSpacing="8"
+                                RowDefinitions="*, *"
+                                RowSpacing="0">
+
+                                <!--  Status Icon  -->
+                                <Label
+                                    Grid.Column="0"
+                                    Margin="0,5,0,0"
+                                    FontSize="10"
+                                    HorizontalTextAlignment="End"
+                                    Style="{DynamicResource IconLabelStyle}"
+                                    Text="{DynamicResource New}"
+                                    TextColor="{DynamicResource Green}"
+                                    VerticalTextAlignment="Center"/>
+
+                                <!--  Profile Name  -->
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    FontFamily="Roboto-Medium"
+                                    HorizontalOptions="Start"
+                                    HorizontalTextAlignment="Start"
+                                    Style="{DynamicResource TitleLabelStyle}"
+                                    Text="Julia Grant"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center"/>
+
+                                <!--  Status  -->
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Margin="{OnPlatform Default='0',
+                                                    iOS='0,6,0,0'}"
+                                    Style="{DynamicResource SimpleLabelStyle}"
+                                    Text="Available"
+                                    TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                                <Label
+                                    Grid.RowSpan="2"
+                                    Grid.Column="2"
+                                    HorizontalOptions="End"
+                                    Style="{DynamicResource IconLabelStyle}"
+                                    Text="{DynamicResource Next}"/>
+
+                            </controls:TapAnimationGrid>
+                        </Border.Content>
+                    </Border>
+                </Grid>
+
+                <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+                <!--  Grid for mail id label and icon  -->
+                <Grid
+                    Padding="16"
+                    ColumnDefinitions="Auto, *"
+                    ColumnSpacing="16">
+
+                    <Label
+                        Grid.Column="0"
+                        Margin="0,5,0,0"
+                        Style="{DynamicResource IconLabelStyle}"
+                        Text="{DynamicResource Account}"/>
+
+                    <Label
+                        Grid.Column="1"
+                        FontFamily="Roboto-Regular"
+                        HorizontalOptions="Start"
+                        Style="{DynamicResource TitleLabelStyle}"
+                        Text="juliagrant@mail.com"
+                        VerticalOptions="Center"/>
+
+                </Grid>
+
+                <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+                <!--  Grid for mobile number label and icon  -->
+                <Grid
+                    Padding="16"
+                    ColumnDefinitions="Auto, *"
+                    ColumnSpacing="16">
+
+                    <Label
+                        Grid.Column="0"
+                        Margin="0,5,0,0"
+                        Style="{DynamicResource IconLabelStyle}"
+                        Text="{DynamicResource Phone}"/>
+
+                    <Label
+                        Grid.Column="1"
+                        FontFamily="Roboto-Regular"
+                        HorizontalOptions="Start"
+                        Style="{DynamicResource TitleLabelStyle}"
+                        Text="+1-202-555-0101"
+                        VerticalOptions="Center"/>
+
+                </Grid>
+
+                <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+                <Grid Padding="16,16,8,0"
+                        ColumnDefinitions="*,*">
+
+                    <!--  Media label  -->
+                    <Label
+                        FontSize="12"
+                        HorizontalOptions="Start"
+                        Style="{DynamicResource TitleLabelStyle}"
+                        Text="MEDIA"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                        VerticalOptions="Center"/>
+
+                    <!--  View all label  -->
+
+                    <button:SfButton Grid.Column="1"
+                                     Padding="0"
+                                     BackgroundColor="{DynamicResource Gray-Bg}"
+                                     FontSize="12"
+                                     HorizontalOptions="End"
+                                     Style="{DynamicResource TransparentButtonStyle}"
+                                     Text="VIEW ALL"
+                            FontFamily="Roboto-Regular"
+                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"/>
+                </Grid>
+
+                <!--  ScrollView for shared media  -->
+                <ScrollView
+                    x:Name="ScrollView"
+                    Padding="16,8,16,16"
+                    HorizontalScrollBarVisibility="Never"
+                    Orientation="Horizontal">
+                    <StackLayout
+                        BindableLayout.ItemsSource="{Binding ProfileImages.Profiles}"
+                        Orientation="Horizontal"
+                        Spacing="16">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Image
+                                    BackgroundColor="{DynamicResource Gray-200}"
+                                    HeightRequest="100"
+                                    WidthRequest="100">
+                                    <Image.Source>
+                                        <UriImageSource
+                                            CacheValidity="14"
+                                            CachingEnabled="true"
+                                            Uri="{Binding ImagePath}"/>
+                                    </Image.Source>
+                                </Image>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </ScrollView>
+
+            </StackLayout>
+
+        </ScrollView>
+    </ContentView.Content>
+</ContentView>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.AboutUs.AboutUsSimplePage"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+    <ContentView.BindingContext>
+        <local:AboutUsViewModel x:Name="viewModel"/>
+    </ContentView.BindingContext>
+    <ContentView.Content>
+        <Grid
+            ColumnSpacing="0"
+            RowSpacing="0">
+            <ScrollView
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+                <StackLayout
+                    HorizontalOptions="Center"
+                    Spacing="0"
+                    VerticalOptions="Center">
+
+                    <!--  Product image  -->
+                    <Image HeightRequest="110"
+                           WidthRequest="124"
+                           Source="aboutusicon.png"/>
+
+                    <!--  Product version  -->
+                    <Label
+                        Margin="0,8.7,0,0"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Start"
+                        Style="{DynamicResource SimpleLabelStyle}"
+                        Text="1.0.0"
+                        VerticalOptions="Start"
+                        VerticalTextAlignment="Start"/>
+
+                    <!--  Product title  -->
+                    <Label
+                        LineHeight="{OnPlatform Android=1.25,
+                                            Default=-1}"
+                        Style="{DynamicResource TitleLabelStyle}"
+                        Text="Acme Products">
+                        <Label.Margin>
+                            <OnIdiom
+                                x:TypeArguments="Thickness"
+                                Default="0, 32, 0, 8"
+                                Phone="0, 16, 0, 16"/>
+                        </Label.Margin>
+                    </Label>
+
+                    <!--  Product description  -->
+                    <Label
+                        Margin="15,0,15,0"
+                        Style="{DynamicResource DescriptionLabelStyle}"
+                        Text="Situated in the heart of Smith-town, Acme Products, Inc., has a long-standing tradition of selling the best products while providing the fastest service on the market. Since 1952, we have helped our customers identify their needs, understand their wants, and capture their dreams."/>
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

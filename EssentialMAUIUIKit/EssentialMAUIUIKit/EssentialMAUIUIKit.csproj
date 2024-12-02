@@ -1,0 +1,646 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net9.0-android;net9.0-ios;net9.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
+		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
+		<!-- <TargetFrameworks>$(TargetFrameworks);net8.0-tizen</TargetFrameworks> -->
+
+		<!-- Note for MacCatalyst:
+		The default runtime is maccatalyst-x64, except in Release config, in which case the default is maccatalyst-x64;maccatalyst-arm64.
+		When specifying both architectures, use the plural <RuntimeIdentifiers> instead of the singular <RuntimeIdentifier>.
+		The Mac App Store will NOT accept apps with ONLY maccatalyst-arm64 indicated;
+		either BOTH runtimes must be indicated or ONLY macatalyst-x64. -->
+		<!-- For example: <RuntimeIdentifiers>maccatalyst-x64;maccatalyst-arm64</RuntimeIdentifiers> -->
+
+		<OutputType>Exe</OutputType>
+		<RootNamespace>EssentialMAUIUIKit</RootNamespace>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+		<AnalysisLevel>latest</AnalysisLevel>
+		<AnalysisLevelSecurity>latest-recommended</AnalysisLevelSecurity>
+		<NoWarn>$(NoWarn);NU1803</NoWarn>
+		<Nullable>enable</Nullable>
+
+		<!-- Display name -->
+		<ApplicationTitle>EssentialMAUIUIKit</ApplicationTitle>
+
+		<!-- App Identifier -->
+		<ApplicationId>com.companyname.essentialmauiuikit</ApplicationId>
+
+		<!-- Versions -->
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationVersion>1</ApplicationVersion>
+
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<Configurations>Debug;Release;Release-Xml</Configurations>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<DefineConstants>TRACE;DEBUG;</DefineConstants>
+		<WarningLevel>5</WarningLevel>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<DefineConstants>TRACE;RELEASE;</DefineConstants>
+		<WarningLevel>5</WarningLevel>
+		<!-- NOTE: not recommended for Debug builds! -->
+		<AndroidLinkTool>r8</AndroidLinkTool>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$(TargetFramework.Contains('-windows')) and '$(Configuration)' == 'Release'">
+		<GenerateAppxPackageOnBuild>true</GenerateAppxPackageOnBuild>
+		<AppxPackageSigningEnabled>true</AppxPackageSigningEnabled>
+		<PackageCertificateThumbprint>d01aec76455c0352854b7caaf1544f9b169dce54</PackageCertificateThumbprint>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release-Xml|AnyCPU' ">
+		<DefineConstants>TRACE;RELEASE;</DefineConstants>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<WarningLevel>5</WarningLevel>
+		<!-- NOTE: not recommended for Debug builds! -->
+		<AndroidLinkTool>r8</AndroidLinkTool>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- App Icon -->
+		<MauiIcon Include="Resources\AppIcon\applicationicon.png" />
+		
+		<!-- Splash Screen -->
+		<MauiSplashScreen Include="Resources\Splash\splashscreen.svg" BaseSize="*,*" />
+		<!-- Images -->
+		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
+
+		<!-- Custom Fonts -->
+		<MauiFont Include="Resources\Fonts\*" />
+
+		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="AppLayout\Icons\aboutus.png" />
+	  <None Remove="AppLayout\Icons\appicon.png" />
+	  <None Remove="AppLayout\Icons\article.png" />
+	  <None Remove="AppLayout\Icons\bookmark.png" />
+	  <None Remove="AppLayout\Icons\catalog.png" />
+	  <None Remove="AppLayout\Icons\chat.png" />
+	  <None Remove="AppLayout\Icons\contactus.png" />
+	  <None Remove="AppLayout\Icons\dashboard.png" />
+	  <None Remove="AppLayout\Icons\detail.png" />
+	  <None Remove="AppLayout\Icons\ecommerce.png" />
+	  <None Remove="AppLayout\Icons\errorempty.png" />
+	  <None Remove="AppLayout\Icons\feedback.png" />
+	  <None Remove="AppLayout\Icons\forms.png" />
+	  <None Remove="AppLayout\Icons\history.png" />
+	  <None Remove="AppLayout\Icons\login.png" />
+	  <None Remove="AppLayout\Icons\navigation.png" />
+	  <None Remove="AppLayout\Icons\notification.png" />
+	  <None Remove="AppLayout\Icons\onboarding.png" />
+	  <None Remove="AppLayout\Icons\profile.png" />
+	  <None Remove="AppLayout\Icons\setting.png" />
+	  <None Remove="AppLayout\Icons\social.png" />
+	  <None Remove="AppLayout\Icons\tracking.png" />
+	  <None Remove="AppLayout\Icons\transaction.png" />
+	  <None Remove="AppLayout\TemplateList.xml" />
+	  <None Remove="Images\about.png" />
+	  <None Remove="Images\aboutusicon.png" />
+	  <None Remove="Images\aboutusimage.png" />
+	  <None Remove="Images\businessregistrationbackground.png" />
+	  <None Remove="Images\CaloriesEaten.png" />
+	  <None Remove="Images\card.png" />
+	  <None Remove="Images\chatmessagebackground.png" />
+	  <None Remove="Images\ChooseGradient.png" />
+	  <None Remove="Images\close.png" />
+	  <None Remove="Images\ConfirmGradient.png" />
+	  <None Remove="Images\DeliverGradient.png" />
+	  <None Remove="Images\emptycart.png" />
+	  <None Remove="Images\excel.png" />
+	  <None Remove="Images\facebook.png" />
+	  <None Remove="Images\file.png" />
+	  <None Remove="Images\google.png" />
+	  <None Remove="Images\headericon.png" />
+	  <None Remove="Images\headeryriangle.png" />
+	  <None Remove="Images\HeartRate.png" />
+	  <None Remove="Images\icon.png" />
+	  <None Remove="Images\invertedtriangle.png" />
+	  <None Remove="Images\locationdenied.png" />
+	  <None Remove="Images\loginbackgroundscale100.png" />
+	  <None Remove="Images\loginbackgroundscale200.png" />
+	  <None Remove="Images\loginbackgroundscale400.png" />
+	  <None Remove="Images\microsoft.png" />
+	  <None Remove="Images\nocredits.png" />
+	  <None Remove="Images\nointernet.png" />
+	  <None Remove="Images\noitem.png" />
+	  <None Remove="Images\nophotos.png" />
+	  <None Remove="Images\notasks.png" />
+	  <None Remove="Images\notenoughcredit.png" />
+	  <None Remove="Images\novideos.png" />
+	  <None Remove="Images\ourteam.png" />
+	  <None Remove="Images\paymentfailed.png" />
+	  <None Remove="Images\paymentfailure.png" />
+	  <None Remove="Images\paymentsuccess.png" />
+	  <None Remove="Images\pdf.png" />
+	  <None Remove="Images\pin.png" />
+	  <None Remove="Images\placeholder.png" />
+	  <None Remove="Images\placeholderrectangle.png" />
+	  <None Remove="Images\reschedule.png" />
+	  <None Remove="Images\SleepDuration.png" />
+	  <None Remove="Images\somethingwentwrong.png" />
+	  <None Remove="Images\splashscreen.png" />
+	  <None Remove="Images\timezone.png" />
+	  <None Remove="Images\viewmode.png" />
+	  <None Remove="Images\visa.png" />
+	  <None Remove="Images\WaterConsumed.png" />
+	  <None Remove="Images\word.png" />
+	  <None Remove="Resources\AppIcon\applicationicon.png" />
+	  <None Remove="Resources\Fonts\Roboto-Medium.ttf" />
+	  <None Remove="Resources\Fonts\Roboto-Regular.ttf" />
+	  <None Remove="Resources\Fonts\UIFontIcons.ttf" />
+	  <None Remove="Resources\Splash\splashscreen.svg" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiImage Include="AppLayout\Icons\appicon.png" />
+	  <EmbeddedResource Include="AppLayout\TemplateList.xml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="AppLayout\Icons\aboutus.png" />
+	  <EmbeddedResource Include="AppLayout\Icons\article.png" />
+	  <EmbeddedResource Include="AppLayout\Icons\bookmark.png" />
+	  <EmbeddedResource Include="AppLayout\Icons\catalog.png" />
+	  <EmbeddedResource Include="AppLayout\Icons\chat.png" />
+	  <EmbeddedResource Include="AppLayout\Icons\contactus.png" />
+	  <EmbeddedResource Include="AppLayout\Icons\dashboard.png" />
+	  <EmbeddedResource Include="AppLayout\Icons\detail.png" />
+	  <EmbeddedResource Include="AppLayout\Icons\errorempty.png" />
+	  <EmbeddedResource Include="AppLayout\Icons\feedback.png" />
+	  <EmbeddedResource Include="AppLayout\Icons\forms.png" />
+	  <EmbeddedResource Include="AppLayout\Icons\history.png" />
+	  <EmbeddedResource Include="AppLayout\Icons\navigation.png" />
+	  <EmbeddedResource Include="AppLayout\Icons\notification.png" />
+	  <EmbeddedResource Include="AppLayout\Icons\profile.png" />
+	  <EmbeddedResource Include="AppLayout\Icons\setting.png" />
+	  <EmbeddedResource Include="AppLayout\Icons\social.png" />
+	  <EmbeddedResource Include="AppLayout\Icons\tracking.png" />
+	  <EmbeddedResource Include="AppLayout\Icons\transaction.png" />
+	  <MauiImage Include="Images\about.png" />
+	  <MauiImage Include="Images\aboutusicon.png" />
+	  <MauiImage Include="Images\aboutusimage.png" />
+	  <MauiImage Include="Images\businessregistrationbackground.png" />
+	  <MauiImage Include="Images\calorieseaten.png" />
+	  <MauiImage Include="Images\card.png" />
+	  <MauiImage Include="Images\chatmessagebackground.png" />
+	  <MauiImage Include="Images\choosegradient.png" />
+	  <MauiImage Include="Images\close.png" />
+	  <MauiImage Include="Images\confirmgradient.png" />
+	  <MauiImage Include="Images\delivergradient.png" />
+	  <MauiImage Include="Images\emptycart.png" />
+	  <MauiImage Include="Images\excel.png" />
+	  <MauiImage Include="Images\facebook.png" />
+	  <MauiImage Include="Images\file.png" />
+	  <MauiImage Include="Images\google.png" />
+	  <MauiImage Include="Images\headericon.png" />
+	  <MauiImage Include="Images\headeryriangle.png" />
+	  <MauiImage Include="Images\heartrate.png" />
+	  <MauiImage Include="Images\icon.png" />
+	  <MauiImage Include="Images\invertedtriangle.png" />
+	  <MauiImage Include="Images\locationdenied.png" />
+	  <MauiImage Include="Images\loginbackgroundscale100.png" />
+	  <MauiImage Include="Images\loginbackgroundscale200.png" />
+	  <MauiImage Include="Images\loginbackgroundscale400.png" />
+	  <MauiImage Include="Images\microsoft.png" />
+	  <MauiImage Include="Images\nocredits.png" />
+	  <MauiImage Include="Images\nointernet.png" />
+	  <MauiImage Include="Images\noitem.png" />
+	  <MauiImage Include="Images\nophotos.png" />
+	  <MauiImage Include="Images\notasks.png" />
+	  <MauiImage Include="Images\notenoughcredit.png" />
+	  <MauiImage Include="Images\novideos.png" />
+	  <MauiImage Include="Images\ourteam.png" />
+	  <MauiImage Include="Images\paymentfailed.png" />
+	  <MauiImage Include="Images\paymentfailure.png" />
+	  <MauiImage Include="Images\paymentsuccess.png" />
+	  <MauiImage Include="Images\pdf.png" />
+	  <MauiImage Include="Images\pin.png" />
+	  <MauiImage Include="Images\placeholder.png" />
+	  <MauiImage Include="Images\placeholderrectangle.png" />
+	  <MauiImage Include="Images\reschedule.png" />
+	  <MauiImage Include="Images\sleepduration.png" />
+	  <MauiImage Include="Images\somethingwentwrong.png" />
+	  <MauiImage Include="Images\timezone.png" />
+	  <MauiImage Include="Images\viewmode.png" />
+	  <MauiImage Include="Images\visa.png" />
+	  <MauiImage Include="Images\waterconsumed.png" />
+	  <MauiImage Include="Images\word.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="Syncfusion.Maui.Buttons" Version="*" />
+		<PackageReference Include="Syncfusion.Maui.Calendar" Version="*" />
+		<PackageReference Include="Syncfusion.Maui.Cards" Version="*" />
+		<PackageReference Include="Syncfusion.Maui.Charts" Version="*" />
+		<PackageReference Include="Syncfusion.Maui.Core" Version="*" />
+		<PackageReference Include="Syncfusion.Maui.DataForm" Version="*" />
+		<PackageReference Include="Syncfusion.Maui.Expander" Version="*" />
+		<PackageReference Include="Syncfusion.Maui.Gauges" Version="*" />
+		<PackageReference Include="Syncfusion.Maui.Inputs" Version="*" />
+		<PackageReference Include="Syncfusion.Maui.ListView" Version="*" />
+		<PackageReference Include="Syncfusion.Maui.Maps" Version="*" />
+		<PackageReference Include="Syncfusion.Maui.ProgressBar" Version="*" />
+		<PackageReference Include="Syncfusion.Maui.Rotator" Version="*" />
+		<PackageReference Include="Syncfusion.Maui.TabView" Version="*" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="AppLayout\Views\HomePageMobileUI.xaml.cs">
+	    <DependentUpon>HomePageMobileUI.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Styles\ComboBoxStyles.xaml.cs">
+	    <DependentUpon>ComboBoxStyles.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="AppLayout\Views\AppLayoutStyles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="AppLayout\Views\HomePageDesktopUI.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="AppLayout\Views\HomePageMobileUI.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="AppLayout\Views\TemplatePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="AppLayout\Views\TemplatesView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Styles\AvatarViewStyles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Styles\BorderStyles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Styles\BoxViewStyles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Styles\ButtonStyles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Styles\Colors.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Styles\ComboBoxStyles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Styles\EditorStyles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Styles\EntryStyles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Styles\FontIcons.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Styles\LabelStyles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Styles\ListViewStyles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Styles\RadioButtonStyles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Styles\RatingStyles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Styles\SegmentedControlStyles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Themes\DarkTheme.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Themes\LightTheme.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AboutUs\AboutUsPageWithCards.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AboutUs\AboutUsSimplePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AboutUs\AboutUsWithScrollPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Bookmark\ArticleListTemplate.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Chat\IncomingImageTemplate.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Chat\IncomingTextTemplate.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Chat\OutgoingImageTemplate.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Chat\OutgoingTextTemplate.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Forms\AddProfilePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Forms\OTPPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Navigation\AppUsagePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Bookmark\ArticleBookmarkPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Catalog\ArticleCardPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Detail\ArticleDetailPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Catalog\ArticleListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Article\ArticleParallaxHeaderPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Catalog\ArticleTilePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Article\ArticleWithCommentsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Profile\AuthorProfilePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Forms\BusinessRegistrationForm.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Forms\CardPaymentPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Bookmark\CartPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Catalog\CatalogListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Catalog\CatalogTilePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Catalog\CategoryTilePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Chat\ChatMessagePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Profile\ChatProfilePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Transaction\CheckoutPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Profile\ContactProfilePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Navigation\ContactsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ContactUs\ContactUsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Dashboard\DailyCaloriesReportPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Detail\DataTablePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Navigation\DocumentsListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Notification\ECommerceNotificationPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ErrorAndEmpty\EmptyCartPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Detail\EventDetailPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Catalog\EventListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Navigation\FAQPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Feedback\FeedbackPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Navigation\FileExplorerGridPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Navigation\FileExplorerPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Forms\ForgotPasswordPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Dashboard\HealthCarePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Profile\HealthProfilePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Settings\HelpPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Navigation\IconNameListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ErrorAndEmpty\LocationDeniedPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Forms\LoginPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Forms\LoginWithSocialIcon.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Profile\MasterProfilePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Navigation\MoviesListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Navigation\MoviesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Detail\MyAddressPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Article\MyArticlePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Transaction\DeliveryView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Transaction\MyCardsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\History\MyOrdersPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Dashboard\MyWalletPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Navigation\NameListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Navigation\NavigationListCardPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Navigation\NavigationTileCardPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ErrorAndEmpty\NoCreditsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ErrorAndEmpty\NoInternetConnectionPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ErrorAndEmpty\NoItemsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ErrorAndEmpty\NoPhotosPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ErrorAndEmpty\NoTasksPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ErrorAndEmpty\NotEnoughCreditsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ErrorAndEmpty\NoVideosPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Tracking\OrderTracking.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ErrorAndEmpty\PaymentFailedPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Transaction\PaymentFailurePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Transaction\PaymentSuccessPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Detail\ProductDetailPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Catalog\ProductHomePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Chat\RecentChatPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Forms\ResetPasswordPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Navigation\RestaurantPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Feedback\ReviewPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Detail\RoomBookingPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Navigation\SelectableNamePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Settings\SettingsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Forms\SignupPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Notification\SocialNotificationPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Social\SocialProfileWithCard.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Social\SocialProfileWithConnectionsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Social\SocialProfileWithInterest.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Social\SocialProfileWithMessage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ErrorAndEmpty\SomethingWentWrongPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Navigation\SongsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Navigation\SongsPlayListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Dashboard\StockOverviewPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Navigation\SuggestionPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Forms\TabbedLogin.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Notification\TaskNotificationPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\History\TransactionHistoryPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Catalog\TravelPlannerPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Bookmark\WishlistPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Transaction\PaymentView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Transaction\PriceDetailView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
+</Project>

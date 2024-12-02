@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Feedback.ReviewPage"
+             xmlns:rating="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:dataForm="clr-namespace:Syncfusion.Maui.DataForm;assembly=Syncfusion.Maui.DataForm"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+    <ContentView.BindingContext>
+        <local:ReviewViewModel/>
+    </ContentView.BindingContext>
+    <ContentView.Content>
+        <ScrollView x:Name="reviewPage"
+                    Padding="10">
+
+            <StackLayout Spacing="16">
+
+                <Border StrokeShape="RoundRectangle 10"
+                        Padding="10"
+                        WidthRequest="{OnPlatform WinUI=650, MacCatalyst=650}"
+                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                        Margin="10,0">
+                    <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto">
+                        <Label Text="Write a Review"
+                               FontFamily="Roboto-Medium"/>
+
+                        <StackLayout Grid.Row="1"
+                                     Orientation="Horizontal">
+                            <!--  Product image  -->
+
+                            <Image Margin="0,10,0,10"
+                                   x:Name="ProductImage"
+                                   Aspect="AspectFill"
+                                   BackgroundColor="{DynamicResource Gray-200}"
+                                   HeightRequest="100"
+                                   WidthRequest="100"/>
+
+
+                            <!--  Product name label  -->
+
+                            <Label
+                                Margin="10"
+                                HorizontalOptions="Start"
+                                Style="{DynamicResource TitleLabelStyle}"
+                                Text="Full-Length Skirt"/>
+                        </StackLayout>
+
+                        <BoxView Grid.Row="2"
+                                 HeightRequest="1"
+                                 Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+
+                        <Label Text="How would you like to rate?"
+                               Margin="0,20,0,0"
+                               Grid.Row="3"
+                               FontFamily="Roboto-Medium"/>
+
+                        <rating:SfRating Margin="20"
+                                BackgroundColor="Transparent"
+                                         Grid.Row="4"
+                                         HorizontalOptions="Center"
+                                         ItemSize="27"
+                                         ItemSpacing="5"
+                                         RatingSettings="{DynamicResource CommonRatingSettings}"
+                                         IsReadOnly="False"
+                                         Style="{DynamicResource RatingStyle}"
+                                         VerticalOptions="Start"/>
+                    </Grid>
+                </Border>
+
+                <Border StrokeShape="RoundRectangle 10"
+                        Padding="10"
+                        WidthRequest="{OnPlatform WinUI=650, MacCatalyst=650}"
+                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                        Margin="10,0">
+                    <StackLayout>
+                        <Label Text="Upload photos and videos"
+                               FontFamily="Roboto-Medium"/>
+                        <Border StrokeDashOffset="1"
+                                Margin="0,10,0,0">
+                            <StackLayout HorizontalOptions="Center"
+                                         Margin="30">
+                                <Button Text="Select to upload file"
+                                        Background="Transparent"
+                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                        BorderColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                        HorizontalOptions="Center"/>
+                                <Label Text="upload image or video"
+                                       FontSize="12"
+                                       TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                       HorizontalOptions="Center"/>
+                            </StackLayout>
+                        </Border>
+                    </StackLayout>
+                </Border>
+
+                <Border Padding="10"
+                        StrokeShape="RoundRectangle 10"
+                        WidthRequest="{OnPlatform WinUI=650, MacCatalyst=650}"
+                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                        Margin="10,0,10,10">
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Describe your review"
+                               FontFamily="Roboto-Medium"/>
+                        <dataForm:SfDataForm x:Name="reviewForm"
+                                             DataObject="{Binding ReviewInfo}"
+                                             MinimumHeightRequest="130"
+                                             LayoutType="TextInputLayout"
+                                             ValidationMode="PropertyChanged">
+                            <dataForm:SfDataForm.TextInputLayoutSettings>
+                                <dataForm:TextInputLayoutSettings ShowHelperText="True"
+                                                                  OutlineCornerRadius="5">
+                                    <dataForm:TextInputLayoutSettings.HelperTextStyle>
+                                        <dataForm:DataFormTextStyle FontFamily="Roboto-Regular"/>
+                                    </dataForm:TextInputLayoutSettings.HelperTextStyle>
+                                </dataForm:TextInputLayoutSettings>
+                            </dataForm:SfDataForm.TextInputLayoutSettings>
+                            <dataForm:SfDataForm.ErrorLabelTextStyle>
+                                <dataForm:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                                            FontFamily="Roboto-Regular"/>
+                            </dataForm:SfDataForm.ErrorLabelTextStyle>
+                            <dataForm:SfDataForm.LabelTextStyle>
+                                <dataForm:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}"
+                                                            FontFamily="Roboto-Regular"/>
+                            </dataForm:SfDataForm.LabelTextStyle>
+                            <dataForm:SfDataForm.ValidMessageLabelTextStyle>
+                                <dataForm:DataFormTextStyle FontFamily="Roboto-Regular"/>
+                            </dataForm:SfDataForm.ValidMessageLabelTextStyle>
+                            <dataForm:SfDataForm.EditorTextStyle>
+                                <dataForm:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                            FontFamily="Roboto-Regular"/>
+                            </dataForm:SfDataForm.EditorTextStyle>
+                        </dataForm:SfDataForm>
+                        <buttons:SfButton Text="Submit"
+                                x:Name="submitButton"
+                                          HorizontalOptions="Center"
+                                Style="{DynamicResource FormsButtonStyle}"
+                                          Margin="0,10,0,0"
+                                          CornerRadius="20"/>
+
+                    </StackLayout>
+
+                </Border>
+            </StackLayout>
+
+        </ScrollView>
+
+    </ContentView.Content>
+    <ContentView.Behaviors>
+        <local:ReviewBehavior/>
+    </ContentView.Behaviors>
+</ContentView>

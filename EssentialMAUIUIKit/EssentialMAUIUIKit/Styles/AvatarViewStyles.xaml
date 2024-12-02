@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Styles.AvatarViewStyles"
+                    xmlns:sfavatar="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core">
+
+    <Style x:Key="AvatarViewStyle" TargetType="sfavatar:SfAvatarView">
+        <Setter Property="ContentType" Value="Initials" />
+        <Setter Property="InitialsType" Value="DoubleCharacter" />
+        <Setter Property="FontFamily" Value="Roboto-Medium" />
+        <Setter Property="InitialsColor" Value="#ffffff" />
+        <Setter Property="AvatarShape" Value="Circle" />
+        <Setter Property="AvatarSize" Value="Medium" />
+        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        <Setter Property="StrokeThickness" Value="0" />
+    </Style>
+
+</ResourceDictionary>

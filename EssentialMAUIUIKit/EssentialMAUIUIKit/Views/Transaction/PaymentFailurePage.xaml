@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Transaction.PaymentFailurePage"
+             xmlns:button="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons">
+    <ContentView.Content>
+
+        <Grid>
+            <button:SfButton
+                Margin="8"
+                FontSize="20"
+                HorizontalOptions="End"
+                Text="{DynamicResource Close}"
+                Style="{DynamicResource IconButtonStyle}"
+                VerticalOptions="Start"/>
+
+            <StackLayout
+                HorizontalOptions="Center"
+                Spacing="0"
+                VerticalOptions="Center">
+
+                <!--  Payment status image  -->
+                <Image
+                    Margin="0,10,0,0"
+                    HeightRequest="80"
+                    Source="paymentfailure.png"
+                    WidthRequest="80"/>
+
+                <!--  Payment status label  -->
+                <Label
+                    Margin="0,40,0,0"
+                    FontSize="22"
+                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                    LineHeight="{OnPlatform Android=1.25,
+                            Default=-1}"
+                    Style="{DynamicResource TitleLabelStyle}"
+                    Text="Payment failure"/>
+
+                <!--  Payment description label  -->
+                <Label
+                    Margin="17,8"
+                    FontFamily="Roboto-Regular"
+                    FontSize="16"
+                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                    LineHeight="{OnPlatform Android=1.25,
+                            Default=-1}"
+                    Style="{DynamicResource TitleLabelStyle}"
+                    Text="Please check your internet connection."/>
+
+                <button:SfButton
+                    Margin="0,24"
+                    Style="{DynamicResource FormsButtonStyle}"
+                    Text="Try Again"
+                    VerticalOptions="Start"
+                    WidthRequest="245"/>
+
+            </StackLayout>
+
+        </Grid>
+    </ContentView.Content>
+</ContentView>

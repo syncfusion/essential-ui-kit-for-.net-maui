@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.AppLayout.Views.TemplatePage"
+             xmlns:viewModels="clr-namespace:EssentialMAUIUIKit.AppLayout.ViewModels"
+             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             NavigationPage.HasNavigationBar="False"
+             NavigationPage.HasBackButton="True">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="AppLayoutStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+        <Style TargetType="listView:ListViewItem">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <ContentPage.BindingContext>
+        <viewModels:TemplatePageViewModel x:Name="templatePageViewModel"/>
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="Auto, Auto, Auto, *">
+        <Grid ColumnDefinitions="Auto, *, Auto"
+              HeightRequest="50"
+              BackgroundColor="#5470FF">
+            <buttons:SfButton Margin="10"
+                              VerticalOptions="Center"
+                              Clicked="BackButtonPressed"
+                              x:Name="backButton"
+                              Style="{DynamicResource IconButtonStyle}"
+                              Text="{DynamicResource Back}"
+                              TextColor="#FFFFFF"/>
+            <Label Grid.Column="1"
+                   x:Name="CategoryTextLabel"
+                   FontSize="15"
+                   FontFamily="Roboto-Medium"
+                   TextColor="#FFFFFF"
+                   VerticalOptions="Center"/>
+            <Grid Grid.Column="2"
+                  ColumnDefinitions="*,*"
+                  HorizontalOptions="End">
+
+                <Button
+                    Clicked="GotoCodeViewer"
+                    FontSize="18"
+                    Style="{DynamicResource ActionBarSettingIconStyle}"
+                    Text="&#xe753;"
+                    VerticalOptions="CenterAndExpand"/>
+
+                <Button Grid.Column="1"
+                        Clicked="ShowSettings"
+                        FontSize="18"
+                        Style="{DynamicResource ActionBarSettingIconStyle}"
+                        VerticalOptions="CenterAndExpand"/>
+            </Grid>
+        </Grid>
+        <ScrollView Orientation="Horizontal"
+                Grid.Row="1"
+                Padding="10"
+                HorizontalScrollBarVisibility="Never">
+            <syncEffectsView:SfChipGroup x:Name="chipView"
+                    ChipClicked="chipView_ChipClicked"
+                    ChipFontFamily="Roboto-Medium"
+                                         ItemsSource="{Binding SelectedCategory.Pages}"
+                    DisplayMemberPath="Name"
+                    ChipType="Choice"
+                    ChipStroke="#E2E4E7"
+                    ChipStrokeThickness="2"
+                    ChipCornerRadius="16"
+                                         SelectedChipBackground="{AppThemeBinding Dark={DynamicResource BackgroundColorLight}, Light={DynamicResource BackgroundColorDark}}"
+                                         ChipTextColor="{AppThemeBinding Light=Black, Dark={DynamicResource White}}"
+                                         SelectedChipTextColor="{AppThemeBinding Light=White, Dark={DynamicResource Black}}">
+            </syncEffectsView:SfChipGroup>
+
+        </ScrollView>
+
+        <BoxView HeightRequest="1"
+                 Grid.Row="2"
+                 Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+        <Grid Grid.Row="3"
+              x:Name="SampleGrid"/>
+
+        <Grid Grid.RowSpan="4"
+                x:Name="propertyFrameOverlay"
+                BindingContext="{x:Reference propertyFrame }"
+                IsVisible="False"
+                Background="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                Opacity="0.2">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="PropertiesTapped"/>
+            </Grid.GestureRecognizers>
+        </Grid>
+        <Border x:Name="propertyFrame"
+                StrokeShape="RoundRectangle, 10,10,0,0"
+                IsVisible="False"
+                Padding="12"
+                Grid.Row="3"
+                VerticalOptions="End"
+                HorizontalOptions="FillAndExpand"
+                BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
+            <Grid RowDefinitions="24,*"
+                    RowSpacing="10"
+                    IsClippedToBounds="True">
+                <Grid Grid.Row="0">
+                    <Label Text="Settings"
+                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                           FontFamily="Roboto-Medium"
+                           VerticalTextAlignment="Center"
+                           VerticalOptions="Center"
+                           FontSize="16"
+                           HeightRequest="20"/>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="PropertiesTapped"/>
+                    </Grid.GestureRecognizers>
+                </Grid>
+                <Grid x:Name="propertyGrid"
+                        Grid.Row="1"
+                        ColumnDefinitions="*,*"
+                        HeightRequest="50"
+                        VerticalOptions="Start">
+                    <Label Text="Dark Theme"
+                            FontFamily="Roboto-Medium"
+                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                            VerticalOptions="Center"/>
+                    <buttons:SfSwitch x:Name="themeSwitch"
+                            Grid.Column="1"
+                            IsOn="False"
+                            StateChanged="SfSwitch_StateChanged"
+                            HorizontalOptions="End"/>
+                </Grid>
+            </Grid>
+        </Border>
+
+    </Grid>
+</ContentPage>

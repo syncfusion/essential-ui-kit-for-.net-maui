@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Navigation.SongsPlayListPage"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+    <ContentView.BindingContext>
+        <local:SongPageViewModel/>
+    </ContentView.BindingContext>
+    <ContentView.Content>
+        <Grid Padding="10"
+              ColumnSpacing="0"
+              RowDefinitions="{OnPlatform Default=*, MacCatalyst=Auto}"
+              RowSpacing="0">
+
+            <Border Padding="10"
+                    StrokeShape="RoundRectangle 10"
+                    Grid.Row="0"
+                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                    IsVisible="{OnPlatform Android=False, iOS=False}"
+                    WidthRequest="{OnPlatform WinUI=550, MacCatalyst=550}">
+                <Grid>
+
+                    <listView:SfListView
+                        AllowSwiping="True"
+                        AutoFitMode="Height"
+                        ScrollBarVisibility="Never"
+                        ItemSpacing="0"
+                        ItemsSource="{Binding SongsPageList}"
+                        SelectionBackground="{AppThemeBinding Light={DynamicResource SelectionBackgroundLight}, Dark={DynamicResource SelectionBackgroundDark}}"
+                        VerticalOptions="Fill">
+
+                        <listView:SfListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout>
+                                        <Grid
+                                            ColumnDefinitions="Auto, Auto, *"
+                                            ColumnSpacing="0"
+                                            RowSpacing="0">
+
+                                            <Border StrokeThickness="0"
+                                                    WidthRequest="50"
+                                                    HeightRequest="50"
+                                                    StrokeShape="RoundRectangle 50">
+                                                <Image Source="{Binding SongImage}"/>
+                                            </Border>
+
+                                            <StackLayout
+                                                Grid.Column="1"
+                                                HorizontalOptions="Fill"
+                                                Spacing="0"
+                                                VerticalOptions="Fill">
+                                                <!--  Name of the Song  -->
+                                                <Label
+                                                    Margin="16,13,0,0"
+                                                    FontFamily="Roboto-Regular"
+                                                    FontSize="16"
+                                                    HeightRequest="24"
+                                                    LineHeight="{OnPlatform Android=1.5,
+                                                        Default=-1}"
+                                                    Text="{Binding SongName}"
+                                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+
+                                                <!--  Composer of the song  -->
+                                                <Label
+                                                    Margin="16,0,0,12"
+                                                    FontFamily="Roboto-Regular"
+                                                    FontSize="14"
+                                                    HeightRequest="21"
+                                                    LineHeight="{OnPlatform Android=1.25,
+                                                        Default=-1}"
+                                                    Text="{Binding Composer}"
+                                                    TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+                                            </StackLayout>
+
+                                            <!--  Menu button  -->
+                                            <buttons:SfButton
+                                                x:Name="MenuButton"
+                                                Grid.Column="2"
+                                                Margin="16,0"
+                                                CornerRadius="4"
+                                                HorizontalOptions="End"
+                                                Style="{DynamicResource IconButtonStyle}"
+                                                Text="{DynamicResource More}"/>
+
+                                        </Grid>
+                                        <!--  Seperator  -->
+                                        <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </listView:SfListView.ItemTemplate>
+                    </listView:SfListView>
+                </Grid>
+            </Border>
+
+            <Grid Grid.Row="1"
+                  IsVisible="{OnPlatform WinUI=False, MacCatalyst=False}"
+                  Margin="20">
+
+                <listView:SfListView
+                    AllowSwiping="True"
+                    AutoFitMode="Height"
+                    ScrollBarVisibility="Never"
+                    ItemSpacing="0"
+                    ItemsSource="{Binding SongsPageList}"
+                    SelectionBackground="{AppThemeBinding Light={DynamicResource SelectionBackgroundLight}, Dark={DynamicResource SelectionBackgroundDark}}"
+                    VerticalOptions="Fill">
+
+                    <listView:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                    <Grid
+                                        ColumnDefinitions="Auto, Auto, *"
+                                        ColumnSpacing="0"
+                                        RowSpacing="0">
+
+                                        <Border StrokeThickness="0"
+                                                WidthRequest="50"
+                                                HeightRequest="50"
+                                                StrokeShape="RoundRectangle 50">
+                                            <Image Source="{Binding SongImage}"/>
+                                        </Border>
+
+                                        <StackLayout
+                                            Grid.Column="1"
+                                            HorizontalOptions="Fill"
+                                            Spacing="0"
+                                            VerticalOptions="Fill">
+                                            <!--  Name of the Song  -->
+                                            <Label
+                                                Margin="16,13,0,0"
+                                                FontFamily="Roboto-Regular"
+                                                FontSize="16"
+                                                HeightRequest="24"
+                                                LineHeight="{OnPlatform Android=1.5,
+                                                    Default=-1}"
+                                                Text="{Binding SongName}"
+                                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+
+                                            <!--  Composer of the song  -->
+                                            <Label
+                                                Margin="16,0,0,12"
+                                                FontFamily="Roboto-Regular"
+                                                FontSize="14"
+                                                HeightRequest="21"
+                                                LineHeight="{OnPlatform Android=1.25,
+                                                    Default=-1}"
+                                                Text="{Binding Composer}"
+                                                TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+                                        </StackLayout>
+
+                                        <!--  Menu button  -->
+                                        <buttons:SfButton
+                                            x:Name="MenuButton"
+                                            Grid.Column="2"
+                                            Margin="16,0"
+                                            CornerRadius="4"
+                                            HorizontalOptions="End"
+                                            Style="{DynamicResource IconButtonStyle}"
+                                            Text="{DynamicResource More}"/>
+
+                                    </Grid>
+                                    <!--  Seperator  -->
+                                    <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </listView:SfListView.ItemTemplate>
+                </listView:SfListView>
+            </Grid>
+
+
+        </Grid>
+    </ContentView.Content>
+</ContentView>

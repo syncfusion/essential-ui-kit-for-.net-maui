@@ -1,0 +1,343 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Bookmark.CartPage"
+             xmlns:combobox="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+    <ContentView.BindingContext>
+        <local:CartPageViewModel/>
+    </ContentView.BindingContext>
+    <ContentView.Content>
+
+        <Border WidthRequest="{OnPlatform WinUI=650, MacCatalyst=650}"
+                BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                Margin="10"
+                StrokeShape="RoundRectangle 10">
+            <ScrollView VerticalScrollBarVisibility="Never">
+
+                <!--  Cart Details  -->
+                <Grid RowDefinitions="Auto,Auto,Auto,Auto"
+                      Margin="10"
+                      ColumnSpacing="0"
+                      RowSpacing="0">
+
+                    <!--  Cart Header  -->
+                    <Label Margin="10"
+                           HorizontalOptions="Start"
+                           Style="{DynamicResource TitleLabelStyle}"
+                           Text="My Cart"/>
+
+                    <BoxView
+                        Grid.Row="1"
+                        HeightRequest="1"
+                        Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+                    <!--  Cart items  -->
+                    <StackLayout
+                        x:Name="CartLayout"
+                        Grid.Row="2"
+                        BindableLayout.ItemsSource="{Binding Products}"
+                        Spacing="16"
+                        VerticalOptions="Start">
+
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid
+                                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                        ColumnDefinitions="Auto, *"
+                                        ColumnSpacing="0"
+                                        RowSpacing="0">
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="{OnIdiom Default=1, Phone=0}"/>
+                                        </Grid.RowDefinitions>
+
+                                        <!--  Product image  -->
+                                        <Image
+                                            Grid.Row="0"
+                                            Grid.RowSpan="4"
+                                            Grid.Column="0"
+                                            Margin="16"
+                                            Aspect="Fill"
+                                            BackgroundColor="{DynamicResource Gray-200}"
+                                            HeightRequest="140"
+                                            WidthRequest="120">
+                                            <Image.Source>
+                                                <UriImageSource
+                                                    CacheValidity="14"
+                                                    CachingEnabled="true"
+                                                    Uri="{Binding PreviewImage}"/>
+                                            </Image.Source>
+                                        </Image>
+
+                                        <!--  Product name  -->
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            Margin="0,16,0,4"
+                                            FontSize="14"
+                                            HorizontalOptions="Start"
+                                            LineBreakMode="TailTruncation"
+                                            MaxLines="1"
+                                            Style="{DynamicResource TitleLabelStyle}"
+                                            Text="{Binding Name}"/>
+
+                                        <!--  Product summary  -->
+                                        <Label
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            Margin="0,0,0,8"
+                                            FontSize="12"
+                                            HorizontalOptions="Start"
+                                            HorizontalTextAlignment="Start"
+                                            LineBreakMode="TailTruncation"
+                                            LineHeight="{OnPlatform Android=1.25,
+                                Default=-1}"
+                                            MaxLines="2"
+                                            Style="{DynamicResource DescriptionLabelStyle}"
+                                            Text="{Binding Summary}"/>
+
+                                        <StackLayout
+                                            Grid.Row="2"
+                                            Grid.Column="1"
+                                            Margin="0,0,0,16"
+                                            Padding="0"
+                                            Orientation="Horizontal"
+                                            Spacing="4">
+
+                                            <!--  Product price  -->
+                                            <Label
+                                                FontSize="20"
+                                                HorizontalOptions="Start"
+                                                Style="{DynamicResource TitleLabelStyle}"
+                                                Text="{Binding DiscountPrice, StringFormat='${0:0 }'}"
+                                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"/>
+
+                                            <Label
+                                                Style="{DynamicResource SimpleLabelStyle}"
+                                                Text="{Binding ActualPrice, StringFormat='${0:0.00}'}"
+                                                TextDecorations="Strikethrough"/>
+
+                                            <Label
+                                                Style="{DynamicResource SimpleLabelStyle}"
+                                                Text="{Binding DiscountPercent, StringFormat=' ({0}% OFF)'}"
+                                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"/>
+
+                                        </StackLayout>
+
+                                        <StackLayout
+                                            Grid.Row="3"
+                                            Grid.Column="1"
+                                            Margin="0,0,0,27"
+                                            Padding="0"
+                                            HorizontalOptions="Start"
+                                            Orientation="Horizontal"
+                                            Spacing="0"
+                                            VerticalOptions="Start">
+
+                                            <Border
+                                                Margin="0"
+                                                Padding="0"
+                                                StrokeShape="RoundRectangle 3,3,3,3"
+                                                HeightRequest="32"
+                                                HorizontalOptions="Start">
+
+                                                <!--  Product quantity dropdown  -->
+                                                <combobox:SfComboBox
+                                                    x:Name="QuantityComboBox"
+                                                    Stroke="{DynamicResource Gray-300}"
+                                                    ItemsSource="{Binding Quantities}"
+                                                    DropDownBackground="{DynamicResource Gray-Bg}"
+                                                    HeightRequest="32"
+                                                    HorizontalOptions="Start"
+                                                    MaximumHeightRequest="200"
+                                                    SelectedDropDownItemBackground="Transparent"
+                                                    SelectedItem="{Binding TotalQuantity, Mode=TwoWay}"
+                                                    ShowBorder="False"
+                                                    Style="{DynamicResource SimpleComboBoxStyle}"
+                                                    TextColor="Transparent"
+                                                    WidthRequest="90">
+
+                                                    <combobox:SfComboBox.CustomView>
+                                                        <Label
+                                                            Margin="10,0,24,0"
+                                                            Background="Transparent"
+                                                            FontFamily="Roboto-Regular"
+                                                            Style="{DynamicResource DescriptionLabelStyle}"
+                                                            Text="{Binding Source={x:Reference QuantityComboBox}, Path=SelectedItem, StringFormat='QTY: {0}'}"
+                                                            VerticalTextAlignment="Center"/>
+                                                    </combobox:SfComboBox.CustomView>
+
+                                                    <combobox:SfComboBox.DropDownButtonSettings>
+                                                        <combobox:DropDownButtonSettings>
+                                                            <combobox:DropDownButtonSettings.View>
+                                                                <Label
+                                                                    Margin="0"
+                                                                    FontFamily="FontIcons"
+                                                                    FontSize="25"
+                                                                    HorizontalTextAlignment="Center"
+                                                                    Text="{DynamicResource DropDownButtonIcon}"
+                                                                    TextColor="{DynamicResource Gray-600}"
+                                                                    VerticalTextAlignment="Center"/>
+                                                            </combobox:DropDownButtonSettings.View>
+                                                        </combobox:DropDownButtonSettings>
+                                                    </combobox:SfComboBox.DropDownButtonSettings>
+                                                </combobox:SfComboBox>
+
+                                            </Border>
+
+                                            <!--  Remove button  -->
+                                            <buttons:SfButton
+                                                HorizontalOptions="End"
+                                                VerticalOptions="Center"
+                                                Background="Transparent"
+                                                WidthRequest="92">
+                                                <Label
+                                                    FontSize="14"
+                                                    Style="{DynamicResource TitleLabelStyle}"
+                                                    Text="Remove"
+                                                    TextColor="{AppThemeBinding Dark={DynamicResource PrimaryColorDark}, Light={DynamicResource PrimaryColorLight}}"
+                                                    VerticalOptions="Center"/>
+                                            </buttons:SfButton>
+                                        </StackLayout>
+
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+
+                    <!--  Price Details  -->
+                    <Border BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                            Grid.Row="3"
+                            StrokeShape="RoundRectangle 10">
+                        <Grid
+                            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                            ColumnDefinitions="*, Auto"
+                            RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
+                            RowSpacing="4"
+                            VerticalOptions="Start">
+
+                            <!--  Header  -->
+                            <Label
+                                Grid.Row="0"
+                                Grid.ColumnSpan="2"
+                                Margin="16,16,16,12"
+                                HorizontalOptions="Start"
+                                LineHeight="{OnPlatform Android=1.25,
+                                    Default=-1}"
+                                Style="{DynamicResource TitleLabelStyle}"
+                                Text="Price Details"/>
+                            <!--  Separator  -->
+                            <BoxView
+                                Grid.Row="1"
+                                Grid.ColumnSpan="2"
+                                HeightRequest="1"
+                                Style="{DynamicResource HorizontalSeparatorStyle}"/>
+                            <!--  Total MRP  -->
+                            <Label
+                                Grid.Row="2"
+                                Margin="16,4,16,0"
+                                HorizontalOptions="Start"
+                                Style="{DynamicResource SimpleLabelStyle}"
+                                Text="Total MRP"/>
+                            <Label
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Margin="16,4,16,0"
+                                HorizontalOptions="End"
+                                HorizontalTextAlignment="End"
+                                Style="{DynamicResource SimpleLabelStyle}"
+                                Text="$1230"/>
+                            <!--  Discount Percent  -->
+                            <Label
+                                Grid.Row="3"
+                                Margin="16,4,16,0"
+                                HorizontalOptions="Start"
+                                Style="{DynamicResource SimpleLabelStyle}"
+                                Text="Discount"/>
+                            <Label
+                                Grid.Row="3"
+                                Grid.Column="1"
+                                Margin="16,4,16,0"
+                                HorizontalOptions="End"
+                                HorizontalTextAlignment="End"
+                                Style="{DynamicResource SimpleLabelStyle}"
+                                Text="21%"/>
+                            <!--  Coupon Discount  -->
+                            <Label
+                                Grid.Row="4"
+                                Margin="16,4,16,0"
+                                HorizontalOptions="Start"
+                                Style="{DynamicResource SimpleLabelStyle}"
+                                Text="Coupon Discount"/>
+                            <buttons:SfButton
+                                Grid.Row="4"
+                                Grid.Column="1"
+                                HorizontalOptions="End"
+                                TextColor="{DynamicResource HyperLink}"
+                                Text="Apply Coupon"
+                                FontFamily="Roboto-Regular"
+                                FontSize="12"
+                                Background="Transparent"
+                                HeightRequest="25"
+                                WidthRequest="110">
+                            </buttons:SfButton>
+                            <!--  Delivery Charges  -->
+                            <Label
+                                Grid.Row="5"
+                                Margin="16,4,16,4"
+                                HorizontalOptions="Start"
+                                Style="{DynamicResource SimpleLabelStyle}"
+                                Text="Delivery Charges"/>
+                            <Label
+                                Grid.Row="5"
+                                Grid.Column="1"
+                                Margin="16,0,16,4"
+                                HorizontalOptions="End"
+                                HorizontalTextAlignment="End"
+                                Style="{DynamicResource SimpleLabelStyle}"
+                                Text="Free"
+                                TextColor="{DynamicResource Green}"/>
+                            <!--  Separator  -->
+                            <BoxView
+                                Grid.Row="6"
+                                Grid.ColumnSpan="2"
+                                HeightRequest="1"
+                                Style="{DynamicResource HorizontalSeparatorStyle}"/>
+                            <!--  Total price  -->
+                            <Label
+                                Grid.Row="7"
+                                Margin="16,12,16,16"
+                                HorizontalOptions="Start"
+                                LineHeight="{OnPlatform Android=1.25,
+                                    Default=-1}"
+                                Style="{DynamicResource TitleLabelStyle}"
+                                Text="Total"/>
+                            <Label
+                                Grid.Row="7"
+                                Grid.Column="1"
+                                Margin="16,12,16,16"
+                                HorizontalOptions="End"
+                                HorizontalTextAlignment="End"
+                                LineHeight="{OnPlatform Android=1.25,
+                                    Default=-1}"
+                                Style="{DynamicResource TitleLabelStyle}"
+                                Text="$960"/>
+
+                        </Grid>
+                    </Border>
+
+                </Grid>
+            </ScrollView>
+        </Border>
+
+
+    </ContentView.Content>
+</ContentView>

@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Forms.CardPaymentPage"
+             xmlns:button="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:dataForm="clr-namespace:Syncfusion.Maui.DataForm;assembly=Syncfusion.Maui.DataForm"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:cards="clr-namespace:Syncfusion.Maui.Cards;assembly=Syncfusion.Maui.Cards"
+             xmlns:rotator="clr-namespace:Syncfusion.Maui.Rotator;assembly=Syncfusion.Maui.Rotator">
+
+    <ContentView.BindingContext>
+        <local:CardPaymentViewModel/>
+    </ContentView.BindingContext>
+    <ContentView.Content>
+        <ScrollView VerticalScrollBarVisibility="Never"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+            <Grid WidthRequest="{OnPlatform WinUI=386, MacCatalyst=400}"
+                    RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+                <Label Grid.Row="0"
+                        Text="Enter card details"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                       FontFamily="Roboto-Medium"
+                       FontSize="Medium"
+                       HorizontalOptions="Center"
+                       Padding="10"/>
+                <dataForm:SfDataForm Grid.Row="1"
+                        x:Name="dataForm"
+                                     DataObject="{Binding ContactsInfo}"
+                                     MinimumHeightRequest="{OnPlatform WinUI=240, Android=270, MacCatalyst=240, iOS=270}"
+                                     LayoutType="TextInputLayout"
+                                     ValidationMode="PropertyChanged"
+                                     ColumnCount="2">
+                    <dataForm:SfDataForm.EditorTextStyle>
+                        <dataForm:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                    FontFamily="Roboto-Regular"/>
+                    </dataForm:SfDataForm.EditorTextStyle>
+                    <dataForm:SfDataForm.TextInputLayoutSettings>
+                        <dataForm:TextInputLayoutSettings ShowHelperText="True"
+                                                          OutlineCornerRadius="5">
+                            <dataForm:TextInputLayoutSettings.HelperTextStyle>
+                                <dataForm:DataFormTextStyle  FontFamily="Roboto-Regular"/>
+                            </dataForm:TextInputLayoutSettings.HelperTextStyle>
+                        </dataForm:TextInputLayoutSettings>
+                    </dataForm:SfDataForm.TextInputLayoutSettings>
+                    <dataForm:SfDataForm.ErrorLabelTextStyle>
+                        <dataForm:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                                    FontFamily="Roboto-Regular"/>
+                    </dataForm:SfDataForm.ErrorLabelTextStyle>
+                    <dataForm:SfDataForm.LabelTextStyle>
+                        <dataForm:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}"
+                                                    FontFamily="Roboto-Regular"/>
+                    </dataForm:SfDataForm.LabelTextStyle>
+                </dataForm:SfDataForm>
+                <button:SfCheckBox Grid.Row="2"
+                        Text="Save card"
+                        TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                   FontSize="12"
+                                   FontFamily="Roboto-Regular"
+                                   TickColor="{DynamicResource White}"
+                                   CheckedColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                   HorizontalOptions="Start"
+                                   Margin="20,0,20,0"/>
+                <button:SfButton Grid.Row="3"
+                        x:Name="addButton"
+                                 Text="Make Payment"
+                                 HorizontalOptions="Fill"
+                                 VerticalOptions="Center"
+                                 Style="{DynamicResource FormsButtonStyle}"
+                                 Margin="20"/>
+                <Label Grid.Row="4"
+                        Text="Saved Cards"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                       Margin="20,10,20,10"
+                       FontSize="14"
+                       FontFamily="Roboto-Medium"
+                       HorizontalOptions="Start"/>
+                <rotator:SfRotator Grid.Row="5"
+                                   x:Name="sfRotator"
+                                   Margin="8,0"
+                                   BackgroundColor="Transparent"
+                                   DotPlacement="OutSide"
+                                   DotsStroke="Transparent"
+                                   HeightRequest="{OnPlatform Default=230, MacCatalyst=250}"
+                                   ItemsSource="{Binding CardDetails}"
+                                   NavigationStripMode="Dots"
+                                   VerticalOptions="Start"
+                                   NavigationStripPosition="Bottom"
+                                   SelectedDotColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                   SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                                   UnselectedDotColor="{DynamicResource Gray-200}">
+                    <rotator:SfRotator.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="10"
+                                    Padding="0"
+                                    StrokeShape="RoundRectangle 10"
+                                    Stroke="Transparent"
+                                    WidthRequest="340"
+                                    HeightRequest="190">
+                                <Border.Background>
+                                    <LinearGradientBrush>
+                                        <GradientStop Offset="0.0"
+                                                      Color="{DynamicResource PrimaryGradient}"/>
+                                        <GradientStop Offset="1.0"
+                                                      Color="{DynamicResource SecondaryGradient}"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Grid Margin="20">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height=".5*"/>
+                                        <RowDefinition Height=".5*"/>
+                                    </Grid.RowDefinitions>
+                                    <StackLayout Grid.Row="0">
+                                        <Label Text="Card Number"
+                                               FontSize="14"
+                                               FontFamily="Roboto-Medium"
+                                               HorizontalOptions="Start"
+                                               TextColor="{DynamicResource White}"/>
+                                        <Label Text="{Binding CardNumber}"
+                                               FontSize="12"
+                                               FontFamily="Roboto-Regular"
+                                               HorizontalOptions="Start"
+                                               TextColor="{DynamicResource White}"
+                                               Padding="0,20,0,0"/>
+                                    </StackLayout>
+                                    <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width=".4*"/>
+                                            <ColumnDefinition Width=".4*"/>
+                                            <ColumnDefinition Width=".2*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height=".7*"/>
+                                            <RowDefinition Height=".3*"/>
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Column="0"
+                                               Text="Card Holder"
+                                               FontSize="12"
+                                               FontFamily="Roboto-Medium"
+                                               HorizontalOptions="Start"
+                                               TextColor="{DynamicResource White}"
+                                               VerticalOptions="End"/>
+                                        <Label Grid.Column="0"
+                                               Grid.Row="1"
+                                               Text="{Binding CardHolderName}"
+                                               FontSize="12"
+                                               FontFamily="Roboto-Regular"
+                                               HorizontalOptions="Start"
+                                               TextColor="{DynamicResource White}"
+                                               VerticalOptions="Center"/>
+                                        <Label Grid.Column="1"
+                                               Text="Expiration"
+                                               FontSize="12"
+                                               FontFamily="Roboto-Medium"
+                                               HorizontalOptions="Start"
+                                               TextColor="{DynamicResource White}"
+                                               VerticalOptions="End"/>
+                                        <Label Grid.Column="1"
+                                               Grid.Row="1"
+                                               Text="{Binding ExpiryDate , StringFormat='{}{0:MM/yy}'}"
+                                               FontSize="12"
+                                               FontFamily="Roboto-Regular"
+                                               HorizontalOptions="Start"
+                                               TextColor="{DynamicResource White}"
+                                               VerticalOptions="Center"/>
+                                        <Label Grid.Column="2"
+                                               Text="CVV"
+                                               FontSize="12"
+                                               FontFamily="Roboto-Medium"
+                                               HorizontalOptions="Start"
+                                               TextColor="{DynamicResource White}"
+                                               VerticalOptions="End"/>
+                                        <Label Grid.Column="2"
+                                               Grid.Row="1"
+                                               Text="{Binding CVV}"
+                                               FontSize="12"
+                                               FontFamily="Roboto-Regular"
+                                               HorizontalOptions="Start"
+                                               TextColor="{DynamicResource White}"
+                                               VerticalOptions="Center"/>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </rotator:SfRotator.ItemTemplate>
+                </rotator:SfRotator>
+            </Grid>
+        </ScrollView>
+
+    </ContentView.Content>
+
+    <ContentView.Behaviors>
+        <local:CardPaymentBehavior/>
+    </ContentView.Behaviors>
+
+
+
+</ContentView>

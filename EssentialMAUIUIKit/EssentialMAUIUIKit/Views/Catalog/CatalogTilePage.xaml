@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Catalog.CatalogTilePage"
+             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
+             xmlns:badge="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:rating="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs">
+
+    <ContentView.BindingContext>
+        <local:CartPageViewModel/>
+    </ContentView.BindingContext>
+    <ContentView.Resources>
+        <ResourceDictionary>
+
+            <OnIdiom x:Key="ListItemMargin"
+                     x:TypeArguments="Thickness"/>
+            <converter:BooleanToColorConverter x:Key="BoolToColorConverter"/>
+            <converter:BooleanToStringConverter x:Key="BoolToStringConverter"/>
+            <converter:DynamicResourceToColorConverter x:Key="DynamicResourceToColorConverter"/>
+
+            <!--  Header Template for Catalog SfListView  -->
+            <DataTemplate x:Key="CatalogDefaultHeaderTemplate">
+                <StackLayout
+                    HorizontalOptions="End"
+                    Orientation="Horizontal"
+                    Spacing="8"
+                    VerticalOptions="Center">
+
+                    <!--  Filter Button  -->
+                    <buttons:SfButton
+                        Background="Transparent"
+                        CornerRadius="4"
+                        HeightRequest="32"
+                        WidthRequest="100"
+                        TextColor="{DynamicResource Gray-700}">
+                        <StackLayout
+                            Padding="8,5,8,6"
+                            Orientation="Horizontal"
+                            Spacing="8"
+                            VerticalOptions="Center">
+                            <Label
+                                FontFamily="FontIcons"
+                                FontSize="18"
+                                Style="{DynamicResource DescriptionLabelStyle}"
+                                Text="{DynamicResource Filter}"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center"/>
+                            <Label
+                                FontFamily="Roboto-Medium"
+                                Style="{DynamicResource DescriptionLabelStyle}"
+                                Text="Filter"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center"/>
+                        </StackLayout>
+                    </buttons:SfButton>
+
+                    <!--  Sort Button  -->
+                    <buttons:SfButton
+                        Background="Transparent"
+                        CornerRadius="4"
+                        HeightRequest="32"
+                        WidthRequest="100"
+                        TextColor="{DynamicResource Gray-700}">
+                        <StackLayout
+                            Padding="8,5,8,6"
+                            Orientation="Horizontal"
+                            VerticalOptions="Center"
+                            Spacing="8">
+                            <Label
+                                FontFamily="FontIcons"
+                                FontSize="18"
+                                Style="{DynamicResource DescriptionLabelStyle}"
+                                Text="{DynamicResource Sort}"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="End"/>
+                            <Label
+                                FontFamily="Roboto-Medium"
+                                Style="{DynamicResource DescriptionLabelStyle}"
+                                Text="Sorting"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center"/>
+                        </StackLayout>
+                    </buttons:SfButton>
+
+                </StackLayout>
+            </DataTemplate>
+
+        </ResourceDictionary>
+
+        <Style TargetType="listView:ListViewItem">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+
+    <ContentView.Content>
+
+        <Grid
+            ColumnSpacing="0"
+            RowSpacing="0">
+            <!--  ListView for catalog  -->
+            <listView:SfListView BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                 x:Name="ListViewTile"
+                                 Padding="8"
+                                 AutoFitMode="Height"
+                                 HeaderTemplate="{DynamicResource CatalogDefaultHeaderTemplate}"
+                                 HorizontalOptions="Fill"
+                                 IsStickyHeader="False"
+                                 ItemSpacing="0, 8, 8, 8"
+                                 ItemsSource="{Binding Products}"
+                                 Style="{DynamicResource TransparentSelectionListView}">
+
+
+                <listView:SfListView.ItemTemplate>
+                    <DataTemplate>
+                        <badge:SfEffectsView
+                            RippleBackground="{DynamicResource Gray-300}"
+                            TouchDownEffects="Ripple">
+                            <Grid>
+                                <Grid.Resources>
+                                    <ResourceDictionary>
+                                        <converter:BooleanToStringConverter x:Key="boolToStringConverter"/>
+                                        <converter:BooleanToColorConverter x:Key="boolToColorConverter"/>
+                                    </ResourceDictionary>
+                                </Grid.Resources>
+
+                                <Border Stroke="Transparent"
+                                        StrokeShape="RoundRectangle 10"
+                                        WidthRequest="178"
+                                        HeightRequest="280">
+                                    <Grid
+                                        Margin="0"
+                                        RowDefinitions="Auto, Auto, Auto, Auto"
+                                        RowSpacing="0">
+
+                                        <!--  Product Image  -->
+                                        <Image
+                                            Grid.Row="0"
+                                            Margin="0,0,0,8"
+                                            BackgroundColor="{DynamicResource Gray-200}"
+                                            HeightRequest="180"
+                                            Aspect="Fill"
+                                            HorizontalOptions="{OnPlatform Android=FillAndExpand, iOS=FillAndExpand, WinUI=FillAndExpand}"
+                                            WidthRequest="{OnIdiom Phone=183,
+                           Tablet=224,
+                           Desktop=178}">
+                                            <Image.Source>
+                                                <UriImageSource
+                                                    CacheValidity="14"
+                                                    CachingEnabled="true"
+                                                    Uri="{Binding PreviewImage}"/>
+                                            </Image.Source>
+                                        </Image>
+
+                                        <!--  Product Name  -->
+                                        <Label
+                                            Grid.Row="1"
+                                            Margin="8,0,0,4"
+                                            FontSize="14"
+                                            HorizontalOptions="Start"
+                                            LineBreakMode="TailTruncation"
+                                            MaxLines="1"
+                                            Style="{DynamicResource TitleLabelStyle}"
+                                            Text="{Binding Name}"/>
+
+                                        <StackLayout
+                                            Grid.Row="2"
+                                            Margin="8,0,0,8"
+                                            Orientation="Horizontal"
+                                            Spacing="2">
+
+                                            <!--  Product Price  -->
+                                            <Label
+                                                FontFamily="Roboto-Medium"
+                                                FontSize="16"
+                                                LineHeight="{OnPlatform Android=1.25,
+                                Default=-1}"
+                                                Style="{DynamicResource SimpleLabelStyle}"
+                                                Text="{Binding DiscountPrice, StringFormat='${0:0 }'}"/>
+
+                                            <Label
+                                                Margin="5,6,0,6"
+                                                Style="{DynamicResource SimpleLabelStyle}"
+                                                Text="{Binding ActualPrice, StringFormat='${0:0.00}'}"
+                                                FontSize="12"
+                                                TextDecorations="Strikethrough"/>
+
+
+                                            <Label
+                                                Margin="10,6,0,6"
+                                                Style="{DynamicResource SimpleLabelStyle}"
+                                                Text="(49% off)"
+                                                FontSize="12"/>
+
+                                        </StackLayout>
+
+                                        <StackLayout Grid.Row="3"
+                                                     Margin="6,0,0,0"
+                                                     Orientation="Horizontal">
+                                            <rating:SfRating BackgroundColor="Transparent"
+                                                             Grid.Row="3"
+                                                             Grid.Column="1"
+                                                             ItemSize="13"
+                                                             ItemSpacing="1"
+                                                             RatingSettings="{DynamicResource CommonRatingSettings}"
+                                                             Style="{DynamicResource RatingStyle}"
+                                                             Value="{Binding OverallRating}"/>
+                                            <Label Margin="10,0,0,0"
+                                                   Text="{Binding OverallRating}"
+                                                   Style="{DynamicResource SimpleLabelStyle}"/>
+                                            <Label Text="/5"
+                                                   Style="{DynamicResource SimpleLabelStyle}"/>
+
+                                        </StackLayout>
+
+                                    </Grid>
+                                </Border>
+
+
+                            </Grid>
+                        </badge:SfEffectsView>
+                    </DataTemplate>
+                </listView:SfListView.ItemTemplate>
+
+                <!--  Layout to customize number of columns in SfListView  -->
+                <listView:SfListView.ItemsLayout>
+                    <listView:GridLayout SpanCount="{OnPlatform Default=5, Android=2, iOS=2}"/>
+                </listView:SfListView.ItemsLayout>
+
+            </listView:SfListView>
+
+        </Grid>
+    </ContentView.Content>
+</ContentView>

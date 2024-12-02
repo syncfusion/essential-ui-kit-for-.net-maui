@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Settings.HelpPage"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:controls="clr-namespace:EssentialMAUIUIKit.Controls">
+  <ContentView.Content>
+    <StackLayout Spacing="0">
+      <Grid Padding="10"
+          ColumnDefinitions="Auto,Auto,*"
+            HorizontalOptions="Fill"
+            IsVisible="True"
+            VerticalOptions="Fill">
+
+        <buttons:SfButton
+          Text="{DynamicResource Back}"
+          Style="{DynamicResource IconButtonStyle}"/>
+        <Label Grid.Column="1"
+               Margin="16,0"
+               FontFamily="Roboto-Medium"
+               HorizontalOptions="Fill"
+               Text="Help centre"
+               VerticalOptions="Center"
+               VerticalTextAlignment="Center"/>
+        <buttons:SfButton Grid.Column="2"
+            HorizontalOptions="End"
+                          IsVisible="True"
+                          Text="{DynamicResource Search}"
+                          FontFamily="FontIcons"
+                          Style="{DynamicResource IconButtonStyle}">
+        </buttons:SfButton>
+
+      </Grid>
+      <BoxView/>
+
+      <ScrollView>
+
+        <StackLayout BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                     Spacing="0">
+
+          <!--Header label for help with recent orders-->
+          <Label
+            Margin="16,24,0,16"
+            FontFamily="Roboto-Medium"
+            FontSize="16"
+            HorizontalOptions="Fill"
+            LineHeight="{OnPlatform Default=-1,
+                                        Android=1.25}"
+            Text="Help with recent orders"
+            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+            VerticalOptions="Center"
+            VerticalTextAlignment="Center"/>
+
+          <!--Previous order label and navigation bar icon-->
+          <controls:TapAnimationGrid
+            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+            ColumnDefinitions="*, Auto"
+            ColumnSpacing="0"
+            HeightRequest="48"
+            RowSpacing="0"
+            Tapped="False">
+            <!--Previous order label-->
+            <Label
+              Grid.Column="0"
+              Margin="16,12"
+              FontFamily="Roboto-Regular"
+              FontSize="16"
+              TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+              HorizontalOptions="Start"
+              Text="Issues with Previous Order"
+              VerticalOptions="Center"/>
+            <!--Navigation icon-->
+            <Label
+              Grid.Column="1"
+              Margin="16,8"
+              Text="{DynamicResource Next}"
+              FontFamily="FontIcons"/>
+          </controls:TapAnimationGrid>
+          <BoxView/>
+
+          <!--Return & refund label and navigation bar icon-->
+          <controls:TapAnimationGrid
+            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+            ColumnDefinitions="*, Auto"
+            ColumnSpacing="0"
+            HeightRequest="48"
+            RowSpacing="0"
+            Tapped="False">
+
+            <!--Return and Refunds label-->
+            <Label
+              Grid.Column="0"
+              Margin="16,12"
+              FontFamily="Roboto-Regular"
+              FontSize="16"
+              TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+              HorizontalOptions="Start"
+              Text="Returns and Refunds"
+              VerticalOptions="Center"/>
+            <!--Navigation icon-->
+            <Label
+              Grid.Column="1"
+              Margin="16,8"
+              Text="{DynamicResource Next}"
+              FontFamily="FontIcons"/>
+          </controls:TapAnimationGrid>
+          <BoxView/>
+
+          <!--Header label for help with other queries-->
+          <Label
+            Margin="16,24,0,16"
+            FontFamily="Roboto-Medium"
+            FontSize="16"
+            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+            HorizontalOptions="Fill"
+            LineHeight="{OnPlatform Default=-1,
+                                        Android=1.25}"
+            Text="Help with other queries"
+            VerticalOptions="Center"
+            VerticalTextAlignment="Center"/>
+
+          <!--Payment related queries and navigation bar icon-->
+          <controls:TapAnimationGrid
+            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+            ColumnDefinitions="*, Auto"
+            ColumnSpacing="0"
+            HeightRequest="48"
+            RowSpacing="0"
+            Tapped="False">
+            <!--Payment related queries label-->
+            <Label
+              Grid.Column="0"
+              Margin="16,12"
+              FontFamily="Roboto-Regular"
+              FontSize="16"
+              TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+              HorizontalOptions="Start"
+              Text="Payment-Related Queries"
+              VerticalOptions="Center"/>
+            <!--Navigation icon-->
+            <Label
+              Grid.Column="1"
+              Margin="16,8"
+              Text="{DynamicResource Next}"
+              FontFamily="FontIcons"/>
+          </controls:TapAnimationGrid>
+          <BoxView/>
+
+          <!--Offers related queries and navigation bar icon-->
+          <controls:TapAnimationGrid
+            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+            ColumnDefinitions="*, Auto"
+            ColumnSpacing="0"
+            HeightRequest="48"
+            RowSpacing="0"
+            Tapped="False">
+            <!--Offers related queries label-->
+            <Label
+              Grid.Column="0"
+              Margin="16,12"
+              FontFamily="Roboto-Regular"
+              FontSize="16"
+              TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+              HorizontalOptions="Start"
+              Text="Offer-Related Queries"
+              VerticalOptions="Center"/>
+            <!--Navigation icon-->
+            <Label
+              Grid.Column="1"
+              Margin="16,8"
+              Text="{DynamicResource Next}"
+              FontFamily="FontIcons"/>
+          </controls:TapAnimationGrid>
+          <BoxView/>
+
+          <!--Account related queries and navigation bar icon-->
+          <controls:TapAnimationGrid
+            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+            ColumnDefinitions="*, Auto"
+            ColumnSpacing="0"
+            HeightRequest="48"
+            RowSpacing="0"
+            Tapped="False">
+            <!--Account related queries label-->
+            <Label
+              Grid.Column="0"
+              Margin="16,12"
+              FontFamily="Roboto-Regular"
+              FontSize="16"
+              TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+              HorizontalOptions="Start"
+              Text="Account-Related Queries"
+              VerticalOptions="Center"/>
+            <!--Navigation icon-->
+            <Label
+              Grid.Column="1"
+              Margin="16,8"
+              Text="{DynamicResource Next}"
+              FontFamily="FontIcons"/>
+          </controls:TapAnimationGrid>
+          <BoxView/>
+
+          <!--Other queries and navigation bar icon-->
+          <controls:TapAnimationGrid
+            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+            ColumnDefinitions="*, Auto"
+            ColumnSpacing="0"
+            HeightRequest="48"
+            RowSpacing="0"
+            Tapped="False">
+            <!--Other queries label-->
+            <Label
+              Grid.Column="0"
+              Margin="16,12"
+              FontFamily="Roboto-Regular"
+              FontSize="16"
+              TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+              HorizontalOptions="Start"
+              Text="Other Queries"
+              VerticalOptions="Center"/>
+            <!--Navigation icon-->
+            <Label
+              Grid.Column="1"
+              Margin="16,8"
+              Text="{DynamicResource Next}"
+              FontFamily="FontIcons"/>
+          </controls:TapAnimationGrid>
+          <BoxView/>
+
+        </StackLayout>
+      </ScrollView>
+    </StackLayout>
+  </ContentView.Content>
+</ContentView>

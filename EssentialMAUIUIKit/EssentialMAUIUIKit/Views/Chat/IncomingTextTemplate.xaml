@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Chat.IncomingTextTemplate"
+             Padding="10">
+    <ContentView.Content>
+        <Border
+            Padding="0"
+            BackgroundColor="{AppThemeBinding Light={DynamicResource SentMessageColorLight}, Dark={DynamicResource SentMessageColorDark}}"
+            StrokeThickness="0"
+            StrokeShape="RoundRectangle 2"
+            HorizontalOptions="Start">
+
+            <Border.Content>
+                <StackLayout Margin="8"
+                             VerticalOptions="Fill">
+
+                    <!--  Message Text  -->
+                    <Label
+                        FontFamily="Roboto-Regular"
+                        FontSize="14"
+                        HorizontalOptions="Start"
+                        LineHeight="1.25"
+                        Text="{Binding Message}"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                        VerticalOptions="Fill"/>
+
+                    <!--  Time  -->
+                    <Label
+                        FontFamily="Roboto-Regular"
+                        FontSize="11"
+                        HorizontalOptions="End"
+                        LineHeight="1.25"
+                        Text="{Binding Time, StringFormat='{0:h:mm tt}'}"
+                        TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                        VerticalOptions="Fill"/>
+
+                </StackLayout>
+            </Border.Content>
+
+        </Border>
+    </ContentView.Content>
+</ContentView>

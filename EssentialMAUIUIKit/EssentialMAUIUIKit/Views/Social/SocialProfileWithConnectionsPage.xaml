@@ -1,0 +1,372 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Social.SocialProfileWithConnectionsPage"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+    <ContentView.Resources>
+        <Style TargetType="listView:ListViewItem">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+    <ContentView.BindingContext>
+        <local:ProfileViewModel/>
+    </ContentView.BindingContext>
+    <ContentView.Content>
+        <ScrollView
+            VerticalScrollBarVisibility="Never">
+
+            <Grid WidthRequest="{OnPlatform WinUI=650, MacCatalyst=650}"
+                  Margin="0,16,0,0"
+                  ColumnDefinitions="Auto, *"
+                  ColumnSpacing="0"
+                  RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
+                  RowSpacing="0">
+
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="16,0,0,24"
+                    BackgroundColor="{DynamicResource Gray-100}"
+                    Stroke="White"
+                    StrokeThickness="2"
+                    StrokeShape="RoundRectangle 40,40,40,40"
+                    HeightRequest="80"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Start"
+                    WidthRequest="80">
+
+                    <!--  Profile image  -->
+                    <Image Margin="-1"
+                           Aspect="AspectFill"
+                           BackgroundColor="{DynamicResource Gray-200}"
+                           HeightRequest="80"
+                           WidthRequest="80">
+                        <Image.Source>
+                            <UriImageSource
+                                CacheValidity="14"
+                                CachingEnabled="true"
+                                Uri="{Binding Profile.ProfileImage}"/>
+                        </Image.Source>
+                    </Image>
+                </Border>
+
+                <StackLayout
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="16,0,0,24"
+                    Padding="0"
+                    Spacing="0">
+
+                    <!--  Profile name  -->
+                    <Label
+                        FontFamily="Roboto-Medium"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        LineHeight="{OnPlatform Default=-1,
+                                                Android=1.5}"
+                        Text="{Binding Profile.ProfileName}"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+
+                    <StackLayout
+                        Margin="0,0,0,16"
+                        HorizontalOptions="Start"
+                        Orientation="Horizontal"
+                        Spacing="5">
+
+                        <!--  Designation label  -->
+                        <Label
+                            FontSize="12"
+                            Style="{DynamicResource DescriptionLabelStyle}"
+                            Text="{Binding Profile.Designation}"/>
+
+                        <BoxView HorizontalOptions="Center"
+                                 Style="{DynamicResource VerticalSeparatorStyle}"/>
+
+                        <!--  State and country label  -->
+                        <Label FontSize="12"
+                               Style="{DynamicResource DescriptionLabelStyle}">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding Profile.State}"
+                                          FontFamily="Roboto-Regular"/>
+                                    <Span Text=" "/>
+                                    <Span Text="{Binding Profile.Country}"
+                                          FontFamily="Roboto-Regular"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </StackLayout>
+
+                    <Grid
+                        ColumnDefinitions="Auto, Auto, Auto"
+                        ColumnSpacing="32"
+                        RowDefinitions="Auto, Auto"
+                        RowSpacing="0">
+
+                        <!--  post count label  -->
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Style="{DynamicResource TitleLabelStyle}"
+                            Text="{Binding Profile.PostsCount}"/>
+
+                        <!--  Post title label  -->
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            FontSize="12"
+                            Style="{DynamicResource DescriptionLabelStyle}"
+                            Text="Posts"/>
+
+                        <!--  Followers count label  -->
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Style="{DynamicResource TitleLabelStyle}"
+                            Text="{Binding Profile.FollowersCount}"/>
+
+                        <!--  Followers title label  -->
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            FontSize="12"
+                            Style="{DynamicResource DescriptionLabelStyle}"
+                            Text="Followers"/>
+
+                        <!--  Following count label  -->
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            Style="{DynamicResource TitleLabelStyle}"
+                            Text="{Binding Profile.FollowingCount}"/>
+
+                        <!--  Following title label  -->
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            FontSize="12"
+                            Style="{DynamicResource DescriptionLabelStyle}"
+                            Text="Following"/>
+
+                    </Grid>
+
+                </StackLayout>
+
+                <!--  About title label  -->
+                <Label
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    Margin="16,0,0,4"
+                    FontSize="16"
+                    HorizontalOptions="Start"
+                    Style="{DynamicResource TitleLabelStyle}"
+                    Text="About"/>
+
+                <!--  About label  -->
+                <Label
+                    Grid.Row="2"
+                    Grid.ColumnSpan="2"
+                    Margin="16,0,16,24"
+                    FontFamily="Roboto-Regular"
+                    FontSize="12"
+                    HorizontalOptions="Start"
+                    HorizontalTextAlignment="Start"
+                    LineHeight="{OnPlatform Default=-1,
+                                            Android=1.5}"
+                    Text="{Binding Profile.About}"
+                    TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                <StackLayout Grid.Row="3"
+                             Grid.ColumnSpan="2"
+                             HorizontalOptions="Center"
+                             Orientation="Horizontal">
+                    <buttons:SfButton Margin="10"
+                                      Text="Edit Profile"
+                                      Stroke="Gray"
+                                      StrokeThickness="1"
+                                      Background="Transparent"
+                                      FontFamily="Roboto-Medium"
+                                      TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                      WidthRequest="{OnPlatform MacCatalyst=280, WinUI=280}"/>
+                    <buttons:SfButton Margin="10"
+                                      Text="Share Profile"
+                                      Stroke="Gray"
+                                      StrokeThickness="1"
+                                      Background="Transparent"
+                                      FontFamily="Roboto-Medium"
+                                      TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                      WidthRequest="{OnPlatform MacCatalyst=280, WinUI=280}"/>
+                </StackLayout>
+
+                <!--  Connection title label  -->
+                <Label
+                    Grid.Row="4"
+                    Grid.ColumnSpan="2"
+                    Margin="16,0,0,0"
+                    FontSize="16"
+                    HorizontalOptions="Start"
+                    Style="{DynamicResource TitleLabelStyle}"
+                    Text="Connections"/>
+
+                <Grid
+                    Grid.Row="5"
+                    Grid.ColumnSpan="2"
+                        ColumnDefinitions="Auto,*">
+
+                    <buttons:SfButton
+                        Margin="16,16,16,0"
+                        Padding="16"
+                        Background="{DynamicResource Gray-200}"
+                        CornerRadius="32"
+                        FontFamily="FontIcons"
+                        FontSize="25"
+                        HeightRequest="64"
+                        HorizontalOptions="Start"
+                        Text="+"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"
+                        TextColor="{DynamicResource Gray-700}"
+                        VerticalOptions="Start"
+                        WidthRequest="64"/>
+
+                    <listView:SfListView
+                        Grid.Column="1"
+                        Margin="0,0,0,24"
+                        Padding="0"
+                        AutoFitMode="DynamicHeight"
+                        HeightRequest="100"
+                        HorizontalOptions="Fill"
+                        ScrollBarVisibility="Never"
+                        IsStickyHeader="False"
+                        ItemSpacing="0"
+                        ItemsSource="{Binding Profile.Connections}"
+                        Orientation="Horizontal"
+                        SelectionBackground="Transparent"
+                        VerticalOptions="Start">
+
+                        <listView:SfListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Margin="10,16,10,0"
+                                             Spacing="0">
+
+                                    <Border
+                                        Margin="0,0,0,4"
+                                        Stroke="{DynamicResource Gray-Bg}"
+                                        StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 35,35,35,35"
+                                        HeightRequest="64"
+                                        HorizontalOptions="Center"
+                                        WidthRequest="64">
+
+                                        <Image
+                                            Aspect="AspectFill"
+                                            BackgroundColor="{DynamicResource Gray-200}"
+                                            HeightRequest="64"
+                                            HorizontalOptions="Center"
+                                            WidthRequest="64">
+                                            <Image.Source>
+                                                <UriImageSource
+                                                    CacheValidity="14"
+                                                    CachingEnabled="true"
+                                                    Uri="{Binding ImagePath}"/>
+                                            </Image.Source>
+                                        </Image>
+                                    </Border>
+
+                                    <!--  Profile name  -->
+                                    <Label
+                                        FontFamily="Roboto-Regular"
+                                        FontSize="12"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        LineHeight="{OnPlatform Default=-1}"
+                                        Text="{Binding Name}"
+                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                        VerticalOptions="Center"/>
+
+                                </StackLayout>
+                            </DataTemplate>
+                        </listView:SfListView.ItemTemplate>
+                    </listView:SfListView>
+
+                </Grid>
+
+
+
+                <!--  Photo title label  -->
+                <Label
+                    Grid.Row="6"
+                    Grid.ColumnSpan="2"
+                    Margin="16,0,0,16"
+                    FontSize="16"
+                    HorizontalOptions="Start"
+                    Style="{DynamicResource TitleLabelStyle}"
+                    Text="Photos and Videos"/>
+
+                <listView:SfListView
+                    x:Name="listView"
+                    Grid.Row="7"
+                    Grid.ColumnSpan="2"
+                    Margin="16,0,0,0"
+                    AutoFitMode="Height"
+                    ScrollBarVisibility="Never"
+                    ItemSize="190"
+                    ItemSpacing="0,0,16,16"
+                    ItemsSource="{Binding Profile.Pictures}"
+                    SelectionBackground="Transparent">
+                    <listView:ListViewItem Style="{DynamicResource ListViewItemStyle}"/>
+
+                    <listView:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <!--  Photos  -->
+                                <Border HeightRequest="{OnPlatform Default=190, Android=165, iOS=165}"
+                                        WidthRequest="{OnPlatform Default=190, Android=165, iOS=165}"
+                                        StrokeShape="RoundRectangle 10"
+                                        StrokeThickness="0">
+                                    <Image
+                                        Aspect="AspectFill"
+                                        BackgroundColor="{DynamicResource Gray-200}">
+                                        <Image.Source>
+                                            <UriImageSource
+                                                CacheValidity="14"
+                                                CachingEnabled="true"
+                                                Uri="{Binding ImagePath}"/>
+                                        </Image.Source>
+                                    </Image>
+                                </Border>
+
+                            </Grid>
+                        </DataTemplate>
+                    </listView:SfListView.ItemTemplate>
+
+                    <listView:SfListView.ItemsLayout>
+                        <listView:GridLayout SpanCount="{OnPlatform Default=3, Android=2, iOS=2}"/>
+                    </listView:SfListView.ItemsLayout>
+
+                </listView:SfListView>
+
+            </Grid>
+
+        </ScrollView>
+    </ContentView.Content>
+</ContentView>

@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.AppLayout.Views.AppLayoutStyles"
+                    xmlns:converters="clr-namespace:EssentialMAUIUIKit.Converters"
+                    xmlns:controls="clr-namespace:EssentialMAUIUIKit.Controls">
+
+    <converters:StringToImageResourceConverter x:Key="ImageResourceConverter" />
+
+    <x:String x:Key="HomePageTitle">Essential MAUI UI Kit</x:String>
+
+    <x:String x:Key="Description">Essential UI Kit for .NET MAUI includes elegantly designed XAML templates for MAUI apps</x:String>
+
+    <!--  Common style for action bar icons  -->
+    <Style x:Key="ActionBarSettingIconStyle" TargetType="Button">
+        <Setter Property="TextColor" Value="{DynamicResource Gray-White}" />
+        <Setter Property="FontFamily" Value="FontIcons" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="Text" Value="&#xe72b;" />
+        <Setter Property="Padding" Value="{OnPlatform Default=8, WinUI=6}" />
+        <Setter Property="Margin" Value="4,8" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="WidthRequest" Value="40" />
+    </Style>
+
+    <!--  Common style for action bar labels  -->
+    <Style x:Key="ActionBarLabelStyle" TargetType="Label">
+        <Setter Property="TextColor" Value="{DynamicResource Gray-White}" />
+        <Setter Property="FontFamily" Value="Roboto-Regular" />
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+
+    <!--  Common style for action bar back button  -->
+    <Style x:Key="ActionBarBackButtonStyle" TargetType="Button">
+        <Setter Property="TextColor" Value="{DynamicResource Gray-White}" />
+        <Setter Property="FontFamily" Value="FontIcons" />
+        <Setter Property="Text" Value="&#xe709;" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="HeightRequest" Value="34" />
+        <Setter Property="WidthRequest" Value="34" />
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="Padding" Value="8" />
+    </Style>
+
+    <!--  Common style for list view item title  -->
+    <Style x:Key="ItemTitleStyle" TargetType="Label">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
+        <Setter Property="Text" Value="{Binding Name}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontFamily" Value="Roboto-Medium" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!--  Common style for list view item description  -->
+    <Style x:Key="ItemDescriptionStyle" TargetType="Label">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}" />
+        <Setter Property="Text" Value="{Binding Description}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontFamily" Value="Roboto-Regular" />
+        <Setter Property="LineHeight" Value="1.25" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+    </Style>
+
+    <!--  Common style for list view item image  -->
+    <Style x:Key="ItemImageStyle" TargetType="Image">
+        <Setter Property="Source" Value="{Binding Icon, Converter={StaticResource ImageResourceConverter}}" />
+        <Setter Property="HeightRequest" Value="80" />
+        <Setter Property="WidthRequest" Value="80" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <Style x:Key="TemplateImageStyle" TargetType="Image">
+        <Setter Property="Source" Value="{Binding Image , Converter={StaticResource ImageResourceConverter}}" />
+    </Style>
+
+    <Style x:Key="TemplateDarkImageStyle" TargetType="Image">
+        <Setter Property="Source" Value="{Binding DarkModeImage, Converter={StaticResource ImageResourceConverter}}" />
+    </Style>
+
+    <!--  Common style for list view item template count  -->
+    <Style x:Key="ItemCountLabelStyle" TargetType="Label">
+        <Setter Property="TextColor" Value="{DynamicResource Gray-700}" />
+        <Setter Property="Text" Value="{Binding TemplateCount}" />
+        <Setter Property="FontFamily" Value="Roboto-Medium" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!--  Common style for close icons  -->
+    <Style x:Key="CloseIconStyle" TargetType="Button">
+        <Setter Property="TextColor" Value="{DynamicResource Gray-700}" />
+        <Setter Property="FontFamily" Value="FontIcons" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="Text" Value="&#xe724;" />
+    </Style>
+
+    <!--  Common style for header icon  -->
+    <Style x:Key="HeaderIconStyle" TargetType="Image">
+        <Setter Property="HorizontalOptions" Value="EndAndExpand" />
+        <Setter Property="HeightRequest" Value="50" />
+        <Setter Property="Margin" Value="0,0,8,0" />
+        <Setter Property="Aspect" Value="AspectFit" />
+        <Setter Property="Source" Value="appicon.png" />
+    </Style>
+
+</ResourceDictionary>

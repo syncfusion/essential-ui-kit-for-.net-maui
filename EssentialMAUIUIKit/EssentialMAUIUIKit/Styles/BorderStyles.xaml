@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Styles.BorderStyles">
+
+    <Color x:Key="BorderBackgroundColor">#20FFFFFF</Color>
+
+    <!--  Common style for theme borders  -->
+    <Style x:Key="LoginFormBorderlessEntryBorderStyle" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{DynamicResource BorderBackgroundColor}" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 20,20,20,20" />
+        <Setter Property="StrokeThickness" Value="1" />
+    </Style>
+
+    <!--  Common style for entry borders  -->
+    <Style x:Key="ThemeBorderStyle" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{DynamicResource Gray-Bg}" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 10,10,10,10" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+    </Style>
+
+    <!--  Common style for forms borders  -->
+    <Style x:Key="DataFormBorderlessEntryBorderStyle" TargetType="Border">
+        <Setter Property="Stroke" Value="{DynamicResource Gray-300}" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 4,4,4,4" />
+        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource Gray-Bg}" />
+    </Style>
+
+    <!--  Common style for profile border style  -->
+    <Style x:Key="ProfileBorderStyle" TargetType="Border">
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Stroke" Value="{DynamicResource Gray-Bg}" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 20,20,20,20" />
+    </Style>
+
+</ResourceDictionary>

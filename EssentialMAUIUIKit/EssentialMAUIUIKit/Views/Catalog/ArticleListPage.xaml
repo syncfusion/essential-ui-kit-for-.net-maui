@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Catalog.ArticleListPage"
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Rotator;assembly=Syncfusion.Maui.Rotator"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
+             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core">
+    <ContentView.BindingContext>
+        <local:ArticleListViewModel/>
+    </ContentView.BindingContext>
+
+
+    <ContentView.Content>
+        <ScrollView>
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto"
+                    Padding="0"
+                  WidthRequest="{OnPlatform WinUI=765, MacCatalyst=765}">
+
+                <!--  Header label  -->
+                <Label Grid.Row="0"
+                       Margin="16,16,0,10"
+                       FontSize="12"
+                       HorizontalOptions="Start"
+                       LineHeight="{OnPlatform Default=-1,
+                                        Android=1.25}"
+                       Style="{DynamicResource TitleLabelStyle}"
+                       Text="FEATURED STORIES"
+                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+
+                <!--<Rotator for featured blog stories>-->
+                <syncfusion:SfRotator Grid.Row="1"
+                        WidthRequest="{OnPlatform WinUI=650, MacCatalyst=650}"
+                                      x:Name="Rotator"
+                                      Margin="16,0"
+                                      BackgroundColor="{DynamicResource Transparent}"
+                                      DotPlacement="OutSide"
+                                      DotsStroke="Transparent"
+                                      HeightRequest="{OnPlatform Default=300, Android=276, iOS=276}"
+                                      HorizontalOptions="Start"
+                                      ItemsSource="{Binding FeaturedStories}"
+                                      NavigationDirection="Horizontal"
+                                      NavigationStripMode="Dots"
+                                      SelectedDotColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                      UnselectedDotColor="{DynamicResource Gray-200}"
+                                      VerticalOptions="Start">
+                    <syncfusion:SfRotator.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                Stroke="Transparent"
+                                StrokeThickness="0"
+                                StrokeShape="RoundRectangle 10">
+                                <StackLayout Spacing="0">
+
+                                    <!--  Image of the blog  -->
+                                    <Image
+                                        Aspect="AspectFill"
+                                        BackgroundColor="{DynamicResource Gray-200}"
+                                        HeightRequest="{OnPlatform Default=180, Android=146, iOS=146}">
+                                        <Image.Source>
+                                            <UriImageSource
+                                                CacheValidity="14"
+                                                CachingEnabled="true"
+                                                Uri="{Binding ImagePath}"/>
+                                        </Image.Source>
+                                    </Image>
+
+                                    <!--  Blog tile  -->
+                                    <Label
+                                        FontFamily="Roboto-Medium"
+                                        HorizontalOptions="Start"
+                                        LineBreakMode="TailTruncation"
+                                        LineHeight="{OnPlatform Default=-1,
+                                Android=1.25}"
+                                        MaxLines="1"
+                                        Style="{DynamicResource TitleLabelStyle}"
+                                        Text="{Binding Name}"/>
+
+                                    <!--  Author name  -->
+                                    <Label
+                                        FontFamily="Roboto-Regular"
+                                        Margin="0,15,0,0"
+                                        FontSize="12"
+                                        LineHeight="{OnPlatform Default=-1,
+                                Android=1.5}"
+                                        Text="{Binding Author}"
+                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                        VerticalOptions="End"/>
+
+                                    <!--  Published date and average reading time  -->
+                                    <Label
+                                        Margin="0,2,16,16"
+                                        FontSize="12"
+                                        LineHeight="{OnPlatform Default=-1,
+                                Android=1.5}"
+                                        TextColor="{DynamicResource Gray-700}">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding Date}"
+                                                      FontFamily="Roboto-Regular"/>
+                                                <Span Text=" | "/>
+                                                <Span Text="{Binding AverageReadingTime}"
+                                                      FontFamily="Roboto-Regular"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                </StackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </syncfusion:SfRotator.ItemTemplate>
+                </syncfusion:SfRotator>
+
+                <!--  Header label  -->
+                <Label Grid.Row="2"
+                       Margin="16,10"
+                       FontSize="12"
+                       HorizontalOptions="Start"
+                       LineHeight="{OnPlatform Default=-1,
+                                        Android=1.25}"
+                       Style="{DynamicResource TitleLabelStyle}"
+                       Text="LATEST STORIES"
+                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+
+                <!--  Featured blog list  -->
+                <StackLayout Grid.Row="3"
+                             Margin="10,0,0,16"
+                             BindableLayout.ItemsSource="{Binding LatestStories}"
+                             Spacing="16">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.Resources>
+                                    <ResourceDictionary>
+                                        <converter:BooleanToStringConverter x:Key="boolToStringConverter"/>
+                                        <converter:BooleanToColorConverter x:Key="boolToColorConverter"/>
+                                    </ResourceDictionary>
+                                </Grid.Resources>
+
+                                <syncEffectsView:SfEffectsView
+                                    RippleBackground="{DynamicResource Gray-300}"
+                                    TouchDownEffects="Ripple">
+                                    <Border Stroke="Transparent"
+                                            StrokeShape="RoundRectangle 10">
+                                        <Grid
+                                            ColumnSpacing="16"
+                                            HeightRequest="110"
+                                            RowDefinitions="*, Auto, Auto"
+                                            RowSpacing="0">
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition>
+                                                    <ColumnDefinition.Width>
+                                                        <OnPlatform Default="*"/>
+                                                    </ColumnDefinition.Width>
+                                                </ColumnDefinition>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <!--  Blog image  -->
+                                            <Image
+                                                Grid.RowSpan="3"
+                                                Margin="0,0,0,0"
+                                                Aspect="AspectFill"
+                                                BackgroundColor="{DynamicResource Gray-200}"
+                                                HeightRequest="110"
+                                                Source="{Binding ImagePath}"
+                                                VerticalOptions="Center"
+                                                WidthRequest="120"/>
+
+                                            <!--  Blog title  -->
+                                            <Label
+                                                Grid.Column="1"
+                                                Margin="0,8,0,0"
+                                                FontSize="14"
+                                                HorizontalOptions="Start"
+                                                HorizontalTextAlignment="Start"
+                                                LineBreakMode="TailTruncation"
+                                                MaxLines="2"
+                                                Style="{DynamicResource TitleLabelStyle}"
+                                                Text="{Binding Name}"/>
+
+                                            <!--  Author name  -->
+                                            <Label
+                                                Grid.Row="1"
+                                                Grid.Column="1"
+                                                Margin="0,8,0,0"
+                                                FontFamily="Roboto-Regular"
+                                                FontSize="12"
+                                                LineHeight="{OnPlatform Default=-1,
+                            Android=1.5}"
+                                                Text="{Binding Author}"
+                                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"/>
+
+                                            <!--  Published date and Average reading time  -->
+                                            <Label
+                                                Grid.Row="2"
+                                                Grid.Column="1"
+                                                Margin="0,2,0,8"
+                                                FontFamily="Roboto-Regular"
+                                                FontSize="12"
+                                                LineHeight="{OnPlatform Default=-1,
+                            Android=1.5}"
+                                                TextColor="{DynamicResource Gray-700}">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding Date}"/>
+                                                        <Span Text=" | "/>
+                                                        <Span Text="{Binding AverageReadingTime}"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+
+                                            <!--  Bookmark button  -->
+                                            <buttons:SfButton
+                                                Grid.Row="0"
+                                                Grid.Column="2"
+                                                Margin="0,5,5,5"
+                                                Padding="0"
+                                                CornerRadius="4"
+                                                FontSize="16"
+                                                HeightRequest="-1"
+                                                HorizontalOptions="End"
+                                                Style="{DynamicResource IconButtonStyle}"
+                                                Text="{Binding IsBookmarked, Converter={StaticResource boolToStringConverter}, ConverterParameter=0}"
+                                                TextColor="{Binding IsBookmarked, Converter={StaticResource boolToColorConverter}, ConverterParameter=4}"
+                                                VerticalOptions="Start"
+                                                Clicked="BookmarkButton_Clicked"
+                                                WidthRequest="-1">
+                                            </buttons:SfButton>
+
+                                        </Grid>
+                                    </Border>
+                                </syncEffectsView:SfEffectsView>
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+
+            </Grid>
+        </ScrollView>
+    </ContentView.Content>
+</ContentView>

@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Navigation.AppUsagePage"
+             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:progressBar="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters">
+    <ContentView.BindingContext>
+        <local:AppUsageViewModel/>
+    </ContentView.BindingContext>
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converter:StringToGlyphConverter x:Key="GlyphConverter"/>
+        </ResourceDictionary>
+
+        <Style TargetType="listView:ListViewItem">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+
+    <ContentView.Content>
+        <Grid Padding="10"
+                RowDefinitions="{OnPlatform Default=*, MacCatalyst=Auto}">
+            <Border StrokeShape="RoundRectangle 10"
+                    IsVisible="{OnPlatform Android=False, iOS=False}"
+                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                    WidthRequest="{OnPlatform WinUI=550, MacCatalyst=550}">
+                <Grid>
+
+                    <listView:SfListView HeightRequest="540"
+                                         ScrollBarVisibility="Never"
+                                         ItemSize="72"
+                                         ItemSpacing="0"
+                                         ItemsSource="{Binding AppUsageList}"
+                                         SelectionBackground="{AppThemeBinding Light={DynamicResource SelectionBackgroundLight}, Dark={DynamicResource SelectionBackgroundDark}}">
+
+
+                        <listView:SfListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout Spacing="0">
+
+                                        <Grid
+                                            ColumnDefinitions="Auto, Auto, *"
+                                            ColumnSpacing="0"
+                                            HeightRequest="72"
+                                            RowDefinitions="Auto, Auto, Auto"
+                                            RowSpacing="0">
+
+                                            <!--  App Icon  -->
+                                            <Border
+                                                Grid.RowSpan="3"
+                                                Margin="16,0"
+                                                BackgroundColor="{Binding BackgroundColor}"
+                                                StrokeThickness="0"
+                                                StrokeShape="RoundRectangle 20,20,20,20"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="Center">
+
+                                                <Label
+                                                    x:Name="AppIcon"
+                                                    FontFamily="FontIcons"
+                                                    FontSize="20"
+                                                    HeightRequest="40"
+                                                    HorizontalTextAlignment="Center"
+                                                    Text="{Binding AppName, Converter={StaticResource GlyphConverter}, ConverterParameter={x:Reference AppIcon}}"
+                                                    TextColor="{DynamicResource Gray-White}"
+                                                    VerticalTextAlignment="Center"
+                                                    WidthRequest="40">
+
+                                                    <Label.Resources>
+                                                        <ResourceDictionary>
+                                                            <ResourceDictionary.MergedDictionaries>
+                                                                <ResourceDictionary Source="../../Styles/FontIcons.xaml"/>
+                                                            </ResourceDictionary.MergedDictionaries>
+                                                        </ResourceDictionary>
+                                                    </Label.Resources>
+
+                                                </Label>
+
+                                            </Border>
+
+                                            <!--  App Name  -->
+                                            <Label
+                                                Grid.Column="1"
+                                                Margin="0,12,0,4"
+                                                FontFamily="Roboto-Regular"
+                                                FontSize="16"
+                                                HeightRequest="24"
+                                                Text="{Binding AppName}"
+                                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+
+                                            <!--  Progress Bar  -->
+                                            <progressBar:SfLinearProgressBar
+                                                Grid.Row="1"
+                                                Grid.Column="1"
+                                                Margin="0,7,0,20"
+                                                ProgressCornerRadius="4"
+                                                HeightRequest="4"
+                                                Progress="{Binding ProgressBarValue}"
+                                                ProgressFill="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                                TrackFill="{DynamicResource Gray-200}"
+                                                WidthRequest="300"/>
+
+                                            <!--  Progress Value  -->
+                                            <Label
+                                                Grid.Row="1"
+                                                Grid.Column="2"
+                                                Margin="8,0,0,13"
+                                                FontFamily="Roboto-Regular"
+                                                FontSize="12"
+                                                HeightRequest="18"
+                                                Text="{Binding ProgressValue}"
+                                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+
+                                            <!--  Seperator  -->
+                                            <BoxView
+                                                Grid.Row="2"
+                                                Grid.ColumnSpan="3"
+                                                Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+                                        </Grid>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </listView:SfListView.ItemTemplate>
+                    </listView:SfListView>
+                </Grid>
+            </Border>
+
+            <Grid IsVisible="{OnPlatform WinUI=False, MacCatalyst=False}">
+
+                <listView:SfListView HeightRequest="700"
+                                     ScrollBarVisibility="Never"
+                                     ItemSize="72"
+                                     ItemSpacing="0"
+                                     ItemsSource="{Binding AppUsageList}"
+                                     SelectionBackground="{AppThemeBinding Light={DynamicResource SelectionBackgroundLight}, Dark={DynamicResource SelectionBackgroundDark}}">
+
+
+                    <listView:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Spacing="0">
+
+                                    <Grid
+                                        ColumnDefinitions="Auto, Auto, *"
+                                        ColumnSpacing="0"
+                                        HeightRequest="72"
+                                        RowDefinitions="Auto, Auto, Auto"
+                                        RowSpacing="0">
+
+                                        <!--  App Icon  -->
+                                        <Border
+                                            Grid.RowSpan="3"
+                                            Margin="16,0"
+                                            BackgroundColor="{Binding BackgroundColor}"
+                                            StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 20,20,20,20"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Center">
+
+                                            <Label
+                                                x:Name="AppIcon"
+                                                FontFamily="FontIcons"
+                                                FontSize="20"
+                                                HeightRequest="40"
+                                                HorizontalTextAlignment="Center"
+                                                Text="{Binding AppName, Converter={StaticResource GlyphConverter}, ConverterParameter={x:Reference AppIcon}}"
+                                                TextColor="{DynamicResource Gray-White}"
+                                                VerticalTextAlignment="Center"
+                                                WidthRequest="40">
+
+                                                <Label.Resources>
+                                                    <ResourceDictionary>
+                                                        <ResourceDictionary.MergedDictionaries>
+                                                            <ResourceDictionary Source="../../Styles/FontIcons.xaml"/>
+                                                        </ResourceDictionary.MergedDictionaries>
+                                                    </ResourceDictionary>
+                                                </Label.Resources>
+
+                                            </Label>
+
+                                        </Border>
+
+                                        <!--  App Name  -->
+                                        <Label
+                                            Grid.Column="1"
+                                            Margin="0,12,0,4"
+                                            FontFamily="Roboto-Regular"
+                                            FontSize="16"
+                                            HeightRequest="24"
+                                            Text="{Binding AppName}"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+
+                                        <!--  Progress Bar  -->
+                                        <progressBar:SfLinearProgressBar
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            Margin="0,7,0,20"
+                                            ProgressCornerRadius="4"
+                                            HeightRequest="4"
+                                            Progress="{Binding ProgressBarValue}"
+                                            ProgressFill="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                            TrackFill="{DynamicResource Gray-200}"
+                                            WidthRequest="{OnPlatform Default=300, Android=250, iOS=250}"/>
+
+                                        <!--  Progress Value  -->
+                                        <Label
+                                            Grid.Row="1"
+                                            Grid.Column="2"
+                                            Margin="8,0,0,13"
+                                            FontFamily="Roboto-Regular"
+                                            FontSize="12"
+                                            HeightRequest="18"
+                                            Text="{Binding ProgressValue}"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+
+                                        <!--  Seperator  -->
+                                        <BoxView
+                                            Grid.Row="2"
+                                            Grid.ColumnSpan="3"
+                                            Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+                                    </Grid>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </listView:SfListView.ItemTemplate>
+                </listView:SfListView>
+            </Grid>
+        </Grid>
+
+
+    </ContentView.Content>
+</ContentView>

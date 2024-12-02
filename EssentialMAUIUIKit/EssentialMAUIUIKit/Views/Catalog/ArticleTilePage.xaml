@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Catalog.ArticleTilePage"
+             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:rotator="clr-namespace:Syncfusion.Maui.Rotator;assembly=Syncfusion.Maui.Rotator"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
+             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core">
+    <ContentView.BindingContext>
+        <local:ArticleListViewModel/>
+    </ContentView.BindingContext>
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="HeaderView">
+                <StackLayout Spacing="8">
+
+                    <!--  Rotator view  -->
+                    <rotator:SfRotator
+                        x:Name="Rotator"
+                        BackgroundColor="#FFFFFF"
+                        DotPlacement="Default"
+                        DotsStroke="Transparent"
+                        EnableLooping="False"
+                        HeightRequest="{OnPlatform Default=324, Android=210, iOS=210}"
+                        HorizontalOptions="Center"
+                        ItemsSource="{Binding FeaturedStories}"
+                        NavigationStripMode="Dots"
+                        SelectedDotColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                        UnselectedDotColor="{DynamicResource Gray-White}"
+                        VerticalOptions="Start">
+                        <rotator:SfRotator.ItemTemplate>
+                            <DataTemplate>
+                                <Grid x:Name="Grid">
+                                    <Image Aspect="AspectFit"
+                                           BackgroundColor="{DynamicResource Gray-200}"
+                                           HeightRequest="{OnPlatform Default=500, Android=210, iOS=210}"
+                                           Source="{Binding ImagePath}"/>
+
+                                    <Label
+                                        Margin="16"
+                                        FontFamily="Roboto-Medium"
+                                        FontSize="{OnPlatform Default=30, Android=20, iOS=20}"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        LineBreakMode="TailTruncation"
+                                        LineHeight="{OnPlatform Default=-1,
+                        Android=1.25}"
+                                        Text="{Binding Name}"
+                                        TextColor="{DynamicResource PrimaryColorLight}"/>
+
+                                </Grid>
+                            </DataTemplate>
+                        </rotator:SfRotator.ItemTemplate>
+                    </rotator:SfRotator>
+                </StackLayout>
+            </DataTemplate>
+
+        </ResourceDictionary>
+
+        <Style TargetType="listView:ListViewItem">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+
+    <ContentView.Content>
+        <Grid WidthRequest="{OnPlatform WinUI=800, MacCatalyst=1000}">
+            <!--  List out the items for latest stories  -->
+            <listView:SfListView x:Name="SfListView"
+                                 AutoFitMode="Height"
+                                 HeaderTemplate="{DynamicResource HeaderView}"
+                                 HorizontalOptions="Fill"
+                                 ItemSpacing="0"
+                                 ItemsSource="{Binding LatestStories}"
+                                 SelectionBackground="Transparent"
+                                 VerticalOptions="Fill">
+                <listView:SfListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="16">
+                            <Grid.Resources>
+                                <ResourceDictionary>
+                                    <converter:BooleanToStringConverter x:Key="boolToStringConverter"/>
+                                    <converter:BooleanToColorConverter x:Key="boolToColorConverter"/>
+                                </ResourceDictionary>
+                            </Grid.Resources>
+
+
+                            <syncEffectsView:SfEffectsView
+                                RippleBackground="{DynamicResource Gray-300}"
+                                TouchDownEffects="Ripple">
+                                <Border Stroke="Transparent"
+                                        StrokeShape="RoundRectangle 10"
+                                        WidthRequest="{OnPlatform WinUI=350, MacCatalyst=450}">
+                                    <Grid
+                                        ColumnDefinitions="*, Auto"
+                                        RowDefinitions="Auto, *, Auto, Auto"
+                                        RowSpacing="0">
+
+                                        <!--  Article Image  -->
+                                        <Image
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            Grid.ColumnSpan="2"
+                                            Aspect="AspectFill"
+                                            BackgroundColor="{DynamicResource Gray-200}"
+                                            HeightRequest="120">
+                                            <Image.Source>
+                                                <UriImageSource
+                                                    CacheValidity="14"
+                                                    CachingEnabled="true"
+                                                    Uri="{Binding ImagePath}"/>
+                                            </Image.Source>
+                                        </Image>
+
+                                        <!--  Label for Article name  -->
+                                        <Label
+                                            Grid.Row="1"
+                                            Grid.ColumnSpan="2"
+                                            Margin="0,8"
+                                            FontSize="14"
+                                            HorizontalOptions="Start"
+                                            HorizontalTextAlignment="Start"
+                                            LineBreakMode="TailTruncation"
+                                            MaxLines="2"
+                                            Style="{DynamicResource TitleLabelStyle}"
+                                            Text="{Binding Name}"/>
+
+                                        <!--  Label for Article author  -->
+                                        <Label
+                                            Grid.Row="2"
+                                            Grid.ColumnSpan="2"
+                                            Margin="0"
+                                            FontFamily="Roboto-Regular"
+                                            FontSize="12"
+                                            HorizontalOptions="Start"
+                                            LineHeight="{OnPlatform Default=-1,
+                        Android=1.25}"
+                                            Text="{Binding Author}"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"/>
+
+                                        <!--  Label for Article date  -->
+                                        <Label
+                                            Grid.Row="3"
+                                            Margin="0,2,0,8"
+                                            FontSize="12"
+                                            HorizontalOptions="Start"
+                                            LineBreakMode="TailTruncation"
+                                            LineHeight="{OnPlatform Default=-1,
+                        Android=1.25}"
+                                            TextColor="{DynamicResource Gray-700}"
+                                            VerticalOptions="Center"
+                                            VerticalTextAlignment="Center">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding Date}"
+                                                          FontFamily="Roboto-Regular"/>
+                                                    <Span Text=" | "/>
+                                                    <Span Text="{Binding AverageReadingTime}"
+                                                          FontFamily="Roboto-Regular"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+
+                                        <!--  Bookmark Button  -->
+                                        <buttons:SfButton
+                                            Grid.Row="2"
+                                            Grid.Column="1"
+                                            Margin="0"
+                                            Padding="0"
+                                            CornerRadius="4"
+                                            FontSize="16"
+                                            HeightRequest="-1"
+                                            Style="{DynamicResource IconButtonStyle}"
+                                            Text="{Binding IsBookmarked, Converter={StaticResource boolToStringConverter}, ConverterParameter=0}"
+                                            TextColor="{Binding IsBookmarked, Converter={StaticResource boolToColorConverter}, ConverterParameter=4}"
+                                            Clicked="BookmarkButton_Clicked"
+                                            WidthRequest="-1"/>
+                                    </Grid>
+
+                                </Border>
+                            </syncEffectsView:SfEffectsView>
+                        </Grid>
+                    </DataTemplate>
+                </listView:SfListView.ItemTemplate>
+                <!--  Layout to customize no. of columns in SfListView  -->
+                <listView:SfListView.ItemsLayout>
+                    <listView:GridLayout x:Name="GridLayout"
+                                         SpanCount="{OnIdiom Phone=1, Tablet=2, Desktop=2}"/>
+                </listView:SfListView.ItemsLayout>
+
+            </listView:SfListView>
+
+        </Grid>
+    </ContentView.Content>
+</ContentView>

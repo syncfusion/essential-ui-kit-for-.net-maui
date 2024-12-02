@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Chat.RecentChatPage"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:controls="clr-namespace:EssentialMAUIUIKit.Controls"
+             xmlns:badge="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converter:StringToBadgeIconConverter x:Key="BadgeConverter"/>
+            <converter:StringToGlyphConverter x:Key="GlyphConverter"/>
+            <converter:StringToMessageTypeConverter x:Key="TextConverter"/>
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <ContentView.BindingContext>
+        <local:RecentChatViewModel></local:RecentChatViewModel>
+    </ContentView.BindingContext>
+    <ContentView.Content>
+        <Grid RowDefinitions="Auto,Auto,*">
+            <Grid Grid.Row="0"
+                    ColumnDefinitions="*,50,50"
+                  x:Name="TitleBar"
+                  Padding="8"
+                  BackgroundColor="{DynamicResource Transparent}"
+                  HorizontalOptions="Fill">
+
+                <Grid ColumnDefinitions="Auto,Auto"
+                      x:Name="ProfileView"
+                      HorizontalOptions="Start"
+                      IsVisible="True"
+                      VerticalOptions="Fill">
+
+                    <!--  Rounded Profile Image  -->
+                    <Border BackgroundColor="{DynamicResource Gray-200}"
+                            Style="{DynamicResource ProfileBorderStyle}">
+                        <Image HeightRequest="32"
+                               WidthRequest="32"
+                               x:Name="ProfileImage">
+                            <Image.Source>
+                                <UriImageSource
+                                    CacheValidity="14"
+                                    CachingEnabled="true"
+                                    Uri="{Binding ProfileImage}"/>
+                            </Image.Source>
+                        </Image>
+                    </Border>
+
+                    <!--  Recent Chat page Title  -->
+                    <Label Grid.Column="1"
+                           Margin="16,0"
+                           FontSize="20"
+                           HorizontalOptions="Start"
+                           Style="{DynamicResource TitleLabelStyle}"
+                           Text="Chat"
+                           VerticalOptions="Center"
+                           VerticalTextAlignment="Center"/>
+
+                </Grid>
+
+                <!--  Search Button  -->
+                <buttons:SfButton Grid.Column="1"
+                                  x:Name="SearchButton"
+                                  BindingContext="{x:Reference ProfileView}"
+                                  IsVisible="{Binding Path=IsVisible}"
+                                  Style="{DynamicResource IconButtonStyle}"
+                                  Text="{DynamicResource Search}">
+                </buttons:SfButton>
+
+                <!--  Menu Button  -->
+                <buttons:SfButton Grid.Column="2"
+                                  x:Name="MenuButton"
+                                  Style="{DynamicResource IconButtonStyle}"
+                                  Text="{DynamicResource More}"/>
+            </Grid>
+
+            <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"
+                    Grid.Row="1"/>
+
+            <!--  Searchable List view  -->
+            <listView:SfListView Grid.Row="2"
+                                 x:Name="ListView"
+                                 AllowSwiping="True"
+                                 AutoFitMode="Height"
+                                 ItemsSource="{Binding ChatItems}"
+                                 SelectionGesture="Tap"
+                                 SelectionMode="Single"
+                                 SwipeOffset="156"
+                                 VerticalOptions="Fill"
+                                 SelectionBackground="{AppThemeBinding Light={DynamicResource SelectionBackgroundLight}, Dark={DynamicResource SelectionBackgroundDark}}">
+
+                <listView:SfListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <Grid>
+                                    <Grid
+                                        x:Name="Grid"
+                                        Padding="16,12"
+                                        ColumnDefinitions="Auto, *, Auto"
+                                        ColumnSpacing="16"
+                                        RowDefinitions="*, *"
+                                        RowSpacing="2">
+
+                                        <!--  Recent Sender Profile image  -->
+                                        <badge:SfBadgeView x:Name="BadgeView"
+                                                           Grid.RowSpan="2">
+                                            <badge:SfBadgeView.Content>
+                                                <Border
+                                                    BackgroundColor="{DynamicResource Gray-200}"
+                                                    Stroke="{DynamicResource Gray-Bg}"
+                                                    Style="{DynamicResource ProfileBorderStyle}">
+                                                    <Image HeightRequest="40"
+                                                           WidthRequest="40">
+                                                        <Image.Source>
+                                                            <UriImageSource
+                                                                CacheValidity="14"
+                                                                CachingEnabled="true"
+                                                                Uri="{Binding ImagePath}"/>
+                                                        </Image.Source>
+                                                    </Image>
+                                                </Border>
+                                            </badge:SfBadgeView.Content>
+
+                                            <badge:SfBadgeView.BadgeSettings>
+                                                <badge:BadgeSettings
+                                                    Background="{DynamicResource Green}"
+                                                    BadgeAlignment="End"
+                                                    Icon="{Binding AvailableStatus, Converter={StaticResource BadgeConverter}}"
+                                                    Position="BottomRight"
+                                                    Type="None"
+                                                    Stroke="{DynamicResource Gray-Bg}"
+                                                    StrokeThickness="0"/>
+                                            </badge:SfBadgeView.BadgeSettings>
+                                        </badge:SfBadgeView>
+
+                                        <!--  Recent Sender Profile Name  -->
+                                        <Label
+                                            Grid.Column="1"
+                                            FontFamily="Roboto-Medium"
+                                            FontSize="16"
+                                            HorizontalOptions="Start"
+                                            LineBreakMode="NoWrap"
+                                            LineHeight="{OnPlatform Default=1.5,
+                                iOS=-1}"
+                                            Text="{Binding SenderName}"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+
+                                        <Grid ColumnDefinitions="Auto,*"
+                                              Grid.Row="1"
+                                              Grid.Column="1">
+
+                                            <!--  Recent Message Type  -->
+                                            <Label
+                                                x:Name="MessageIcon"
+                                                HorizontalOptions="Start"
+                                                HorizontalTextAlignment="Start"
+                                                Style="{DynamicResource IconLabelStyle}"
+                                                Text="{Binding MessageType, Converter={StaticResource GlyphConverter}, ConverterParameter={x:Reference MessageIcon}}">
+                                                <Label.Resources>
+                                                    <ResourceDictionary>
+                                                        <ResourceDictionary.MergedDictionaries>
+                                                            <ResourceDictionary Source="../../Styles/FontIcons.xaml"/>
+                                                        </ResourceDictionary.MergedDictionaries>
+                                                    </ResourceDictionary>
+                                                </Label.Resources>
+                                            </Label>
+
+                                            <!--  Recent Message  -->
+                                            <Label Grid.Column="1"
+                                                   x:Name="MessageLabel"
+                                                   LineBreakMode="TailTruncation"
+                                                   FontFamily="Roboto-Regular"
+                                                   Style="{DynamicResource SimpleLabelStyle}"
+                                                   Text="{Binding MessageType, Converter={StaticResource TextConverter}, ConverterParameter={x:Reference MessageLabel}}"/>
+
+                                        </Grid>
+
+                                        <!--  Recent Message Time  -->
+                                        <Label
+                                            Grid.Column="2"
+                                            FontFamily="Roboto-Regular"
+                                            HorizontalOptions="Center"
+                                            LineBreakMode="NoWrap"
+                                            Style="{DynamicResource SimpleLabelStyle}"
+                                            Text="{Binding Time}"
+                                            VerticalOptions="Start"
+                                            VerticalTextAlignment="Start"/>
+
+                                        <!--  Recent Message Notification  -->
+                                        <Label
+                                            x:Name="NotificationLabel"
+                                            Grid.Row="1"
+                                            Grid.Column="2"
+                                            HorizontalOptions="End"
+                                            HorizontalTextAlignment="End"
+                                            Style="{DynamicResource IconLabelStyle}"
+                                            Text="{Binding NotificationType, Converter={StaticResource GlyphConverter}, ConverterParameter={x:Reference NotificationLabel}}"
+                                            VerticalOptions="Start">
+                                            <Label.Resources>
+                                                <ResourceDictionary>
+                                                    <ResourceDictionary.MergedDictionaries>
+                                                        <ResourceDictionary Source="../../Styles/FontIcons.xaml"/>
+                                                    </ResourceDictionary.MergedDictionaries>
+                                                </ResourceDictionary>
+                                            </Label.Resources>
+                                        </Label>
+
+                                    </Grid>
+                                </Grid>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </listView:SfListView.ItemTemplate>
+
+                <listView:SfListView.EndSwipeTemplate>
+                    <DataTemplate>
+                        <Border
+                            Margin="0,8"
+                            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                            Stroke="{DynamicResource Transparent}"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 30, 0, 0, 30">
+                            <Grid>
+
+                                <Grid
+                                    Padding="15,0"
+                                    ColumnDefinitions="Auto, Auto, Auto"
+                                    ColumnSpacing="14"
+                                    RowDefinitions="Auto"
+                                    VerticalOptions="Center">
+
+                                    <!--Voice call button-->
+                                    <buttons:SfButton
+                                        BackgroundColor="{DynamicResource Gray-Bg}"
+                                        CornerRadius="16"
+                                        HeightRequest="32"
+                                        Style="{DynamicResource IconButtonStyle}"
+                                        WidthRequest="32">
+                                        <Label
+                                            BackgroundColor="Transparent"
+                                            Style="{DynamicResource IconLabelStyle}"
+                                            Text="{DynamicResource PhoneFill}"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                            VerticalTextAlignment="Center"/>
+                                    </buttons:SfButton>
+
+                                    <!--Video call button-->
+                                    <buttons:SfButton
+                                        Grid.Column="1"
+                                        BackgroundColor="{DynamicResource Gray-Bg}"
+                                        CornerRadius="16"
+                                        HeightRequest="32"
+                                        Style="{DynamicResource IconButtonStyle}"
+                                        WidthRequest="32">
+                                        <Label
+                                            BackgroundColor="Transparent"
+                                            Style="{DynamicResource IconLabelStyle}"
+                                            Text="{DynamicResource Video}"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                            VerticalTextAlignment="Center"/>
+                                    </buttons:SfButton>
+
+                                    <!--Settings button-->
+                                    <buttons:SfButton
+                                        Grid.Column="2"
+                                        BackgroundColor="{DynamicResource Gray-Bg}"
+                                        CornerRadius="16"
+                                        HeightRequest="32"
+                                        Style="{DynamicResource IconButtonStyle}"
+                                        WidthRequest="32">
+                                        <Label
+                                            BackgroundColor="Transparent"
+                                            Style="{DynamicResource IconLabelStyle}"
+                                            Text="{DynamicResource Menu}"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                            VerticalTextAlignment="Center"/>
+                                    </buttons:SfButton>
+
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </listView:SfListView.EndSwipeTemplate>
+
+            </listView:SfListView>
+
+        </Grid>
+    </ContentView.Content>
+</ContentView>
