@@ -36,7 +36,7 @@
         <Grid RowDefinitions="{OnPlatform Default=*, MacCatalyst=Auto}"
                 RowSpacing="0">
 
-            <Border Margin="10"
+            <Border Margin="10,10,10,-10"
                     StrokeShape="RoundRectangle 10"
                     WidthRequest="{OnPlatform WinUI=660, MacCatalyst=660}">
 
@@ -54,7 +54,7 @@
                              Margin="10"/>
 
                     <listView:SfListView Grid.Row="2"
-                            HeightRequest="{OnPlatform WinUI=490, MacCatalyst=490, Default=600}"
+                            HeightRequest="{OnPlatform WinUI=490, Default=600}"
                                          x:Name="WishlistLayout"
                                          AllowSwiping="True"
                                          BackgroundColor="{OnIdiom Default={DynamicResource Transparent},

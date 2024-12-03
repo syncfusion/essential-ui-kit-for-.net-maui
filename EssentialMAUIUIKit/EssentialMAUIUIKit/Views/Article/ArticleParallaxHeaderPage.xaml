@@ -41,7 +41,7 @@
             <Grid Grid.Row="1">
                 <!--  Parallx header view  -->
                 <ScrollView BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
-                    <ContentView
+                    <Grid
                         x:Name="headerView"
                         HorizontalOptions="Fill"
                         VerticalOptions="Fill">
@@ -63,7 +63,7 @@
                                 </Image.Source>
                             </Image>
                         </Grid>
-                    </ContentView>
+                    </Grid>
                 </ScrollView>
 
                 <!--  OverLay Effect  -->
@@ -148,7 +148,7 @@
                                     <DataTemplate>
                                         <Grid ColumnDefinitions="Auto, *">
                                             <Label
-                                                Margin="{OnPlatform iOS='0,10,0,0', Android='0,2,0,0'}"
+                                                Margin="{OnPlatform iOS='0,10,0,0', Android='0,2,0,0', MacCatalyst='0,10,0,0'}"
                                                 FontFamily="FontIcons"
                                                 FontSize="14"
                                                 Text="&#xe720;"

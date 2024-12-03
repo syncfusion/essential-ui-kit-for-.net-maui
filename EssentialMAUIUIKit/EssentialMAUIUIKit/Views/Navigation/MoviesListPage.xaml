@@ -9,7 +9,7 @@
     </ContentView.BindingContext>
     <ContentView.Content>
 
-        <Grid Padding="0,10,0,0"
+        <Grid Padding="0,10,0,10"
               ColumnSpacing="0"
               RowSpacing="0"
                 RowDefinitions="{OnPlatform Default=*, MacCatalyst=Auto}">

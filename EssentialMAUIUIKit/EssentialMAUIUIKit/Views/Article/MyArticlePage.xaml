@@ -45,9 +45,9 @@
                         <Grid RowDefinitions="Auto, Auto"
                               HeightRequest="{OnPlatform Default=340, Android=300, iOS=300}"
                               WidthRequest="{OnPlatform Default=210, Android=170, iOS=170}">
-                            <Border StrokeThickness="0"
+                            <Border StrokeThickness="0" Grid.Row="0"
                                     StrokeShape="RoundRectangle 10">
-                                <Image
+                                <Image HeightRequest="{OnPlatform MacCatalyst=300, iOS=260}"
                                     Aspect="AspectFill"
                                     BackgroundColor="{DynamicResource Gray-Bg}"
                                     Source="{Binding ImagePath}"/>

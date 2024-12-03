@@ -11,7 +11,7 @@
         <Setter Property="SegmentCornerRadius" Value="20" />
         <Setter Property="SegmentHeight" Value="40" />
         <Setter Property="SegmentWidth" Value="40" />
-        <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+        <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="SelectionIndicatorSettings">
             <Setter.Value>
                 <buttons:SelectionIndicatorSettings

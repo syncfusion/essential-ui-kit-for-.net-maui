@@ -17,7 +17,6 @@
 
     <ContentView.Content>
         <Border Margin="10"
-                HeightRequest="{OnPlatform MacCatalyst=1000}"
                 WidthRequest="{OnPlatform WinUI=800, MacCatalyst=800}"
                 StrokeShape="RoundRectangle 10">
             <ScrollView>

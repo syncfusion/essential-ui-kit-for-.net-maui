@@ -278,6 +278,7 @@ namespace EssentialMAUIUIKit.ViewModel
         public string PhoneNumber { get; set; }
 
         [Display(Name = "Message")]
+        [Required(ErrorMessage = "Enter your message")]
         [DataType(DataType.MultilineText)]
         public string Message { get; set; }
     }

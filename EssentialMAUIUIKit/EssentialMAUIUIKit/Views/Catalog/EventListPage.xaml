@@ -159,7 +159,7 @@
                         <tabView:SfTabItem.Content>
                             <StackLayout
                                 Margin="10,0,10,16"
-                                BindableLayout.ItemsSource="{Binding EventItems}"
+                                BindableLayout.ItemsSource="{Binding UpcomingItems}"
                                 Spacing="16">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate>
@@ -264,7 +264,7 @@
                         <tabView:SfTabItem.Content>
                             <StackLayout
                                 Margin="10,0,10,16"
-                                BindableLayout.ItemsSource="{Binding EventItems}"
+                                BindableLayout.ItemsSource="{Binding PopularItems}"
                                 Spacing="16">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate>

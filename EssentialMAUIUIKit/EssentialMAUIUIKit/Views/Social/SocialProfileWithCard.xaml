@@ -190,7 +190,7 @@
 
                     <listView:SfListView.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout Margin="0,16,16,0"
+                            <StackLayout Margin="10,16,10,0"
                                          Spacing="0">
 
                                 <Border

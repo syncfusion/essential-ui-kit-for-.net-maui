@@ -326,10 +326,10 @@
                             Background="{DynamicResource Gray-200}"
                             CornerRadius="32"
                             FontFamily="FontIcons"
-                            FontSize="25"
+                            FontSize="20"
                             HeightRequest="64"
                             HorizontalOptions="Start"
-                            Text="+"
+                            Text="{DynamicResource Add}"
                             TextColor="{DynamicResource Gray-700}"
                             VerticalOptions="Start"
                             WidthRequest="64"/>
@@ -351,7 +351,7 @@
 
                             <listView:SfListView.ItemTemplate>
                                 <DataTemplate>
-                                    <StackLayout Margin="0,16,16,0"
+                                    <StackLayout Margin="10,16,10,0"
                                                  Spacing="0">
 
                                         <Border

@@ -132,8 +132,8 @@
                 <buttons:SfButton
                     Margin="{OnIdiom Default=24,
                  Tablet='24,24,16,24'}"
-                    HorizontalOptions="{OnIdiom Default=FillAndExpand,
-                            Phone=CenterAndExpand,
+                    HorizontalOptions="{OnIdiom Default=Fill,
+                            Phone=Center,
                             Tablet=End}"
                     Style="{DynamicResource GradientButtonStyle}"
                     Text="PLACE ORDER"

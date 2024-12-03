@@ -69,13 +69,13 @@
                     FontSize="18"
                     Style="{DynamicResource ActionBarSettingIconStyle}"
                     Text="&#xe753;"
-                    VerticalOptions="CenterAndExpand"/>
+                    VerticalOptions="Center"/>
 
                 <Button Grid.Column="1"
                         Clicked="ShowSettings"
                         FontSize="18"
                         Style="{DynamicResource ActionBarSettingIconStyle}"
-                        VerticalOptions="CenterAndExpand"/>
+                        VerticalOptions="Center"/>
             </Grid>
         </Grid>
         <ScrollView Orientation="Horizontal"
@@ -121,7 +121,7 @@
                 Padding="12"
                 Grid.Row="3"
                 VerticalOptions="End"
-                HorizontalOptions="FillAndExpand"
+                HorizontalOptions="Fill"
                 BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
             <Grid RowDefinitions="24,*"
                     RowSpacing="10"

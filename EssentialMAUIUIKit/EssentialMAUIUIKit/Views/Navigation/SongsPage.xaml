@@ -42,7 +42,7 @@
                     Margin="10">
                 <StackLayout Spacing="0">
 
-                    <listView:SfListView HeightRequest="540"
+                    <listView:SfListView HeightRequest="{OnPlatform WinUI=540}"
                                          ScrollBarVisibility="Never"
                                          ItemSize="75"
                                          ItemSpacing="0"

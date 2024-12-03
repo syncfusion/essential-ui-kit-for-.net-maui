@@ -14,7 +14,7 @@
     <ContentView.Content>
         <ScrollView VerticalScrollBarVisibility="Never"
                     HorizontalOptions="Center"
-                    VerticalOptions="Center">
+                    VerticalOptions="{OnPlatform Default=Center, iOS=Start}">
             <Grid WidthRequest="{OnPlatform WinUI=386, MacCatalyst=400}"
                     RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
                 <Label Grid.Row="0"

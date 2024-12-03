@@ -18,14 +18,14 @@
         <Setter Property="BackgroundColor" Value="{DynamicResource Gray-Bg}" />
         <Setter Property="Stroke" Value="Transparent" />
         <Setter Property="StrokeShape" Value="RoundRectangle 10,10,10,10" />
-        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
     </Style>
 
     <!--  Common style for forms borders  -->
     <Style x:Key="DataFormBorderlessEntryBorderStyle" TargetType="Border">
         <Setter Property="Stroke" Value="{DynamicResource Gray-300}" />
         <Setter Property="StrokeShape" Value="RoundRectangle 4,4,4,4" />
-        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="BackgroundColor" Value="{DynamicResource Gray-Bg}" />
     </Style>
 

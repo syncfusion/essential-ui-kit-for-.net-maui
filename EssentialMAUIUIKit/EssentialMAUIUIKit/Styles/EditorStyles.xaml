@@ -6,7 +6,7 @@
     
     <Style x:Key="BorderlessEditorStyle" TargetType="control:BorderlessEditor">
         <Setter Property="TextColor" Value="{DynamicResource Gray-900}" />
-        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}" />

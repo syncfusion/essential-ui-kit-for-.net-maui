@@ -7,10 +7,14 @@ namespace EssentialMAUIUIKit
     public class EventListViewModel
     {
         public ObservableCollection<EventList> EventItems { get; set; }
+        public ObservableCollection<EventList> PopularItems { get; set; }
+        public ObservableCollection<EventList> UpcomingItems { get; set; }
 
         public EventListViewModel()
         {
             EventItems = new ObservableCollection<EventList>();
+            PopularItems = new ObservableCollection<EventList>();
+            UpcomingItems = new ObservableCollection<EventList>();
             LoadData();
         }
 
@@ -65,6 +69,16 @@ namespace EssentialMAUIUIKit
             foreach (var eventItem in data.EventItems)
             {
                 EventItems.Add(eventItem);
+
+                if (eventItem.IsPopular)
+                {
+                    PopularItems.Add(eventItem);
+                }
+
+                if (eventItem.IsUpcoming)
+                {
+                    UpcomingItems.Add(eventItem);
+                }
             }
         }
     }

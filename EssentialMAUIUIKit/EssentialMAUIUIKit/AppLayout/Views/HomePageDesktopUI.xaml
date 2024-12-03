@@ -62,7 +62,7 @@
                                           Background="Transparent"
                                           VerticalTextAlignment="Center"
                                           WidthRequest="400"
-                                          Margin="10,0,0,10"
+                                          Margin="{OnPlatform Default='10,0,0,10', MacCatalyst='10,10,0,10'}"
                                           Grid.Column="1"
                                           PlaceholderColor="{DynamicResource PrimaryTextColorDark}"
                                           TextColor="{DynamicResource PrimaryTextColorDark}"

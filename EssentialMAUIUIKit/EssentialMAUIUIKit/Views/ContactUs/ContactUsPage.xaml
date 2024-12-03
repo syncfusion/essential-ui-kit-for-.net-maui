@@ -99,7 +99,7 @@
 
                                         <!--Set pin image-->
                                         <Image
-                                            Margin="10,5,0,0"
+                                            Margin="15,5,15,15"
                                             HeightRequest="25"
                                             HorizontalOptions="Start"
                                             Source="{Binding Path=BindingContext.MapMarkerImage, Source={x:Reference Map}}"
@@ -111,7 +111,7 @@
                     </maps:SfMaps.Layer>
                 </maps:SfMaps>
 
-                <StackLayout x:Name="MainStack"
+                <StackLayout VerticalOptions="Center" x:Name="MainStack"
                              Spacing="0"
                              Grid.Column="1">
                     <!--  For getting the contact information  -->

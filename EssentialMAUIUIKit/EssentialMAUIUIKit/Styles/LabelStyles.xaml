@@ -50,7 +50,7 @@
         <Setter Property="Margin" Value="15,0" />
         <Setter Property="FontFamily" Value="FontIcons" />
         <Setter Property="FontSize" Value="18" />
-        <Setter Property="HorizontalOptions" Value="EndAndExpand" />
+        <Setter Property="HorizontalOptions" Value="End" />
         <Setter Property="HorizontalTextAlignment" Value="End" />
         <Setter Property="TextColor" Value="{DynamicResource Red}" />
         <Setter Property="VerticalOptions" Value="Center" />

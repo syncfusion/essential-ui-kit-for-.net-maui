@@ -99,7 +99,7 @@
 
     <!--  Common style for header icon  -->
     <Style x:Key="HeaderIconStyle" TargetType="Image">
-        <Setter Property="HorizontalOptions" Value="EndAndExpand" />
+        <Setter Property="HorizontalOptions" Value="End" />
         <Setter Property="HeightRequest" Value="50" />
         <Setter Property="Margin" Value="0,0,8,0" />
         <Setter Property="Aspect" Value="AspectFit" />

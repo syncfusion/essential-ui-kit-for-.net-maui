@@ -11,7 +11,7 @@
         <Setter Property="InitialsColor" Value="#ffffff" />
         <Setter Property="AvatarShape" Value="Circle" />
         <Setter Property="AvatarSize" Value="Medium" />
-        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="StrokeThickness" Value="0" />
     </Style>
 

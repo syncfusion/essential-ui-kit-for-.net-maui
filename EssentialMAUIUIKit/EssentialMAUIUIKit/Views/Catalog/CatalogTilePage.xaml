@@ -159,7 +159,7 @@
                                             BackgroundColor="{DynamicResource Gray-200}"
                                             HeightRequest="180"
                                             Aspect="Fill"
-                                            HorizontalOptions="{OnPlatform Android=FillAndExpand, iOS=FillAndExpand, WinUI=FillAndExpand}"
+                                            HorizontalOptions="{OnPlatform Android=Fill, iOS=Fill, WinUI=Fill}"
                                             WidthRequest="{OnIdiom Phone=183,
                            Tablet=224,
                            Desktop=178}">

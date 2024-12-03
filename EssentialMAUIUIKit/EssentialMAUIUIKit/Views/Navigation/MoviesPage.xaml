@@ -97,7 +97,7 @@
                                       VerticalOptions="Center"/>
                 </Grid>
 
-                <listView:SfListView HeightRequest="{OnPlatform Android=280, iOS=280}"
+                <listView:SfListView HeightRequest="{OnPlatform Android=280, iOS=280, MacCatalyst=280}"
                                      Grid.Row="2"
                                      ScrollBarVisibility="Never"
                                      ItemSize="150"
@@ -179,7 +179,7 @@
                                       VerticalOptions="Center"/>
                 </Grid>
 
-                <listView:SfListView HeightRequest="{OnPlatform Android=230, iOS=230}"
+                <listView:SfListView HeightRequest="{OnPlatform Android=230, iOS=230, MacCatalyst=230}"
                                      Grid.Row="4"
                                      ScrollBarVisibility="Never"
                                      ItemSize="150"
@@ -243,7 +243,7 @@
                                       VerticalOptions="Center"/>
                 </Grid>
 
-                <listView:SfListView HeightRequest="{OnPlatform Android=230, iOS=230}"
+                <listView:SfListView HeightRequest="{OnPlatform Android=230, iOS=230, MacCatalyst=230}"
                                      Grid.Row="6"
                                      ScrollBarVisibility="Never"
                                      ItemSize="150"
@@ -259,7 +259,7 @@
                                         <Border
                                             StrokeThickness="0"
                                             StrokeShape="RoundRectangle 8,8,8,8">
-                                            <Image
+                                            <Image HeightRequest="{OnPlatform MacCatalyst=230, iOS=230}"
                                                 Aspect="AspectFill"
                                                 BackgroundColor="Transparent"
                                                 Source="{Binding Image}">

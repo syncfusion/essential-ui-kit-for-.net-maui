@@ -8,6 +8,9 @@ namespace EssentialMAUIUIKit
     public class OrdersViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<Order>? orders;
+        private ObservableCollection<Order>? requestedOrders;
+        private ObservableCollection<Order>? completedOrders;
+        private ObservableCollection<Order>? cancelledOrders;
 
         public OrdersViewModel()
         {
@@ -20,6 +23,36 @@ namespace EssentialMAUIUIKit
             set
             {
                 orders = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<Order>? RequestedOrders
+        {
+            get => requestedOrders;
+            set
+            {
+                requestedOrders = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<Order>? CompletedOrders
+        {
+            get => completedOrders;
+            set
+            {
+                completedOrders = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<Order>? CancelledOrders
+        {
+            get => cancelledOrders;
+            set
+            {
+                cancelledOrders = value;
                 OnPropertyChanged();
             }
         }
@@ -67,12 +100,30 @@ namespace EssentialMAUIUIKit
             var ordersList = JsonSerializer.Deserialize<OrdersList>(jsonData, options);
             var images = new List<string>() { "Image1.png", "Image2.png", "Image3.png" };
             Orders = new ObservableCollection<Order>();
+            CancelledOrders = new ObservableCollection<Order>();
+            CompletedOrders = new ObservableCollection<Order>();
+            RequestedOrders = new ObservableCollection<Order>();
             if (ordersList != null && ordersList.Orders != null)
             {
                 for (int i = 0; i < ordersList.Orders.Count; i++)
                 {
                     ordersList.Orders[i].ProductImage = images[i];
                     Orders.Add(ordersList.Orders[i]);
+
+                    if (ordersList.Orders[i].Status == "Cancelled")
+                    {
+                        CancelledOrders.Add(ordersList.Orders[i]);
+                    }
+
+                    if (ordersList.Orders[i].Status == "Dispatched")
+                    {
+                        RequestedOrders.Add(ordersList.Orders[i]);
+                    }
+
+                    if (ordersList.Orders[i].Status == "Completed")
+                    {
+                        CompletedOrders.Add(ordersList.Orders[i]);
+                    }
                 }
             }
         }

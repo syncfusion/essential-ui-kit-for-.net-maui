@@ -84,7 +84,7 @@
                         HeightRequest="150"
                         HorizontalOptions="{OnIdiom Tablet=Center,
                                                 Desktop=Center,
-                                                Phone=FillAndExpand}"
+                                                Phone=Fill}"
                         Source="{Binding Articles.ArticleSubImage}"/>
 
                     <!--  Description image name  -->
@@ -115,7 +115,7 @@
                                 <Grid ColumnDefinitions="Auto, *">
 
                                     <Label
-                                        Margin="{OnPlatform iOS='0, 10, 0, 0', Android='0, 2, 0, 0'}"
+                                        Margin="{OnPlatform iOS='0, 10, 0, 0', Android='0, 2, 0, 0', MacCatalyst='0, 10, 0, 0'}"
                                         FontFamily="FontIcons"
                                         FontSize="14"
                                         Text="&#xe720;"
