@@ -408,7 +408,7 @@
                                             WidthRequest="80">
                                             <BindableLayout.ItemTemplate>
                                                 <DataTemplate x:DataType="local:DataTableViewModel">
-                                                    <BoxView
+                                                    <BoxView x:DataType="x:String"
                                                         BackgroundColor="{Binding}"
                                                         CornerRadius="16"
                                                         HeightRequest="8"
