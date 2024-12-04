@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Notification.TaskNotificationPage"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:sfavatar="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+    <ContentView.Resources>
+        <Style TargetType="listView:ListViewItem">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+    <ContentView.BindingContext>
+        <local:TaskNotificationViewModel x:Name="viewModel"/>
+    </ContentView.BindingContext>
+    <ContentView.Content>
+        <Grid
+            ColumnSpacing="0"
+            RowDefinitions="Auto,Auto,Auto, *"
+            RowSpacing="0">
+
+            <BoxView Margin="0,0,0,0"
+                     Grid.Row="0"
+                     Grid.ColumnSpan="2"
+                     Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+            <Grid Grid.Row="1">
+
+                <Label
+                    Margin="20,20,20,20"
+                    FontFamily="Roboto-Medium"
+                    FontSize="14"
+                    VerticalOptions="Start"
+                    HorizontalOptions="Start"
+                    Text="Recent"
+                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+
+                <buttons:SfButton
+                    BackgroundColor="{DynamicResource Gray-Bg}"
+                    HeightRequest="18"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center"
+                    Style="{DynamicResource TransparentButtonStyle}"
+                    TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                    WidthRequest="134">
+
+                    <Label
+                        FontFamily="Roboto-Medium"
+                        FontSize="14"
+                        HorizontalTextAlignment="Center"
+                        LineHeight="{OnPlatform Android=1.5,
+                                            Default=-1}"
+                        Text="Mark all as read"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                        VerticalTextAlignment="Start"/>
+
+                </buttons:SfButton>
+            </Grid>
+
+            <BoxView Margin="0,0,0,10"
+                     Grid.Row="2"
+                     Grid.ColumnSpan="2"
+                     Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+            <Grid Grid.Row="3">
+                <listView:SfListView
+                    x:Name="TaskNotifications"
+                    AllowSwiping="True"
+                    AutoFitMode="Height"
+                    ScrollBarVisibility="Never"
+                    ItemSpacing="0"
+                    ItemsSource="{Binding TaskNotifications}"
+                    SelectionBackground="Transparent"
+                    SelectionGesture="Tap"
+                    SelectionMode="Single"
+                    VerticalOptions="Fill">
+
+
+                    <listView:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid
+                                    ColumnDefinitions="Auto, *"
+                                    ColumnSpacing="0"
+                                    RowDefinitions="Auto, Auto, Auto, Auto"
+                                    RowSpacing="0">
+
+                                    <!--User Name Avatar-->
+                                    <sfavatar:SfAvatarView
+                                        Grid.RowSpan="4"
+                                        Margin="16,12,8,41"
+                                        AvatarName="{Binding UserName}"
+                                        AvatarShape="Circle"
+                                        AvatarSize="Medium"
+                                        BackgroundColor="{Binding BackgroundColor}"
+                                        StrokeThickness="0"
+                                        FontFamily="Roboto-Regular"
+                                        HeightRequest="48"
+                                        InitialsColor="{DynamicResource Gray-White}"
+                                        InitialsType="DoubleCharacter"
+                                        VerticalOptions="Start"
+                                        WidthRequest="48"/>
+
+                                    <!--Description-->
+                                    <Label
+                                        Grid.Column="1"
+                                        Margin="8,12,16,0"
+                                        FontFamily="Roboto-Medium"
+                                        FontSize="16"
+                                        LineBreakMode="TailTruncation"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                Default=-1}"
+                                        Text="{Binding Description}"
+                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+
+                                    <!--Detailed Description-->
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="8,0,16,8"
+                                        FontFamily="Roboto-Regular"
+                                        FontSize="14"
+                                        HeightRequest="21"
+                                        LineBreakMode="TailTruncation"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                Default=-1}"
+                                        Text="{Binding Detail}"
+                                        TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                                    <Border StrokeThickness="0"
+                                            Background="#EFF1FF"
+                                            HeightRequest="20"
+                                            StrokeShape="RoundRectangle 20"
+                                            WidthRequest="100"
+                                            Grid.Row="2"
+                                            Grid.Column="1"
+                                            Margin="13,3,13,15"
+                                            HorizontalOptions="Start">
+                                        <Label Text="{Binding TaskID}"
+                                                FontFamily="Roboto-Medium"
+                                                FontSize="12"
+                                                TextColor="#0D5CDD"
+                                                VerticalTextAlignment="Center"
+                                                HorizontalTextAlignment="Center"/>
+                                    </Border>
+
+                                    <!--Time-->
+                                    <Label
+                                        Grid.RowSpan="4"
+                                        Grid.Column="1"
+                                        Margin="0,68,16,0"
+                                        FontFamily="Roboto-Regular"
+                                        FontSize="12"
+                                        HeightRequest="18"
+                                        HorizontalOptions="End"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                Default=-1}"
+                                        Text="{Binding Time}"
+                                        TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                                    <!--Seperator-->
+                                    <BoxView Margin="30,0,30,0"
+                                             Grid.Row="3"
+                                             Grid.ColumnSpan="2"
+                                             Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </listView:SfListView.ItemTemplate>
+                </listView:SfListView>
+            </Grid>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

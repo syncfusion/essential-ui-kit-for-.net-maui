@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Detail.MyAddressPage"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:ListView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+    <ContentView.Resources>
+        <Style TargetType="ListView:ListViewItem">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+    <ContentView.BindingContext>
+        <local:AddressViewModel/>
+    </ContentView.BindingContext>
+    <ContentView.Content>
+        <Grid
+            ColumnSpacing="0"
+            RowDefinitions="*, Auto"
+            RowSpacing="0">
+
+
+            <!--  ListView displaying address  -->
+            <ListView:SfListView
+                x:Name="myAddress"
+                Padding="8"
+                AllowSwiping="True"
+                AutoFitMode="Height"
+                BackgroundColor="Transparent"
+                ScrollBarVisibility="Never"
+                ItemsSource="{Binding AddressDetails}"
+                SelectionBackground="Transparent"
+                SelectionGesture="Tap"
+                SelectionMode="Single">
+
+                <ListView:SfListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            Margin="8"
+                            Padding="8"
+                                HeightRequest="120"
+                            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 4"
+                            HorizontalOptions="Center"
+                            WidthRequest="343">
+                            <Grid
+                                ColumnDefinitions="Auto, *, Auto, Auto"
+                                ColumnSpacing="8"
+                                RowDefinitions="Auto, Auto, Auto"
+                                RowSpacing="8">
+
+                                <!--  Name and Type of the address  -->
+                                <Label
+                                    Grid.ColumnSpan="2"
+                                    HorizontalOptions="Start"
+                                    LineBreakMode="NoWrap"
+                                    LineHeight="{OnPlatform Default=-1,
+                                                        Android=1.5}"
+                                    VerticalOptions="Center">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span
+                                                FontFamily="Roboto-Medium"
+                                                FontSize="16"
+                                                Text="{Binding Name}"
+                                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+                                            <Span Text="  "/>
+                                            <Span
+                                                FontFamily="Roboto-Medium"
+                                                FontSize="12"
+                                                Text="{Binding AddressType}"
+                                                TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+
+                                <!--  Edit button command  -->
+                                <buttons:SfButton
+                                    x:Name="editButton"
+                                    Grid.Column="2"
+                                    CornerRadius="16"
+                                    HeightRequest="32"
+                                    HorizontalOptions="End"
+                                    Style="{DynamicResource IconButtonStyle}"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                    VerticalOptions="Start"
+                                    WidthRequest="32">
+                                    <Label
+                                        FontFamily="FontIcons"
+                                        FontSize="18"
+                                        HorizontalOptions="Center"
+                                        Text="{DynamicResource Edit}"
+                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                        VerticalOptions="Center"/>
+                                </buttons:SfButton>
+
+                                <!--  Delete button command  -->
+                                <buttons:SfButton
+                                    x:Name="DeleteButton"
+                                    Grid.Column="3"
+                                    CornerRadius="16"
+                                    HeightRequest="32"
+                                    HorizontalOptions="End"
+                                    Style="{DynamicResource IconButtonStyle}"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                    VerticalOptions="Start"
+                                    WidthRequest="32">
+                                    <Label
+                                        FontFamily="FontIcons"
+                                        FontSize="18"
+                                        HorizontalOptions="Center"
+                                        Text="{DynamicResource Delete}"
+                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                        VerticalOptions="Center"/>
+                                </buttons:SfButton>
+
+                                <!--  Map Pin Icon  -->
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    FontFamily="FontIcons"
+                                    FontSize="18"
+                                    LineHeight="{OnPlatform Default=-1,
+                                                        Android=1.5}"
+                                    Text="{DynamicResource MapPin}"
+                                    TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                    VerticalOptions="Start"/>
+
+                                <!--  Delivery Address  -->
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"
+                                    HorizontalOptions="Start"
+                                    HorizontalTextAlignment="Start"
+                                    LineBreakMode="WordWrap"
+                                    Style="{DynamicResource DescriptionLabelStyle}"
+                                    Text="{Binding Location}"
+                                    VerticalOptions="Start"/>
+
+                                <!--  Phone Icon  -->
+                                <Label
+                                    Grid.Row="2"
+                                    Grid.Column="0"
+                                    FontFamily="FontIcons"
+                                    FontSize="18"
+                                    LineHeight="{OnPlatform Default=-1,
+                                                        Android=1.5}"
+                                    Text="{DynamicResource Phone}"
+                                    TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                                <!--  Contact Number  -->
+                                <Label
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"
+                                    HorizontalOptions="Start"
+                                    Style="{DynamicResource DescriptionLabelStyle}"
+                                    VerticalOptions="Start">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Mobile: "
+                                                  FontFamily="Roboto-Regular"
+                                                  TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+                                            <Span Text="{Binding ContactNumber}"
+                                                  TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                                  FontFamily="Roboto-Regular"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView:SfListView.ItemTemplate>
+                <ListView:SfListView.ItemsLayout>
+                    <ListView:GridLayout SpanCount="{OnPlatform WinUI=3, Android=1, MacCatalyst=3, iOS=1}"/>
+                </ListView:SfListView.ItemsLayout>
+            </ListView:SfListView>
+
+        </Grid>
+    </ContentView.Content>
+</ContentView>

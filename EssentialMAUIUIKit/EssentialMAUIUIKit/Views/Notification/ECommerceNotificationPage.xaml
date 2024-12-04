@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Notification.ECommerceNotificationPage"
+             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converter:BooleanToColorConverter x:Key="BoolToColorConverter"/>
+            <converter:StringToGlyphConverter x:Key="GlyphConverter"/>
+        </ResourceDictionary>
+        <Style TargetType="listView:ListViewItem">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+    <ContentView.BindingContext>
+        <local:ECommerceNotificationViewModel x:Name="viewModel"/>
+    </ContentView.BindingContext>
+    <ContentView.Content>
+        <StackLayout Spacing="0">
+            <Grid Grid.Row="1">
+
+                <Label
+                    Margin="20,20,20,20"
+                    FontFamily="Roboto-Medium"
+                    FontSize="14"
+                    VerticalOptions="Start"
+                    HorizontalOptions="Start"
+                    Text="Recent"
+                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+
+                <buttons:SfButton
+                    BackgroundColor="{DynamicResource Gray-Bg}"
+                    HeightRequest="18"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center"
+                    Style="{DynamicResource TransparentButtonStyle}"
+                    TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                    WidthRequest="134">
+
+                    <Label
+                        FontFamily="Roboto-Medium"
+                        FontSize="14"
+                        HorizontalTextAlignment="Center"
+                        LineHeight="{OnPlatform Android=1.5,
+                                Default=-1}"
+                        Text="Mark all as read"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                        VerticalTextAlignment="Start"/>
+
+                </buttons:SfButton>
+            </Grid>
+
+            <listView:SfListView
+                x:Name="ECommerceNotifications"
+                AllowSwiping="True"
+                AutoFitMode="Height"
+                ScrollBarVisibility="Never"
+                ItemSpacing="0"
+                ItemsSource="{Binding EcommerceNotifications}"
+                SelectionBackground="Transparent"
+                SelectionGesture="Tap"
+                SelectionMode="Single"
+                VerticalOptions="Fill">
+
+                <listView:SfListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid
+                                BackgroundColor="Transparent"
+                                ColumnDefinitions="Auto, *"
+                                ColumnSpacing="0"
+                                RowDefinitions="Auto, Auto, Auto"
+                                RowSpacing="0">
+                                <!--  Circular Border for icons  -->
+                                <Border
+                                    Grid.RowSpan="3"
+                                    Margin="8,16,16,0"
+                                    BackgroundColor="{Binding BackgroundColor}"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 24,24,24,24"
+                                    VerticalOptions="Start">
+                                    <Label
+                                        x:Name="NotificationIcon"
+                                        FontFamily="FontIcons"
+                                        FontSize="25"
+                                        HeightRequest="48"
+                                        HorizontalTextAlignment="Center"
+                                        Text="{Binding NotificationIcon, Converter={StaticResource GlyphConverter}, ConverterParameter={x:Reference NotificationIcon}}"
+                                        TextColor="{DynamicResource Gray-White}"
+                                        VerticalTextAlignment="Center"
+                                        WidthRequest="48">
+                                        <Label.Resources>
+                                            <ResourceDictionary>
+                                                <ResourceDictionary.MergedDictionaries>
+                                                    <ResourceDictionary Source="../../Styles/FontIcons.xaml"/>
+                                                </ResourceDictionary.MergedDictionaries>
+                                            </ResourceDictionary>
+                                        </Label.Resources>
+                                    </Label>
+                                </Border>
+                                <!--  Description  -->
+                                <Label
+                                    Grid.Column="1"
+                                    Margin="0,16,16,4"
+                                    FontFamily="Roboto-Regular"
+                                    FontSize="16"
+                                    LineBreakMode="WordWrap"
+                                    LineHeight="{OnPlatform Android=1.5,
+                                Default=-1}"
+                                    Text="{Binding Description}"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+                                <!--  Time  -->
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Margin="0,0,0,16"
+                                    FontFamily="Roboto-Regular"
+                                    FontSize="12"
+                                    LineHeight="{OnPlatform Android=1.5,
+                                Default=-1}"
+                                    Text="{Binding Time}"
+                                    TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+                                <!--  Seperator  -->
+                                <BoxView
+                                    Grid.Row="2"
+                                    Grid.ColumnSpan="2">
+
+                                </BoxView>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </listView:SfListView.ItemTemplate>
+            </listView:SfListView>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

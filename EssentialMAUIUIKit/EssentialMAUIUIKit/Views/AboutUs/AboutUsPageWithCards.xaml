@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.AboutUs.AboutUsPageWithCards"
+             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+    <ContentView.BindingContext>
+        <local:AboutUsViewModel x:Name="viewModel"/>
+    </ContentView.BindingContext>
+    <ContentView.Resources>
+        <Style TargetType="listView:ListViewItem">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <ScrollView
+            Margin="0"
+            Padding="0"
+            HorizontalOptions="Center">
+            <Grid
+                Margin="0"
+                Padding="0"
+                ColumnSpacing="0"
+                HorizontalOptions="Center"
+                RowDefinitions="Auto, Auto, Auto, *"
+                RowSpacing="0">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{OnIdiom Desktop=1*, Tablet=1*, Phone=16}"/>
+                    <ColumnDefinition Width="{OnIdiom Desktop=3*, Tablet=4*, Phone=*}"/>
+                    <ColumnDefinition Width="{OnIdiom Desktop=1*, Tablet=1*, Phone=16}"/>
+                </Grid.ColumnDefinitions>
+
+                <!--  First half background image for the screen  -->
+                <Image
+                    Grid.Row="0"
+                    Grid.ColumnSpan="3"
+                    Aspect="AspectFill"
+                    BackgroundColor="{DynamicResource Gray-Bg}"
+                    HeightRequest="253"
+                    HorizontalOptions="Fill"
+                    Source="aboutusimage.png">
+                </Image>
+
+                <!--  Product name and description  -->
+                <Border
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="0,-40,0,0"
+                    Padding="16,24,16,0"
+                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 20"
+                    HorizontalOptions="Center">
+
+                    <StackLayout HorizontalOptions="Center">
+
+                        <!--  Header  -->
+                        <Label
+                            Margin="0,0,0,16"
+                            FontSize="22"
+                            FontFamily="Roboto-Medium"
+                            LineHeight="{OnPlatform Android=1.25,
+                                                Default=-1}"
+                            Text="About Us"
+                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                            HorizontalTextAlignment="Center"/>
+
+                        <!--  Description  -->
+                        <Label LineHeight="1.5"
+                               Margin="0,0,0,24"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Start"
+                               Text="Situated in the heart of Smith-town, Acme Products, Inc., has a long-standing tradition of selling the best products while providing the fastest service on the market. Since 1952, we have helped our customers identify their needs, understand their wants, and capture their dreams."
+                               TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                               FontFamily="Roboto-Regular"/>
+                    </StackLayout>
+                </Border>
+
+                <!--  Header  -->
+                <StackLayout
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="0"
+                    Padding="0"
+                    Spacing="0">
+
+                    <Label
+                        Margin="0,32,0,12"
+                        FontSize="22"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                        LineHeight="{OnPlatform Android=1.25,
+                                            Default=-1}"
+                        Text="Our Team"
+                        FontFamily="Roboto-Medium"
+                        HorizontalTextAlignment="Center"/>
+                </StackLayout>
+                <!--  Employee profiles  -->
+                <listView:SfListView WidthRequest="{OnPlatform WinUI=850, MacCatalyst=850}"
+                                     ScrollBarVisibility="Never"
+                                     x:Name="employeesList"
+                                     Grid.Row="3"
+                                     Grid.ColumnSpan="3"
+                                     Margin="0"
+                                     Padding="0"
+                                     AutoFitMode="Height"
+                                     HorizontalOptions="Center"
+                                     IsStickyHeader="True"
+                                     ItemsSource="{Binding EmployeeDetails}"
+                                     SelectionBackground="Transparent">
+
+                    <listView:SfListView.ItemTemplate>
+
+                        <DataTemplate>
+
+                            <!--  Frame to have rounded corners  -->
+                            <Border
+                                Margin="5"
+                                Padding="0"
+                                BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                StrokeThickness="0"
+                                StrokeShape=" RoundRectangle 4"
+                                HeightRequest="160"
+                                WidthRequest="160">
+                                <StackLayout
+                                    Padding="0"
+                                    HorizontalOptions="Center"
+                                    Spacing="0"
+                                    VerticalOptions="Center">
+                                    <!--  Profile image  -->
+                                    <Border
+                                        Margin="0,0,0,8"
+                                        HeightRequest="64"
+                                        WidthRequest="64"
+                                        StrokeShape="RoundRectangle 60"
+                                        StrokeThickness="0">
+                                        <Image BackgroundColor="{DynamicResource Gray-200}"
+                                               Source="{Binding Image}"/>
+                                    </Border>
+
+                                    <!--  Employee name  -->
+                                    <Label
+                                        FontSize="16"
+                                        FontFamily="Roboto-Medium"
+                                        Text="{Binding EmployeeName}"
+                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                        HorizontalTextAlignment="Center"/>
+
+                                    <!--  Designation  -->
+                                    <Label
+                                        FontSize="14"
+                                        FontFamily="Roboto-Regular"
+                                        TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                        Text="{Binding Designation}"
+                                        HorizontalTextAlignment="Center"/>
+                                </StackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </listView:SfListView.ItemTemplate>
+
+                    <!--  Layout to customize number of columns in SfListView  -->
+                    <listView:SfListView.ItemsLayout>
+                        <listView:GridLayout SpanCount="{OnPlatform Default=5, Android=2, iOS=2}"/>
+                    </listView:SfListView.ItemsLayout>
+                </listView:SfListView>
+
+
+            </Grid>
+        </ScrollView>
+    </ContentView.Content>
+</ContentView>

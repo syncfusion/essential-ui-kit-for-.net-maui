@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Navigation.NavigationTileCardPage"
+             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:button="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+    <ContentView.Resources>
+        <Style TargetType="listView:ListViewItem">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+    <ContentView.BindingContext>
+        <local:NavigationListViewModel/>
+    </ContentView.BindingContext>
+    <ContentView.Content>
+
+        <Grid RowDefinitions="Auto, *">
+
+            <Grid Grid.Row="1"
+                  Padding="10">
+
+                <listView:SfListView
+                    x:Name="navigationList"
+                    AutoFitMode="Height"
+                    ScrollBarVisibility="Never"
+                    ItemSpacing="10"
+                    ItemsSource="{Binding NavigationList}"
+                    SelectionBackground="Transparent">
+
+                    <listView:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <!--  View of each tile item  -->
+                                <Border
+                                    Margin="5,2,5,5"
+                                    Padding="0"
+                                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                    Stroke="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                    StrokeThickness="1"
+                                    StrokeShape="RoundRectangle 4"
+                                    HorizontalOptions="Fill"
+                                    VerticalOptions="Fill">
+
+                                    <Border
+                                        Stroke="Transparent"
+                                        StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 4,4,4,4">
+                                        <Grid
+                                            BackgroundColor="{DynamicResource PlaceholderColor}"
+                                            ColumnSpacing="0"
+                                            RowDefinitions="Auto, Auto"
+                                            RowSpacing="0">
+
+                                            <!--  Image of an item  -->
+                                            <Image
+                                                Aspect="AspectFill"
+                                                BackgroundColor="{DynamicResource Gray-200}"
+                                                HeightRequest="254">
+                                                <Image.Source>
+                                                    <UriImageSource
+                                                        CacheValidity="14"
+                                                        CachingEnabled="true"
+                                                        Uri="{Binding ItemImage}"/>
+                                                </Image.Source>
+                                            </Image>
+                                            <StackLayout
+                                                Grid.Row="1"
+                                                Padding="16"
+                                                HorizontalOptions="Fill"
+                                                Spacing="0"
+                                                VerticalOptions="Fill">
+
+                                                <!--  Name of an item  -->
+                                                <Label
+                                                    HorizontalOptions="Start"
+                                                    Style="{DynamicResource TitleLabelStyle}"
+                                                    Text="{Binding ItemName}"/>
+
+                                                <!--  Description about an item  -->
+                                                <Label
+                                                    Margin="0,4,0,8"
+                                                    FontSize="12"
+                                                    HorizontalOptions="Start"
+                                                    HorizontalTextAlignment="Start"
+                                                    LineHeight="{OnPlatform Android=1.25,
+                                    Default=-1}"
+                                                    Style="{DynamicResource DescriptionLabelStyle}"
+                                                    Text="{Binding ItemDescription}"/>
+                                                <Grid ColumnDefinitions="Auto,Auto,*"
+                                                      HorizontalOptions="Fill"
+                                                      VerticalOptions="End">
+
+                                                    <!--  Average rating from the overall rating  -->
+                                                    <Label
+                                                        Margin="0,0,4,0"
+                                                        FontFamily="FontIcons"
+                                                        FontSize="16"
+                                                        Text="{DynamicResource Rating}"
+                                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                                        VerticalOptions="Center"
+                                                        WidthRequest="16"/>
+                                                    <Label Grid.Column="1"
+                                                           FontFamily="Roboto-Regular"
+                                                           FontSize="12"
+                                                           LineHeight="{OnPlatform Android=1.5,
+                                        Default=-1}"
+                                                           Text="{Binding ItemRating}"
+                                                           TextColor="{DynamicResource Gray-700}"
+                                                           VerticalOptions="Center">
+
+                                                    </Label>
+
+                                                    <!--  Navigation icon  -->
+                                                    <button:SfButton Grid.Column="2"
+                                                                     Background="Transparent"
+                                                                     CornerRadius="4"
+                                                                     FontFamily="FontIcons"
+                                                                     FontSize="14"
+                                                                     HorizontalOptions="End"
+                                                                     Text="{DynamicResource ArrowRight}"
+                                                                     TextColor="{DynamicResource Gray-600}"
+                                                                     VerticalOptions="Center">
+                                                    </button:SfButton>
+
+                                                </Grid>
+                                            </StackLayout>
+                                        </Grid>
+                                    </Border>
+
+                                </Border>
+                            </ViewCell>
+                        </DataTemplate>
+                    </listView:SfListView.ItemTemplate>
+
+                    <!--  Span count to specify in the different layouts  -->
+                    <listView:SfListView.ItemsLayout>
+                        <listView:GridLayout SpanCount="{OnIdiom Phone=1, Tablet=2, Desktop=3}"/>
+                    </listView:SfListView.ItemsLayout>
+                </listView:SfListView>
+            </Grid>
+
+        </Grid>
+
+    </ContentView.Content>
+</ContentView>

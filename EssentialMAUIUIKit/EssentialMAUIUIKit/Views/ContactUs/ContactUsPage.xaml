@@ -1,0 +1,338 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.ContactUs.ContactUsPage"
+             xmlns:maps="clr-namespace:Syncfusion.Maui.Maps;assembly=Syncfusion.Maui.Maps"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:dataform="clr-namespace:Syncfusion.Maui.DataForm;assembly=Syncfusion.Maui.DataForm"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit.ViewModel"
+             xmlns:behavior="clr-namespace:EssentialMAUIUIKit">
+
+    <ContentView.BindingContext>
+        <local:ContactUsViewModel/>
+    </ContentView.BindingContext>
+
+    <ContentView.Content>
+        <Grid Margin="10">
+            <Grid ColumnDefinitions=".5*, .5*"
+                  IsVisible="{OnPlatform Android=False, iOS=False, Default=true}">
+
+                <maps:SfMaps Grid.Column="0"
+                             BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                             HorizontalOptions="Fill"
+                             VerticalOptions="Fill">
+
+                    <maps:SfMaps.Layer>
+                        <maps:MapTileLayer UrlTemplate="https://tile.openstreetmap.org/{z}/{x}/{y}.png">
+                            <maps:MapTileLayer.Center>
+                                <maps:MapLatLng Latitude="40.133808"
+                                                Longitude="-75.516279"/>
+                            </maps:MapTileLayer.Center>
+
+                            <maps:MapTileLayer.ZoomPanBehavior>
+                                <maps:MapZoomPanBehavior ZoomLevel="16"
+                                                         EnableZooming="False"/>
+                            </maps:MapTileLayer.ZoomPanBehavior>
+
+                            <maps:MapTileLayer.Markers>
+                                <maps:MapMarkerCollection>
+                                    <maps:MapMarker Latitude="40.133808"
+                                                    Longitude="-75.516279"/>
+                                </maps:MapMarkerCollection>
+                            </maps:MapTileLayer.Markers>
+
+                            <!--Template for customizing the address popup-->
+                            <maps:MapTileLayer.MarkerTemplate>
+                                <DataTemplate>
+                                    <StackLayout>
+
+                                        <Border
+                                            Margin="0"
+                                            Padding="16,0,9,0"
+                                            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                            Stroke="Transparent"
+                                            StrokeShape="RoundRectangle 5"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Start">
+
+                                            <StackLayout
+                                                HorizontalOptions="Center"
+                                                Spacing="0"
+                                                VerticalOptions="Start">
+
+
+                                                <!--Pin location header-->
+                                                <Label
+                                                    Margin="0,16,0,4"
+                                                    HorizontalOptions="Start"
+                                                    Style="{DynamicResource TitleLabelStyle}"
+                                                    Text="{Binding Path=BindingContext.MapMarkerHeader, Source={x:Reference Map}}"/>
+
+                                                <!--Pin location address-->
+                                                <Label
+                                                    Margin="0,0,0,6"
+                                                    FontFamily="Roboto-Regular"
+                                                    Style="{DynamicResource SimpleLabelStyle}"
+                                                    Text="{Binding Path=BindingContext.MapMarkerAddress, Source={x:Reference Map}}"
+                                                    VerticalOptions="Start"
+                                                    VerticalTextAlignment="Start"/>
+
+                                                <!--Pin location email id-->
+                                                <Label
+                                                    Margin="0,0,0,6"
+                                                    FontFamily="Roboto-Regular"
+                                                    Style="{DynamicResource SimpleLabelStyle}"
+                                                    Text="{Binding Path=BindingContext.MapMarkerEmailId, Source={x:Reference Map}}"
+                                                    VerticalOptions="Start"
+                                                    VerticalTextAlignment="Start"/>
+
+                                                <!--Pin location phone number-->
+                                                <Label
+                                                    Margin="0,0,0,14"
+                                                    FontFamily="Roboto-Regular"
+                                                    Style="{DynamicResource SimpleLabelStyle}"
+                                                    Text="{Binding Path=BindingContext.MapMarkerPhoneNumber, Source={x:Reference Map}}"
+                                                    VerticalOptions="Start"
+                                                    VerticalTextAlignment="Start"/>
+                                            </StackLayout>
+                                        </Border>
+
+                                        <!--Set pin image-->
+                                        <Image
+                                            Margin="15,5,15,15"
+                                            HeightRequest="25"
+                                            HorizontalOptions="Start"
+                                            Source="{Binding Path=BindingContext.MapMarkerImage, Source={x:Reference Map}}"
+                                            WidthRequest="25"/>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </maps:MapTileLayer.MarkerTemplate>
+                        </maps:MapTileLayer>
+                    </maps:SfMaps.Layer>
+                </maps:SfMaps>
+
+                <StackLayout VerticalOptions="Center" x:Name="MainStack"
+                             Spacing="0"
+                             Grid.Column="1">
+                    <!--  For getting the contact information  -->
+                    <Border
+                        x:Name="MainFrame"
+                        Padding="0"
+                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                        Stroke="Transparent"
+                        HorizontalOptions="Fill">
+
+                        <StackLayout
+                            x:Name="MainFrameStack"
+                            Padding="15"
+                            HorizontalOptions="Fill"
+                            Spacing="16">
+
+                            <!--  Label to display title  -->
+                            <Label
+                                Margin="{OnPlatform Android='0,16,0,16', iOS='0,16,0,16', Default='0,48,0,16'}"
+                                FontSize="20"
+                                HorizontalOptions="Fill"
+                                LineHeight="{OnPlatform Android=1.25,
+                                                Default=-1}"
+                                Style="{DynamicResource TitleLabelStyle}"
+                                Text="Contact Us"
+                                VerticalTextAlignment="Center"/>
+
+                            <dataform:SfDataForm x:Name="dataFormDesktop"
+                                                 DataObject="{Binding ContactUsInfo}"
+                                                 VerticalOptions="Center"
+                                                 LayoutType="TextInputLayout"
+                                                 ValidationMode="PropertyChanged">
+                                <dataform:SfDataForm.TextInputLayoutSettings>
+                                    <dataform:TextInputLayoutSettings ShowHelperText="True"
+                                                                      OutlineCornerRadius="5">
+                                        <dataform:TextInputLayoutSettings.HelperTextStyle>
+                                            <dataform:DataFormTextStyle FontFamily="Roboto-Regular"/>
+                                        </dataform:TextInputLayoutSettings.HelperTextStyle>
+                                    </dataform:TextInputLayoutSettings>
+                                </dataform:SfDataForm.TextInputLayoutSettings>
+                                <dataform:SfDataForm.ErrorLabelTextStyle>
+                                    <dataform:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                                                FontFamily="Roboto-Regular"/>
+                                </dataform:SfDataForm.ErrorLabelTextStyle>
+                                <dataform:SfDataForm.LabelTextStyle>
+                                    <dataform:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}"
+                                                                FontFamily="Roboto-Regular"/>
+                                </dataform:SfDataForm.LabelTextStyle>
+                                <dataform:SfDataForm.ValidMessageLabelTextStyle>
+                                    <dataform:DataFormTextStyle FontFamily="Roboto-Regular"/>
+                                </dataform:SfDataForm.ValidMessageLabelTextStyle>
+                                <dataform:SfDataForm.EditorTextStyle>
+                                    <dataform:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                                FontFamily="Roboto-Regular"/>
+                                </dataform:SfDataForm.EditorTextStyle>
+                            </dataform:SfDataForm>
+                            <!--  Send Button  -->
+                            <buttons:SfButton x:Name="submitButtonDesktop"
+                                              Style="{DynamicResource FormsButtonStyle}"
+                                              Text="Submit"
+                                              WidthRequest="150"
+                                              VerticalOptions="Start"/>
+
+                        </StackLayout>
+                    </Border>
+                </StackLayout>
+            </Grid>
+            <ScrollView IsVisible="{OnPlatform Default=False, Android=True, iOS=True}">
+                <StackLayout
+                    Padding="15"
+                    HorizontalOptions="Fill"
+                    Spacing="16">
+
+                    <!--  Label to display title  -->
+                    <Label
+                        Margin="{OnPlatform Android='0,16,0,16', iOS='0,16,0,16', Default='0,48,0,16'}"
+                        FontSize="20"
+                        HorizontalOptions="Fill"
+                        LineHeight="{OnPlatform Android=1.25,
+                                                Default=-1}"
+                        Style="{DynamicResource TitleLabelStyle}"
+                        Text="Contact Us"
+                        VerticalTextAlignment="Center"/>
+
+                    <dataform:SfDataForm x:Name="dataForm"
+                                         DataObject="{Binding ContactUsInfo}"
+                                         VerticalOptions="Center"
+                                         HeightRequest="400"
+                                         LayoutType="TextInputLayout"
+                                         ValidationMode="PropertyChanged">
+                        <dataform:SfDataForm.TextInputLayoutSettings>
+                            <dataform:TextInputLayoutSettings ShowHelperText="True"
+                                                              OutlineCornerRadius="5">
+                                <dataform:TextInputLayoutSettings.HelperTextStyle>
+                                    <dataform:DataFormTextStyle FontFamily="Roboto-Regular"/>
+                                </dataform:TextInputLayoutSettings.HelperTextStyle>
+                            </dataform:TextInputLayoutSettings>
+                        </dataform:SfDataForm.TextInputLayoutSettings>
+                        <dataform:SfDataForm.ErrorLabelTextStyle>
+                            <dataform:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                                        FontFamily="Roboto-Regular"/>
+                        </dataform:SfDataForm.ErrorLabelTextStyle>
+                        <dataform:SfDataForm.LabelTextStyle>
+                            <dataform:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}"
+                                                        FontFamily="Roboto-Regular"/>
+                        </dataform:SfDataForm.LabelTextStyle>
+                        <dataform:SfDataForm.ValidMessageLabelTextStyle>
+                            <dataform:DataFormTextStyle FontFamily="Roboto-Regular"/>
+                        </dataform:SfDataForm.ValidMessageLabelTextStyle>
+                        <dataform:SfDataForm.EditorTextStyle>
+                            <dataform:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                        FontFamily="Roboto-Regular"/>
+                        </dataform:SfDataForm.EditorTextStyle>
+                    </dataform:SfDataForm>
+                    <!--  Send Button  -->
+                    <buttons:SfButton x:Name="submitButton"
+                                      Style="{DynamicResource FormsButtonStyle}"
+                                      Text="Submit"
+                                      WidthRequest="150"
+                                      VerticalOptions="Start"/>
+
+                    <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"
+                             HeightRequest="1"
+                             Margin="10"/>
+
+                    <StackLayout
+                        HorizontalOptions="Start"
+                        Spacing="0"
+                        VerticalOptions="Start">
+
+                        <Label Text="Contact Us"
+                               FontSize="22"
+                               FontFamily="Roboto-Medium"
+                               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+
+
+                        <!--Pin location header-->
+                        <Label
+                            Margin="0,16,0,4"
+                            HorizontalOptions="Start"
+                            Style="{DynamicResource TitleLabelStyle}"
+                            Text="{Binding Path=BindingContext.MapMarkerHeader, Source={x:Reference Map}}"/>
+
+                        <!--Pin location address-->
+                        <Label
+                            Margin="0,0,0,6"
+                            FontFamily="Roboto-Regular"
+                            Style="{DynamicResource SimpleLabelStyle}"
+                            Text="{Binding Path=BindingContext.MapMarkerAddress, Source={x:Reference Map}}"
+                            VerticalOptions="Start"
+                            VerticalTextAlignment="Start"/>
+
+                        <!--Pin location email id-->
+                        <Label
+                            Margin="0,0,0,6"
+                            FontFamily="Roboto-Regular"
+                            Style="{DynamicResource SimpleLabelStyle}"
+                            Text="{Binding Path=BindingContext.MapMarkerEmailId, Source={x:Reference Map}}"
+                            VerticalOptions="Start"
+                            VerticalTextAlignment="Start"/>
+
+                        <!--Pin location phone number-->
+                        <Label
+                            Margin="0,0,0,14"
+                            FontFamily="Roboto-Regular"
+                            Style="{DynamicResource SimpleLabelStyle}"
+                            Text="{Binding Path=BindingContext.MapMarkerPhoneNumber, Source={x:Reference Map}}"
+                            VerticalOptions="Start"
+                            VerticalTextAlignment="Start"/>
+                    </StackLayout>
+
+                    <maps:SfMaps Grid.Column="0"
+                                 x:Name="Map"
+                                 BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                 HorizontalOptions="Fill"
+                                 VerticalOptions="Fill">
+
+                        <maps:SfMaps.Layer>
+                            <maps:MapTileLayer UrlTemplate="https://tile.openstreetmap.org/{z}/{x}/{y}.png">
+                                <maps:MapTileLayer.Center>
+                                    <maps:MapLatLng Latitude="40.133808"
+                                                    Longitude="-75.516279"/>
+                                </maps:MapTileLayer.Center>
+
+                                <maps:MapTileLayer.ZoomPanBehavior>
+                                    <maps:MapZoomPanBehavior ZoomLevel="16"
+                                                             EnableZooming="False"/>
+                                </maps:MapTileLayer.ZoomPanBehavior>
+
+                                <maps:MapTileLayer.Markers>
+                                    <maps:MapMarkerCollection>
+                                        <maps:MapMarker Latitude="40.133808"
+                                                        Longitude="-75.516279"/>
+                                    </maps:MapMarkerCollection>
+                                </maps:MapTileLayer.Markers>
+
+                                <!--Template for customizing the address popup-->
+                                <maps:MapTileLayer.MarkerTemplate>
+                                    <DataTemplate>
+                                        <StackLayout>
+
+                                            <!--Set pin image-->
+                                            <Image
+                                                Margin="10,5,0,0"
+                                                HeightRequest="25"
+                                                HorizontalOptions="Start"
+                                                Source="{Binding Path=BindingContext.MapMarkerImage, Source={x:Reference Map}}"
+                                                WidthRequest="25"/>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </maps:MapTileLayer.MarkerTemplate>
+                            </maps:MapTileLayer>
+                        </maps:SfMaps.Layer>
+                    </maps:SfMaps>
+
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+
+    </ContentView.Content>
+    <ContentView.Behaviors>
+        <behavior:ContactUsBehavior/>
+    </ContentView.Behaviors>
+</ContentView>

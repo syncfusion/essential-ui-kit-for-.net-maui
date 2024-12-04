@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Navigation.MoviesPage"
+             xmlns:rating="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+             xmlns:rotator="clr-namespace:Syncfusion.Maui.Rotator;assembly=Syncfusion.Maui.Rotator"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+    <ContentView.BindingContext>
+        <local:MoviesPageViewModel/>
+    </ContentView.BindingContext>
+    <ContentView.Resources>
+
+        <Style TargetType="listView:ListViewItem">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+    <ContentView.Content>
+
+        <ScrollView>
+            <Grid
+                ColumnSpacing="0"
+                RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto"
+                RowSpacing="0">
+
+                <rotator:SfRotator
+                    Grid.Row="0"
+                    BackgroundColor="{DynamicResource Transparent}"
+                    DotsStroke="Transparent"
+                    EnableAutoPlay="True"
+                    HeightRequest="{OnPlatform Default=300, Android=210, iOS=210}"
+                    HorizontalOptions="Start"
+                    ItemsSource="{Binding RotatorMoviesList}"
+                    NavigationDelay="2000"
+                    NavigationDirection="Horizontal"
+                    NavigationStripMode="Dots"
+                    SelectedDotColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                    UnselectedDotColor="#ebecef"
+                    VerticalOptions="Start">
+                    <rotator:SfRotator.ItemTemplate>
+                        <DataTemplate>
+                            <Image
+                                Aspect="AspectFit"
+                                BackgroundColor="Transparent">
+                                <Image.Source>
+                                    <UriImageSource
+                                        CacheValidity="14"
+                                        CachingEnabled="true"
+                                        Uri="{Binding Image}"/>
+                                </Image.Source>
+                            </Image>
+                        </DataTemplate>
+                    </rotator:SfRotator.ItemTemplate>
+                </rotator:SfRotator>
+
+                <Grid
+                    Grid.Row="1"
+                    Margin="16,26,16,8"
+                    ColumnDefinitions="*,*"
+                    VerticalOptions="Start">
+
+                    <Label
+                        FontFamily="Roboto-Medium"
+                        FontSize="12"
+                        LineHeight="{OnPlatform Android=1.25,
+                                            Default=-1}"
+                        Text="NOW SHOWING"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                        VerticalTextAlignment="Center"/>
+
+                    <buttons:SfButton Grid.Column="1"
+                                      Margin="16,0,0,0"
+                                      FontSize="12"
+                                      HeightRequest="38"
+                                      HorizontalOptions="End"
+                                      Style="{DynamicResource TransparentButtonStyle}"
+                                      Text="VIEW ALL"
+                                      VerticalOptions="Center"/>
+                </Grid>
+
+                <listView:SfListView HeightRequest="{OnPlatform Android=280, iOS=280, MacCatalyst=280}"
+                                     Grid.Row="2"
+                                     ScrollBarVisibility="Never"
+                                     ItemSize="150"
+                                     ItemSpacing="8, 0, 8, 0"
+                                     ItemsSource="{Binding ShowingMoviesList}"
+                                     Orientation="Horizontal"
+                                     SelectionMode="None">
+                    <listView:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <StackLayout Spacing="8">
+                                        <Border
+                                            StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 8,8,8,8">
+                                            <Image
+                                                Aspect="AspectFill"
+                                                BackgroundColor="Transparent"
+                                                Source="{Binding Image}"
+                                                HeightRequest="220"
+                                                WidthRequest="150">
+                                            </Image>
+                                        </Border>
+
+                                        <Label
+                                            FontFamily="Roboto-Medium"
+                                            FontSize="14"
+                                            LineBreakMode="TailTruncation"
+                                            LineHeight="{OnPlatform Android=1.5,
+                    Default=-1}"
+                                            Text="{Binding MovieName}"
+                                            TextColor="{DynamicResource Gray-900}"/>
+
+                                        <rating:SfRating BackgroundColor="Transparent"
+                                                         HorizontalOptions="Start"
+                                                         ItemCount="5"
+                                                         ItemSize="14"
+                                                         ItemSpacing="1"
+                                                         IsReadOnly="True"
+                                                         VerticalOptions="Center"
+                                                         Value="5">
+                                            <rating:SfRating.RatingSettings>
+                                                <rating:RatingSettings
+                                                    RatedFill="{DynamicResource Gold}"
+                                                    RatedStroke="{DynamicResource Gold}"
+                                                    UnratedStroke="{DynamicResource Gray-600}"
+                                                    UnratedStrokeThickness="1"/>
+                                            </rating:SfRating.RatingSettings>
+                                        </rating:SfRating>
+
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </listView:SfListView.ItemTemplate>
+                </listView:SfListView>
+
+                <Grid
+                    Grid.Row="3"
+                    Margin="16,26,16,8"
+                        ColumnDefinitions="*,*">
+
+                    <Label
+                        FontFamily="Roboto-Medium"
+                        FontSize="12"
+                        LineHeight="{OnPlatform Android=1.25,
+                                            Default=-1}"
+                        Text="TRAILERS"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                        VerticalTextAlignment="Center"/>
+
+                    <buttons:SfButton Grid.Column="1"
+                                      Margin="16,0,0,0"
+                                      FontSize="12"
+                                      HeightRequest="38"
+                                      HorizontalOptions="End"
+                                      Style="{DynamicResource TransparentButtonStyle}"
+                                      Text="VIEW ALL"
+                                      VerticalOptions="Center"/>
+                </Grid>
+
+                <listView:SfListView HeightRequest="{OnPlatform Android=230, iOS=230, MacCatalyst=230}"
+                                     Grid.Row="4"
+                                     ScrollBarVisibility="Never"
+                                     ItemSize="150"
+                                     ItemSpacing="8, 0, 8, 0"
+                                     ItemsSource="{Binding TrailerMoviesList}"
+                                     Orientation="Horizontal"
+                                     SelectionMode="None">
+                    <listView:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <StackLayout Spacing="8">
+                                        <Border
+                                            StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 8,8,8,8">
+                                            <Image
+                                                Aspect="AspectFill"
+                                                BackgroundColor="Transparent"
+                                                Source="{Binding Image}"
+                                                    WidthRequest="150"
+                                                    HeightRequest="220">
+                                            </Image>
+                                        </Border>
+
+                                        <Label
+                                            FontFamily="Roboto-Medium"
+                                            FontSize="14"
+                                            LineBreakMode="TailTruncation"
+                                            LineHeight="{OnPlatform Android=1.5,
+                    Default=-1}"
+                                            Text="{Binding MovieName}"
+                                            TextColor="{DynamicResource Gray-900}"/>
+
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </listView:SfListView.ItemTemplate>
+                </listView:SfListView>
+
+                <Grid ColumnDefinitions="*,*"
+                      Grid.Row="5"
+                      Margin="16,26,16,8">
+
+                    <Label
+                        FontFamily="Roboto-Medium"
+                        FontSize="12"
+                        LineHeight="{OnPlatform Android=1.25,
+                                            Default=-1}"
+                        Text="COMING SOON"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                        VerticalTextAlignment="Center"/>
+
+                    <buttons:SfButton Grid.Column="1"
+                                      Margin="16,0,0,0"
+                                      FontSize="12"
+                                      HeightRequest="38"
+                                      HorizontalOptions="End"
+                                      Style="{DynamicResource TransparentButtonStyle}"
+                                      Text="VIEW ALL"
+                                      VerticalOptions="Center"/>
+                </Grid>
+
+                <listView:SfListView HeightRequest="{OnPlatform Android=230, iOS=230, MacCatalyst=230}"
+                                     Grid.Row="6"
+                                     ScrollBarVisibility="Never"
+                                     ItemSize="150"
+                                     ItemSpacing="8, 0, 8, 0"
+                                     ItemsSource="{Binding UpcomingMoviesList}"
+                                     Orientation="Horizontal"
+                                     SelectionMode="None">
+                    <listView:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <StackLayout Spacing="8">
+                                        <Border
+                                            StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 8,8,8,8">
+                                            <Image HeightRequest="{OnPlatform MacCatalyst=230, iOS=230}"
+                                                Aspect="AspectFill"
+                                                BackgroundColor="Transparent"
+                                                Source="{Binding Image}">
+                                            </Image>
+                                        </Border>
+
+                                        <Label
+                                            FontFamily="Roboto-Medium"
+                                            FontSize="14"
+                                            LineBreakMode="TailTruncation"
+                                            LineHeight="{OnPlatform Android=1.5,
+                    Default=-1}"
+                                            Text="{Binding MovieName}"
+                                            TextColor="{DynamicResource Gray-900}"/>
+
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </listView:SfListView.ItemTemplate>
+                </listView:SfListView>
+
+            </Grid>
+        </ScrollView>
+
+    </ContentView.Content>
+</ContentView>

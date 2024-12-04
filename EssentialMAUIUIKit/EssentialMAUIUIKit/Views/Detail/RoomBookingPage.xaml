@@ -1,0 +1,758 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Detail.RoomBookingPage"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:rotator="clr-namespace:Syncfusion.Maui.Rotator;assembly=Syncfusion.Maui.Rotator"
+             xmlns:rating="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Calendar;assembly=Syncfusion.Maui.Calendar"
+             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:maps="clr-namespace:Syncfusion.Maui.Maps;assembly=Syncfusion.Maui.Maps"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+    <ContentView.Resources>
+        <Style TargetType="listView:ListViewItem">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+    <ContentView.BindingContext>
+        <local:RoomBookingPageViewModel x:Name="viewModel"/>
+    </ContentView.BindingContext>
+    <ContentView.Content>
+        <ScrollView Padding="10">
+            <Grid RowDefinitions="Auto,Auto">
+
+                <Grid Grid.Row="0"
+                        WidthRequest="{OnPlatform WinUI=800, MacCatalyst=1000}">
+
+                    <!--<Rotator for featured blog stories>-->
+                    <rotator:SfRotator
+                        x:Name="Rotator"
+                        BackgroundColor="Gray"
+                        HeightRequest="350"
+                        HorizontalOptions="Start"
+                        ItemsSource="{Binding PreviewImages}"
+                        VerticalOptions="Start">
+                        <rotator:SfRotator.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+
+                                    <!--Image of the resort-->
+                                    <Image
+                                        Aspect="AspectFill"
+                                        BackgroundColor="{DynamicResource Gray-200}"
+                                        HeightRequest="350">
+                                        <Image.Source>
+                                            <UriImageSource
+                                                CacheValidity="14"
+                                                CachingEnabled="true"
+                                                Uri="{Binding ImagePath}"/>
+                                        </Image.Source>
+                                    </Image>
+
+                                    <!--OverLay Effect-->
+                                    <Border BackgroundColor="{DynamicResource Gray-Black}"
+                                            Opacity="0.25"/>
+
+                                </Grid>
+                            </DataTemplate>
+                        </rotator:SfRotator.ItemTemplate>
+                    </rotator:SfRotator>
+
+                    <!--  Back button  -->
+                    <buttons:SfButton
+                        Margin="4"
+                        FontSize="20"
+                        HorizontalOptions="Start"
+                        Style="{DynamicResource IconButtonStyle}"
+                        Text="{DynamicResource Back}"
+                        TextColor="{DynamicResource Gray-White}"
+                        VerticalOptions="Start"/>
+
+                </Grid>
+
+                <Grid Grid.Row="1"
+                        WidthRequest="{OnPlatform WinUI=800, MacCatalyst=1000}"
+                        Padding="10"
+                      BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                      ColumnSpacing="0"
+                      RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
+                      RowSpacing="0">
+
+                    <Grid Margin="0,10,0,0"
+                          Grid.Row="0"
+                          ColumnDefinitions="*,*"
+                          RowDefinitions="*,*">
+                        <StackLayout Orientation="Horizontal">
+                            <!--  Product Name  -->
+                            <Label
+                                FontSize="20"
+                                HorizontalOptions="Start"
+                                Style="{DynamicResource TitleLabelStyle}"
+                                Text="{Binding RoomDetail.Name}"
+                                VerticalOptions="Start"
+                                VerticalTextAlignment="Start"/>
+                            <!--  Product rating  -->
+                            <rating:SfRating BackgroundColor="Transparent"
+                                             Margin="10,0,0,0"
+                                             VerticalOptions="Center"
+                                             RatingSettings="{DynamicResource RatingSettings}"
+                                             Style="{DynamicResource RatingStyle}"
+                                             Value="{Binding RoomDetail.OverallRating}"/>
+                        </StackLayout>
+
+                        <!--Address Label-->
+                        <Label Grid.Row="1"
+                               Text="7654, Cleveland Street, Phoenixville ,PA 19460"
+                               FontFamily="Roboto-Regular"
+                               FontSize="16"
+                               TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                        <!--Book Now button-->
+                        <buttons:SfButton Grid.RowSpan="2"
+                                          Grid.Column="1"
+                                          HorizontalOptions="End"
+                                          VerticalOptions="Center"
+                                          Text="Book Now"
+                                          Style="{DynamicResource FormsButtonStyle }"/>
+                    </Grid>
+
+                    <Grid Grid.Row="1"
+                            Margin="0,20,0,0">
+                        <Grid IsVisible="{OnPlatform Default=true, Android=false, iOS=false}"
+                              ColumnDefinitions="*,*,*">
+                            <StackLayout Margin="10,5,10,0"
+                                         Orientation="Vertical">
+                                <Label
+                                    FontSize="14"
+                                    HorizontalOptions="Start"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                    FontFamily="Roboto-Regular"
+                                    Text="Check-in"
+                                    VerticalOptions="Start"
+                                    VerticalTextAlignment="Start"/>
+                                <!--  combo Box for calender  -->
+                                <Border Style="{DynamicResource DataFormBorderlessEntryBorderStyle}"
+                                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
+
+                                    <rating:SfComboBox Background="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                                       x:Name="sfComboBox"
+                                                       Margin="3,3,3,3"
+                                                       ItemsSource="{Binding Calender}"
+                                                       DropdownFooterViewHeight="0"
+                                                       DropdownHeaderViewHeight="300"
+                                                       DropDownItemHeight="0"
+                                                       DropdownWidth="300"
+                                                       FontFamily="Roboto-Regular"
+                                                       IsDropDownOpen="{Binding IsDropDownOpen, Mode=TwoWay}"
+                                                       MaximumHeightRequest="300"
+                                                       ShowDropdownFooterView="False"
+                                                       ShowDropdownHeaderView="True"
+                                                       Style="{DynamicResource TextInputLayoutComboBoxStyle}"
+                                                       Text="{Binding RoomDetail.SelectedRanges}"
+                                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                       FontSize="12">
+
+                                        <rating:SfComboBox.DropdownHeaderView>
+
+                                            <Grid Padding="2"
+                                                  HeightRequest="300">
+                                                <syncfusion:SfCalendar FooterView="{syncfusion:CalendarFooterView ShowActionButtons=True}"
+                                                                       EnablePastDates="False"
+                                                                       SelectionMode="Range"/>
+                                            </Grid>
+                                        </rating:SfComboBox.DropdownHeaderView>
+
+                                        <rating:SfComboBox.DropDownButtonSettings>
+                                            <rating:DropDownButtonSettings>
+                                                <rating:DropDownButtonSettings.View>
+                                                    <Label
+                                                        Padding="0,0,4,0"
+                                                        FontFamily="FontIcons"
+                                                        FontSize="16"
+                                                        HorizontalTextAlignment="Start"
+                                                        Style="{DynamicResource TitleLabelStyle}"
+                                                        Text="{DynamicResource Calendar}"
+                                                        TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                                        VerticalTextAlignment="Center"
+                                                        WidthRequest="20"/>
+                                                </rating:DropDownButtonSettings.View>
+                                            </rating:DropDownButtonSettings>
+                                        </rating:SfComboBox.DropDownButtonSettings>
+
+                                    </rating:SfComboBox>
+
+                                </Border>
+                            </StackLayout>
+
+                            <StackLayout Margin="10,5,10,0"
+                                         Grid.Column="1"
+                                         Orientation="Vertical">
+                                <Label
+                                    FontSize="14"
+                                    HorizontalOptions="Start"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                    FontFamily="Roboto-Regular"
+                                    Text="Guests"
+                                    VerticalOptions="Start"
+                                    VerticalTextAlignment="Start"/>
+                                <!--  combo Box for guests  -->
+                                <Border Style="{DynamicResource DataFormBorderlessEntryBorderStyle}"
+                                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
+
+                                    <rating:SfComboBox Background="Transparent"
+                                                       Margin="3,3,3,3"
+                                                       ItemsSource="{Binding GuestsCollection}"
+                                                       DisplayMemberPath="DisplayText"
+                                                       FontFamily="Roboto-Regular"
+                                                       ItemPadding="3"
+                                                       SelectedIndex="0"
+                                                       Style="{DynamicResource TextInputLayoutComboBoxStyle}"
+                                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                       FontSize="14"
+                                                       VerticalOptions="Center">
+                                    </rating:SfComboBox>
+
+                                </Border>
+                            </StackLayout>
+
+                            <StackLayout Margin="10,5,10,0"
+                                         Grid.Column="2"
+                                         Orientation="Vertical">
+                                <Label
+                                    FontSize="14"
+                                    HorizontalOptions="Start"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                    FontFamily="Roboto-Regular"
+                                    Text="Bedrooms"
+                                    VerticalOptions="Start"
+                                    VerticalTextAlignment="Start"/>
+                                <!--  combo Box for bed  -->
+                                <Border Style="{DynamicResource DataFormBorderlessEntryBorderStyle}"
+                                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
+
+                                    <rating:SfComboBox Background="Transparent"
+                                                       x:Name="bedComboBox"
+                                                       Margin="3,3,3,3"
+                                                       ItemsSource="{Binding BedsCollection}"
+                                                       DisplayMemberPath="DisplayText"
+                                                       FontFamily="Roboto-Regular"
+                                                       ItemPadding="3"
+                                                       SelectedIndex="0"
+                                                       Style="{DynamicResource TextInputLayoutComboBoxStyle}"
+                                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                       FontSize="14"
+                                                       VerticalOptions="Center">
+                                    </rating:SfComboBox>
+                                </Border>
+                            </StackLayout>
+                        </Grid>
+                        <Grid IsVisible="{OnPlatform Default=false, Android=true, iOS=true}"
+                              RowDefinitions="*,*,*">
+                            <StackLayout Margin="10,5,10,0"
+                                         Orientation="Vertical">
+                                <Label
+                                    FontSize="14"
+                                    HorizontalOptions="Start"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                    FontFamily="Roboto-Regular"
+                                    Text="Check-in"
+                                    VerticalOptions="Start"
+                                    VerticalTextAlignment="Start"/>
+                                <!--  combo Box for calender  -->
+                                <Border Style="{DynamicResource DataFormBorderlessEntryBorderStyle}"
+                                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
+
+                                    <rating:SfComboBox Background="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                                       Margin="3,3,3,3"
+                                                       ItemsSource="{Binding Calender}"
+                                                       DropdownFooterViewHeight="0"
+                                                       DropdownHeaderViewHeight="300"
+                                                       DropDownItemHeight="0"
+                                                       DropdownWidth="300"
+                                                       FontFamily="Roboto-Regular"
+                                                       IsDropDownOpen="{Binding IsDropDownOpen, Mode=TwoWay}"
+                                                       MaximumHeightRequest="300"
+                                                       ShowDropdownFooterView="False"
+                                                       ShowDropdownHeaderView="True"
+                                                       Style="{DynamicResource TextInputLayoutComboBoxStyle}"
+                                                       Text="{Binding RoomDetail.SelectedRanges}"
+                                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                       FontSize="12">
+
+                                        <rating:SfComboBox.DropdownHeaderView>
+
+                                            <Grid Padding="2"
+                                                  HeightRequest="300">
+                                                <syncfusion:SfCalendar FooterView="{syncfusion:CalendarFooterView ShowActionButtons=True}"
+                                                                       EnablePastDates="False"
+                                                                       SelectionMode="Range"/>
+                                            </Grid>
+                                        </rating:SfComboBox.DropdownHeaderView>
+
+                                        <rating:SfComboBox.DropDownButtonSettings>
+                                            <rating:DropDownButtonSettings>
+                                                <rating:DropDownButtonSettings.View>
+                                                    <Label
+                                                        Padding="0,0,4,0"
+                                                        FontFamily="FontIcons"
+                                                        FontSize="16"
+                                                        HorizontalTextAlignment="Start"
+                                                        Style="{DynamicResource TitleLabelStyle}"
+                                                        Text="{DynamicResource Calendar}"
+                                                        TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                                        VerticalTextAlignment="Center"
+                                                        WidthRequest="20"/>
+                                                </rating:DropDownButtonSettings.View>
+                                            </rating:DropDownButtonSettings>
+                                        </rating:SfComboBox.DropDownButtonSettings>
+
+                                    </rating:SfComboBox>
+
+                                </Border>
+                            </StackLayout>
+
+                            <StackLayout Margin="10,5,10,0"
+                                         Grid.Row="1"
+                                         Orientation="Vertical">
+                                <Label
+                                    FontSize="14"
+                                    HorizontalOptions="Start"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                    FontFamily="Roboto-Regular"
+                                    Text="Guests"
+                                    VerticalOptions="Start"
+                                    VerticalTextAlignment="Start"/>
+                                <!--  combo Box for guests  -->
+                                <Border Style="{DynamicResource DataFormBorderlessEntryBorderStyle}"
+                                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
+
+                                    <rating:SfComboBox Background="Transparent"
+                                                       Margin="3,3,3,3"
+                                                       ItemsSource="{Binding GuestsCollection}"
+                                                       DisplayMemberPath="DisplayText"
+                                                       FontFamily="Roboto-Regular"
+                                                       ItemPadding="3"
+                                                       SelectedIndex="0"
+                                                       Style="{DynamicResource TextInputLayoutComboBoxStyle}"
+                                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                       FontSize="14"
+                                                       VerticalOptions="Center">
+                                    </rating:SfComboBox>
+
+                                </Border>
+                            </StackLayout>
+
+                            <StackLayout Margin="10,5,10,0"
+                                         Grid.Row="2"
+                                         Orientation="Vertical">
+                                <Label
+                                    FontSize="14"
+                                    HorizontalOptions="Start"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                    FontFamily="Roboto-Regular"
+                                    Text="Bedrooms"
+                                    VerticalOptions="Start"
+                                    VerticalTextAlignment="Start"/>
+                                <!--  combo Box for bed  -->
+                                <Border Style="{DynamicResource DataFormBorderlessEntryBorderStyle}"
+                                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
+
+                                    <rating:SfComboBox Background="Transparent"
+                                                       Margin="3,3,3,3"
+                                                       ItemsSource="{Binding BedsCollection}"
+                                                       DisplayMemberPath="DisplayText"
+                                                       FontFamily="Roboto-Regular"
+                                                       ItemPadding="3"
+                                                       SelectedIndex="0"
+                                                       Style="{DynamicResource TextInputLayoutComboBoxStyle}"
+                                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                       FontSize="14"
+                                                       VerticalOptions="Center">
+                                    </rating:SfComboBox>
+                                </Border>
+                            </StackLayout>
+                        </Grid>
+                    </Grid>
+
+
+
+                    <!--  Resort information title  -->
+                    <Label
+                        Grid.Row="2"
+                        Margin="0,20,0,10"
+                        FontSize="22"
+                        HorizontalOptions="Start"
+                        Style="{DynamicResource TitleLabelStyle}"
+                        Text="About Hotel"/>
+
+                    <!--  resort description  -->
+                    <Label
+                        Grid.Row="3"
+                        Margin="0"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        HorizontalTextAlignment="Start"
+                        Style="{DynamicResource DescriptionLabelStyle}"
+                        Text="{Binding RoomDetail.ResortDescription}"/>
+
+                    <!--  Title fo amenities  -->
+                    <Label
+                        Grid.Row="4"
+                        Margin="0,20,0,0"
+                        FontSize="22"
+                        HorizontalOptions="Start"
+                        Style="{DynamicResource TitleLabelStyle}"
+                        Text="Amenities"/>
+
+                    <!--  icon label  -->
+                    <listView:SfListView
+                        Grid.Row="5"
+                        AutoFitMode="Height"
+                        HeightRequest="80"
+                        ScrollBarVisibility="Never"
+                        ItemSpacing="8"
+                        ItemsSource="{Binding Facilities}"
+                        Orientation="Horizontal"
+                        SelectionBackground="Transparent">
+
+                        <listView:SfListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout
+                                    Margin="0"
+                                    Orientation="Vertical"
+                                    Spacing="4">
+
+                                    <Border
+                                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                        StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 20,20,20,20"
+                                        HeightRequest="40"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        WidthRequest="40">
+                                        <Border.Content>
+                                            <Label
+                                                FontFamily="FontIcons"
+                                                FontSize="20"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Icon}"
+                                                TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                                VerticalOptions="Center"/>
+
+                                        </Border.Content>
+                                    </Border>
+
+                                    <Label
+                                        FontFamily="Roboto-Regular"
+                                        FontSize="12"
+                                        HorizontalOptions="Center"
+                                        Text="{Binding Facility}"
+                                        TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                                </StackLayout>
+                            </DataTemplate>
+                        </listView:SfListView.ItemTemplate>
+
+                        <listView:SfListView.FooterTemplate>
+                            <DataTemplate>
+                                <StackLayout
+                                    Margin="0"
+                                    Orientation="Vertical"
+                                    Spacing="4">
+
+                                    <buttons:SfButton
+                                        BackgroundColor="{DynamicResource Gray-200}"
+                                        Command="{Binding MoreCommand}"
+                                        Style="{DynamicResource IconButtonStyle}"
+                                        Text="{DynamicResource Menu}"
+                                        TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                                    <Label
+                                        FontFamily="Roboto-Regular"
+                                        FontSize="12"
+                                        HorizontalOptions="Center"
+                                        Text="More"
+                                        TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                                </StackLayout>
+                            </DataTemplate>
+                        </listView:SfListView.FooterTemplate>
+
+                    </listView:SfListView>
+
+                    <!--  Title for location  -->
+                    <Label Margin="0,10,0,0"
+                           Grid.Row="6"
+                           FontSize="22"
+                           HorizontalOptions="Start"
+                           Style="{DynamicResource TitleLabelStyle}"
+                           Text="Location"/>
+
+                    <!--  Map for locating the location  -->
+                    <maps:SfMaps Grid.Row="7"
+                                 HeightRequest="300"
+                                 Margin="20"
+                                 x:Name="Map"
+                                 BackgroundColor="{DynamicResource Gray-Bg}"
+                                 HorizontalOptions="Fill"
+                                 VerticalOptions="Fill">
+
+                        <maps:SfMaps.Layer>
+                            <maps:MapTileLayer UrlTemplate="https://tile.openstreetmap.org/{z}/{x}/{y}.png">
+                                <maps:MapTileLayer.Center>
+                                    <maps:MapLatLng Latitude="40.133808"
+                                                    Longitude="-75.516279"/>
+                                </maps:MapTileLayer.Center>
+
+                                <maps:MapTileLayer.ZoomPanBehavior>
+                                    <maps:MapZoomPanBehavior ZoomLevel="16"
+                                                             EnableZooming="False"/>
+                                </maps:MapTileLayer.ZoomPanBehavior>
+
+                                <maps:MapTileLayer.Markers>
+                                    <maps:MapMarkerCollection>
+                                        <maps:MapMarker Latitude="40.133808"
+                                                        Longitude="-75.516279"/>
+                                    </maps:MapMarkerCollection>
+                                </maps:MapTileLayer.Markers>
+
+                                <!--Template for customizing the address popup-->
+                                <maps:MapTileLayer.MarkerTemplate>
+                                    <DataTemplate>
+                                        <StackLayout>
+
+                                            <!--Set pin image-->
+                                            <Image
+                                                Margin="10,5,0,0"
+                                                HeightRequest="25"
+                                                HorizontalOptions="Start"
+                                                Source="{Binding Path=BindingContext.MapMarkerImage, Source={x:Reference Map}}"
+                                                WidthRequest="25"/>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </maps:MapTileLayer.MarkerTemplate>
+                            </maps:MapTileLayer>
+                        </maps:SfMaps.Layer>
+                    </maps:SfMaps>
+
+                    <Grid
+                        Grid.Row="8"
+                        Margin="0,8,0,0"
+                        ColumnDefinitions="Auto, Auto"
+                        ColumnSpacing="12"
+                        RowDefinitions="Auto, Auto"
+                        RowSpacing="8">
+
+                        <!--  Map pin icon  -->
+                        <Label
+                            FontFamily="FontIcons"
+                            FontSize="12"
+                            HorizontalOptions="Start"
+                            HorizontalTextAlignment="Start"
+                            Style="{DynamicResource TitleLabelStyle}"
+                            Text="{DynamicResource MapPin}"
+                            WidthRequest="12"/>
+
+                        <!--  Label for address  -->
+                        <Label
+                            Grid.Column="1"
+                            FontFamily="Roboto-Regular"
+                            FontSize="12"
+                            HorizontalOptions="Start"
+                            HorizontalTextAlignment="Start"
+                            Style="{DynamicResource TitleLabelStyle}"
+                            Text="{Binding RoomDetail.Address}"/>
+
+
+                        <!--  icon for call  -->
+                        <Label
+                            Grid.Row="1"
+                            FontFamily="FontIcons"
+                            FontSize="12"
+                            HorizontalOptions="Start"
+                            Style="{DynamicResource TitleLabelStyle}"
+                            Text="{DynamicResource Phone}"
+                            WidthRequest="12"/>
+
+                        <!--  call label  -->
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            FontFamily="Roboto-Regular"
+                            FontSize="12"
+                            HorizontalOptions="Start"
+                            Style="{DynamicResource TitleLabelStyle}"
+                            Text="{Binding RoomDetail.PhoneNumber}"/>
+                    </Grid>
+
+                    <!--  Rating and Reviews  -->
+                    <StackLayout Grid.Row="9">
+                        <StackLayout Spacing="0">
+                            <!--  Rating and Reviews Header  -->
+                            <StackLayout Margin="0"
+                                         Orientation="Horizontal">
+
+                                <Label
+                                    Margin="0,20,8,8"
+                                    HorizontalOptions="Start"
+                                    Style="{DynamicResource TitleLabelStyle}"
+                                    Text="Ratings and Reviews"
+                                    FontSize="22"
+                                    VerticalOptions="Center"/>
+
+                            </StackLayout>
+
+                        </StackLayout>
+
+                        <StackLayout
+                            x:Name="StackLayout"
+                            BindableLayout.ItemsSource="{Binding RoomDetail.Reviews}"
+                            Spacing="0">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout Spacing="0">
+
+                                        <BoxView HeightRequest="{OnIdiom Default=1, Desktop=0}"
+                                                 Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+                                        <Grid ColumnDefinitions="Auto, *"
+                                              RowDefinitions="Auto, Auto, Auto"
+                                              Padding="16,8,16,8"
+                                              ColumnSpacing="0">
+                                            <!--  Profile Image  -->
+                                            <Border
+                                                BackgroundColor="{DynamicResource Gray-Bg}"
+                                                StrokeThickness="{OnIdiom Default=2,
+Desktop=0}"
+                                                StrokeShape="RoundRectangle 24,24,24,24"
+                                                HeightRequest="48"
+                                                Style="{DynamicResource ProfileBorderStyle}"
+                                                WidthRequest="48">
+                                                <Image BackgroundColor="{DynamicResource Gray-200}">
+                                                    <Image.Source>
+                                                        <UriImageSource
+                                                            CacheValidity="14"
+                                                            CachingEnabled="true"
+                                                            Uri="{Binding CustomerImage}"/>
+                                                    </Image.Source>
+                                                </Image>
+                                            </Border>
+
+                                            <Grid ColumnDefinitions="*,*"
+                                                  Grid.Column="1"
+                                                  Margin="0"
+                                                  Padding="16,0,0,0"
+                                                  VerticalOptions="Center">
+
+                                                <StackLayout
+                                                    Margin="0"
+                                                    Padding="0"
+                                                    Spacing="0"
+                                                    VerticalOptions="Start">
+
+                                                    <!--  Customer Name  -->
+                                                    <Label
+                                                        FontSize="14"
+                                                        Margin="0,0,0,10"
+                                                        HorizontalOptions="Start"
+                                                        Style="{DynamicResource TitleLabelStyle}"
+                                                        Text="{Binding CustomerName}"/>
+
+                                                    <!--  Commented Date  -->
+                                                    <Label
+                                                        FontFamily="Roboto-Regular"
+                                                        LineHeight="{OnPlatform Android=1.25,
+          Default=-1}"
+                                                        Style="{DynamicResource SimpleLabelStyle}"
+                                                        Text="{Binding ReviewedDate, StringFormat='{}{0:dd MMM, yyyy}'}"/>
+                                                </StackLayout>
+
+                                                <!--  Product rating  -->
+                                                <rating:SfRating BackgroundColor="Transparent"
+                                                        Grid.Column="1"
+                                                                 HorizontalOptions="End"
+                                                                 ItemSize="13"
+                                                                 ItemSpacing="1"
+                                                                 RatingSettings="{DynamicResource CommonRatingSettings}"
+                                                                 Style="{DynamicResource RatingStyle}"
+                                                                 VerticalOptions="Start"
+                                                                 Value="{Binding Rating}">
+                                                    <rating:SfRating.Triggers>
+                                                        <DataTrigger
+                                                            Binding="{Binding Rating}"
+                                                            TargetType="rating:SfRating"
+                                                            Value="0">
+                                                            <Setter Property="IsVisible"
+                                                                    Value="False"/>
+                                                        </DataTrigger>
+                                                    </rating:SfRating.Triggers>
+                                                </rating:SfRating>
+                                            </Grid>
+
+                                            <!--  Product images  -->
+                                            <StackLayout
+                                                Grid.Row="1"
+                                                Grid.ColumnSpan="2"
+                                                BindableLayout.ItemsSource="{Binding Images}"
+                                                Orientation="Horizontal"
+                                                Spacing="8">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Image
+                                                            Margin="0,8,0,0"
+                                                            Aspect="AspectFill"
+                                                            BackgroundColor="{DynamicResource Gray-200}"
+                                                            HeightRequest="50"
+                                                            WidthRequest="60">
+                                                            <Image.Source>
+                                                                <UriImageSource
+                                                                    CacheValidity="14"
+                                                                    CachingEnabled="true"
+                                                                    Uri="{Binding .}"/>
+                                                            </Image.Source>
+                                                        </Image>
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </StackLayout>
+
+                                            <!--  Product Review  -->
+                                            <Label
+                                                Grid.Row="2"
+                                                Grid.ColumnSpan="2"
+                                                Margin="0,10,0,16"
+                                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                HorizontalOptions="Start"
+                                                HorizontalTextAlignment="Start"
+                                                Style="{DynamicResource DescriptionLabelStyle}"
+                                                    FontFamily="Roboto-Regular"
+                                                Text="{Binding Comment}"/>
+                                        </Grid>
+
+                                    </StackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
+                    </StackLayout>
+
+                </Grid>
+            </Grid>
+        </ScrollView>
+    </ContentView.Content>
+</ContentView>

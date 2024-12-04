@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Chat.ChatMessagePage"
+             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:controls="clr-namespace:EssentialMAUIUIKit.Controls"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:templateSelector="clr-namespace:EssentialMAUIUIKit.Views.Chat"
+             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters">
+    <ContentView.BindingContext>
+        <local:ChatMessageViewModel/>
+    </ContentView.BindingContext>
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converter:DateTimeToStringConverter x:Key="DateTimeToStringConverter"/>
+            <templateSelector:MessageDataTemplateSelector x:Key="MessageDataTemplateSelector"/>
+        </ResourceDictionary>
+
+        <Style TargetType="listView:ListViewItem">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+
+    <ContentView.Content>
+
+        <Grid>
+            <ScrollView>
+
+                <!--  List view to show the recent chat history  -->
+                <listView:SfListView
+                    x:Name="ListView"
+                    AutoFitMode="Height"
+                    BackgroundColor="{DynamicResource Transparent}"
+                    IsStickyFooter="True"
+                    IsStickyHeader="True"
+                    ItemTemplate="{DynamicResource MessageDataTemplateSelector}"
+                    ItemsSource="{Binding UserProfile.ChatMessageInfo}"
+                    SelectionMode="None"
+                    VerticalOptions="Fill">
+
+                    <listView:SfListView.GroupHeaderTemplate>
+                        <DataTemplate>
+                            <Label
+                                Margin="0,16,0,0"
+                                FontFamily="Roboto-Regular"
+                                FontSize="12"
+                                HorizontalTextAlignment="Center"
+                                LineHeight="1.5"
+                                Text="{Binding Key, Converter={StaticResource DateTimeToStringConverter}}"
+                                TextColor="{DynamicResource Gray-700}"/>
+                        </DataTemplate>
+                    </listView:SfListView.GroupHeaderTemplate>
+
+                    <!--  Navigation bar  -->
+                    <listView:SfListView.HeaderTemplate>
+                        <DataTemplate>
+                            <Grid RowDefinitions="Auto, Auto"
+                                  RowSpacing="0">
+                                <Grid ColumnDefinitions="Auto,Auto,Auto,*"
+                                      Padding="4,10,10,10"
+                                      BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                      HorizontalOptions="Fill"
+                                      VerticalOptions="Fill">
+
+                                    <!--  Back Button  -->
+                                    <buttons:SfButton
+                                        Style="{DynamicResource IconButtonStyle}"
+                                        Text="{DynamicResource Back}"/>
+
+                                    <!--  Rounded Profile Image  -->
+                                    <Border Grid.Column="1"
+                                            Margin="8,0"
+                                            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                            Style="{DynamicResource ProfileBorderStyle}">
+                                        <Image HeightRequest="35"
+                                               WidthRequest="35"
+                                               x:Name="ProfileImage"
+                                               Source="https://cdn.syncfusion.com/essential-ui-kit-for-xamarin.forms/common/uikitimages/ProfileImage1.png"/>
+
+                                    </Border>
+
+                                    <!--  Profile Name  -->
+                                    <Label Grid.Column="2"
+                                           HorizontalOptions="Fill"
+                                           HorizontalTextAlignment="Start"
+                                           Style="{DynamicResource TitleLabelStyle}"
+                                           Text="Alex Russell"
+                                           VerticalOptions="Center"
+                                           VerticalTextAlignment="Center">
+                                    </Label>
+
+                                    <StackLayout Orientation="Horizontal"
+                                            Grid.Column="3"
+                                            HorizontalOptions="End">
+                                        <!--  Video call button  -->
+                                        <buttons:SfButton Grid.Column="3"
+                                                          Style="{DynamicResource IconButtonStyle}"
+                                                          Text="{DynamicResource VideoCall}"/>
+
+                                        <!--  Voice call button  -->
+                                        <buttons:SfButton Grid.Column="4"
+                                                          Style="{DynamicResource IconButtonStyle}"
+                                                          Text="{DynamicResource Phone}"/>
+
+                                        <!--  Menu Button  -->
+                                        <buttons:SfButton Grid.Column="5"
+                                                          Style="{DynamicResource IconButtonStyle}"
+                                                          Text="{DynamicResource More}"/>
+                                    </StackLayout>
+
+                                </Grid>
+                                <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"
+                                        Grid.Row="1"
+                                        Grid.ColumnSpan="4"/>
+                            </Grid>
+                        </DataTemplate>
+                    </listView:SfListView.HeaderTemplate>
+
+                    <!--  New text entry in the chat conversation  -->
+                    <listView:SfListView.FooterTemplate>
+                        <DataTemplate>
+                            <Grid
+                                Padding="16,5,16,24"
+                                ColumnDefinitions="*, Auto"
+                                ColumnSpacing="16"
+                                RowDefinitions="Auto">
+
+                                <!--  Rounded Border  -->
+                                <Border BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                        Padding="5,0"
+                                        Stroke="{DynamicResource Gray-Bg}"
+                                        StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 25"
+                                        Style="{DynamicResource ThemeBorderStyle}">
+
+                                    <Grid
+                                        ColumnDefinitions="*, Auto, Auto"
+                                        ColumnSpacing="0"
+                                        RowDefinitions="Auto">
+
+                                        <!--  Extendable editor  -->
+                                        <controls:BorderlessEditor
+                                            Margin="5,0"
+                                            Placeholder="Type here"
+                                            Style="{DynamicResource BorderlessEditorStyle}"
+                                            Text="{Binding NewMessage}"/>
+
+                                        <!--  Camera Button  -->
+                                        <buttons:SfButton
+                                            Grid.Column="1"
+                                            Style="{DynamicResource IconButtonStyle}"
+                                            Text="{DynamicResource Camera}"
+                                            VerticalOptions="End"/>
+
+                                        <!--  Attachment Button  -->
+                                        <buttons:SfButton
+                                            Grid.Column="2"
+                                            Style="{DynamicResource IconButtonStyle}"
+                                            Text="{DynamicResource Attachment}"
+                                            VerticalOptions="End"/>
+
+                                    </Grid>
+                                </Border>
+
+                                <!--  Send Button  -->
+                                <buttons:SfButton
+                                    Grid.Column="1"
+                                    Padding="0,2,2,0"
+                                    Background="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                    HorizontalOptions="End"
+                                    Style="{DynamicResource IconButtonStyle}"
+                                    Text="{DynamicResource Send}"
+                                    TextColor="{DynamicResource Gray-White}"
+                                    VerticalOptions="End"/>
+
+                            </Grid>
+                        </DataTemplate>
+                    </listView:SfListView.FooterTemplate>
+                </listView:SfListView>
+
+            </ScrollView>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

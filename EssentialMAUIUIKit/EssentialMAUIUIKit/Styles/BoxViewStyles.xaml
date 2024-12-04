@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Styles.BoxViewStyles">
+
+    <Style x:Key="HorizontalSeparatorStyle" TargetType="BoxView">
+        <Setter Property="Color" Value="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HeightRequest" Value="1" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" />
+    </Style>
+
+    <Style x:Key="VerticalSeparatorStyle" TargetType="BoxView">
+        <Setter Property="WidthRequest" Value="1" />
+        <Setter Property="HeightRequest" Value="12" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource Gray-700}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Catalog.ArticleCardPage"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converter:BooleanToStringConverter x:Key="boolToStringConverter"/>
+            <converter:BooleanToColorConverter x:Key="boolToColorConverter"/>
+        </ResourceDictionary>
+
+        <Style TargetType="listView:ListViewItem">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+    <ContentView.BindingContext>
+        <local:ArticleCardViewModel/>
+    </ContentView.BindingContext>
+    <ContentView.Content>
+        <Grid RowDefinitions="Auto, *"
+              RowSpacing="0">
+
+            <BoxView
+                Grid.Row="0"
+                HeightRequest="1"/>
+
+            <Grid Grid.Row="1">
+                <listView:SfListView  ItemSpacing="10"
+                                      x:Name="ArticlesCard"
+                                      AllowSwiping="True"
+                                      AutoFitMode="Height"
+                                      ScrollBarVisibility="Never"
+                                      ItemsSource="{Binding Articles}"
+                                      SelectionBackground="Transparent"
+                                      SelectionGesture="Tap"
+                                      SelectionMode="Single"
+                                      VerticalOptions="Fill">
+                    <listView:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <Border HeightRequest="240"
+                                    WidthRequest="{OnIdiom Phone=343,
+    Tablet=343,
+    Desktop=344}"
+                                    Margin="16"
+                                    Padding="0"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 4"
+                                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
+                                <Border.Content>
+                                    <syncEffectsView:SfEffectsView
+                                        RippleBackground="{DynamicResource Gray-300}"
+                                        TouchDownEffects="Ripple">
+
+                                        <Border
+                                            Stroke="Transparent"
+                                            StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 4,4,4,4">
+                                            <Grid WidthRequest="343"
+                                                  ColumnSpacing="0"
+                                                  ColumnDefinitions=".5*, .5*"
+                                                  RowDefinitions="*, Auto"
+                                                  RowSpacing="0">
+
+                                                <Border Grid.ColumnSpan="2"
+                                                        Grid.Row="0"
+                                                        Stroke="Transparent"
+                                                        StrokeShape="RoundRectangle 10">
+                                                    <Image
+                                                        Aspect="AspectFill">
+                                                        <Image.Source>
+                                                            <UriImageSource
+                                                                CacheValidity="14"
+                                                                CachingEnabled="true"
+                                                                Uri="{Binding ImagePath}"/>
+                                                        </Image.Source>
+                                                    </Image>
+
+                                                </Border>
+
+                                                <!--  Description of the Article  -->
+                                                <StackLayout
+                                                    Grid.Row="1"
+                                                    Grid.Column="0"
+                                                    Margin="16,0,16,0"
+                                                    Spacing="0"
+                                                    HorizontalOptions="Start"
+                                                    VerticalOptions="Start">
+
+                                                    <!--  Article Title  -->
+                                                    <Label
+                                                        Margin="0,8"
+                                                        HorizontalOptions="Start"
+                                                        LineBreakMode="TailTruncation"
+                                                        Style="{DynamicResource TitleLabelStyle}"
+                                                        Text="{Binding Name}"
+                                                        VerticalOptions="End"/>
+
+                                                    <!--  Author name  -->
+                                                    <Label
+                                                        FontFamily="Roboto-Regular"
+                                                        FontSize="12"
+                                                        LineHeight="{OnPlatform Default=-1,
+                                                            Android=1.5}"
+                                                        Text="{Binding Author}"
+                                                        TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                                        VerticalOptions="End"/>
+
+                                                    <!--  Published date and average reading time  -->
+                                                    <Label
+                                                        Grid.Row="2"
+                                                        Margin="0,0,0,8"
+                                                        FontSize="12"
+                                                        LineHeight="{OnPlatform Default=-1,
+                                                            Android=1.5}"
+                                                        VerticalOptions="End">
+                                                        <Label.FormattedText>
+                                                            <FormattedString>
+                                                                <Span Text="{Binding Date}"
+                                                                      TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                                                        FontFamily="Roboto-Regular"/>
+                                                                <Span Text=" | "
+                                                                      TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                                                        FontFamily="Roboto-Regular"/>
+                                                                <Span Text="{Binding AverageReadingTime}"
+                                                                      TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                                                        FontFamily="Roboto-Regular"/>
+                                                            </FormattedString>
+                                                        </Label.FormattedText>
+                                                    </Label>
+                                                </StackLayout>
+
+                                                <StackLayout Grid.Row="1"
+                                                             Grid.Column="1">
+                                                    <StackLayout
+                                                        Margin="0,8,16,8"
+                                                        HorizontalOptions="End"
+                                                        VerticalOptions="Start"
+                                                        Orientation="Horizontal"
+                                                        Spacing="0">
+
+                                                        <!--  Bookmark Button  -->
+                                                        <buttons:SfButton
+                                                            HeightRequest="30"
+                                                            Style="{DynamicResource IconButtonStyle}"
+                                                            Text="{Binding IsBookmarked, Converter={StaticResource boolToStringConverter}, ConverterParameter=0}"
+                                                            TextColor="{Binding IsBookmarked, Converter={StaticResource boolToColorConverter}, ConverterParameter=4}"
+                                                            Clicked="BookmarkButton_Clicked"
+                                                            WidthRequest="30"/>
+
+                                                        <!--  Favourite Icon  -->
+                                                        <buttons:SfButton
+                                                            HeightRequest="30"
+                                                            Style="{DynamicResource IconButtonStyle}"
+                                                            Text="{Binding IsFavourite, Converter={StaticResource boolToStringConverter}, ConverterParameter=1}"
+                                                            TextColor="{Binding IsFavourite, Converter={x:StaticResource boolToColorConverter}, ConverterParameter=4}"
+                                                            Clicked="FavouriteButton_Clicked_1"
+                                                            WidthRequest="30"/>
+
+                                                        <!--  Share Icon  -->
+                                                        <buttons:SfButton
+                                                            x:Name="shareButton"
+                                                            Margin="0"
+                                                            Padding="0"
+                                                            HeightRequest="30"
+                                                            HorizontalTextAlignment="Center"
+                                                            Style="{DynamicResource IconButtonStyle}"
+                                                            Text="{DynamicResource Share}"
+                                                            WidthRequest="30"/>
+                                                    </StackLayout>
+
+                                                </StackLayout>
+
+                                            </Grid>
+                                        </Border>
+                                    </syncEffectsView:SfEffectsView>
+                                </Border.Content>
+                            </Border>
+                        </DataTemplate>
+                    </listView:SfListView.ItemTemplate>
+
+                    <!--  Layout to customize no. of columns in SfListView  -->
+                    <listView:SfListView.ItemsLayout>
+                        <listView:GridLayout SpanCount="{OnPlatform Default=3, Android=1, iOS=1}"/>
+                    </listView:SfListView.ItemsLayout>
+
+                </listView:SfListView>
+            </Grid>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

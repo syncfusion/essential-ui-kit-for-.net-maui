@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.AppLayout.Views.HomePageDesktopUI"
+             xmlns:viewModels="clr-namespace:EssentialMAUIUIKit.AppLayout.ViewModels;assembly=EssentialMAUIUIKit"
+             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:controls="clr-namespace:EssentialMAUIUIKit.AppLayout.Controls"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="AppLayoutStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.BindingContext>
+        <viewModels:HomePageViewModel/>
+    </ContentPage.BindingContext>
+
+    <Grid
+        RowDefinitions="60,*"
+        x:Name="samplegrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{OnPlatform WinUI=300, MacCatalyst=400}"/>
+            <ColumnDefinition Width="*"/>
+
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Row="0"
+              Grid.ColumnSpan="2"
+              ColumnDefinitions="*, *, *"
+              BackgroundColor="#5470FF">
+            <HorizontalStackLayout>
+                <Image Source="appicon.png"
+                       HeightRequest="40"
+                       Margin="10,0,10,0"
+                       VerticalOptions="Center"/>
+                <Label Text="MAUI Essential UI Kit"
+                       Padding="0,0,10,0"
+                       VerticalOptions="Center"
+                       FontFamily="Roboto-Medium"
+                       FontSize="16"
+                       TextColor="White"/>
+            </HorizontalStackLayout>
+
+            <Grid Grid.Column="1"
+                  HeightRequest="40"
+                  HorizontalOptions="Center">
+                <Border StrokeShape="RoundRectangle 25"
+                        BackgroundColor="#6982ff"
+                        Stroke="Transparent">
+                    <HorizontalStackLayout>
+                        <Label Text="&#xe705;"
+                               FontFamily="FontIcons"
+                               TextColor="#FFFFFF"
+                               FontSize="18"
+                               VerticalTextAlignment="Center"
+                               Padding="10,0,0,0"/>
+                        <controls:SfEntry x:Name="searchView"
+                                          Placeholder="Search"
+                                          Background="Transparent"
+                                          VerticalTextAlignment="Center"
+                                          WidthRequest="400"
+                                          Margin="{OnPlatform Default='10,0,0,10', MacCatalyst='10,10,0,10'}"
+                                          Grid.Column="1"
+                                          PlaceholderColor="{DynamicResource PrimaryTextColorDark}"
+                                          TextColor="{DynamicResource PrimaryTextColorDark}"
+                                          FontFamily="Roboto-Medium"
+                                          FontSize="14"
+                                          HeightRequest="38"
+                                          Unfocused="searchView_Unfocused"
+                                          TextChanged="searchView_TextChanged"
+                                          ClearButtonVisibility="Never"
+                                          Text="{Binding SearchText}"/>
+                    </HorizontalStackLayout>
+
+                </Border>
+
+            </Grid>
+            <StackLayout
+                Grid.Column="2"
+                HorizontalOptions="End"
+                Orientation="Horizontal"
+                Spacing="0">
+                <Button
+                    x:Name="CodeViewerIcon"
+                    Clicked="GotoCodeViewer"
+                    FontSize="18"
+                    Style="{DynamicResource ActionBarSettingIconStyle}"
+                    Text="&#xe753;"
+                    VerticalOptions="Start"
+                    WidthRequest="35"/>
+
+                <Button
+                    x:Name="SettingsIcon"
+                    Clicked="ShowSettings"
+                    FontSize="18"
+                    Style="{DynamicResource ActionBarSettingIconStyle}"
+                    VerticalOptions="Start"/>
+            </StackLayout>
+        </Grid>
+
+        <Border HorizontalOptions="Start"
+                Grid.Row="1"
+                Grid.Column="0"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 10"
+                BackgroundColor="#F9F9F9"
+                Margin="10"
+                Padding="0">
+            <listView:SfListView ScrollBarVisibility="Never"
+                                 ItemSize="{OnPlatform WinUI=60, MacCatalyst=70}"
+                                 x:Name="listView"
+                                 SelectionBackground="{AppThemeBinding Light={DynamicResource SelectionBackgroundLight}, Dark={DynamicResource SelectionBackgroundDark}}"
+                                 BackgroundColor="{AppThemeBinding Light=#F9F9F9, Dark={DynamicResource BackgroundColorDark}}"
+                                 ItemsSource="{Binding Categories}"
+                                 ItemTapped="listView_ItemTapped">
+
+                <listView:SfListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <!--  The image at the left will be rendered with some space.  -->
+                            <Grid
+                                Margin="0,10,10,8"
+                                ColumnDefinitions="Auto, *"
+                                RowSpacing="8">
+
+                                <Image Margin="10,0,10,0"
+                                       Grid.RowSpan="2"
+                                       Grid.Column="0"
+                                       Aspect="AspectFit"
+                                       HeightRequest="32"
+                                       Style="{DynamicResource ItemImageStyle}"
+                                       WidthRequest="32"/>
+
+                                <Grid ColumnDefinitions="*,*"
+                                      Grid.Column="1"
+                                      Grid.ColumnSpan="2">
+                                    <Label FontSize="14"
+                                           VerticalOptions="Center"
+                                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                           Style="{DynamicResource ItemTitleStyle}"/>
+
+                                    <Border Grid.Column="1"
+                                            HorizontalOptions="End"
+                                            Stroke="Transparent"
+                                            WidthRequest="100"
+                                            HeightRequest="20"
+                                            VerticalOptions="Center"
+                                            Margin="0"
+                                            Padding="0"
+                                            BackgroundColor="{AppThemeBinding Light=#EDF0F3, Dark={DynamicResource BackgroundColorDark}}"
+                                            StrokeShape="RoundRectangle 10">
+                                        <Border.Content>
+                                            <Label HorizontalOptions="Center"
+                                                   Padding="10,0,10,0"
+                                                   Style="{DynamicResource ItemCountLabelStyle}"/>
+                                        </Border.Content>
+                                    </Border>
+                                </Grid>
+
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </listView:SfListView.ItemTemplate>
+            </listView:SfListView>
+        </Border>
+
+        <Grid Grid.Row="1"
+              Grid.Column="1"
+              x:Name="SampleViewGrid">
+
+        </Grid>
+
+        <Grid Grid.Row="1"
+              Grid.ColumnSpan="2"
+              x:Name="propertyFrameOverlay"
+              BindingContext="{x:Reference propertyFrame }"
+              IsVisible="False"
+              Background="#22000000">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="PropertiesTapped"/>
+            </Grid.GestureRecognizers>
+        </Grid>
+        <Grid x:Name="propertyFrame"
+              IsVisible="False"
+              Grid.Column="1"
+              Padding="12"
+              Grid.Row="1"
+              WidthRequest="300"
+              HorizontalOptions="End"
+              BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
+            <Grid RowDefinitions="24,*"
+                  RowSpacing="10"
+                  IsClippedToBounds="True">
+                <Grid Grid.Row="0">
+                    <Label Text="Settings"
+                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                           FontFamily="Roboto-Medium"
+                           VerticalTextAlignment="Center"
+                           VerticalOptions="Center"
+                           FontSize="16"
+                           HeightRequest="20"/>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="PropertiesTapped"/>
+                    </Grid.GestureRecognizers>
+                </Grid>
+                <Grid x:Name="propertyGrid"
+                      Grid.Row="1"
+                      ColumnDefinitions="*,*"
+                      HeightRequest="50"
+                      VerticalOptions="Start">
+                    <Label Text="Dark Theme"
+                           FontFamily="Roboto-Medium"
+                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                           VerticalOptions="Center"/>
+                    <buttons:SfSwitch x:Name="themeSwitch"
+                                      Grid.Column="1"
+                                      IsOn="False"
+                                      StateChanged="SfSwitch_StateChanged"
+                                      HorizontalOptions="End"/>
+                </Grid>
+            </Grid>
+        </Grid>
+        <Grid x:Name="searchListGrid"
+              IsVisible="False"
+              Grid.Row="1"
+              Grid.ColumnSpan="2">
+            <Grid VerticalOptions="Start"
+                  RowDefinitions="Auto"
+                  Background="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                  HorizontalOptions="Center"
+                  x:Name="shadowGrid"
+                  Margin="0,0,0,0"
+                  MaximumHeightRequest="300"
+                  IsClippedToBounds="True">
+                <Grid.Shadow>
+                    <Shadow Brush="Black"
+                            Radius="5"/>
+                </Grid.Shadow>
+                <ScrollView x:Name="searchScrollView"
+                            Orientation="Vertical"
+                            WidthRequest="400"
+                            Margin="0,0,0,5"
+                            MaximumHeightRequest="296"
+                            VerticalOptions="Fill"
+                            VerticalScrollBarVisibility="Always"
+                            HorizontalOptions="Center">
+                    <VerticalStackLayout x:Name="searchedResultList"
+                                         Margin="5,0"
+                                         BindableLayout.ItemsSource="{Binding SearchList, Mode=TwoWay}"
+                                         Background="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                         Padding="0">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <HorizontalStackLayout Padding="5"
+                                                       Spacing="5"
+                                                       HeightRequest="40">
+                                    <HorizontalStackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                                    </HorizontalStackLayout.GestureRecognizers>
+                                    <Label Grid.Row="0"
+                                           Text="{Binding Category.Name }"
+                                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                           FontSize="14"
+                                           VerticalOptions="Center"
+                                           VerticalTextAlignment="Center"/>
+                                    <Label Grid.Row="0"
+                                           Text="-"
+                                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                           FontSize="14"
+                                           VerticalOptions="Center"
+                                           VerticalTextAlignment="Center"/>
+                                    <Label Grid.Row="0"
+                                           Text="{Binding Template.Name }"
+                                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                           FontSize="14"
+                                           VerticalOptions="Center"
+                                           VerticalTextAlignment="Center"/>
+
+                                </HorizontalStackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </ScrollView>
+
+            </Grid>
+        </Grid>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Transaction.PaymentSuccessPage"
+             xmlns:button="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons">
+   <Grid>
+      <button:SfButton
+         Margin="8"
+         FontSize="20"
+         HorizontalOptions="End"
+         Text="{DynamicResource Close}"
+         Style="{DynamicResource IconButtonStyle}"
+         VerticalOptions="Start"/>
+
+      <ScrollView HorizontalOptions="Center"
+                  VerticalOptions="Center">
+         <StackLayout
+            HorizontalOptions="Center"
+            Spacing="0"
+            VerticalOptions="Center">
+
+            <!--  Payment status image  -->
+
+            <Image
+               Margin="0,10,0,0"
+               HeightRequest="80"
+               Source="paymentsuccess.png"
+               WidthRequest="80"/>
+
+            <!--  Payment status label  -->
+            <Label
+               Margin="0,40,0,0"
+               FontSize="22"
+               LineHeight="{OnPlatform Android=1.25,
+                                         Default=-1}"
+               Style="{DynamicResource TitleLabelStyle}"
+               HorizontalOptions="Center"
+               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+               Text="Payment success"/>
+
+            <!--  Payment description label  -->
+            <Label
+               Margin="17,8"
+               FontFamily="Roboto-Regular"
+               LineHeight="{OnPlatform Android=1.25,
+                                         Default=-1}"
+               Style="{DynamicResource TitleLabelStyle}"
+               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+               FontSize="16"
+               Text="Thank you for your payment. An automated payment receipt will be sent to your registered email."/>
+
+            <button:SfButton
+               Margin="0,24"
+               Text="OK"
+               VerticalOptions="Start"
+               WidthRequest="245"
+               Style="{DynamicResource FormsButtonStyle}"/>
+
+         </StackLayout>
+      </ScrollView>
+
+   </Grid>
+</ContentView>

@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Profile.HealthProfilePage"
+             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+    <ContentView.Resources>
+        <Style TargetType="listView:ListViewItem">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+    <ContentView.BindingContext>
+        <local:HealthProfileViewModel x:Name="viewModel"/>
+    </ContentView.BindingContext>
+    <ContentView.Content>
+        <ScrollView>
+            <Grid RowDefinitions="Auto, *">
+
+                <Grid
+                    HeightRequest="361"
+                    RowDefinitions="Auto, Auto, *"
+                    RowSpacing="0">
+                    <Grid Grid.RowSpan="3">
+                        <Grid.Background>
+                            <LinearGradientBrush StartPoint="0,0"
+                                                 EndPoint="0,1">
+                                <GradientStop Offset="0.0"
+                                              Color="#513FF8"/>
+                                <GradientStop Offset="1.0"
+                                              Color="#AF1AC2"/>
+                            </LinearGradientBrush>
+                        </Grid.Background>
+                    </Grid>
+
+                    <!--  Profile Image  -->
+                    <Border
+                        Margin="0,56,0,8"
+                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                        Stroke="{DynamicResource Gray-White}"
+                        StrokeThickness="2"
+                        StrokeShape="RoundRectangle 60"
+                        HeightRequest="120"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Start"
+                        WidthRequest="120">
+
+                        <Image Aspect="AspectFill"
+                               BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
+                            <Image.Source>
+                                <UriImageSource
+                                    CacheValidity="14"
+                                    CachingEnabled="True"
+                                    Uri="{Binding ProfileImage}"/>
+                            </Image.Source>
+                        </Image>
+
+                    </Border>
+
+                    <!--  Profile Name  -->
+                    <Label
+                        Grid.Row="1"
+                        Margin="0,0,0,2"
+                        FontSize="20"
+                        Style="{DynamicResource TitleLabelStyle}"
+                        Text="{Binding ProfileName}"
+                        TextColor="{DynamicResource Gray-White}"/>
+
+                    <!--  State and Country  -->
+                    <Label
+                        Grid.Row="2"
+                        FontSize="12"
+                        Style="{DynamicResource DescriptionLabelStyle}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding State}"
+                                      TextColor="{DynamicResource Gray-White}"/>
+                                <Span Text=" "/>
+                                <Span Text="{Binding Country}"
+                                      TextColor="{DynamicResource Gray-White}"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </Grid>
+
+                <Border
+                    Grid.Row="1"
+                    Margin="0,-69,0,0"
+                    Padding="0,61,0,0"
+                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 14,14,0,0"
+                    VerticalOptions="Start">
+                    <listView:SfListView
+                        AutoFitMode="Height"
+                        IsScrollingEnabled="False"
+                        ItemSize="74"
+                        ItemsSource="{Binding CardItems}"
+                        SelectionMode="None">
+                        <listView:SfListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border
+                                    Margin="16,8"
+                                    Padding="0"
+                                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 4"
+                                    HorizontalOptions="Center"
+                                    WidthRequest="{OnIdiom Phone=343,
+                                                       Default=736}">
+
+                                    <Grid
+                                        Padding="16"
+                                        RowDefinitions="Auto, *"
+                                        RowSpacing="0">
+
+                                        <!--  Category  -->
+                                        <Label
+                                            HeightRequest="24"
+                                            HorizontalOptions="Start"
+                                            Style="{DynamicResource TitleLabelStyle}"
+                                            Text="{Binding CategoryValue}"/>
+
+                                        <!--  Category Value  -->
+                                        <Label
+                                            Grid.Row="1"
+                                            FontSize="12"
+                                            HeightRequest="18"
+                                            HorizontalOptions="Start"
+                                            Style="{DynamicResource DescriptionLabelStyle}"
+                                            Text="{Binding Category}"/>
+
+                                        <!--  Category Image  -->
+                                        <Image
+                                            Grid.RowSpan="2"
+                                            BackgroundColor="Transparent"
+                                            HeightRequest="31"
+                                            HorizontalOptions="End"
+                                            Source="{Binding CategoryImage}"
+                                            VerticalOptions="Center"
+                                            WidthRequest="32"/>
+                                    </Grid>
+
+                                </Border>
+                            </DataTemplate>
+                        </listView:SfListView.ItemTemplate>
+                    </listView:SfListView>
+                </Border>
+
+                <Border
+                    Grid.Row="0"
+                    Margin="16,0,16,24"
+                    Padding="0"
+                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 4"
+                    HorizontalOptions="Center"
+                    VerticalOptions="End"
+                    WidthRequest="{OnIdiom Phone=343,
+                                       Default=736}">
+
+                    <Border.Content>
+                        <Grid
+                            ColumnDefinitions="*, Auto, *, Auto, *"
+                            ColumnSpacing="0"
+                            HeightRequest="90"
+                            RowDefinitions="*, *"
+                            RowSpacing="0"
+                            WidthRequest="{OnIdiom Phone=343,
+                                               Default=480}">
+
+                            <!--  Age  -->
+                            <Label
+                                HeightRequest="24"
+                                Style="{DynamicResource TitleLabelStyle}"
+                                Text="{Binding Age}"
+                                VerticalOptions="End"/>
+
+                            <Label
+                                Grid.Row="1"
+                                FontSize="12"
+                                Style="{DynamicResource DescriptionLabelStyle}"
+                                Text="Age"/>
+
+                            <!--  Seperator  -->
+                            <BoxView
+                                Grid.RowSpan="2"
+                                Grid.Column="1"
+                                BackgroundColor="{DynamicResource Gray-400}"
+                                HeightRequest="24"
+                                Style="{DynamicResource VerticalSeparatorStyle}"/>
+
+
+                            <!--  Weight  -->
+                            <Label
+                                Grid.Row="0"
+                                Grid.Column="2"
+                                HeightRequest="24"
+                                Style="{DynamicResource TitleLabelStyle}"
+                                Text="{Binding Weight}"
+                                VerticalOptions="End"/>
+
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="2"
+                                FontSize="12"
+                                Style="{DynamicResource DescriptionLabelStyle}"
+                                Text="Weight"/>
+
+                            <!--  Seperator  -->
+                            <BoxView
+                                Grid.RowSpan="2"
+                                Grid.Column="3"
+                                BackgroundColor="{DynamicResource Gray-400}"
+                                HeightRequest="24"
+                                Style="{DynamicResource VerticalSeparatorStyle}"/>
+
+                            <!--  Height  -->
+                            <Label
+                                Grid.Row="0"
+                                Grid.Column="4"
+                                HeightRequest="24"
+                                Style="{DynamicResource TitleLabelStyle}"
+                                Text="{Binding Height}"
+                                VerticalOptions="End"/>
+
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="4"
+                                FontSize="12"
+                                Style="{DynamicResource DescriptionLabelStyle}"
+                                Text="Height"/>
+
+                        </Grid>
+                    </Border.Content>
+
+                </Border>
+            </Grid>
+        </ScrollView>
+    </ContentView.Content>
+</ContentView>

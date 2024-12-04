@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.History.MyOrdersPage"
+             xmlns:tabView="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.TabView"
+             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core">
+    <ContentView.BindingContext>
+        <local:OrdersViewModel x:Name="viewModel"/>
+    </ContentView.BindingContext>
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converter:StringToColorConverter x:Key="StringToColorConverter"/>
+        </ResourceDictionary>
+
+    </ContentView.Resources>
+
+
+    <ContentView.Content>
+
+        <tabView:SfTabView
+            WidthRequest="{OnPlatform WinUI=650, MacCatalyst=650}">
+            <tabView:SfTabItem
+                Header="All Orders"
+                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                FontFamily="Roboto-Regular"
+                FontSize="14">
+                <tabView:SfTabItem.Content>
+
+                    <!--  My Order list  -->
+                    <listView:SfListView
+                        x:Name="myOrderList"
+                        AutoFitMode="DynamicHeight"
+                        ItemsSource="{Binding Orders}"
+                        HeightRequest="700"
+                        SelectionMode="None"
+                        VerticalOptions="Start">
+
+
+                        <listView:SfListView.ItemTemplate>
+                            <DataTemplate>
+                                <syncEffectsView:SfEffectsView
+                                    Margin="0,16,0,0"
+                                    TouchDownEffects="Ripple">
+                                    <Grid
+                                        ColumnDefinitions="Auto, *"
+                                        ColumnSpacing="0"
+                                        RowSpacing="0">
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="{OnIdiom Default=1, Phone=0}"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Border Grid.Row="0"
+                                                Grid.RowSpan="4"
+                                                Grid.Column="0"
+                                                Margin="16,8,16,16"
+                                                HeightRequest="80"
+                                                WidthRequest="80"
+                                                StrokeThickness="0"
+                                                StrokeShape="RoundRectangle 10">
+                                            <!--  Product image  -->
+                                            <Image
+                                                Aspect="Fill">
+                                                <Image.Source>
+                                                    <UriImageSource
+                                                        CacheValidity="14"
+                                                        CachingEnabled="true"
+                                                        Uri="{Binding ProductImage}"/>
+                                                </Image.Source>
+                                            </Image>
+                                        </Border>
+
+                                        <!--  Product name  -->
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            Margin="0,8,0,4"
+                                            FontFamily="Roboto-Medium"
+                                            FontSize="14"
+                                            HorizontalOptions="Start"
+                                            LineBreakMode="TailTruncation"
+                                            LineHeight="1.5"
+                                            MaxLines="1"
+                                            Text="{Binding Name}"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+
+                                        <!--  Description label  -->
+                                        <Label
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            Margin="0,0,0,8"
+                                            FontFamily="Roboto-Regular"
+                                            FontSize="12"
+                                            HorizontalOptions="Start"
+                                            LineHeight="1.5"
+                                            Text="{Binding Description}"
+                                            TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                                        <StackLayout
+                                            Grid.Row="2"
+                                            Grid.Column="1"
+                                            Margin="0,4,0,0"
+                                            Padding="0"
+                                            HorizontalOptions="Start"
+                                            Orientation="Horizontal"
+                                            Spacing="0"
+                                            VerticalOptions="Start">
+
+                                            <!--  Order ID  -->
+                                            <Label
+                                                Margin="0"
+                                                FontFamily="Roboto-Regular"
+                                                FontSize="12"
+                                                Text="{Binding OrderID, StringFormat='Order ID: {0}'}"
+                                                TextColor="{DynamicResource Gray-700}"
+                                                VerticalOptions="Center"/>
+
+                                            <!--  Order status  -->
+
+                                            <Border
+                                                Margin="8,0"
+                                                Padding="0"
+                                                Stroke="Transparent"
+                                                StrokeShape="RoundRectangle 12,12,12,12"
+                                                HeightRequest="24"
+                                                HorizontalOptions="Start"
+                                                WidthRequest="96">
+
+                                                <Border.Content>
+                                                    <Grid>
+                                                        <BoxView BackgroundColor="{Binding Status, Converter={x:StaticResource StringToColorConverter}, ConverterParameter=0}"
+                                                                 Opacity="0.1"/>
+
+                                                        <Label
+                                                            FontFamily="Roboto-Medium"
+                                                            FontSize="12"
+                                                            HorizontalOptions="Center"
+                                                            Text="{Binding Status}"
+                                                            TextColor="{Binding Status, Converter={x:StaticResource StringToColorConverter}, ConverterParameter=0}"
+                                                            VerticalOptions="Center"/>
+                                                    </Grid>
+                                                </Border.Content>
+                                            </Border>
+
+                                        </StackLayout>
+
+                                    </Grid>
+                                </syncEffectsView:SfEffectsView>
+                            </DataTemplate>
+                        </listView:SfListView.ItemTemplate>
+
+                    </listView:SfListView>
+                </tabView:SfTabItem.Content>
+            </tabView:SfTabItem>
+
+            <tabView:SfTabItem
+                Header="Requested"
+                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                FontFamily="Roboto-Regular"
+                FontSize="14">
+                <tabView:SfTabItem.Content>
+                    <Grid>
+                        <!--  My Order list  -->
+                        <listView:SfListView
+         AutoFitMode="DynamicHeight"
+             HeightRequest="700"
+         ItemsSource="{Binding RequestedOrders}"
+         SelectionMode="None"
+         VerticalOptions="Start">
+
+                            <listView:ListViewItem Style="{DynamicResource ListViewItemStyle}"/>
+
+                            <listView:SfListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid
+                     ColumnSpacing="0"
+                     RowSpacing="0"
+                     ColumnDefinitions="Auto, *">
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="{OnIdiom Default=1, Phone=0}"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Border Grid.Row="0"
+                             StrokeThickness="0"
+                             Grid.RowSpan="4"
+                             Grid.Column="0"
+                             Margin="16,8,16,16"
+                             StrokeShape="RoundRectangle 10"
+                             HeightRequest="80"
+                             WidthRequest="80">
+                                            <!--  Product image  -->
+                                            <Image
+                             Aspect="Fill"
+                             BackgroundColor="{DynamicResource Gray-200}">
+                                                <Image.Source>
+                                                    <UriImageSource
+                                     CacheValidity="14"
+                                     CachingEnabled="true"
+                                     Uri="{Binding ProductImage}"/>
+                                                </Image.Source>
+                                            </Image>
+                                        </Border>
+
+
+
+                                        <!--  Product name  -->
+                                        <Label
+                         Grid.Row="0"
+                         Grid.Column="1"
+                         Margin="0,8,0,4"
+                         FontFamily="Roboto-Medium"
+                         FontSize="14"
+                         HorizontalOptions="Start"
+                         LineBreakMode="TailTruncation"
+                         LineHeight="1.5"
+                         MaxLines="1"
+                         Text="{Binding Name}"
+                         TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+
+                                        <!--  Description label  -->
+                                        <Label
+                         Grid.Row="1"
+                         Grid.Column="1"
+                         Margin="0,0,0,8"
+                         FontFamily="Roboto-Regular"
+                         FontSize="12"
+                         HorizontalOptions="Start"
+                         LineHeight="1.5"
+                         Text="{Binding Description}"
+                         TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                                        <!--  Order ID  -->
+                                        <Label
+                         Grid.Row="2"
+                         Grid.Column="1"
+                         FontFamily="Roboto-Regular"
+                         FontSize="12"
+                         HorizontalOptions="Start"
+                         Text="{Binding OrderID, StringFormat='Order ID: {0}'}"
+                         VerticalOptions="Center"
+                         TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                                    </Grid>
+                                </DataTemplate>
+                            </listView:SfListView.ItemTemplate>
+
+                        </listView:SfListView>
+
+                    </Grid>
+                </tabView:SfTabItem.Content>
+            </tabView:SfTabItem>
+
+            <tabView:SfTabItem
+                Header="Completed"
+                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                FontFamily="Roboto-Regular"
+                FontSize="14">
+                <tabView:SfTabItem.Content>
+                    <Grid>
+                        <!--  My Order list  -->
+                        <listView:SfListView
+         AutoFitMode="DynamicHeight"
+             HeightRequest="700"
+         ItemsSource="{Binding CompletedOrders}"
+         SelectionMode="None"
+         VerticalOptions="Start">
+
+                            <listView:ListViewItem Style="{DynamicResource ListViewItemStyle}"/>
+
+                            <listView:SfListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid
+                     ColumnSpacing="0"
+                     RowSpacing="0"
+                     ColumnDefinitions="Auto, *">
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="{OnIdiom Default=1, Phone=0}"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Border Grid.Row="0"
+                             StrokeThickness="0"
+                             Grid.RowSpan="4"
+                             Grid.Column="0"
+                             Margin="16,8,16,16"
+                             StrokeShape="RoundRectangle 10"
+                             HeightRequest="80"
+                             WidthRequest="80">
+                                            <!--  Product image  -->
+                                            <Image
+                             Aspect="Fill"
+                             BackgroundColor="{DynamicResource Gray-200}">
+                                                <Image.Source>
+                                                    <UriImageSource
+                                     CacheValidity="14"
+                                     CachingEnabled="true"
+                                     Uri="{Binding ProductImage}"/>
+                                                </Image.Source>
+                                            </Image>
+                                        </Border>
+
+
+
+                                        <!--  Product name  -->
+                                        <Label
+                         Grid.Row="0"
+                         Grid.Column="1"
+                         Margin="0,8,0,4"
+                         FontFamily="Roboto-Medium"
+                         FontSize="14"
+                         HorizontalOptions="Start"
+                         LineBreakMode="TailTruncation"
+                         LineHeight="1.5"
+                         MaxLines="1"
+                         Text="{Binding Name}"
+                         TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+
+                                        <!--  Description label  -->
+                                        <Label
+                         Grid.Row="1"
+                         Grid.Column="1"
+                         Margin="0,0,0,8"
+                         FontFamily="Roboto-Regular"
+                         FontSize="12"
+                         HorizontalOptions="Start"
+                         LineHeight="1.5"
+                         Text="{Binding Description}"
+                         TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                                        <!--  Order ID  -->
+                                        <Label
+                         Grid.Row="2"
+                         Grid.Column="1"
+                         FontFamily="Roboto-Regular"
+                         FontSize="12"
+                         HorizontalOptions="Start"
+                         Text="{Binding OrderID, StringFormat='Order ID: {0}'}"
+                         VerticalOptions="Center"
+                         TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                                    </Grid>
+                                </DataTemplate>
+                            </listView:SfListView.ItemTemplate>
+
+                        </listView:SfListView>
+
+                    </Grid>
+                </tabView:SfTabItem.Content>
+            </tabView:SfTabItem>
+
+            <tabView:SfTabItem
+                Header="Cancelled"
+                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                FontFamily="Roboto-Regular"
+                FontSize="14">
+                <tabView:SfTabItem.Content>
+                    <Grid>
+                        <!--  My Order list  -->
+                        <listView:SfListView
+         AutoFitMode="DynamicHeight"
+             HeightRequest="700"
+         ItemsSource="{Binding CancelledOrders}"
+         SelectionMode="None"
+         VerticalOptions="Start">
+
+                            <listView:ListViewItem Style="{DynamicResource ListViewItemStyle}"/>
+
+                            <listView:SfListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid
+                     ColumnSpacing="0"
+                     RowSpacing="0"
+                     ColumnDefinitions="Auto, *">
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="{OnIdiom Default=1, Phone=0}"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Border Grid.Row="0"
+                             StrokeThickness="0"
+                             Grid.RowSpan="4"
+                             Grid.Column="0"
+                             Margin="16,8,16,16"
+                             StrokeShape="RoundRectangle 10"
+                             HeightRequest="80"
+                             WidthRequest="80">
+                                            <!--  Product image  -->
+                                            <Image
+                             Aspect="Fill"
+                             BackgroundColor="{DynamicResource Gray-200}">
+                                                <Image.Source>
+                                                    <UriImageSource
+                                     CacheValidity="14"
+                                     CachingEnabled="true"
+                                     Uri="{Binding ProductImage}"/>
+                                                </Image.Source>
+                                            </Image>
+                                        </Border>
+
+
+
+                                        <!--  Product name  -->
+                                        <Label
+                         Grid.Row="0"
+                         Grid.Column="1"
+                         Margin="0,8,0,4"
+                         FontFamily="Roboto-Medium"
+                         FontSize="14"
+                         HorizontalOptions="Start"
+                         LineBreakMode="TailTruncation"
+                         LineHeight="1.5"
+                         MaxLines="1"
+                         Text="{Binding Name}"
+                         TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+
+                                        <!--  Description label  -->
+                                        <Label
+                         Grid.Row="1"
+                         Grid.Column="1"
+                         Margin="0,0,0,8"
+                         FontFamily="Roboto-Regular"
+                         FontSize="12"
+                         HorizontalOptions="Start"
+                         LineHeight="1.5"
+                         Text="{Binding Description}"
+                         TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                                        <!--  Order ID  -->
+                                        <Label
+                         Grid.Row="2"
+                         Grid.Column="1"
+                         FontFamily="Roboto-Regular"
+                         FontSize="12"
+                         HorizontalOptions="Start"
+                         Text="{Binding OrderID, StringFormat='Order ID: {0}'}"
+                         VerticalOptions="Center"
+                         TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                                    </Grid>
+                                </DataTemplate>
+                            </listView:SfListView.ItemTemplate>
+
+                        </listView:SfListView>
+
+                    </Grid>
+                </tabView:SfTabItem.Content>
+
+            </tabView:SfTabItem>
+
+        </tabView:SfTabView>
+
+    </ContentView.Content>
+
+</ContentView>

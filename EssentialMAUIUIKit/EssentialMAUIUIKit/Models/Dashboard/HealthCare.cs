@@ -1,0 +1,89 @@
+﻿using System.ComponentModel;
+
+namespace EssentialMAUIUIKit.Models.Dashboard
+{
+    /// <summary>
+    /// Model for Health care page.
+    /// </summary>
+    public class HealthCare : INotifyPropertyChanged
+    {
+        #region Field
+
+        private IReadOnlyCollection<ChartModel>? chartData;
+
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        /// The declaration of the property changed event.
+        /// </summary>
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        #endregion
+
+        #region Property
+
+        /// <summary>
+        /// Gets or sets the property that has been displays the Category.
+        /// </summary>
+        public string? Category { get; set; }
+
+        /// <summary>
+        /// Gets or sets the property that has been displays the Category value.
+        /// </summary>
+        public string? CategoryValue { get; set; }
+
+        /// <summary>
+        /// Gets or sets the property that has been displays the Category percentage.
+        /// </summary>
+        public string? CategoryPercentage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the property that has been bound with SfChart Control, which displays the health care data visualization.
+        /// </summary>
+        public IReadOnlyCollection<ChartModel>? ChartData
+        {
+            get
+            {
+                return this.chartData;
+            }
+
+            set
+            {
+                if (this.chartData == value)
+                {
+                    return;
+                }
+
+                this.chartData = value;
+                this.OnPropertyChanged("ChartData");
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the property that has been displays the background gradient start.
+        /// </summary>
+        public string? BackgroundGradientStart { get; set; }
+
+        /// <summary>
+        /// Gets or sets the property that has been displays the background gradient end.
+        /// </summary>
+        public string? BackgroundGradientEnd { get; set; }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// The PropertyChanged event occurs when changing the value of property.
+        /// </summary>
+        /// <param name="property">Property name</param>
+        protected void OnPropertyChanged(string property)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+        }
+
+        #endregion
+    }
+}

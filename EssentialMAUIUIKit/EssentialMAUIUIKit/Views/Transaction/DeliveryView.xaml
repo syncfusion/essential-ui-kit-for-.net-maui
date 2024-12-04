@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Transaction.DeliveryView"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <buttons:SfRadioGroupKey x:Key="DeliveryAddressGroup"/>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <StackLayout Spacing="0">
+
+        <!--  Header  -->
+        <Grid
+            Padding="0,0,0,0"
+            ColumnDefinitions="*, *"
+            RowDefinitions="Auto, 1, *">
+
+            <Label Padding="10,0,0,0"
+                   Grid.Column="0"
+                   HorizontalOptions="Start"
+                   LineHeight="{OnPlatform Android=1.25,
+                                    Default=-1}"
+                   Style="{DynamicResource TitleLabelStyle}"
+                   Text="Deliver To"
+                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+
+
+        </Grid>
+
+        <Border Margin="10"
+                StrokeShape="RoundRectangle 10">
+            <buttons:SfRadioGroup
+                x:Name="RadioGroup"
+                BindableLayout.ItemsSource="{Binding DeliveryAddress}"
+                Spacing="0">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Grid
+                            RowDefinitions="Auto,Auto,Auto,Auto"
+                            RowSpacing="0">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="{OnIdiom Default=*, Phone=0}"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <buttons:SfRadioButton
+                                Grid.Row="0"
+                                BackgroundColor="Transparent"
+                                CheckedColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                GroupKey="{DynamicResource DeliveryAddressGroup}"
+                                HorizontalOptions="Center"
+                                UncheckedColor="{DynamicResource Gray-300}"
+                                VerticalOptions="Start"/>
+
+                            <!--  Customer Name  -->
+                            <Label Padding="0,10,0,0"
+                                   Grid.Row="0"
+                                   Grid.Column="1"
+                                   HorizontalOptions="Start"
+                                   Style="{DynamicResource DescriptionLabelStyle}"
+                                   VerticalOptions="Start">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding CustomerName}"
+                                              TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                              FontFamily="Roboto-Regular"/>
+                                        <Span
+                                            FontSize="12"
+                                            FontFamily="Roboto-Regular"
+                                            Text="{Binding AddressType, StringFormat={OnIdiom Default=' ', Tablet='  {0}'}}"
+                                            TextColor="{DynamicResource Gray-700}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <!--  Edit/Change button  -->
+                            <buttons:SfButton HeightRequest="30"
+                                              Grid.Row="0"
+                                              Grid.Column="3"
+                                              Margin="{OnIdiom Default='16,16,16,0',
+                                 Phone='16,2,16,2'}"
+                                              HorizontalOptions="End"
+                                              Style="{DynamicResource TransparentButtonStyle}"
+                                              FontFamily="Roboto-Medium"
+                                              Text="Edit"/>
+
+                            <!--  Address Label  -->
+                            <Label VerticalOptions="Start"
+                                   Grid.Row="1"
+                                   Grid.Column="1"
+                                   FontFamily="Roboto-Regular"
+                                   Text="{Binding Address}"/>
+
+                            <!--  Mobile Number  -->
+                            <Label VerticalOptions="Start"
+                                   Grid.Row="2"
+                                   Grid.Column="1"
+                                   FontFamily="Roboto-Regular"
+                                   HorizontalOptions="Start">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Mobile: "
+                                              FontFamily="Roboto-Regular"/>
+                                        <Span Text="{Binding MobileNumber}"
+                                              TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                              FontFamily="Roboto-Regular"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <!--  Separator  -->
+                            <BoxView Margin="0,10,0,0"
+                                     Grid.Row="3"
+                                     Grid.ColumnSpan="4"
+                                     Style="{DynamicResource HorizontalSeparatorStyle}"
+                                     VerticalOptions="End"/>
+
+                        </Grid>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </buttons:SfRadioGroup>
+
+        </Border>
+
+    </StackLayout>
+</ContentView>

@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Navigation.MoviesListPage"
+             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+    <ContentView.BindingContext>
+        <local:MoviesViewModel/>
+    </ContentView.BindingContext>
+    <ContentView.Content>
+
+        <Grid Padding="0,10,0,10"
+              ColumnSpacing="0"
+              RowSpacing="0"
+                RowDefinitions="{OnPlatform Default=*, MacCatalyst=Auto}">
+
+            <Border Padding="20"
+                    StrokeShape="RoundRectangle 10"
+                    WidthRequest="{OnPlatform WinUI=550, MacCatalyst=550}"
+                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                    IsVisible="{OnPlatform Android=False, iOS=False}">
+                <Grid>
+                    <listView:SfListView
+                        AllowSwiping="True"
+                        AutoFitMode="Height"
+                        ScrollBarVisibility="Never"
+                        ItemSpacing="0"
+                        ItemsSource="{Binding MoviesList}"
+                        SelectionBackground="{AppThemeBinding Light={DynamicResource SelectionBackgroundLight}, Dark={DynamicResource SelectionBackgroundDark}}"
+                        SelectionGesture="Tap"
+                        SelectionMode="Single"
+                        VerticalOptions="Fill">
+
+                        <listView:SfListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid
+                                        ColumnDefinitions="*, 82"
+                                        ColumnSpacing="0"
+                                        RowDefinitions="72, 1"
+                                        RowSpacing="0">
+
+                                        <StackLayout
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            Margin="16,13"
+                                            Spacing="0">
+
+                                            <Label
+                                                FontFamily="Roboto-Medium"
+                                                FontSize="16"
+                                                LineBreakMode="TailTruncation"
+                                                LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                                Text="{Binding MovieName}"
+                                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                VerticalOptions="Center"
+                                                VerticalTextAlignment="Center"/>
+
+                                            <Label
+                                                FontFamily="Roboto-Medium"
+                                                FontSize="14"
+                                                LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                                Text="{Binding MovieYear}"
+                                                TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                                VerticalOptions="Fill"
+                                                VerticalTextAlignment="Center"/>
+
+
+                                        </StackLayout>
+
+                                        <Border
+                                            Grid.RowSpan="2"
+                                            Grid.Column="1"
+                                            Margin="16,24"
+                                            BackgroundColor="#1C7E39"
+                                            Stroke="Transparent"
+                                            StrokeShape="RoundRectangle 12,12,12,12"
+                                            HeightRequest="24"
+                                            VerticalOptions="Center"
+                                            WidthRequest="50">
+
+                                            <StackLayout
+                                                HorizontalOptions="Center"
+                                                Orientation="Horizontal"
+                                                Spacing="4.7"
+                                                VerticalOptions="Center">
+                                                <Label
+                                                    FontFamily="FontIcons"
+                                                    FontSize="12"
+                                                    LineHeight="{OnPlatform Android=1.5,
+                                                                    Default=-1}"
+                                                    Text="{DynamicResource Rating}"
+                                                    TextColor="{DynamicResource Gray-White}"
+                                                    VerticalOptions="Center"
+                                                    VerticalTextAlignment="Center"/>
+
+                                                <Label
+                                                    FontFamily="Roboto-Regular"
+                                                    FontSize="12"
+                                                    HorizontalOptions="Start"
+                                                    LineHeight="{OnPlatform Android=1.5,
+                                                                    Default=-1}"
+                                                    Text="{Binding MovieRating}"
+                                                    TextColor="{DynamicResource Gray-White}"
+                                                    VerticalTextAlignment="Center"/>
+
+                                            </StackLayout>
+                                        </Border>
+                                        <BoxView
+                                            Grid.Row="1"
+                                            Grid.ColumnSpan="2"
+                                            Style="{DynamicResource HorizontalSeparatorStyle}"/>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </listView:SfListView.ItemTemplate>
+                    </listView:SfListView>
+                </Grid>
+
+            </Border>
+
+            <Grid Grid.Row="2"
+                  IsVisible="{OnPlatform WinUI=False, MacCatalyst=False}">
+                <listView:SfListView
+                    AllowSwiping="True"
+                    AutoFitMode="Height"
+                    ScrollBarVisibility="Never"
+                    ItemSpacing="0"
+                    ItemsSource="{Binding MoviesList}"
+                    SelectionBackground="{AppThemeBinding Light={DynamicResource SelectionBackgroundLight}, Dark={DynamicResource SelectionBackgroundDark}}"
+                    SelectionGesture="Tap"
+                    SelectionMode="Single"
+                    VerticalOptions="Fill">
+
+                    <listView:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid
+                                    ColumnDefinitions="*, 82"
+                                    ColumnSpacing="0"
+                                    RowDefinitions="72, 1"
+                                    RowSpacing="0">
+
+                                    <StackLayout
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        Margin="16,13"
+                                        Spacing="0">
+
+                                        <Label
+                                            FontFamily="Roboto-Medium"
+                                            FontSize="16"
+                                            LineBreakMode="TailTruncation"
+                                            LineHeight="{OnPlatform Android=1.5,
+                                                Default=-1}"
+                                            Text="{Binding MovieName}"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                            VerticalOptions="Center"
+                                            VerticalTextAlignment="Center"/>
+
+                                        <Label
+                                            FontFamily="Roboto-Medium"
+                                            FontSize="14"
+                                            LineHeight="{OnPlatform Android=1.5,
+                                                Default=-1}"
+                                            Text="{Binding MovieYear}"
+                                            TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                            VerticalOptions="Fill"
+                                            VerticalTextAlignment="Center"/>
+
+
+                                    </StackLayout>
+
+                                    <Border
+                                        Grid.RowSpan="2"
+                                        Grid.Column="1"
+                                        Margin="16,24"
+                                        BackgroundColor="#1C7E39"
+                                        Stroke="Transparent"
+                                        StrokeShape="RoundRectangle 12,12,12,12"
+                                        HeightRequest="24"
+                                        VerticalOptions="Center"
+                                        WidthRequest="50">
+
+                                        <StackLayout
+                                            HorizontalOptions="Center"
+                                            Orientation="Horizontal"
+                                            Spacing="4.7"
+                                            VerticalOptions="Center">
+                                            <Label
+                                                FontFamily="FontIcons"
+                                                FontSize="12"
+                                                LineHeight="{OnPlatform Android=1.5,
+                                                    Default=-1}"
+                                                Text="{DynamicResource Rating}"
+                                                TextColor="{DynamicResource Gray-White}"
+                                                VerticalOptions="Center"
+                                                VerticalTextAlignment="Center"/>
+
+                                            <Label
+                                                FontFamily="Roboto-Regular"
+                                                FontSize="12"
+                                                HorizontalOptions="Start"
+                                                LineHeight="{OnPlatform Android=1.5,
+                                                    Default=-1}"
+                                                Text="{Binding MovieRating}"
+                                                TextColor="{DynamicResource Gray-White}"
+                                                VerticalTextAlignment="Center"/>
+
+                                        </StackLayout>
+                                    </Border>
+                                    <BoxView
+                                        Grid.Row="1"
+                                        Grid.ColumnSpan="2"
+                                        Style="{DynamicResource HorizontalSeparatorStyle}"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </listView:SfListView.ItemTemplate>
+                </listView:SfListView>
+            </Grid>
+
+        </Grid>
+
+    </ContentView.Content>
+</ContentView>

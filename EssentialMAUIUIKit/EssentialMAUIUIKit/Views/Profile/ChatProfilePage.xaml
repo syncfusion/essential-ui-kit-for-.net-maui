@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Profile.ChatProfilePage"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons">
+    <ContentView.Content>
+        <ScrollView>
+
+            <StackLayout Spacing="0">
+
+                <!--  Profile image with edit label  -->
+                <buttons:SfButton
+                    Margin="0,10,0,0"
+                    BackgroundColor="Transparent"
+                    CornerRadius="60"
+                    HorizontalOptions="Center"
+                    WidthRequest="100"
+                    HeightRequest="100">
+                    <buttons:SfButton>
+                        <Grid HeightRequest="120"
+                              WidthRequest="120">
+
+                            <Image
+                                x:Name="ProfileImage"
+                                Aspect="AspectFill"
+                                BackgroundColor="{DynamicResource Gray-200}"/>
+                            <BoxView
+                                BackgroundColor="{DynamicResource Gray-Black}"
+                                HeightRequest="32"
+                                Opacity="0.6"
+                                VerticalOptions="End"/>
+                            <Label
+                                FontFamily="Roboto-Medium"
+                                FontSize="12"
+                                HeightRequest="32"
+                                HorizontalTextAlignment="Center"
+                                Text="EDIT"
+                                TextColor="{DynamicResource Gray-White}"
+                                VerticalOptions="End"
+                                VerticalTextAlignment="Center"/>
+                        </Grid>
+                    </buttons:SfButton>
+                </buttons:SfButton>
+
+                <!--  Profile Name  -->
+                <Label
+                    Margin="0,10,0,10"
+                    FontFamily="Roboto-Medium"
+                    Style="{DynamicResource TitleLabelStyle}"
+                    Text="Julia Grant"
+                    VerticalOptions="Center"/>
+
+                <!--  Grid for available label and navigation icon  -->
+                <Grid
+                    x:Name="AvailableGrid"
+                    Padding="16"
+                    ColumnDefinitions="Auto, *, Auto"
+                    ColumnSpacing="16">
+
+                    <Label
+                        Grid.Column="0"
+                        Style="{DynamicResource IconLabelStyle}"
+                        Text="{DynamicResource New}"
+                        TextColor="{DynamicResource Green}"/>
+
+                    <Label
+                        Grid.Column="1"
+                        FontFamily="Roboto-Regular"
+                        HorizontalOptions="Start"
+                        Style="{DynamicResource TitleLabelStyle}"
+                        Text="Available"
+                        VerticalOptions="Center"/>
+
+                    <Label
+                        Grid.Column="2"
+                        HorizontalOptions="End"
+                        Style="{DynamicResource IconLabelStyle}"
+                        Text="{DynamicResource Next}"/>
+
+
+                </Grid>
+
+                <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+                <!--  Grid for mail id label and icon  -->
+                <Grid
+                    Padding="16"
+                    ColumnDefinitions="Auto, *"
+                    ColumnSpacing="16">
+
+                    <Label
+                        Grid.Column="0"
+                        Style="{DynamicResource IconLabelStyle}"
+                        Text="{DynamicResource Account}"/>
+
+                    <Label
+                        Grid.Column="1"
+                        FontFamily="Roboto-Regular"
+                        HorizontalOptions="Start"
+                        Style="{DynamicResource TitleLabelStyle}"
+                        Text="juliagrant@mail.com"
+                        VerticalOptions="Center"/>
+
+                </Grid>
+
+                <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+                <!--  Grid for mobile number label and icon  -->
+                <Grid
+                    Padding="16"
+                    ColumnDefinitions="Auto, *"
+                    ColumnSpacing="16">
+
+                    <Label
+                        Grid.Column="0"
+                        Style="{DynamicResource IconLabelStyle}"
+                        Text="{DynamicResource Phone}"/>
+
+                    <Label
+                        Grid.Column="1"
+                        FontFamily="Roboto-Regular"
+                        HorizontalOptions="Start"
+                        Style="{DynamicResource TitleLabelStyle}"
+                        Text="+1-202-555-0101"
+                        VerticalOptions="Center"/>
+
+                </Grid>
+
+                <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+                <!--  Grid for notification label and navigation icon  -->
+                <Grid
+                    x:Name="NotificationGrid"
+                    Padding="16"
+                    ColumnDefinitions="Auto, *, Auto"
+                    ColumnSpacing="16">
+                    <Label
+                        Grid.Column="0"
+                        Style="{DynamicResource IconLabelStyle}"
+                        Text="{DynamicResource Notification}"/>
+
+                    <Label
+                        Grid.Column="1"
+                        FontFamily="Roboto-Regular"
+                        HorizontalOptions="Start"
+                        Style="{DynamicResource TitleLabelStyle}"
+                        Text="Notifications"
+                        VerticalOptions="Center"/>
+
+                    <Label
+                        Grid.Column="2"
+                        HorizontalOptions="End"
+                        Style="{DynamicResource IconLabelStyle}"
+                        Text="{DynamicResource Next}"/>
+
+                </Grid>
+
+                <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+                <!--  Grid for help label and icon  -->
+                <Grid
+                    Padding="16"
+                    ColumnDefinitions="Auto, *"
+                    ColumnSpacing="16">
+
+                    <Label
+                        Grid.Column="0"
+                        Style="{DynamicResource IconLabelStyle}"
+                        Text="{DynamicResource Help}"/>
+
+                    <Label
+                        Grid.Column="1"
+                        FontFamily="Roboto-Regular"
+                        HorizontalOptions="Start"
+                        Style="{DynamicResource TitleLabelStyle}"
+                        Text="Help"
+                        VerticalOptions="Center"/>
+
+                </Grid>
+
+                <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+            </StackLayout>
+
+        </ScrollView>
+
+    </ContentView.Content>
+</ContentView>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Profile.MasterProfilePage">
+    <ContentView.Content>
+        <ScrollView>
+            <StackLayout Spacing="0"
+                         Padding="10,0,0,0">
+
+                <!--  profile view  -->
+                <Grid
+                    Padding="16,24,16,8"
+                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                    ColumnDefinitions="Auto, *"
+                    ColumnSpacing="8"
+                    RowDefinitions="*, *"
+                    RowSpacing="2">
+
+                    <!--  Rounded Profile Image  -->
+                    <Border
+                        Grid.RowSpan="2"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 24,24,24,24"
+                        Style="{DynamicResource ProfileBorderStyle}">
+                        <Image
+                            x:Name="ProfileImage"
+                            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                            HeightRequest="48"
+                            WidthRequest="48">
+                            <Image.Source>
+                                <UriImageSource
+                                    CacheValidity="14"
+                                    CachingEnabled="true"/>
+                            </Image.Source>
+                        </Image>
+                    </Border>
+
+                    <!--  Profile Name  -->
+                    <Label
+                        Grid.Column="1"
+                        Margin="0,4,0,0"
+                        FontSize="14"
+                        HorizontalOptions="Start"
+                        Style="{DynamicResource TitleLabelStyle}"
+                        Text="John Doe"/>
+
+                    <!--  Email  -->
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        FontSize="12"
+                        HorizontalOptions="Start"
+                        Style="{DynamicResource DescriptionLabelStyle}"
+                        Text="johndoe@gmail.com"/>
+                </Grid>
+
+                <BoxView Margin="0,0,0,8"
+                         Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+                <!--  Grid for home label and icon  -->
+                <Grid
+                    x:Name="HomeGrid"
+                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                    ColumnDefinitions="Auto, *">
+
+                    <Label
+                        Grid.Column="0"
+                        Style="{DynamicResource IconLabelStyle}"
+                        Text="{DynamicResource Home}"/>
+
+                    <Label
+                        Grid.Column="1"
+                        Margin="10,14"
+                        FontSize="14"
+                        HorizontalOptions="Start"
+                        Style="{DynamicResource TitleLabelStyle}"
+                        Text="Home"/>
+
+                </Grid>
+
+                <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+                <!--  Grid for interests label and icon  -->
+                <Grid
+                    x:Name="InterestsGrid"
+                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                    ColumnDefinitions="Auto, *">
+
+                    <Label
+                        Grid.Column="0"
+                        Style="{DynamicResource IconLabelStyle}"
+                        Text="{DynamicResource Favourite}"/>
+
+                    <Label
+                        Grid.Column="1"
+                        Margin="10,14"
+                        FontSize="14"
+                        HorizontalOptions="Start"
+                        Style="{DynamicResource TitleLabelStyle}"
+                        Text="Interests"/>
+
+                </Grid>
+
+                <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+                <!--  Grid for bookmark label and icon  -->
+                <Grid
+                    x:Name="BookmarkGrid"
+                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                    ColumnDefinitions="Auto, *">
+
+                    <Label
+                        Grid.Column="0"
+                        Style="{DynamicResource IconLabelStyle}"
+                        Text="{DynamicResource Bookmark}"/>
+
+                    <Label
+                        Grid.Column="1"
+                        Margin="10,14"
+                        FontSize="14"
+                        HorizontalOptions="Start"
+                        Style="{DynamicResource TitleLabelStyle}"
+                        Text="Bookmarks"/>
+
+                </Grid>
+
+                <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+                <!--  Grid for activity label and icon  -->
+                <Grid
+                    x:Name="ActivityGrid"
+                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                    ColumnDefinitions="Auto, *">
+
+                    <Label
+                        Grid.Column="0"
+                        Style="{DynamicResource IconLabelStyle}"
+                        Text="{DynamicResource Notification}"/>
+
+                    <Label
+                        Grid.Column="1"
+                        Margin="10,14"
+                        FontSize="14"
+                        HorizontalOptions="Start"
+                        Style="{DynamicResource TitleLabelStyle}"
+                        Text="Activity"/>
+
+                </Grid>
+
+                <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+                <!--  Grid for profile label and icon  -->
+                <Grid
+                    x:Name="ProfileGrid"
+                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                    ColumnDefinitions="Auto, *">
+
+                    <Label
+                        Grid.Column="0"
+                        Style="{DynamicResource IconLabelStyle}"
+                        Text="{DynamicResource Account}"/>
+
+                    <Label
+                        Grid.Column="1"
+                        Margin="10,14"
+                        FontSize="14"
+                        HorizontalOptions="Start"
+                        Style="{DynamicResource TitleLabelStyle}"
+                        Text="Profile"/>
+
+                </Grid>
+
+                <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+            </StackLayout>
+        </ScrollView>
+    </ContentView.Content>
+</ContentView>

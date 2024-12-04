@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Styles.RadioButtonStyles"
+                    xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons">
+
+    <buttons:SfRadioGroupKey x:Key="PaymentOptionGroup" />
+
+    <!--  Common style for RadioButtons  -->
+    <Style x:Key="RadioButtonStyle" TargetType="buttons:SfRadioButton">
+        <Setter Property="HorizontalTextAlignment" Value="Start" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="CheckedColor" Value="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}" />
+        <Setter Property="TextColor" Value="{DynamicResource Gray-900}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="UncheckedColor" Value="{DynamicResource Gray-300}" />
+        <Setter Property="FontFamily" Value="Roboto-Medium" />
+    </Style>
+
+</ResourceDictionary>

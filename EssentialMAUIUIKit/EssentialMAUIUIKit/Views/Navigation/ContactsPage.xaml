@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Navigation.ContactsPage"
+             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:sfavatar="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+    <ContentView.BindingContext>
+        <local:ContactsPageViewModel/>
+    </ContentView.BindingContext>
+    <ContentView.Content>
+
+        <Grid Padding="10"
+              ColumnSpacing="0"
+              RowSpacing="0"
+                RowDefinitions="{OnPlatform Default=*, MacCatalyst=Auto}">
+            <Border StrokeShape="RoundRectangle 10"
+                    WidthRequest="{OnPlatform WinUI=550, MacCatalyst=550}"
+                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                    IsVisible="{OnPlatform Android=False, iOS=False}">
+                <Grid>
+
+                    <listView:SfListView
+                        AllowSwiping="True"
+                        AutoFitMode="Height"
+                        ScrollBarVisibility="Never"
+                        ItemSpacing="0"
+                        ItemsSource="{Binding ContactsList}"
+                        SelectionBackground="{AppThemeBinding Light={DynamicResource SelectionBackgroundLight}, Dark={DynamicResource SelectionBackgroundDark}}"
+                        SelectionGesture="Tap"
+                        SelectionMode="Single"
+                        VerticalOptions="Fill">
+
+                        <!--  Group Header  -->
+                        <listView:SfListView.GroupHeaderTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <ViewCell.View>
+                                        <StackLayout
+                                            BackgroundColor="{DynamicResource Gray-100}"
+                                            HeightRequest="40"
+                                            Orientation="Horizontal"
+                                            Spacing="0">
+
+                                            <Label
+                                                Margin="16,0"
+                                                FontFamily="Roboto-Medium"
+                                                HorizontalOptions="Start"
+                                                Style="{DynamicResource TitleLabelStyle}"
+                                                Text="{Binding Key}"
+                                                VerticalOptions="Center"/>
+
+                                        </StackLayout>
+                                    </ViewCell.View>
+                                </ViewCell>
+                            </DataTemplate>
+                        </listView:SfListView.GroupHeaderTemplate>
+
+                        <listView:SfListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <ViewCell.View>
+                                        <Grid
+                                            ColumnDefinitions="Auto, *"
+                                            ColumnSpacing="0"
+                                            HeightRequest="62"
+                                            RowSpacing="0">
+
+                                            <!--  Contact name avatar  -->
+                                            <sfavatar:SfAvatarView
+                                                Margin="16,8"
+                                                AvatarName="{Binding Name}"
+                                                BackgroundColor="{Binding BackgroundColor}"
+                                                FontFamily="Roboto-Regular"
+                                                Style="{DynamicResource AvatarViewStyle}"/>
+
+                                            <!--  Contact name  -->
+                                            <Label
+                                                Grid.Column="1"
+                                                Margin="0,16"
+                                                FontFamily="Roboto-Regular"
+                                                HorizontalOptions="Start"
+                                                Style="{DynamicResource TitleLabelStyle}"
+                                                Text="{Binding Name}"
+                                                VerticalOptions="Center"/>
+                                        </Grid>
+                                    </ViewCell.View>
+                                </ViewCell>
+                            </DataTemplate>
+                        </listView:SfListView.ItemTemplate>
+                    </listView:SfListView>
+                </Grid>
+            </Border>
+
+            <Grid Grid.Row="2"
+                  IsVisible="{OnPlatform WinUI=False, MacCatalyst=False}">
+
+                <listView:SfListView
+                    AllowSwiping="True"
+                    AutoFitMode="Height"
+                    ScrollBarVisibility="Never"
+                    ItemSpacing="0"
+                    ItemsSource="{Binding ContactsList}"
+                    SelectionBackground="{AppThemeBinding Light={DynamicResource SelectionBackgroundLight}, Dark={DynamicResource SelectionBackgroundDark}}"
+                    SelectionGesture="Tap"
+                    SelectionMode="Single"
+                    VerticalOptions="Fill">
+
+                    <!--  Group Header  -->
+                    <listView:SfListView.GroupHeaderTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <StackLayout
+                                        BackgroundColor="{DynamicResource Gray-100}"
+                                        HeightRequest="40"
+                                        Orientation="Horizontal"
+                                        Spacing="0">
+
+                                        <Label
+                                            Margin="16,0"
+                                            FontFamily="Roboto-Medium"
+                                            HorizontalOptions="Start"
+                                            Style="{DynamicResource TitleLabelStyle}"
+                                            Text="{Binding Key}"
+                                            VerticalOptions="Center"/>
+
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </listView:SfListView.GroupHeaderTemplate>
+
+                    <listView:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <Grid
+                                        ColumnDefinitions="Auto, *"
+                                        ColumnSpacing="0"
+                                        HeightRequest="62"
+                                        RowSpacing="0">
+
+                                        <!--  Contact name avatar  -->
+                                        <sfavatar:SfAvatarView
+                                            Margin="16,8"
+                                            AvatarName="{Binding Name}"
+                                            BackgroundColor="{Binding BackgroundColor}"
+                                            FontFamily="Roboto-Regular"
+                                            Style="{DynamicResource AvatarViewStyle}"/>
+
+                                        <!--  Contact name  -->
+                                        <Label
+                                            Grid.Column="1"
+                                            Margin="0,16"
+                                            FontFamily="Roboto-Regular"
+                                            HorizontalOptions="Start"
+                                            Style="{DynamicResource TitleLabelStyle}"
+                                            Text="{Binding Name}"
+                                            VerticalOptions="Center"/>
+                                    </Grid>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </listView:SfListView.ItemTemplate>
+                </listView:SfListView>
+            </Grid>
+
+
+        </Grid>
+    </ContentView.Content>
+</ContentView>

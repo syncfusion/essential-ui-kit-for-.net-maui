@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.ErrorAndEmpty.LocationDeniedPage"
+             xmlns:button="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons">
+    <Grid RowDefinitions="*, Auto">
+
+        <button:SfButton
+            Margin="8"
+            FontSize="20"
+            HorizontalOptions="End"
+            Text="{DynamicResource Close}"
+            Style="{DynamicResource IconButtonStyle}"
+            VerticalOptions="Start"/>
+
+        <StackLayout
+            BackgroundColor="Transparent"
+            Spacing="0"
+            VerticalOptions="Center">
+
+            <!--  Display the svg illustration image  -->
+            <Image
+                Source="locationdenied.png"
+                VerticalOptions="Center"
+                WidthRequest="{x:OnIdiom Phone=200,
+                          Desktop=300,
+                          Tablet=300}"/>
+
+            <!--  Label to display header  -->
+            <Label
+                Margin="0,32,0,8"
+                FontSize="22"
+                Style="{DynamicResource TitleLabelStyle}"
+                Text="Location blocked"
+                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                VerticalTextAlignment="Center"
+                HorizontalTextAlignment="Center"/>
+
+            <!--  Label to display content  -->
+            <Label
+                Margin="8,0,8,0"
+                FontSize="16"
+                LineHeight="{OnPlatform Android=1.25,
+                                    Default=-1}"
+                Style="{DynamicResource DescriptionLabelStyle}"
+                Text="You cannot access this location at this time"
+                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                VerticalTextAlignment="Center"
+                HorizontalTextAlignment="Center"/>
+
+            <!--  Try again button  -->
+            <button:SfButton
+                Grid.Row="1"
+                Margin="0,50,0,24"
+                Style="{DynamicResource FormsButtonStyle}"
+                Text="Try again"
+                VerticalOptions="End"
+                WidthRequest="245"/>
+        </StackLayout>
+
+    </Grid>
+</ContentView>

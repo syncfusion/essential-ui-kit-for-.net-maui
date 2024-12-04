@@ -1,0 +1,30 @@
+﻿<?xml version = "1.0" encoding = "UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             x:Class="EssentialMAUIUIKit.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+                <ResourceDictionary Source="Styles/ButtonStyles.xaml"/>
+                <ResourceDictionary Source="Styles/LabelStyles.xaml"/>
+                <ResourceDictionary Source="Styles/FontIcons.xaml"/>
+                <ResourceDictionary Source="Styles/AvatarViewStyles.xaml"/>
+                <ResourceDictionary Source="Styles/BorderStyles.xaml"/>
+                <ResourceDictionary Source="Styles/BoxViewStyles.xaml"/>
+                <ResourceDictionary Source="Styles/Colors.xaml"/>
+                <ResourceDictionary Source="Styles/ComboBoxStyles.xaml"/>
+                <ResourceDictionary Source="Styles/EditorStyles.xaml"/>
+                <ResourceDictionary Source="Styles/EntryStyles.xaml"/>
+                <ResourceDictionary Source="Styles/ListViewStyles.xaml"/>
+                <ResourceDictionary Source="Styles/RadioButtonStyles.xaml"/>
+                <ResourceDictionary Source="Styles/RatingStyles.xaml"/>
+                <ResourceDictionary Source="Styles/SegmentedControlStyles.xaml"/>
+                <ResourceDictionary Source="Themes/DarkTheme.xaml"/>
+                <ResourceDictionary Source="Themes/LightTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

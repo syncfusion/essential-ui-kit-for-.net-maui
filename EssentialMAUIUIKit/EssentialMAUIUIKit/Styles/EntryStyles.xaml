@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Styles.EntryStyles"
+                    xmlns:control="clr-namespace:EssentialMAUIUIKit.Controls">
+
+    <Style x:Key="BorderlessEntryStyle" TargetType="control:BorderlessEntry">
+        <Setter Property="FontFamily" Value="Roboto-Regular" />
+        <Setter Property="PlaceholderColor" Value="{DynamicResource Gray-700}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{DynamicResource Gray-900}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="ReturnType" Value="Done" />
+    </Style>
+
+</ResourceDictionary>

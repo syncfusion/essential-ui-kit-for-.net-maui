@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Forms.SignupPage"
+             xmlns:dataForm="clr-namespace:Syncfusion.Maui.DataForm;assembly=Syncfusion.Maui.DataForm"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:button="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons">
+    <ContentView.BindingContext>
+        <local:SignupPageViewModel/>
+    </ContentView.BindingContext>
+
+    <ContentView.Content>
+        <ScrollView VerticalScrollBarVisibility="Never">
+            <Grid WidthRequest="{OnPlatform WinUI=386, MacCatalyst=400}"
+                    RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                  VerticalOptions="Center">
+                <Label Grid.Row="0"
+                        Text="Sign Up"
+                       FontSize="Medium"
+                       FontFamily="Roboto-Medium"
+                       HorizontalOptions="Center"
+                       Padding="0,0,0,20"
+                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"/>
+                <Label Grid.Row="1"
+                        Text="Create your new account"
+                       FontFamily="Roboto-Regular"
+                       HorizontalOptions="Center"
+                       TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                       FontSize="14"/>
+                <dataForm:SfDataForm Grid.Row="2"
+                        x:Name="dataForm"
+                                     DataObject="{Binding ContactsInfo}"
+                                     MinimumHeightRequest="{OnPlatform WinUI=300, Android=340, MacCatalyst=300, iOS=340}"
+                                     LayoutType="TextInputLayout"
+                                     ValidationMode="PropertyChanged">
+                    <dataForm:SfDataForm.TextInputLayoutSettings>
+                        <dataForm:TextInputLayoutSettings ShowHelperText="True"
+                                                          OutlineCornerRadius="5">
+                            <dataForm:TextInputLayoutSettings.HelperTextStyle>
+                                <dataForm:DataFormTextStyle FontFamily="Roboto-Regular"/>
+                            </dataForm:TextInputLayoutSettings.HelperTextStyle>
+                        </dataForm:TextInputLayoutSettings>
+                    </dataForm:SfDataForm.TextInputLayoutSettings>
+                    <dataForm:SfDataForm.ErrorLabelTextStyle>
+                        <dataForm:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                                    FontFamily="Roboto-Regular"/>
+                    </dataForm:SfDataForm.ErrorLabelTextStyle>
+                    <dataForm:SfDataForm.LabelTextStyle>
+                        <dataForm:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}"
+                                                    FontFamily="Roboto-Regular"/>
+                    </dataForm:SfDataForm.LabelTextStyle>
+                    <dataForm:SfDataForm.ValidMessageLabelTextStyle>
+                        <dataForm:DataFormTextStyle FontFamily="Roboto-Regular"/>
+                    </dataForm:SfDataForm.ValidMessageLabelTextStyle>
+                    <dataForm:SfDataForm.EditorTextStyle>
+                        <dataForm:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                    FontFamily="Roboto-Regular"/>
+                    </dataForm:SfDataForm.EditorTextStyle>
+                </dataForm:SfDataForm>
+                <button:SfCheckBox Grid.Row="3"
+                        Text="I agree to the Terms and Conditions"
+                                   FontSize="14"
+                                   TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                   FontFamily="Roboto-Regular"
+                                   TickColor="{DynamicResource White}"
+                                   CheckedColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                   HorizontalOptions="Start"
+                                   Margin="20,0,20,0"/>
+                <button:SfButton Grid.Row="4"
+                        x:Name="registerButton"
+                                 Text="Create Account"
+                                 Margin="20"
+                                 Style="{DynamicResource FormsButtonStyle}"
+                                 HorizontalOptions="Fill"/>
+                <Label Grid.Row="5"
+                        Text="Or Signup with"
+                       FontSize="12"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       Margin="10"
+                       FontFamily="Roboto-Regular"
+                       TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+                <Grid Grid.Row="6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".5*"/>
+                        <ColumnDefinition Width=".5*"/>
+                    </Grid.ColumnDefinitions>
+                    <button:SfButton Grid.Column="0"
+                                     Text="Google"
+                                     Stroke="#E5E1E3"
+                                     StrokeThickness="1"
+                                     WidthRequest="150"
+                                     TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                     ImageSource="google.png"
+                                     HorizontalOptions="End"
+                                     ImageAlignment="Start"
+                                     ShowIcon="True"
+                                     Margin="10"
+                                     FontFamily="Roboto-Regular"
+                                     Background="Transparent"/>
+                    <button:SfButton Grid.Column="1"
+                                     Text="Facebook"
+                                     Stroke="#E5E1E3"
+                                     StrokeThickness="1"
+                                     WidthRequest="150"
+                                     TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                     ImageSource="facebook.png"
+                                     HorizontalOptions="Start"
+                                     ImageAlignment="Start"
+                                     ShowIcon="True"
+                                     Margin="10"
+                                     FontFamily="Roboto-Regular"
+                                     Background="Transparent"/>
+                </Grid>
+                <HorizontalStackLayout Grid.Row="7"
+                        VerticalOptions="End"
+                                       HorizontalOptions="Center">
+                    <Label Text="Already have an account?"
+                           FontFamily="Roboto-Regular"
+                           TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                           FontSize="14"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Start"
+                           Margin="10,10,0,10"/>
+                    <button:SfButton Text="Log In"
+                                     FontSize="14"
+                                     FontFamily="Roboto-Regular"
+                                     Background="Transparent"
+                                     Style="{DynamicResource TransparentButtonStyle}"
+                                     Margin="0,1,0,10"
+                                     TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"/>
+                </HorizontalStackLayout>
+            </Grid>
+        </ScrollView>
+
+    </ContentView.Content>
+
+    <ContentView.Behaviors>
+        <local:SignUpPageBehavior/>
+    </ContentView.Behaviors>
+
+</ContentView>

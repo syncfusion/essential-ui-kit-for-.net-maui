@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Forms.BusinessRegistrationForm"
+             xmlns:button="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:dataForm="clr-namespace:Syncfusion.Maui.DataForm;assembly=Syncfusion.Maui.DataForm"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+
+    <ContentView.BindingContext>
+        <local:BusinessRegistrationFormViewModel/>
+    </ContentView.BindingContext>
+
+    <ContentView.Content>
+        <ScrollView>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="businessregistrationbackground.png"
+                       Aspect="Fill"
+                       IsVisible="{OnPlatform Default=false, WinUI=True, MacCatalyst=true}"/>
+                <VerticalStackLayout Grid.Column="{OnPlatform Default=1, Android=0, iOS=0}"
+                                     Grid.ColumnSpan="{OnPlatform Default=2, WinUI=0, MacCatalyst=0}"
+                                     VerticalOptions="Center"
+                                     HorizontalOptions="Center"
+                                     Margin="{OnPlatform Default=30, Android=10, iOS=10}">
+                    <Label Text="Registration Form"
+                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                           HorizontalOptions="Center"
+                           FontFamily="Roboto-Medium"
+                           FontSize="Medium"/>
+                    <dataForm:SfDataForm x:Name="dataForm"
+                                         DataObject="{Binding ContactsInfo}"
+                                         MinimumHeightRequest="600"
+                                         LayoutType="TextInputLayout"
+                                         ValidationMode="PropertyChanged"
+                                         ColumnCount="2">
+                        <dataForm:SfDataForm.TextInputLayoutSettings>
+                            <dataForm:TextInputLayoutSettings ShowHelperText="True"
+                                                              OutlineCornerRadius="5">
+                                <dataForm:TextInputLayoutSettings.HelperTextStyle>
+                                    <dataForm:DataFormTextStyle FontFamily="Roboto-Regular"/>
+                                </dataForm:TextInputLayoutSettings.HelperTextStyle>
+                            </dataForm:TextInputLayoutSettings>
+                        </dataForm:SfDataForm.TextInputLayoutSettings>
+                        <dataForm:SfDataForm.ErrorLabelTextStyle>
+                            <dataForm:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                                        FontFamily="Roboto-Regular"/>
+                        </dataForm:SfDataForm.ErrorLabelTextStyle>
+                        <dataForm:SfDataForm.LabelTextStyle>
+                            <dataForm:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}"
+                                                        FontFamily="Roboto-Regular"/>
+                        </dataForm:SfDataForm.LabelTextStyle>
+                        <dataForm:SfDataForm.ValidMessageLabelTextStyle>
+                            <dataForm:DataFormTextStyle FontFamily="Roboto-Regular"/>
+                        </dataForm:SfDataForm.ValidMessageLabelTextStyle>
+                        <dataForm:SfDataForm.EditorTextStyle>
+                            <dataForm:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                        FontFamily="Roboto-Regular"/>
+                        </dataForm:SfDataForm.EditorTextStyle>
+                    </dataForm:SfDataForm>
+                    <button:SfButton x:Name="submitButton"
+                                     Text="SUBMIT"
+                                     HorizontalOptions="Fill"
+                                     Margin="20,0,20,30"
+                                     Style="{DynamicResource FormsButtonStyle}"/>
+                </VerticalStackLayout>
+            </Grid>
+        </ScrollView>
+
+
+    </ContentView.Content>
+
+    <ContentView.Behaviors>
+        <local:BusinessRegistrationFormBehavior/>
+    </ContentView.Behaviors>
+
+</ContentView>

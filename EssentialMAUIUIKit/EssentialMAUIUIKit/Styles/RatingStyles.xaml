@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Styles.RatingStyles"
+                    xmlns:rating="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs">
+
+    <Style x:Key="RatingStyle" TargetType="rating:SfRating">
+        <Setter Property="ItemCount" Value="5" />
+        <Setter Property="IsReadOnly" Value="True" />
+        <Setter Property="ItemSize" Value="14" />
+        <Setter Property="ItemSpacing" Value="0" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+    </Style>
+
+    <rating:RatingSettings
+    x:Key="RatingSettings"
+    RatedFill="#fcbc0f"
+    RatedStroke="#fcbc0f"
+    UnratedStroke="{DynamicResource Gray-600}" />
+
+
+    <rating:RatingSettings
+    x:Key="CommonRatingSettings"
+    RatedFill="#fcbc0f"
+    RatedStroke="#fcbc0f"
+    UnratedStroke="{DynamicResource Gray-600}"
+    UnratedStrokeThickness="1" />
+
+</ResourceDictionary>

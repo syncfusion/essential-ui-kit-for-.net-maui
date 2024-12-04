@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Article.ArticleWithCommentsPage"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+    <ContentView.BindingContext>
+        <local:ArticleViewModel/>
+    </ContentView.BindingContext>
+    <ContentView.Content>
+        <ScrollView>
+            <StackLayout Spacing="0">
+
+                <StackLayout Margin="{OnIdiom Phone='16,0', Tablet='48,0', Desktop='48,0'}"
+                             Spacing="0">
+
+                    <!--  Article Tile  -->
+                    <Label
+                        Margin="0,16,0,8"
+                        FontFamily="Roboto-Medium"
+                        FontSize="20"
+                        LineHeight="1.25"
+                        Text="{Binding Articles.ArticleName}"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+
+                    <!--  Article author, title & average reading time  -->
+                    <Label
+                        Margin="0,0,0,16"
+                        FontSize="12"
+                        LineHeight="{OnPlatform Default=-1,
+                                            Android=1.5}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span
+                                    FontFamily="Roboto-Regular"
+                                    Text="{Binding Articles.ArticleAuthor}"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+                                <Span Text="    "/>
+                                <Span
+                                    FontFamily="Roboto-Regular"
+                                    Text="{Binding Articles.ArticleDate}"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+                                <Span
+                                    FontFamily="Roboto-Regular"
+                                    Text=" | "
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+                                <Span
+                                    FontFamily="Roboto-Regular"
+                                    Text="{Binding Articles.ArticleReadingTime}"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <!--  Image of the blog  -->
+                    <Image
+                        Aspect="AspectFill"
+                        BackgroundColor="{DynamicResource Gray-200}"
+                        HeightRequest="210">
+                        <Image.Source>
+                            <UriImageSource
+                                CacheValidity="14"
+                                CachingEnabled="true"
+                                Uri="{Binding Articles.ArticleImage}"/>
+                        </Image.Source>
+                    </Image>
+
+                    <!--  Article content  -->
+                    <Label
+                        Margin="0,16"
+                        FontFamily="Roboto-Regular"
+                        FontSize="14"
+                        LineHeight="1.5"
+                        Text="{Binding Articles.ArticleContent}"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+
+                    <!--  Decription image of the blog  -->
+                    <Image
+                        Margin="{OnIdiom Phone='16,8',
+                                     Tablet='0,24,0,8',
+                                     Desktop='0,24,0,8'}"
+                        Aspect="AspectFill"
+                        BackgroundColor="{DynamicResource Gray-200}"
+                        HeightRequest="150"
+                        HorizontalOptions="{OnIdiom Tablet=Center,
+                                                Desktop=Center,
+                                                Phone=Fill}"
+                        Source="{Binding Articles.ArticleSubImage}"/>
+
+                    <!--  Description image name  -->
+                    <Label
+                        FontFamily="Roboto-Regular"
+                        FontSize="12"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        LineHeight="1.25"
+                        Text="Image_1"
+                        TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                    <!--  Subtitle of the blog  -->
+                    <Label
+                        Margin="0,24,0,8"
+                        FontFamily="Roboto-Medium"
+                        FontSize="16"
+                        LineHeight="1.25"
+                        Text="{Binding Articles.SubTitle1}"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+
+                    <StackLayout
+                        Margin="0,0,0,24"
+                        BindableLayout.ItemsSource="{Binding Articles.ContentList}"
+                        Spacing="16">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="Auto, *">
+
+                                    <Label
+                                        Margin="{OnPlatform iOS='0, 10, 0, 0', Android='0, 2, 0, 0', MacCatalyst='0, 10, 0, 0'}"
+                                        FontFamily="FontIcons"
+                                        FontSize="14"
+                                        Text="&#xe720;"
+                                        TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                                    <Label Grid.Column="1"
+                                           FontFamily="Roboto-Regular"
+                                           FontSize="14"
+                                           LineHeight="1.5"
+                                           Text="{Binding Description}"
+                                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+
+                </StackLayout>
+
+                <StackLayout Margin="{OnIdiom Phone='16,20', Tablet='48,20', Desktop='48,20'}"
+                             Orientation="Horizontal">
+
+                    <Label
+                        HorizontalOptions="Start"
+                        Style="{DynamicResource TitleLabelStyle}"
+                        Text="Reviews"
+                        VerticalOptions="Center"/>
+                </StackLayout>
+
+                <StackLayout Margin="{OnIdiom Phone='16,0', Tablet='48,0', Desktop='48,0'}"
+                             x:Name="StackLayout"
+                             BindableLayout.ItemsSource="{Binding Articles.Reviews}"
+                             Spacing="0">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Grid RowDefinitions="Auto, Auto"
+                                  ColumnDefinitions="Auto, *">
+
+                                <BoxView HeightRequest="{OnIdiom Default=1, Desktop=0}"
+                                         Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+                                <Border Margin="10,0,0,0"
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        HorizontalOptions="Start"
+                                        BackgroundColor="{DynamicResource Gray-Bg}"
+                                        StrokeThickness="{OnIdiom Default=2,
+                          Desktop=0}"
+                                        StrokeShape="RoundRectangle 24,24,24,24"
+                                        HeightRequest="48"
+                                        Style="{DynamicResource ProfileBorderStyle}"
+                                        WidthRequest="48">
+                                    <Image HorizontalOptions="Start"
+                                           BackgroundColor="{DynamicResource Gray-200}">
+                                        <Image.Source>
+                                            <UriImageSource
+                                                CacheValidity="14"
+                                                CachingEnabled="true"
+                                                Uri="{Binding CustomerImage}"/>
+                                        </Image.Source>
+                                    </Image>
+                                </Border>
+
+                                <StackLayout Grid.Row="0"
+                                             Grid.Column="1"
+                                             Orientation="Vertical"
+                                             HorizontalOptions="Start">
+
+                                    <!--  Customer Name  -->
+                                    <Label Padding="10,5,0,0"
+                                           FontSize="14"
+                                           Style="{DynamicResource TitleLabelStyle}"
+                                           HorizontalOptions="Start"
+                                            VerticalOptions="Start"
+                                           Text="{Binding CustomerName}"/>
+
+                                    <!--  Commented Date  -->
+                                    <Label Padding="10,10,0,0"
+                                           FontFamily="Roboto-Regular"
+                                           Style="{DynamicResource SimpleLabelStyle}"
+                                           Text="{Binding ReviewedDate, StringFormat='{}{0:dd MMM, yyyy}'}"/>
+                                </StackLayout>
+
+                                <!--  Product Review  -->
+                                <Label
+                                    Grid.Row="2"
+                                    Grid.ColumnSpan="2"
+                                    Margin="10,10,0,16"
+                                    HorizontalOptions="Start"
+                                    HorizontalTextAlignment="Start"
+                                    LineHeight="1.25"
+                                    Style="{DynamicResource DescriptionLabelStyle}"
+                                    Text="{Binding Comment}"/>
+
+                            </Grid>
+                        </DataTemplate>
+
+                    </BindableLayout.ItemTemplate>
+
+                </StackLayout>
+
+                <!--  See all reviews Button  -->
+                <buttons:SfButton
+                    Margin="50,8,50,24"
+                    Style="{DynamicResource FormsButtonStyle}"
+                    Text="COMMENT"
+                    WidthRequest="245"/>
+            </StackLayout>
+
+        </ScrollView>
+    </ContentView.Content>
+</ContentView>

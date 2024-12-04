@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Navigation.SongsPage"
+             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+    <ContentView.Resources>
+        <Style TargetType="listView:ListViewItem">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+    <ContentView.BindingContext>
+        <local:SongPageViewModel/>
+    </ContentView.BindingContext>
+    <ContentView.Content>
+
+        <Grid RowDefinitions="Auto"
+              ColumnSpacing="0"
+              RowSpacing="0">
+
+            <Border StrokeShape="RoundRectangle 10"
+                    IsVisible="{OnPlatform Android=False, iOS=False}"
+                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                    WidthRequest="{OnPlatform WinUI=550, MacCatalyst=550}"
+                    Margin="10">
+                <StackLayout Spacing="0">
+
+                    <listView:SfListView HeightRequest="{OnPlatform WinUI=540}"
+                                         ScrollBarVisibility="Never"
+                                         ItemSize="75"
+                                         ItemSpacing="0"
+                                         ItemsSource="{Binding SongsPageList}"
+                                         SelectionBackground="Transparent">
+
+                        <listView:SfListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid RowDefinitions="Auto,Auto"
+                                          Margin="16,10,16,0"
+                                          ColumnDefinitions="Auto, *"
+                                          ColumnSpacing="0"
+                                          HeightRequest="60"
+                                          RowSpacing="0">
+
+                                        <Border
+                                            BackgroundColor="{DynamicResource Gray-200}"
+                                            Stroke="{DynamicResource Gray-Bg}"
+                                            StrokeShape="RoundRectangle 50"
+                                            Style="{DynamicResource ProfileBorderStyle}">
+                                            <Image HeightRequest="50"
+                                                   WidthRequest="50">
+                                                <Image.Source>
+                                                    <UriImageSource
+                                                        CacheValidity="14"
+                                                        CachingEnabled="true"
+                                                        Uri="{Binding SongImage}"/>
+                                                </Image.Source>
+                                            </Image>
+                                        </Border>
+
+                                        <StackLayout
+                                            Grid.Column="1"
+                                            Margin="16,0"
+                                            HorizontalOptions="Fill"
+                                            Spacing="0"
+                                            VerticalOptions="Center">
+
+                                            <!--  Name of the Song  -->
+                                            <Label
+                                                FontFamily="Roboto-Medium"
+                                                HorizontalOptions="Start"
+                                                Style="{DynamicResource TitleLabelStyle}"
+                                                Text="{Binding SongName}"/>
+
+                                            <!--  Composer of the song  -->
+                                            <Label
+                                                HorizontalOptions="Start"
+                                                FontFamily="Roboto-Regular"
+                                                Style="{DynamicResource DescriptionLabelStyle}"
+                                                Text="{Binding Composer}"/>
+                                        </StackLayout>
+
+                                        <BoxView Grid.Row="1"
+                                                Grid.ColumnSpan="2"
+                                                Style="{DynamicResource HorizontalSeparatorStyle}"
+                                                 VerticalOptions="End"
+                                                 Margin="0,10,0,0"/>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </listView:SfListView.ItemTemplate>
+                    </listView:SfListView>
+                </StackLayout>
+            </Border>
+
+            <StackLayout Grid.Row="2"
+                         IsVisible="{OnPlatform WinUI=False, MacCatalyst=False}"
+                         Spacing="0">
+
+                <listView:SfListView HeightRequest="700"
+                                     ScrollBarVisibility="Never"
+                                     ItemSize="72"
+                                     ItemSpacing="0"
+                                     ItemsSource="{Binding SongsPageList}"
+                                     SelectionBackground="Transparent">
+
+                    <listView:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                    <Grid
+                                        Margin="16,5,16,0"
+                                        ColumnDefinitions="Auto, *"
+                                        ColumnSpacing="0"
+                                        HeightRequest="56"
+                                        RowSpacing="0">
+
+                                        <Border
+                                            BackgroundColor="{DynamicResource Gray-200}"
+                                            Stroke="{DynamicResource Gray-Bg}"
+                                            StrokeShape="RoundRectangle 50"
+                                            Style="{DynamicResource ProfileBorderStyle}">
+                                            <Image HeightRequest="56"
+                                                   WidthRequest="56">
+                                                <Image.Source>
+                                                    <UriImageSource
+                                                        CacheValidity="14"
+                                                        CachingEnabled="true"
+                                                        Uri="{Binding SongImage}"/>
+                                                </Image.Source>
+                                            </Image>
+                                        </Border>
+
+                                        <StackLayout
+                                            Grid.Column="1"
+                                            Margin="16,0"
+                                            HorizontalOptions="Fill"
+                                            Spacing="0"
+                                            VerticalOptions="Center">
+
+                                            <!--  Name of the Song  -->
+                                            <Label
+                                                FontFamily="Roboto-Regular"
+                                                HorizontalOptions="Start"
+                                                Style="{DynamicResource TitleLabelStyle}"
+                                                Text="{Binding SongName}"/>
+
+                                            <!--  Composer of the song  -->
+                                            <Label
+                                                HorizontalOptions="Start"
+                                                Style="{DynamicResource DescriptionLabelStyle}"
+                                                Text="{Binding Composer}"/>
+                                        </StackLayout>
+                                    </Grid>
+
+                                    <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"
+                                             VerticalOptions="End"
+                                             Margin="0,10,0,0"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </listView:SfListView.ItemTemplate>
+                </listView:SfListView>
+            </StackLayout>
+
+
+        </Grid>
+
+    </ContentView.Content>
+</ContentView>

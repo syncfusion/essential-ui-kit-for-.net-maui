@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Styles.EditorStyles"
+                    xmlns:control="clr-namespace:EssentialMAUIUIKit.Controls">
+    
+    <Style x:Key="BorderlessEditorStyle" TargetType="control:BorderlessEditor">
+        <Setter Property="TextColor" Value="{DynamicResource Gray-900}" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}" />
+    </Style>
+
+</ResourceDictionary>

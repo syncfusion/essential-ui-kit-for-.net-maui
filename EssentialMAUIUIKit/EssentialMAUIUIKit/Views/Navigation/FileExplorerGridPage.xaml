@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Navigation.FileExplorerGridPage"
+             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+    <ContentView.Resources>
+        <Style TargetType="listView:ListViewItem">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+    <ContentView.BindingContext>
+        <local:FileExplorerViewModel/>
+    </ContentView.BindingContext>
+    <ContentView.Content>
+
+        <Grid
+            ColumnSpacing="0"
+            RowSpacing="0">
+
+            <listView:SfListView
+                x:Name="FileExploreGrid"
+                Margin="16,20"
+                AllowSwiping="True"
+                AutoFitMode="Height"
+                ScrollBarVisibility="Never"
+                ItemSpacing="0,0,16,24"
+                ItemsSource="{Binding FileExploreList}"
+                SelectionBackground="{AppThemeBinding Light={DynamicResource SelectionBackgroundLight}, Dark={DynamicResource SelectionBackgroundDark}}"
+                SelectionGesture="Tap"
+                SelectionMode="Single"
+                VerticalOptions="Fill">
+
+                <listView:SfListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid
+                            ColumnSpacing="0"
+                            RowDefinitions="Auto, Auto"
+                            RowSpacing="0">
+
+                            <!--  Folder Icon  -->
+                            <Image Source="file.png"
+                                   WidthRequest="50"
+                                   HeightRequest="40"/>
+
+                            <!--  Folder Name  -->
+                            <Label
+                                Grid.Row="1"
+                                Margin="0,0,0,8"
+                                FontFamily="Roboto-Regular"
+                                FontSize="14"
+                                HorizontalOptions="Center"
+                                LineBreakMode="TailTruncation"
+                                LineHeight="{OnPlatform Android=1.5,
+                                                    Default=-1}"
+                                Text="{Binding FolderName}"
+                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+
+                        </Grid>
+                    </DataTemplate>
+                </listView:SfListView.ItemTemplate>
+
+                <listView:SfListView.ItemsLayout>
+                    <listView:GridLayout SpanCount="{OnPlatform Android=3, iOS=5, MacCatalyst=10, WinUI=10}"/>
+                </listView:SfListView.ItemsLayout>
+
+            </listView:SfListView>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

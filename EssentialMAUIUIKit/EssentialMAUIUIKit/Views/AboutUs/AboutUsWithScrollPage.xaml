@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.AboutUs.AboutUsWithScrollPage"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView">
+    <ContentView.BindingContext>
+        <local:AboutUsViewModel x:Name="viewModel"/>
+    </ContentView.BindingContext>
+    <ContentView.Resources>
+        <Style TargetType="listView:ListViewItem">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+
+    <ContentView.Content>
+
+        <ScrollView>
+            <Grid WidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
+                    RowDefinitions="Auto, *"
+                  RowSpacing="0">
+
+                <!--  Product details  -->
+                <StackLayout
+                    x:Name="AboutUs"
+                    Grid.Row="0"
+                    Margin="0,0,0,23"
+                    VerticalOptions="Start">
+
+                    <!--  Header  -->
+                    <Label
+                        Margin="0,24,0,16"
+                        FontSize="20"
+                        LineHeight="{OnPlatform Android=1.25,
+                                            Default=-1}"
+                        Style="{DynamicResource TitleLabelStyle}"
+                        HorizontalTextAlignment="Center"
+                        Text="About Us"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+
+                    <!--  Product description  -->
+                    <Label
+                        Margin="16,0,16,0"
+                        HorizontalOptions="Start"
+                        HorizontalTextAlignment="Center"
+                        Style="{DynamicResource DescriptionLabelStyle}"
+                        Text="Situated in the heart of Smith-town, Acme Products, Inc., has a long-standing tradition of selling the best products while providing the fastest service on the market. Since 1952, we have helped our customers identify their needs, understand their wants, and capture their dreams."
+                        TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+                </StackLayout>
+
+                <!--  Background image  -->
+                <Border Grid.Row="1"
+                        StrokeShape="RoundRectangle 20,20,0,0"
+                        StrokeThickness="0">
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="1,0">
+                            <GradientStop Color="#0D62D4"
+                                          Offset="0"/>
+                            <GradientStop Color="#9F3CDC"
+                                          Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <!--  To display the team member's details  -->
+                    <listView:SfListView HeightRequest="600"
+                                         x:Name="OurTeam"
+                                         Grid.Row="1"
+                                         AutoFitMode="Height"
+                                         ItemsSource="{Binding EmployeeDetails}"
+                                         SelectionMode="None"
+                                         VerticalOptions="Start">
+
+                        <listView:SfListView.HeaderTemplate>
+                            <DataTemplate>
+                                <!--  Header  -->
+                                <Label
+                                    Margin="0,30,0,5"
+                                    FontSize="20"
+                                    LineHeight="{OnPlatform Android=1.25,
+                                     Default=-1}"
+                                    Style="{DynamicResource TitleLabelStyle}"
+                                    Text="Our Team"
+                                    TextColor="{DynamicResource Gray-White}"/>
+                            </DataTemplate>
+                        </listView:SfListView.HeaderTemplate>
+
+                        <listView:SfListView.ItemTemplate>
+                            <DataTemplate>
+
+                                <!--  Details of each employee  -->
+                                <StackLayout Margin="15,15,15,24"
+                                             Spacing="0">
+
+                                    <!--  Profile image  -->
+                                    <Border
+                                        Margin="0,0,0,8"
+                                        StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 32"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center">
+                                        <Image
+                                            BackgroundColor="{DynamicResource Gray-200}"
+                                            HeightRequest="64"
+                                            WidthRequest="64">
+                                            <Image.Source>
+                                                <UriImageSource
+                                                    CacheValidity="14"
+                                                    CachingEnabled="true"
+                                                    Uri="{Binding Image}"/>
+                                            </Image.Source>
+                                        </Image>
+                                    </Border>
+
+                                    <!--  Employee name  -->
+                                    <Label
+                                        FontSize="14"
+                                        Style="{DynamicResource TitleLabelStyle}"
+                                        Text="{Binding EmployeeName}"
+                                        TextColor="{DynamicResource Gray-White}"/>
+
+                                    <!--  Designation  -->
+                                    <Label
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        Style="{DynamicResource SimpleLabelStyle}"
+                                        Text="{Binding Designation}"
+                                        TextColor="White"
+                                        VerticalOptions="Start"
+                                        VerticalTextAlignment="Start"/>
+
+                                </StackLayout>
+                            </DataTemplate>
+                        </listView:SfListView.ItemTemplate>
+
+                        <listView:SfListView.ItemsLayout>
+                            <listView:GridLayout SpanCount="3"/>
+                        </listView:SfListView.ItemsLayout>
+                    </listView:SfListView>
+                </Border>
+
+
+            </Grid>
+        </ScrollView>
+    </ContentView.Content>
+</ContentView>
