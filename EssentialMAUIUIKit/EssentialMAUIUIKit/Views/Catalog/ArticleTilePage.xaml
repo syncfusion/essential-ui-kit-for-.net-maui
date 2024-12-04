@@ -6,18 +6,20 @@
              xmlns:rotator="clr-namespace:Syncfusion.Maui.Rotator;assembly=Syncfusion.Maui.Rotator"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:model="clr-namespace:EssentialMAUIUIKit.Models"
              xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
-             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core">
+             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             x:DataType="local:ArticleListViewModel">
     <ContentView.BindingContext>
         <local:ArticleListViewModel/>
     </ContentView.BindingContext>
     <ContentView.Resources>
         <ResourceDictionary>
-            <DataTemplate x:Key="HeaderView">
+            <DataTemplate x:Key="HeaderView" x:DataType="model:Story">
                 <StackLayout Spacing="8">
 
                     <!--  Rotator view  -->
-                    <rotator:SfRotator
+                    <rotator:SfRotator x:DataType="local:ArticleListViewModel"
                         x:Name="Rotator"
                         BackgroundColor="#FFFFFF"
                         DotPlacement="Default"
@@ -31,7 +33,7 @@
                         UnselectedDotColor="{DynamicResource Gray-White}"
                         VerticalOptions="Start">
                         <rotator:SfRotator.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="model:Story">
                                 <Grid x:Name="Grid">
                                     <Image Aspect="AspectFit"
                                            BackgroundColor="{DynamicResource Gray-200}"
@@ -93,7 +95,7 @@
                                  SelectionBackground="Transparent"
                                  VerticalOptions="Fill">
                 <listView:SfListView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="model:Story">
                         <Grid Margin="16">
                             <Grid.Resources>
                                 <ResourceDictionary>

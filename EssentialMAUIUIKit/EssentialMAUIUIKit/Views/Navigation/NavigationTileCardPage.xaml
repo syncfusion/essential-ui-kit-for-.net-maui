@@ -4,7 +4,8 @@
              x:Class="EssentialMAUIUIKit.Views.Navigation.NavigationTileCardPage"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:button="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             x:DataType="local:NavigationListViewModel">
     <ContentView.Resources>
         <Style TargetType="listView:ListViewItem">
             <Setter Property="VisualStateManager.VisualStateGroups">
@@ -46,7 +47,7 @@
                     SelectionBackground="Transparent">
 
                     <listView:SfListView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="local:NavigationItem">
                             <ViewCell>
                                 <!--  View of each tile item  -->
                                 <Border

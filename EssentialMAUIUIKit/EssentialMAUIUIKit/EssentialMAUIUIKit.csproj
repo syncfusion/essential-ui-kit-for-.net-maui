@@ -24,6 +24,7 @@
 		<AnalysisLevelSecurity>latest-recommended</AnalysisLevelSecurity>
 		<NoWarn>$(NoWarn);NU1803</NoWarn>
 		<Nullable>enable</Nullable>
+		<MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
 
 		<!-- Display name -->
 		<ApplicationTitle>EssentialMAUIUIKit</ApplicationTitle>
@@ -633,9 +634,6 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Bookmark\WishlistPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Transaction\PaymentView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Transaction\PriceDetailView.xaml">

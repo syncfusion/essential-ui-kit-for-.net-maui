@@ -6,8 +6,10 @@
              xmlns:tabView="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.TabView"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:model="clr-namespace:EssentialMAUIUIKit.Models.Catalog"
              xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
-             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core">
+             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             x:DataType="local:EventListViewModel">
     <ContentView.Resources>
         <ResourceDictionary>
             <converter:BooleanToStringConverter x:Key="boolToStringConverter"/>
@@ -41,7 +43,7 @@
             <StackLayout Grid.Row="1">
 
                 <!--  Tab view  -->
-                <tabView:SfTabView x:Name="tabView"
+                <tabView:SfTabView x:DataType="tabView:SfTabView" x:Name="tabView"
                                    SelectedIndex="{Binding SelectedIndex}">
                     <!--  Tab view for All  -->
                     <tabView:SfTabItem
@@ -52,12 +54,12 @@
 
                         <tabView:SfTabItem.Content>
 
-                            <StackLayout
+                            <StackLayout x:DataType="local:EventListViewModel"
                                 Margin="10,0,10,16"
                                 BindableLayout.ItemsSource="{Binding EventItems}"
                                 Spacing="16">
                                 <BindableLayout.ItemTemplate>
-                                    <DataTemplate>
+                                    <DataTemplate x:DataType="model:EventList">
                                         <Grid>
                                             <syncEffectsView:SfEffectsView
                                                 RippleBackground="{DynamicResource Gray-300}"
@@ -151,7 +153,7 @@
                     </tabView:SfTabItem>
 
                     <!--  Tab view for upcoming  -->
-                    <tabView:SfTabItem
+                    <tabView:SfTabItem x:DataType="local:EventListViewModel"
                         Header="Upcoming"
                         TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                         FontFamily="Roboto-Medium"
@@ -162,7 +164,7 @@
                                 BindableLayout.ItemsSource="{Binding UpcomingItems}"
                                 Spacing="16">
                                 <BindableLayout.ItemTemplate>
-                                    <DataTemplate>
+                                    <DataTemplate x:DataType="model:EventList">
                                         <Grid>
                                             <syncEffectsView:SfEffectsView
                                                 RippleBackground="{DynamicResource Gray-300}"
@@ -256,7 +258,7 @@
                     </tabView:SfTabItem>
 
                     <!--  Tab view for popular  -->
-                    <tabView:SfTabItem
+                    <tabView:SfTabItem x:DataType="local:EventListViewModel"
                         Header="Popular"
                         TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                         FontFamily="Roboto-Medium"
@@ -267,7 +269,7 @@
                                 BindableLayout.ItemsSource="{Binding PopularItems}"
                                 Spacing="16">
                                 <BindableLayout.ItemTemplate>
-                                    <DataTemplate>
+                                    <DataTemplate x:DataType="model:EventList">
                                         <Grid>
                                             <syncEffectsView:SfEffectsView
                                                 RippleBackground="{DynamicResource Gray-300}"

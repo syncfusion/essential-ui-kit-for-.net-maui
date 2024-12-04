@@ -7,7 +7,8 @@
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             x:DataType="local:MoviesPageViewModel">
     <ContentView.BindingContext>
         <local:MoviesPageViewModel/>
     </ContentView.BindingContext>
@@ -57,7 +58,7 @@
                     UnselectedDotColor="#ebecef"
                     VerticalOptions="Start">
                     <rotator:SfRotator.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="local:RotatorMovie">
                             <Image
                                 Aspect="AspectFit"
                                 BackgroundColor="Transparent">
@@ -106,7 +107,7 @@
                                      Orientation="Horizontal"
                                      SelectionMode="None">
                     <listView:SfListView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="local:ShowingMovie">
                             <ViewCell>
                                 <ViewCell.View>
                                     <StackLayout Spacing="8">
@@ -128,7 +129,7 @@
                                             LineBreakMode="TailTruncation"
                                             LineHeight="{OnPlatform Android=1.5,
                     Default=-1}"
-                                            Text="{Binding MovieName}"
+                                            Text="{Binding Moviename}"
                                             TextColor="{DynamicResource Gray-900}"/>
 
                                         <rating:SfRating BackgroundColor="Transparent"
@@ -188,7 +189,7 @@
                                      Orientation="Horizontal"
                                      SelectionMode="None">
                     <listView:SfListView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="local:TrailerMovie">
                             <ViewCell>
                                 <ViewCell.View>
                                     <StackLayout Spacing="8">
@@ -210,7 +211,7 @@
                                             LineBreakMode="TailTruncation"
                                             LineHeight="{OnPlatform Android=1.5,
                     Default=-1}"
-                                            Text="{Binding MovieName}"
+                                            Text="{Binding Moviename}"
                                             TextColor="{DynamicResource Gray-900}"/>
 
                                     </StackLayout>
@@ -252,7 +253,7 @@
                                      Orientation="Horizontal"
                                      SelectionMode="None">
                     <listView:SfListView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="local:UpcomingMovie">
                             <ViewCell>
                                 <ViewCell.View>
                                     <StackLayout Spacing="8">
@@ -272,7 +273,7 @@
                                             LineBreakMode="TailTruncation"
                                             LineHeight="{OnPlatform Android=1.5,
                     Default=-1}"
-                                            Text="{Binding MovieName}"
+                                            Text="{Binding Moviename}"
                                             TextColor="{DynamicResource Gray-900}"/>
 
                                     </StackLayout>

@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.AboutUs.AboutUsPageWithCards"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:model="clr-namespace:EssentialMAUIUIKit.Models.About"
+             x:DataType="local:AboutUsViewModel">
     <ContentView.BindingContext>
         <local:AboutUsViewModel x:Name="viewModel"/>
     </ContentView.BindingContext>
@@ -131,7 +133,7 @@
                         <DataTemplate>
 
                             <!--  Frame to have rounded corners  -->
-                            <Border
+                            <Border x:DataType="model:AboutUsModel"
                                 Margin="5"
                                 Padding="0"
                                 BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"

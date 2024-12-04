@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Navigation.FileExplorerGridPage"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             x:DataType="local:FileExplorerViewModel">
     <ContentView.Resources>
         <Style TargetType="listView:ListViewItem">
             <Setter Property="VisualStateManager.VisualStateGroups">
@@ -49,7 +50,7 @@
                 VerticalOptions="Fill">
 
                 <listView:SfListView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="local:FileExplorerFolder">
                         <Grid
                             ColumnSpacing="0"
                             RowDefinitions="Auto, Auto"

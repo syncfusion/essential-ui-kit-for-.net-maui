@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Article.MyArticlePage"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:model="clr-namespace:EssentialMAUIUIKit.Models"
+             x:DataType="local:ArticleViewModel">
     <ContentView.Resources>
         <Style TargetType="listView:ListViewItem">
             <Setter Property="VisualStateManager.VisualStateGroups">
@@ -41,7 +43,7 @@
                                  Style="{DynamicResource TransparentSelectionListView}">
 
                 <listView:SfListView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="model:Story">
                         <Grid RowDefinitions="Auto, Auto"
                               HeightRequest="{OnPlatform Default=340, Android=300, iOS=300}"
                               WidthRequest="{OnPlatform Default=210, Android=170, iOS=170}">

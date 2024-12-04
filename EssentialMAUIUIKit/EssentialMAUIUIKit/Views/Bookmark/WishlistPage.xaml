@@ -4,7 +4,9 @@
              x:Class="EssentialMAUIUIKit.Views.Bookmark.WishlistPage"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:model="clr-namespace:EssentialMAUIUIKit.Models"
+             x:DataType="local:CartPageViewModel">
 
     <ContentView.Resources>
         <Style TargetType="listView:ListViewItem">
@@ -66,7 +68,7 @@
                                          VerticalOptions="Fill">
 
                         <listView:SfListView.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="model:Product">
                                 <Grid>
                                     <Grid
                                         BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"

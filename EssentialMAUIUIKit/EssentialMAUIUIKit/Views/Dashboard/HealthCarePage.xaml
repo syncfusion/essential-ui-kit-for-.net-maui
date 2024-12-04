@@ -6,7 +6,7 @@
              xmlns:controls="clr-namespace:EssentialMAUIUIKit.Controls"
              xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
              xmlns:local="clr-namespace:EssentialMAUIUIKit">
-    <ContentView.BindingContext>
+    <!--<ContentView.BindingContext>
         <local:HealthCareViewModel/>
     </ContentView.BindingContext>
     <ContentView.Content>
@@ -104,7 +104,7 @@
                         </DataTemplate>
                     </listView:SfListView.ItemTemplate>
 
-                    <!--  Layout to customize number of columns in SfListView  -->
+                    --><!--  Layout to customize number of columns in SfListView  --><!--
                     <listView:SfListView.ItemsLayout>
                         <listView:GridLayout SpanCount="2"/>
                     </listView:SfListView.ItemsLayout>
@@ -179,5 +179,5 @@
                 </listView:SfListView>
             </Grid>
         </ScrollView>
-    </ContentView.Content>
+    </ContentView.Content>-->
 </ContentView>

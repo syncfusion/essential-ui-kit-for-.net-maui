@@ -3,9 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.AppLayout.Views.HomePageMobileUI"
              xmlns:viewModels="clr-namespace:EssentialMAUIUIKit.AppLayout.ViewModels;assembly=EssentialMAUIUIKit"
+             xmlns:model="clr-namespace:EssentialMAUIUIKit.AppLayout.Models;assembly=EssentialMAUIUIKit"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:controls="clr-namespace:EssentialMAUIUIKit.AppLayout.Controls"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             x:DataType="viewModels:HomePageViewModel"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -365,14 +367,14 @@
                                              Padding="0">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate>
-                                    <HorizontalStackLayout Padding="5"
+                                    <HorizontalStackLayout x:DataType="viewModels:HomePageViewModel" Padding="5"
                                             Spacing="5"
                                             HeightRequest="40">
                                         <HorizontalStackLayout.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
                                         </HorizontalStackLayout.GestureRecognizers>
-                                        <Label Grid.Row="0"
-                                                Text="{Binding Category.Name }"
+                                        <Label x:DataType="model:Category" Grid.Row="0"
+                                                Text="{Binding Name }"
                                                 TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                                                 FontSize="14"
                                                 VerticalOptions="Center"
@@ -383,8 +385,8 @@
                                                 FontSize="14"
                                                 VerticalOptions="Center"
                                                 VerticalTextAlignment="Center"/>
-                                        <Label Grid.Row="0"
-                                                Text="{Binding Template.Name }"
+                                        <Label x:DataType="model:Template" Grid.Row="0"
+                                                Text="{Binding Name}"
                                                 TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                                                 FontSize="14"
                                                 VerticalOptions="Center"

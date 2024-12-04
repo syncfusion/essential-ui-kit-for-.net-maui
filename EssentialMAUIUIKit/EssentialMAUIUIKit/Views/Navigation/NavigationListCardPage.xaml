@@ -4,7 +4,8 @@
              x:Class="EssentialMAUIUIKit.Views.Navigation.NavigationListCardPage"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             x:DataType="local:NavigationListViewModel">
 
     <ContentView.Resources>
         <Style TargetType="listView:ListViewItem">
@@ -51,7 +52,7 @@
                     VerticalOptions="Fill">
 
                     <listView:SfListView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="local:NavigationItem">
                             <ViewCell>
                                 <!--  View of each card item  -->
                                 <Border

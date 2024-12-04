@@ -5,7 +5,9 @@
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:progressBar="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
-             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters">
+             xmlns:model="clr-namespace:EssentialMAUIUIKit.Models.Navigation"
+             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
+             x:DataType="local:AppUsageViewModel">
     <ContentView.BindingContext>
         <local:AppUsageViewModel/>
     </ContentView.BindingContext>
@@ -54,7 +56,7 @@
 
 
                         <listView:SfListView.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="model:AppUsage">
                                 <ViewCell>
                                     <StackLayout Spacing="0">
 
@@ -157,7 +159,7 @@
 
 
                     <listView:SfListView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="model:AppUsage">
                             <ViewCell>
                                 <StackLayout Spacing="0">
 

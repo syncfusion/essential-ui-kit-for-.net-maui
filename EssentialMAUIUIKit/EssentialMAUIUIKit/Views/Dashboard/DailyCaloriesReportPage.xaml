@@ -8,7 +8,7 @@
              xmlns:control="clr-namespace:EssentialMAUIUIKit.Controls"
              xmlns:local="clr-namespace:EssentialMAUIUIKit">
 
-    <ContentView.BindingContext>
+    <!--<ContentView.BindingContext>
         <local:DailyCaloriesReportViewModel/>
     </ContentView.BindingContext>
     <ContentView.Content>
@@ -163,5 +163,5 @@
                 </Grid>
             </ScrollView>
         </Grid>
-    </ContentView.Content>
+    </ContentView.Content>-->
 </ContentView>

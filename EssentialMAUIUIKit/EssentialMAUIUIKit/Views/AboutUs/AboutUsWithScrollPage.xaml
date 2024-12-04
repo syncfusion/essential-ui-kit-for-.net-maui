@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.AboutUs.AboutUsWithScrollPage"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
-             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView">
+             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:model="clr-namespace:EssentialMAUIUIKit.Models.About"
+             x:DataType="local:AboutUsViewModel">
     <ContentView.BindingContext>
         <local:AboutUsViewModel x:Name="viewModel"/>
     </ContentView.BindingContext>
@@ -104,7 +106,7 @@
                             <DataTemplate>
 
                                 <!--  Details of each employee  -->
-                                <StackLayout Margin="15,15,15,24"
+                                <StackLayout x:DataType="model:AboutUsModel" Margin="15,15,15,24"
                                              Spacing="0">
 
                                     <!--  Profile image  -->

@@ -4,7 +4,8 @@
              x:Class="EssentialMAUIUIKit.Views.Notification.SocialNotificationPage"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
-             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters">
+             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
+             x:DataType="local:SocialNotificationViewModel">
     <ContentView.BindingContext>
         <local:SocialNotificationViewModel x:Name="viewModel"/>
     </ContentView.BindingContext>
@@ -54,7 +55,7 @@
                     </listView:SfListView.HeaderTemplate>
 
                     <listView:SfListView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="local:SocialNotification">
                             <Grid HeightRequest="70"
                                   ColumnDefinitions="Auto, *"
                                   ColumnSpacing="16"
@@ -140,7 +141,7 @@
                     </listView:SfListView.HeaderTemplate>
 
                     <listView:SfListView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="local:SocialNotification">
                             <Grid HeightRequest="70"
                                   ColumnDefinitions="Auto, *"
                                   ColumnSpacing="16"

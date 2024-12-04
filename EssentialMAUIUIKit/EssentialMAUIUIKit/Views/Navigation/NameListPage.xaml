@@ -4,7 +4,8 @@
              x:Class="EssentialMAUIUIKit.Views.Navigation.NameListPage"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             x:DataType="local:NameListViewModel">
     <ContentView.BindingContext>
         <local:NameListViewModel/>
     </ContentView.BindingContext>
@@ -32,33 +33,8 @@
                         SelectionMode="Single"
                         VerticalOptions="Fill">
 
-                        <!--  Group Header  -->
-                        <listView:SfListView.GroupHeaderTemplate>
-                            <DataTemplate>
-                                <ViewCell>
-                                    <ViewCell.View>
-                                        <StackLayout
-                                            BackgroundColor="{DynamicResource Gray-100}"
-                                            HeightRequest="40"
-                                            Orientation="Horizontal"
-                                            Spacing="0">
-                                            <Label
-                                                Margin="16,8"
-                                                FontFamily="Roboto-Regular"
-                                                FontSize="16"
-                                                HorizontalOptions="Start"
-                                                Text="{Binding Key}"
-                                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                                VerticalOptions="Center"/>
-
-                                        </StackLayout>
-                                    </ViewCell.View>
-                                </ViewCell>
-                            </DataTemplate>
-                        </listView:SfListView.GroupHeaderTemplate>
-
                         <listView:SfListView.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="local:NameInfo">
                                 <ViewCell>
                                     <ViewCell.View>
                                         <Grid
@@ -101,33 +77,8 @@
                     SelectionMode="Single"
                     VerticalOptions="Fill">
 
-                    <!--  Group Header  -->
-                    <listView:SfListView.GroupHeaderTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <ViewCell.View>
-                                    <StackLayout
-                                        BackgroundColor="{DynamicResource Gray-100}"
-                                        HeightRequest="40"
-                                        Orientation="Horizontal"
-                                        Spacing="0">
-                                        <Label
-                                            Margin="16,8"
-                                            FontFamily="Roboto-Regular"
-                                            FontSize="16"
-                                            HorizontalOptions="Start"
-                                            Text="{Binding Key}"
-                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                            VerticalOptions="Center"/>
-
-                                    </StackLayout>
-                                </ViewCell.View>
-                            </ViewCell>
-                        </DataTemplate>
-                    </listView:SfListView.GroupHeaderTemplate>
-
                     <listView:SfListView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="local:NameInfo">
                             <ViewCell>
                                 <ViewCell.View>
                                     <Grid

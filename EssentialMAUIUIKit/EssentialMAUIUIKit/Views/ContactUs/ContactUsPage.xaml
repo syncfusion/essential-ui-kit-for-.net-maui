@@ -6,7 +6,8 @@
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:dataform="clr-namespace:Syncfusion.Maui.DataForm;assembly=Syncfusion.Maui.DataForm"
              xmlns:local="clr-namespace:EssentialMAUIUIKit.ViewModel"
-             xmlns:behavior="clr-namespace:EssentialMAUIUIKit">
+             xmlns:behavior="clr-namespace:EssentialMAUIUIKit"
+             x:DataType="local:ContactUsViewModel">
 
     <ContentView.BindingContext>
         <local:ContactUsViewModel/>
@@ -66,14 +67,14 @@
                                                     Margin="0,16,0,4"
                                                     HorizontalOptions="Start"
                                                     Style="{DynamicResource TitleLabelStyle}"
-                                                    Text="{Binding Path=BindingContext.MapMarkerHeader, Source={x:Reference Map}}"/>
+                                                    Text="Sipes Inc"/>
 
                                                 <!--Pin location address-->
                                                 <Label
                                                     Margin="0,0,0,6"
                                                     FontFamily="Roboto-Regular"
                                                     Style="{DynamicResource SimpleLabelStyle}"
-                                                    Text="{Binding Path=BindingContext.MapMarkerAddress, Source={x:Reference Map}}"
+                                                    Text="7654 Cleveland street, Phoenixville, PA 19460"
                                                     VerticalOptions="Start"
                                                     VerticalTextAlignment="Start"/>
 
@@ -82,7 +83,7 @@
                                                     Margin="0,0,0,6"
                                                     FontFamily="Roboto-Regular"
                                                     Style="{DynamicResource SimpleLabelStyle}"
-                                                    Text="{Binding Path=BindingContext.MapMarkerEmailId, Source={x:Reference Map}}"
+                                                    Text="dopuyi@hostguru.info"
                                                     VerticalOptions="Start"
                                                     VerticalTextAlignment="Start"/>
 
@@ -91,7 +92,7 @@
                                                     Margin="0,0,0,14"
                                                     FontFamily="Roboto-Regular"
                                                     Style="{DynamicResource SimpleLabelStyle}"
-                                                    Text="{Binding Path=BindingContext.MapMarkerPhoneNumber, Source={x:Reference Map}}"
+                                                    Text="+1-202-555-0101"
                                                     VerticalOptions="Start"
                                                     VerticalTextAlignment="Start"/>
                                             </StackLayout>
@@ -102,7 +103,7 @@
                                             Margin="15,5,15,15"
                                             HeightRequest="25"
                                             HorizontalOptions="Start"
-                                            Source="{Binding Path=BindingContext.MapMarkerImage, Source={x:Reference Map}}"
+                                            Source="pin.png"
                                             WidthRequest="25"/>
                                     </StackLayout>
                                 </DataTemplate>
@@ -253,14 +254,14 @@
                             Margin="0,16,0,4"
                             HorizontalOptions="Start"
                             Style="{DynamicResource TitleLabelStyle}"
-                            Text="{Binding Path=BindingContext.MapMarkerHeader, Source={x:Reference Map}}"/>
+                            Text="Sipes Inc"/>
 
                         <!--Pin location address-->
                         <Label
                             Margin="0,0,0,6"
                             FontFamily="Roboto-Regular"
                             Style="{DynamicResource SimpleLabelStyle}"
-                            Text="{Binding Path=BindingContext.MapMarkerAddress, Source={x:Reference Map}}"
+                            Text="7654 Cleveland street, Phoenixville, PA 19460"
                             VerticalOptions="Start"
                             VerticalTextAlignment="Start"/>
 
@@ -269,7 +270,7 @@
                             Margin="0,0,0,6"
                             FontFamily="Roboto-Regular"
                             Style="{DynamicResource SimpleLabelStyle}"
-                            Text="{Binding Path=BindingContext.MapMarkerEmailId, Source={x:Reference Map}}"
+                            Text="dopuyi@hostguru.info"
                             VerticalOptions="Start"
                             VerticalTextAlignment="Start"/>
 
@@ -278,7 +279,7 @@
                             Margin="0,0,0,14"
                             FontFamily="Roboto-Regular"
                             Style="{DynamicResource SimpleLabelStyle}"
-                            Text="{Binding Path=BindingContext.MapMarkerPhoneNumber, Source={x:Reference Map}}"
+                            Text="+1-202-555-0101"
                             VerticalOptions="Start"
                             VerticalTextAlignment="Start"/>
                     </StackLayout>
@@ -318,7 +319,7 @@
                                                 Margin="10,5,0,0"
                                                 HeightRequest="25"
                                                 HorizontalOptions="Start"
-                                                Source="{Binding Path=BindingContext.MapMarkerImage, Source={x:Reference Map}}"
+                                                Source="pin.png"
                                                 WidthRequest="25"/>
                                         </StackLayout>
                                     </DataTemplate>

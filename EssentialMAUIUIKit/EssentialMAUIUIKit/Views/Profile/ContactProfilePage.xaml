@@ -4,7 +4,9 @@
              x:Class="EssentialMAUIUIKit.Views.Profile.ContactProfilePage"
              xmlns:button="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:controls="clr-namespace:EssentialMAUIUIKit.Controls"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:model="clr-namespace:EssentialMAUIUIKit.Models"
+             x:DataType="local:ContactProfileViewModel">
     <ContentView.BindingContext>
         <local:ContactProfileViewModel/>
     </ContentView.BindingContext>
@@ -211,7 +213,7 @@
                         Orientation="Horizontal"
                         Spacing="16">
                         <BindableLayout.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="model:UserProfile">
                                 <Image
                                     BackgroundColor="{DynamicResource Gray-200}"
                                     HeightRequest="100"

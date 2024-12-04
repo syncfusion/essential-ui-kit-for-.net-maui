@@ -5,8 +5,10 @@
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:model="clr-namespace:EssentialMAUIUIKit.Models"
              xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
-             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters">
+             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
+             x:DataType="local:ArticleCardViewModel">
     <ContentView.Resources>
         <ResourceDictionary>
             <converter:BooleanToStringConverter x:Key="boolToStringConverter"/>
@@ -51,7 +53,7 @@
                                       SelectionMode="Single"
                                       VerticalOptions="Fill">
                     <listView:SfListView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="model:Story">
                             <Border HeightRequest="240"
                                     WidthRequest="{OnIdiom Phone=343,
     Tablet=343,

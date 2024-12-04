@@ -4,7 +4,8 @@
              x:Class="EssentialMAUIUIKit.Views.Forms.BusinessRegistrationForm"
              xmlns:button="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:dataForm="clr-namespace:Syncfusion.Maui.DataForm;assembly=Syncfusion.Maui.DataForm"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             x:DataType="local:BusinessRegistrationFormViewModel">
 
     <ContentView.BindingContext>
         <local:BusinessRegistrationFormViewModel/>

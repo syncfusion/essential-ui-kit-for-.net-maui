@@ -4,7 +4,8 @@
              x:Class="EssentialMAUIUIKit.Views.Tracking.OrderTracking"
              xmlns:progressBar="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons">
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             x:DataType="local:OrderTrackingViewModel">
 
     <ContentView.BindingContext>
         <local:OrderTrackingViewModel/>

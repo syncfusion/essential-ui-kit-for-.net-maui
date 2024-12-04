@@ -5,7 +5,8 @@
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:card="clr-namespace:Syncfusion.Maui.Cards;assembly=Syncfusion.Maui.Cards"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             x:DataType="local:MyCardsViewModel">
     <ContentView.Resources>
         <Style TargetType="listView:ListViewItem">
             <Setter Property="VisualStateManager.VisualStateGroups">
@@ -49,7 +50,7 @@
                 SelectionGesture="Tap"
                 SelectionMode="Single">
                 <listView:SfListView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="local:CardDetail">
                         <card:SfCardView
                             Padding="0"
                             BorderWidth="0"

@@ -4,7 +4,8 @@
              x:Class="EssentialMAUIUIKit.Views.History.TransactionHistoryPage"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters;assembly=EssentialMAUIUIKit"
-             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core">
+             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             x:DataType="local:TransactionHistoryViewModel">
     <ContentView.BindingContext>
         <local:TransactionHistoryViewModel x:Name="viewModel"/>
     </ContentView.BindingContext>
@@ -36,7 +37,7 @@
                         BindableLayout.ItemsSource="{Binding TransactionDetails}"
                         Spacing="16">
                         <BindableLayout.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="local:TransactionDetail">
                                 <Border
                                     Margin="0"
                                     Padding="0"

@@ -4,7 +4,8 @@
              x:Class="EssentialMAUIUIKit.Views.Navigation.ContactsPage"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:sfavatar="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             x:DataType="local:ContactsPageViewModel">
     <ContentView.BindingContext>
         <local:ContactsPageViewModel/>
     </ContentView.BindingContext>
@@ -31,33 +32,8 @@
                         SelectionMode="Single"
                         VerticalOptions="Fill">
 
-                        <!--  Group Header  -->
-                        <listView:SfListView.GroupHeaderTemplate>
-                            <DataTemplate>
-                                <ViewCell>
-                                    <ViewCell.View>
-                                        <StackLayout
-                                            BackgroundColor="{DynamicResource Gray-100}"
-                                            HeightRequest="40"
-                                            Orientation="Horizontal"
-                                            Spacing="0">
-
-                                            <Label
-                                                Margin="16,0"
-                                                FontFamily="Roboto-Medium"
-                                                HorizontalOptions="Start"
-                                                Style="{DynamicResource TitleLabelStyle}"
-                                                Text="{Binding Key}"
-                                                VerticalOptions="Center"/>
-
-                                        </StackLayout>
-                                    </ViewCell.View>
-                                </ViewCell>
-                            </DataTemplate>
-                        </listView:SfListView.GroupHeaderTemplate>
-
                         <listView:SfListView.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="local:Contact">
                                 <ViewCell>
                                     <ViewCell.View>
                                         <Grid
@@ -106,33 +82,8 @@
                     SelectionMode="Single"
                     VerticalOptions="Fill">
 
-                    <!--  Group Header  -->
-                    <listView:SfListView.GroupHeaderTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <ViewCell.View>
-                                    <StackLayout
-                                        BackgroundColor="{DynamicResource Gray-100}"
-                                        HeightRequest="40"
-                                        Orientation="Horizontal"
-                                        Spacing="0">
-
-                                        <Label
-                                            Margin="16,0"
-                                            FontFamily="Roboto-Medium"
-                                            HorizontalOptions="Start"
-                                            Style="{DynamicResource TitleLabelStyle}"
-                                            Text="{Binding Key}"
-                                            VerticalOptions="Center"/>
-
-                                    </StackLayout>
-                                </ViewCell.View>
-                            </ViewCell>
-                        </DataTemplate>
-                    </listView:SfListView.GroupHeaderTemplate>
-
                     <listView:SfListView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="local:Contact">
                             <ViewCell>
                                 <ViewCell.View>
                                     <Grid

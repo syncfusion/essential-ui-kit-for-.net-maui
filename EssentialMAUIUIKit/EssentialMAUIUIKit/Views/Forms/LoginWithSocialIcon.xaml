@@ -4,7 +4,8 @@
              x:Class="EssentialMAUIUIKit.Views.Forms.LoginWithSocialIcon"
              xmlns:button="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:dataForm="clr-namespace:Syncfusion.Maui.DataForm;assembly=Syncfusion.Maui.DataForm"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             x:DataType="local:LoginPageViewModel">
     <ContentView.BindingContext>
         <local:LoginPageViewModel/>
     </ContentView.BindingContext>
@@ -100,7 +101,6 @@
 
                     <button:SfButton
                         Background="{DynamicResource FacebookLogin}"
-                        Command="{Binding FaceBookLoginCommand}"
                         HeightRequest="40"
                         HorizontalOptions="Start"
                         Style="{DynamicResource IconButtonStyle}"
@@ -110,7 +110,6 @@
 
                     <button:SfButton
                         Background="{DynamicResource TwitterBlue}"
-                        Command="{Binding TwitterLoginCommand}"
                         HeightRequest="40"
                         Style="{DynamicResource IconButtonStyle}"
                         Text="{DynamicResource Twitter}"
@@ -118,7 +117,6 @@
                         TextColor="{DynamicResource White}"/>
 
                     <button:SfButton
-                        Command="{Binding GmailLoginCommand}"
                         HeightRequest="40"
                         HorizontalOptions="End"
                         Style="{DynamicResource IconButtonStyle}"

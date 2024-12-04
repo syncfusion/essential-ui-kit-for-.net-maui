@@ -7,7 +7,9 @@
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
              xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:model="clr-namespace:EssentialMAUIUIKit.Models.Catalog"
+             x:DataType="local:TravelPlannerViewModel">
     <ContentView.BindingContext>
         <local:TravelPlannerViewModel/>
     </ContentView.BindingContext>
@@ -56,10 +58,12 @@
                                    NavigationStripMode="Dots"
                                    NavigationStripPosition="Bottom"
                                    SelectedDotColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                   SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
                                    UnselectedDotColor="{DynamicResource Gray-200}">
+                    <rotator:SfRotator.SelectedIndex>
+                        <Binding x:DataType="rotator:SfRotator" Path="SelectedIndex" Mode="TwoWay"/>
+                    </rotator:SfRotator.SelectedIndex>
                     <rotator:SfRotator.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="model:Travel">
                             <Border WidthRequest="650"
                                     Stroke="Transparent"
                                     StrokeThickness="0"
@@ -139,7 +143,7 @@
                     <listView:ListViewItem Style="{DynamicResource ListViewItemStyle}"/>
 
                     <listView:SfListView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="model:Travel">
                             <Border
                                 Margin="8,0,8,35"
                                 Padding="0"
@@ -268,7 +272,7 @@
                                      Orientation="Horizontal"
                                      SelectionBackground="Transparent">
                     <listView:SfListView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="model:Travel">
                             <Border
                                 Margin="8,0,8,24"
                                 Padding="0"

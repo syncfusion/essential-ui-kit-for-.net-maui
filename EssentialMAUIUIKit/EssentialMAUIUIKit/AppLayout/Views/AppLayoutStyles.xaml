@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.AppLayout.Views.AppLayoutStyles"
                     xmlns:converters="clr-namespace:EssentialMAUIUIKit.Converters"
-                    xmlns:controls="clr-namespace:EssentialMAUIUIKit.Controls">
+                    xmlns:controls="clr-namespace:EssentialMAUIUIKit.Controls"
+                    xmlns:model="clr-namespace:EssentialMAUIUIKit.AppLayout.Models">
 
     <converters:StringToImageResourceConverter x:Key="ImageResourceConverter" />
 
@@ -46,7 +47,7 @@
     <!--  Common style for list view item title  -->
     <Style x:Key="ItemTitleStyle" TargetType="Label">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
-        <Setter Property="Text" Value="{Binding Name}" />
+        <Setter x:DataType="model:Category" Property="Text" Value="{Binding Name}" />
         <Setter Property="FontSize" Value="16" />
         <Setter Property="FontFamily" Value="Roboto-Medium" />
         <Setter Property="VerticalTextAlignment" Value="Center" />
@@ -56,7 +57,7 @@
     <!--  Common style for list view item description  -->
     <Style x:Key="ItemDescriptionStyle" TargetType="Label">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}" />
-        <Setter Property="Text" Value="{Binding Description}" />
+        <Setter x:DataType="model:Category" Property="Text" Value="{Binding Description}" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="FontFamily" Value="Roboto-Regular" />
         <Setter Property="LineHeight" Value="1.25" />
@@ -65,24 +66,16 @@
 
     <!--  Common style for list view item image  -->
     <Style x:Key="ItemImageStyle" TargetType="Image">
-        <Setter Property="Source" Value="{Binding Icon, Converter={StaticResource ImageResourceConverter}}" />
+        <Setter x:DataType="model:Category" Property="Source" Value="{Binding Icon, Converter={StaticResource ImageResourceConverter}}" />
         <Setter Property="HeightRequest" Value="80" />
         <Setter Property="WidthRequest" Value="80" />
         <Setter Property="VerticalOptions" Value="Center" />
     </Style>
 
-    <Style x:Key="TemplateImageStyle" TargetType="Image">
-        <Setter Property="Source" Value="{Binding Image , Converter={StaticResource ImageResourceConverter}}" />
-    </Style>
-
-    <Style x:Key="TemplateDarkImageStyle" TargetType="Image">
-        <Setter Property="Source" Value="{Binding DarkModeImage, Converter={StaticResource ImageResourceConverter}}" />
-    </Style>
-
     <!--  Common style for list view item template count  -->
     <Style x:Key="ItemCountLabelStyle" TargetType="Label">
         <Setter Property="TextColor" Value="{DynamicResource Gray-700}" />
-        <Setter Property="Text" Value="{Binding TemplateCount}" />
+        <Setter x:DataType="model:Category" Property="Text" Value="{Binding TemplateCount}" />
         <Setter Property="FontFamily" Value="Roboto-Medium" />
         <Setter Property="FontSize" Value="12" />
         <Setter Property="VerticalTextAlignment" Value="Center" />

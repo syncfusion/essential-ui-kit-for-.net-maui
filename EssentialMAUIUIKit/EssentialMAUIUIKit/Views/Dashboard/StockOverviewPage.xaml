@@ -7,7 +7,7 @@
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
              xmlns:local="clr-namespace:EssentialMAUIUIKit">
-    <ContentView.BindingContext>
+    <!--<ContentView.BindingContext>
         <local:StockOverviewViewModel/>
     </ContentView.BindingContext>
 
@@ -114,7 +114,7 @@
                                             <BoxView HeightRequest="1"
                                                      Color="{DynamicResource Gray-200}"/>
 
-                                            <!--  Size variant buttons  -->
+                                            --><!--  Size variant buttons  --><!--
                                             <buttons:SfSegmentedControl
                                                 x:Name="SegmentControl"
                                                 ItemsSource="{Binding DataVariants}"
@@ -228,5 +228,5 @@
                 </StackLayout>
             </StackLayout>
         </ScrollView>
-    </ContentView.Content>
+    </ContentView.Content>-->
 </ContentView>

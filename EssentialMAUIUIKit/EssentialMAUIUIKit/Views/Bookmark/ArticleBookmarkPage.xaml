@@ -4,7 +4,9 @@
              x:Class="EssentialMAUIUIKit.Views.Bookmark.ArticleBookmarkPage"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
-             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters">
+             xmlns:model="clr-namespace:EssentialMAUIUIKit.Models"
+             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
+             x:DataType="local:ArticleBookmarkViewModel">
     <ContentView.BindingContext>
         <local:ArticleBookmarkViewModel/>
     </ContentView.BindingContext>
@@ -25,7 +27,7 @@
                 BindableLayout.ItemsSource="{Binding LatestStories}"
                 Spacing="16">
                 <BindableLayout.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="model:Story">
                         <Border StrokeShape="RoundRectangle 10"
                                 StrokeThickness="0">
                             <Grid

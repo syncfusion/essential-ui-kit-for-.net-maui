@@ -8,7 +8,7 @@
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
              xmlns:local="clr-namespace:EssentialMAUIUIKit">
-    <ContentView.BindingContext>
+    <!--<ContentView.BindingContext>
         <local:MyWalletViewModel/>
     </ContentView.BindingContext>
     <ContentView.Resources>
@@ -60,7 +60,7 @@
                         </LinearGradientBrush>
                     </Grid.Background>
 
-                    <!--  Back button  -->
+                    --><!--  Back button  --><!--
                     <buttons:SfButton
                         Margin="4,24,0,12"
                         HorizontalOptions="Start"
@@ -70,7 +70,7 @@
                         VerticalOptions="Start"
                         VerticalTextAlignment="Start"/>
 
-                    <!--  Title  -->
+                    --><!--  Title  --><!--
                     <Label
                         Margin="0,28,0,12"
                         FontFamily="Roboto-Medium"
@@ -78,7 +78,7 @@
                         Text="Wallet"
                         TextColor="{DynamicResource Gray-White}"/>
 
-                    <!--  Total balance  -->
+                    --><!--  Total balance  --><!--
                     <Label
                         Grid.Row="1"
                         Margin="16,16,16,4"
@@ -299,7 +299,7 @@
                                     RowDefinitions="Auto, Auto"
                                     RowSpacing="0">
 
-                                    <!--  Profile Image  -->
+                                    --><!--  Profile Image  --><!--
                                     <Border
                                         Grid.RowSpan="3"
                                         Margin="16"
@@ -320,7 +320,7 @@
                                         </Image>
                                     </Border>
 
-                                    <!--  Name  -->
+                                    --><!--  Name  --><!--
                                     <Label
                                         Grid.Column="1"
                                         Margin="0,15,0,4"
@@ -329,7 +329,7 @@
                                         Style="{DynamicResource TitleLabelStyle}"
                                         Text="{Binding Name}"/>
 
-                                    <!--  Transaction Title  -->
+                                    --><!--  Transaction Title  --><!--
                                     <Label
                                         Grid.Row="1"
                                         Grid.Column="1"
@@ -339,7 +339,7 @@
                                         Style="{DynamicResource DescriptionLabelStyle}"
                                         Text="{Binding Title}"/>
 
-                                    <!--  Amount  -->
+                                    --><!--  Amount  --><!--
                                     <Label
                                         Grid.Column="1"
                                         Margin="0,16,16,4"
@@ -358,7 +358,7 @@
                                         </Label.FormattedText>
                                     </Label>
 
-                                    <!--  Date  -->
+                                    --><!--  Date  --><!--
                                     <Label
                                         Grid.Row="1"
                                         Grid.Column="1"
@@ -369,7 +369,7 @@
                                         Text="{Binding Date, StringFormat='{}{0:dd MMM yyyy}'}"/>
 
                                 </Grid>
-                                <!--  Seperator  -->
+                                --><!--  Seperator  --><!--
                                 <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
                             </StackLayout>
 
@@ -379,5 +379,5 @@
 
             </Grid>
         </ScrollView>
-    </ContentView.Content>
+    </ContentView.Content>-->
 </ContentView>

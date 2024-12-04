@@ -7,6 +7,7 @@
              xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
              xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             x:DataType="viewModels:TemplatePageViewModel"
              NavigationPage.HasNavigationBar="False"
              NavigationPage.HasBackButton="True">
 

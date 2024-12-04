@@ -4,7 +4,8 @@
              x:Class="EssentialMAUIUIKit.Views.Navigation.SongsPlayListPage"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             x:DataType="local:SongPageViewModel">
     <ContentView.BindingContext>
         <local:SongPageViewModel/>
     </ContentView.BindingContext>
@@ -32,7 +33,7 @@
                         VerticalOptions="Fill">
 
                         <listView:SfListView.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="local:Song">
                                 <ViewCell>
                                     <StackLayout>
                                         <Grid
@@ -110,7 +111,7 @@
                     VerticalOptions="Fill">
 
                     <listView:SfListView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="local:Song">
                             <ViewCell>
                                 <StackLayout>
                                     <Grid

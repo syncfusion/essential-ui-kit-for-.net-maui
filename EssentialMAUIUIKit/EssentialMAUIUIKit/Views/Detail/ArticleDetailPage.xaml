@@ -4,7 +4,9 @@
              x:Class="EssentialMAUIUIKit.Views.Detail.ArticleDetailPage"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
-             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters">
+             xmlns:model="clr-namespace:EssentialMAUIUIKit.Models"
+             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
+             x:DataType="local:ArticleViewModel">
     <ContentView.BindingContext>
         <local:ArticleViewModel/>
     </ContentView.BindingContext>
@@ -114,7 +116,7 @@
                         BindableLayout.ItemsSource="{Binding Articles.ContentList}"
                         Spacing="16">
                         <BindableLayout.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="local:Content">
                                 <Grid ColumnDefinitions="Auto,*">
 
                                     <Label VerticalOptions="Start"
@@ -154,7 +156,7 @@
                              BindableLayout.ItemsSource="{Binding Articles.RelatedStories}"
                              Spacing="16">
                     <BindableLayout.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="model:Story">
                             <Grid
                                 ColumnSpacing="16"
                                 HeightRequest="110"

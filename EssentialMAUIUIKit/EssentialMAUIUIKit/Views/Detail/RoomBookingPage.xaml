@@ -8,7 +8,8 @@
              xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Calendar;assembly=Syncfusion.Maui.Calendar"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:maps="clr-namespace:Syncfusion.Maui.Maps;assembly=Syncfusion.Maui.Maps"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             x:DataType="local:RoomBookingPageViewModel">
     <ContentView.Resources>
         <Style TargetType="listView:ListViewItem">
             <Setter Property="VisualStateManager.VisualStateGroups">
@@ -50,7 +51,7 @@
                         ItemsSource="{Binding PreviewImages}"
                         VerticalOptions="Start">
                         <rotator:SfRotator.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="local:RoomDetail">
                                 <Grid>
 
                                     <!--Image of the resort-->
@@ -433,7 +434,7 @@
                         SelectionBackground="Transparent">
 
                         <listView:SfListView.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="local:RoomDetail">
                                 <StackLayout
                                     Margin="0"
                                     Orientation="Vertical"
@@ -471,7 +472,7 @@
                         </listView:SfListView.ItemTemplate>
 
                         <listView:SfListView.FooterTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="local:RoomBookingPageViewModel">
                                 <StackLayout
                                     Margin="0"
                                     Orientation="Vertical"
@@ -535,7 +536,7 @@
 
                                 <!--Template for customizing the address popup-->
                                 <maps:MapTileLayer.MarkerTemplate>
-                                    <DataTemplate>
+                                    <DataTemplate x:DataType="local:RoomBookingPageViewModel">
                                         <StackLayout>
 
                                             <!--Set pin image-->
@@ -543,7 +544,7 @@
                                                 Margin="10,5,0,0"
                                                 HeightRequest="25"
                                                 HorizontalOptions="Start"
-                                                Source="{Binding Path=BindingContext.MapMarkerImage, Source={x:Reference Map}}"
+                                                Source="{Binding Path=MapMarkerImage, Source={x:Reference Map}}"
                                                 WidthRequest="25"/>
                                         </StackLayout>
                                     </DataTemplate>
@@ -626,7 +627,7 @@
                             BindableLayout.ItemsSource="{Binding RoomDetail.Reviews}"
                             Spacing="0">
                             <BindableLayout.ItemTemplate>
-                                <DataTemplate>
+                                <DataTemplate x:DataType="local:Review">
                                     <StackLayout Spacing="0">
 
                                         <BoxView HeightRequest="{OnIdiom Default=1, Desktop=0}"
@@ -705,32 +706,6 @@ Desktop=0}"
                                                     </rating:SfRating.Triggers>
                                                 </rating:SfRating>
                                             </Grid>
-
-                                            <!--  Product images  -->
-                                            <StackLayout
-                                                Grid.Row="1"
-                                                Grid.ColumnSpan="2"
-                                                BindableLayout.ItemsSource="{Binding Images}"
-                                                Orientation="Horizontal"
-                                                Spacing="8">
-                                                <BindableLayout.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <Image
-                                                            Margin="0,8,0,0"
-                                                            Aspect="AspectFill"
-                                                            BackgroundColor="{DynamicResource Gray-200}"
-                                                            HeightRequest="50"
-                                                            WidthRequest="60">
-                                                            <Image.Source>
-                                                                <UriImageSource
-                                                                    CacheValidity="14"
-                                                                    CachingEnabled="true"
-                                                                    Uri="{Binding .}"/>
-                                                            </Image.Source>
-                                                        </Image>
-                                                    </DataTemplate>
-                                                </BindableLayout.ItemTemplate>
-                                            </StackLayout>
 
                                             <!--  Product Review  -->
                                             <Label
