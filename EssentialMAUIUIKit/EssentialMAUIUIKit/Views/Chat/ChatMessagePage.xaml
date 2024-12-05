@@ -7,7 +7,8 @@
              xmlns:controls="clr-namespace:EssentialMAUIUIKit.Controls"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              xmlns:templateSelector="clr-namespace:EssentialMAUIUIKit.Views.Chat"
-             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters">
+             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
+             x:DataType="local:ChatMessageViewModel">
     <ContentView.BindingContext>
         <local:ChatMessageViewModel/>
     </ContentView.BindingContext>
@@ -55,19 +56,6 @@
                     ItemsSource="{Binding UserProfile.ChatMessageInfo}"
                     SelectionMode="None"
                     VerticalOptions="Fill">
-
-                    <listView:SfListView.GroupHeaderTemplate>
-                        <DataTemplate>
-                            <Label
-                                Margin="0,16,0,0"
-                                FontFamily="Roboto-Regular"
-                                FontSize="12"
-                                HorizontalTextAlignment="Center"
-                                LineHeight="1.5"
-                                Text="{Binding Key, Converter={StaticResource DateTimeToStringConverter}}"
-                                TextColor="{DynamicResource Gray-700}"/>
-                        </DataTemplate>
-                    </listView:SfListView.GroupHeaderTemplate>
 
                     <!--  Navigation bar  -->
                     <listView:SfListView.HeaderTemplate>
@@ -160,8 +148,7 @@
                                         <controls:BorderlessEditor
                                             Margin="5,0"
                                             Placeholder="Type here"
-                                            Style="{DynamicResource BorderlessEditorStyle}"
-                                            Text="{Binding NewMessage}"/>
+                                            Style="{DynamicResource BorderlessEditorStyle}"/>
 
                                         <!--  Camera Button  -->
                                         <buttons:SfButton

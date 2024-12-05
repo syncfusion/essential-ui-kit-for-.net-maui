@@ -5,8 +5,10 @@
              xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Rotator;assembly=Syncfusion.Maui.Rotator"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:model="clr-namespace:EssentialMAUIUIKit.Models"
              xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
-             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core">
+             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             x:DataType="local:ArticleListViewModel">
     <ContentView.BindingContext>
         <local:ArticleListViewModel/>
     </ContentView.BindingContext>
@@ -46,7 +48,7 @@
                                       UnselectedDotColor="{DynamicResource Gray-200}"
                                       VerticalOptions="Start">
                     <syncfusion:SfRotator.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="model:Story">
                             <Border
                                 Stroke="Transparent"
                                 StrokeThickness="0"
@@ -129,7 +131,7 @@
                              BindableLayout.ItemsSource="{Binding LatestStories}"
                              Spacing="16">
                     <BindableLayout.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="model:Story">
                             <Grid>
                                 <Grid.Resources>
                                     <ResourceDictionary>

@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Detail.DataTablePage"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             x:DataType="local:DataTableViewModel">
     <ContentView.BindingContext>
         <local:DataTableViewModel></local:DataTableViewModel>
     </ContentView.BindingContext>
@@ -98,7 +99,7 @@
 
                         <!--  List View for the table  -->
                         <listView:SfListView.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="local:DataTableList">
                                 <ViewCell>
                                     <StackLayout Margin="0"
                                                  Spacing="0">
@@ -200,8 +201,8 @@
                                                 VerticalOptions="Center"
                                                 WidthRequest="80">
                                                 <BindableLayout.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <BoxView
+                                                    <DataTemplate x:DataType="local:DataTableViewModel">
+                                                        <BoxView x:DataType="x:String"
                                                             BackgroundColor="{Binding}"
                                                             CornerRadius="16"
                                                             HeightRequest="8"
@@ -304,7 +305,7 @@
 
                     <!--  List View for the table  -->
                     <listView:SfListView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="local:DataTableList">
                             <ViewCell>
                                 <StackLayout Margin="0"
                                              Spacing="0">
@@ -406,8 +407,8 @@
                                             VerticalOptions="Center"
                                             WidthRequest="80">
                                             <BindableLayout.ItemTemplate>
-                                                <DataTemplate>
-                                                    <BoxView
+                                                <DataTemplate x:DataType="local:DataTableViewModel">
+                                                    <BoxView x:DataType="x:String"
                                                         BackgroundColor="{Binding}"
                                                         CornerRadius="16"
                                                         HeightRequest="8"

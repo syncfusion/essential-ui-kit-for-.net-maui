@@ -131,13 +131,6 @@
 		<Page Name="Product Delivery Tracking" Description="This page displays a live train’s present status with the estimated time of arrival at a specified destination." PageName="Views.Tracking.OrderTracking" />
 	</Category>
 
-	<Category Icon="dashboard.png" Name="Dashboard"  Description="A beautifully presented interface relevant to common real-world use cases.">
-		<Page Name="Stock Overview" Description="This page displays a dashboard for stock market data visualization." PageName="Views.Dashboard.StockOverviewPage" />
-		<Page Name="Health Care"  Description="This page displays a dashboard for health-care data visualization." PageName="Views.Dashboard.HealthCarePage" />
-		<Page Name="Daily Calories Report"  Description="This page displays a dashboard visualizing a daily calorie report." PageName="Views.Dashboard.DailyCaloriesReportPage" />
-		<Page Name="My Wallet"  Description="This page shows income and expense charts as well as transaction details." PageName="Views.Dashboard.MyWalletPage" />
-	</Category>
-
 	<Category Icon="setting.png" Name="Settings" Description="Display various types of settings pages.">
 		<Page Name="Setting" Description="This page displays a simple settings page that includes account, notification, and support settings." PageName="Views.Settings.SettingsPage" />
 		<Page Name="Help"  Description="This page displays a simple help page that provides help with recent orders and other queries." PageName="Views.Settings.HelpPage" />

@@ -4,7 +4,8 @@
              x:Class="EssentialMAUIUIKit.Views.Navigation.SelectableNamePage"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             x:DataType="local:NameListViewModel">
     <ContentView.BindingContext>
         <local:NameListViewModel/>
     </ContentView.BindingContext>
@@ -30,7 +31,7 @@
                         SelectionMode="Single"
                         VerticalOptions="Fill">
                         <listView:SfListView.GroupHeaderTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="local:NameInfo">
                                 <ViewCell>
                                     <ViewCell.View>
                                         <StackLayout
@@ -54,7 +55,7 @@
                         </listView:SfListView.GroupHeaderTemplate>
 
                         <listView:SfListView.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="local:NameInfo">
                                 <ViewCell>
                                     <ViewCell.View>
                                         <Grid
@@ -71,7 +72,7 @@
                                                 FontSize="16"
                                                 HeightRequest="48"
                                                 HorizontalOptions="Start"
-                                                IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                                IsChecked="False"
                                                 Text="{Binding Name}"
                                                 TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                                                 VerticalOptions="Center"/>
@@ -100,7 +101,7 @@
 
                     <!--  Group Header  -->
                     <listView:SfListView.GroupHeaderTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="local:NameInfo">
                             <ViewCell>
                                 <ViewCell.View>
                                     <StackLayout
@@ -124,7 +125,7 @@
                     </listView:SfListView.GroupHeaderTemplate>
 
                     <listView:SfListView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="local:NameInfo">
                             <ViewCell>
                                 <ViewCell.View>
                                     <Grid
@@ -141,7 +142,7 @@
                                             FontSize="16"
                                             HeightRequest="48"
                                             HorizontalOptions="Start"
-                                            IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                            IsChecked="False"
                                             Text="{Binding Name}"
                                             TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                                             VerticalOptions="Center"/>

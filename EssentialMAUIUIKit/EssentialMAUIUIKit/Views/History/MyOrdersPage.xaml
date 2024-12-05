@@ -6,7 +6,8 @@
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
-             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core">
+             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             x:DataType="local:OrdersViewModel">
     <ContentView.BindingContext>
         <local:OrdersViewModel x:Name="viewModel"/>
     </ContentView.BindingContext>
@@ -41,7 +42,7 @@
 
 
                         <listView:SfListView.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="local:Order">
                                 <syncEffectsView:SfEffectsView
                                     Margin="0,16,0,0"
                                     TouchDownEffects="Ripple">
@@ -119,7 +120,7 @@
                                                 Margin="0"
                                                 FontFamily="Roboto-Regular"
                                                 FontSize="12"
-                                                Text="{Binding OrderID, StringFormat='Order ID: {0}'}"
+                                                Text="{Binding OrderId, StringFormat='Order ID: {0}'}"
                                                 TextColor="{DynamicResource Gray-700}"
                                                 VerticalOptions="Center"/>
 
@@ -179,7 +180,7 @@
                             <listView:ListViewItem Style="{DynamicResource ListViewItemStyle}"/>
 
                             <listView:SfListView.ItemTemplate>
-                                <DataTemplate>
+                                <DataTemplate x:DataType="local:Order">
                                     <Grid
                      ColumnSpacing="0"
                      RowSpacing="0"
@@ -249,7 +250,7 @@
                          FontFamily="Roboto-Regular"
                          FontSize="12"
                          HorizontalOptions="Start"
-                         Text="{Binding OrderID, StringFormat='Order ID: {0}'}"
+                         Text="{Binding OrderId, StringFormat='Order ID: {0}'}"
                          VerticalOptions="Center"
                          TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
 
@@ -281,7 +282,7 @@
                             <listView:ListViewItem Style="{DynamicResource ListViewItemStyle}"/>
 
                             <listView:SfListView.ItemTemplate>
-                                <DataTemplate>
+                                <DataTemplate x:DataType="local:Order">
                                     <Grid
                      ColumnSpacing="0"
                      RowSpacing="0"
@@ -351,7 +352,7 @@
                          FontFamily="Roboto-Regular"
                          FontSize="12"
                          HorizontalOptions="Start"
-                         Text="{Binding OrderID, StringFormat='Order ID: {0}'}"
+                         Text="{Binding OrderId, StringFormat='Order ID: {0}'}"
                          VerticalOptions="Center"
                          TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
 
@@ -383,7 +384,7 @@
                             <listView:ListViewItem Style="{DynamicResource ListViewItemStyle}"/>
 
                             <listView:SfListView.ItemTemplate>
-                                <DataTemplate>
+                                <DataTemplate x:DataType="local:Order">
                                     <Grid
                      ColumnSpacing="0"
                      RowSpacing="0"
@@ -453,7 +454,7 @@
                          FontFamily="Roboto-Regular"
                          FontSize="12"
                          HorizontalOptions="Start"
-                         Text="{Binding OrderID, StringFormat='Order ID: {0}'}"
+                         Text="{Binding OrderId, StringFormat='Order ID: {0}'}"
                          VerticalOptions="Center"
                          TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
 

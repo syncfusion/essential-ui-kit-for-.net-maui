@@ -5,7 +5,8 @@
              xmlns:viewModels="clr-namespace:EssentialMAUIUIKit.AppLayout.ViewModels"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
-             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters">
+             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
+             x:DataType="viewModels:TemplatePageViewModel">
 
     <ContentView.Resources>
         <ResourceDictionary>

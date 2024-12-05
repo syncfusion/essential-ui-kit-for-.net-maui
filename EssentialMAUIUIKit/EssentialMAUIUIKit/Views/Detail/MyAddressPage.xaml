@@ -4,7 +4,8 @@
              x:Class="EssentialMAUIUIKit.Views.Detail.MyAddressPage"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:ListView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             x:DataType="local:AddressViewModel">
     <ContentView.Resources>
         <Style TargetType="ListView:ListViewItem">
             <Setter Property="VisualStateManager.VisualStateGroups">
@@ -51,7 +52,7 @@
                 SelectionMode="Single">
 
                 <ListView:SfListView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="local:Address">
                         <Border
                             Margin="8"
                             Padding="8"

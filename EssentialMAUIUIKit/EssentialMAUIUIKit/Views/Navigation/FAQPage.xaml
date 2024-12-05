@@ -4,7 +4,8 @@
              x:Class="EssentialMAUIUIKit.Views.Navigation.FAQPage"
              xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Expander;assembly=Syncfusion.Maui.Expander"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             x:DataType="local:FAQViewModel">
     <ContentView.BindingContext>
         <local:FAQViewModel/>
     </ContentView.BindingContext>
@@ -41,7 +42,7 @@
 
                     <!--  View of each card item  -->
                     <listView:SfListView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="local:QuestionItem">
                             <ViewCell>
                                 <StackLayout BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                                              Spacing="0">
@@ -79,7 +80,7 @@
                                                 <BindableLayout.ItemTemplate>
                                                     <DataTemplate>
                                                         <!--  Label for Answers  -->
-                                                        <Label
+                                                        <Label x:DataType="x:String"
                                                             HorizontalOptions="Start"
                                                             HorizontalTextAlignment="Start"
                                                             LineHeight="{OnPlatform Default=-1,

@@ -4,7 +4,8 @@
              x:Class="EssentialMAUIUIKit.Views.Transaction.CheckoutPage"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
-             xmlns:templateSelector="clr-namespace:EssentialMAUIUIKit.Views.Transaction">
+             xmlns:templateSelector="clr-namespace:EssentialMAUIUIKit.Views.Transaction"
+             x:DataType="local:CheckoutViewModel">
     <ContentView.BindingContext>
         <local:CheckoutViewModel x:Name="viewModel"/>
     </ContentView.BindingContext>
@@ -89,7 +90,7 @@
                                 BindableLayout.ItemsSource="{Binding PaymentModes}"
                                 Spacing="0">
                                 <BindableLayout.ItemTemplate>
-                                    <DataTemplate>
+                                    <DataTemplate x:DataType="local:PaymentMode">
                                         <Grid
                                             RowDefinitions="Auto,Auto,Auto,Auto"
                                             RowSpacing="0">

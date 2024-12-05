@@ -551,6 +551,8 @@ namespace EssentialMAUIUIKit
             }
         }
 
+
+
         /// <summary>
         /// Invoked when the book button is clicked.
         /// </summary>
@@ -598,7 +600,7 @@ namespace EssentialMAUIUIKit
 
         private int cost;
 
-        private string? selectedRanges;
+        private string? selectedRanges = $"{DateTime.Now:dd MMM yyyy} - {DateTime.Now.AddDays(2):dd MMM yyy}";
 
         private IReadOnlyCollection<Review> reviews = new ObservableCollection<Review>();
 

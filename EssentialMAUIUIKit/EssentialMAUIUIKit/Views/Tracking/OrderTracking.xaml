@@ -4,7 +4,8 @@
              x:Class="EssentialMAUIUIKit.Views.Tracking.OrderTracking"
              xmlns:progressBar="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons">
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             x:DataType="local:OrderTrackingViewModel">
 
     <ContentView.BindingContext>
         <local:OrderTrackingViewModel/>
@@ -208,7 +209,7 @@
                                                 HorizontalOptions="Start"
                                                 Style="{DynamicResource SimpleLabelStyle}"
                                                 Text="Coupon Discount"/>
-                                            <buttons:SfButton Margin="16,5,16,0"
+                                            <buttons:SfButton Margin="16,5,10,0"
                                                               Text="Apply coupon"
                                                               TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
                                                               FontFamily="Roboto-Regular"
@@ -218,7 +219,7 @@
                                                               Grid.Column="1"
                                                               HorizontalOptions="End"
                                                               Background="Transparent"
-                                                              WidthRequest="85">
+                                                              WidthRequest="90">
                                             </buttons:SfButton>
                                             <!--  Delivery Charges  -->
                                             <Label

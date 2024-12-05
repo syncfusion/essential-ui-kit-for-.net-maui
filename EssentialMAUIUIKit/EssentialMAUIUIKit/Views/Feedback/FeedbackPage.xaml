@@ -5,7 +5,9 @@
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:rating="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
              xmlns:progressbar="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:model="clr-namespace:EssentialMAUIUIKit.Models"
+             x:DataType="local:FeedbackViewModel">
 
     <ContentView.BindingContext>
         <local:FeedbackViewModel/>
@@ -59,7 +61,7 @@
                         <StackLayout BindableLayout.ItemsSource="{Binding RatingInfo}"
                                      Margin="0,20,0,0">
                             <BindableLayout.ItemTemplate>
-                                <DataTemplate>
+                                <DataTemplate x:DataType="local:RatingInfo">
                                     <Grid RowDefinitions="Auto"
                                           ColumnDefinitions="Auto, Auto, Auto"
                                           HeightRequest="40">
@@ -115,7 +117,7 @@
                                                  VerticalOptions="Fill">
 
                                 <listView:SfListView.ItemTemplate>
-                                    <DataTemplate>
+                                    <DataTemplate x:DataType="model:Review">
                                         <Grid RowDefinitions="*,*,Auto"
                                               ColumnDefinitions="Auto,*,Auto"
                                               HeightRequest="100">

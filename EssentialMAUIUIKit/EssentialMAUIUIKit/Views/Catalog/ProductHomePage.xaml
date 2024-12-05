@@ -4,7 +4,8 @@
              x:Class="EssentialMAUIUIKit.Views.Catalog.ProductHomePage"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
-             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core">
+             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             x:DataType="local:CategoryTileViewModel">
     <ContentView.BindingContext>
         <local:CategoryTileViewModel/>
     </ContentView.BindingContext>
@@ -35,7 +36,7 @@
                                          Style="{DynamicResource TransparentSelectionListView}">
 
                         <listView:SfListView.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="local:CategoryTile">
                                 <syncEffectsView:SfEffectsView
                                     RippleBackground="{DynamicResource Gray-300}"
                                     TouchDownEffects="Ripple">

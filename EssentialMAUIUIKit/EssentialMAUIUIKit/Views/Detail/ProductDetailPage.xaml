@@ -5,7 +5,8 @@
              xmlns:rotator="clr-namespace:Syncfusion.Maui.Rotator;assembly=Syncfusion.Maui.Rotator"
              xmlns:rating="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             x:DataType="local:ProductDetailsViewModel">
     <ContentView.BindingContext>
         <local:ProductDetailsViewModel/>
     </ContentView.BindingContext>
@@ -30,7 +31,7 @@
                     <rotator:SfRotator.ItemTemplate>
                         <DataTemplate>
                             <Grid>
-                                <Image Source="{Binding}"
+                                <Image x:DataType="x:String" Source="{Binding}"
                                        Aspect="AspectFit"/>
                                 <StackLayout VerticalOptions="Start"
                                              HorizontalOptions="End">
@@ -278,7 +279,7 @@
                             <StackLayout x:Name="StackLayout"
                                          BindableLayout.ItemsSource="{Binding Product.DetailPageReviews}">
                                 <BindableLayout.ItemTemplate>
-                                    <DataTemplate>
+                                    <DataTemplate x:DataType="local:Review">
                                         <Grid RowDefinitions="*,*,*"
                                               ColumnDefinitions="Auto,*,Auto">
                                             <!--  Profile Image  -->
@@ -355,8 +356,8 @@
                                                          Orientation="Horizontal"
                                                          Spacing="8">
                                                 <BindableLayout.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <Image
+                                                    <DataTemplate x:DataType="local:Review">
+                                                        <Image x:DataType="x:String"
                                                             Margin="0,8,0,0"
                                                             Aspect="AspectFill"
                                                             BackgroundColor="{DynamicResource Gray-200}"
@@ -366,7 +367,7 @@
                                                                 <UriImageSource
                                                                     CacheValidity="14"
                                                                     CachingEnabled="true"
-                                                                    Uri="{Binding .}"/>
+                                                                    Uri="{Binding}"/>
                                                             </Image.Source>
                                                         </Image>
                                                     </DataTemplate>

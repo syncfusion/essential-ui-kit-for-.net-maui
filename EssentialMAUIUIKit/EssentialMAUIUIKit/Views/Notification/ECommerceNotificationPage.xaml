@@ -4,8 +4,10 @@
              x:Class="EssentialMAUIUIKit.Views.Notification.ECommerceNotificationPage"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:model="clr-namespace:EssentialMAUIUIKit.Models.Notification"
              xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons">
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             x:DataType="local:ECommerceNotificationViewModel">
     <ContentView.Resources>
         <ResourceDictionary>
             <converter:BooleanToColorConverter x:Key="BoolToColorConverter"/>
@@ -83,7 +85,7 @@
                 VerticalOptions="Fill">
 
                 <listView:SfListView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="model:ECommerceNotificationsListModel">
                         <ViewCell>
                             <Grid
                                 BackgroundColor="Transparent"

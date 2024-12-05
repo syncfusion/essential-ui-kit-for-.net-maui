@@ -4,7 +4,9 @@
              x:Class="EssentialMAUIUIKit.Views.Bookmark.CartPage"
              xmlns:combobox="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:model="clr-namespace:EssentialMAUIUIKit.Models"
+             x:DataType="local:CartPageViewModel">
     <ContentView.BindingContext>
         <local:CartPageViewModel/>
     </ContentView.BindingContext>
@@ -42,7 +44,7 @@
                         VerticalOptions="Start">
 
                         <BindableLayout.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="model:Product">
                                 <Grid>
                                     <Grid
                                         BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
@@ -165,7 +167,7 @@
                                                     WidthRequest="90">
 
                                                     <combobox:SfComboBox.CustomView>
-                                                        <Label
+                                                        <Label x:DataType="combobox:SfComboBox"
                                                             Margin="10,0,24,0"
                                                             Background="Transparent"
                                                             FontFamily="Roboto-Regular"

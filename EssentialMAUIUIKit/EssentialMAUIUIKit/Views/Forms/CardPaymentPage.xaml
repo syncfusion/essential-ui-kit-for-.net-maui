@@ -6,7 +6,8 @@
              xmlns:dataForm="clr-namespace:Syncfusion.Maui.DataForm;assembly=Syncfusion.Maui.DataForm"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              xmlns:cards="clr-namespace:Syncfusion.Maui.Cards;assembly=Syncfusion.Maui.Cards"
-             xmlns:rotator="clr-namespace:Syncfusion.Maui.Rotator;assembly=Syncfusion.Maui.Rotator">
+             xmlns:rotator="clr-namespace:Syncfusion.Maui.Rotator;assembly=Syncfusion.Maui.Rotator"
+             x:DataType="local:CardPaymentViewModel">
 
     <ContentView.BindingContext>
         <local:CardPaymentViewModel/>
@@ -87,10 +88,12 @@
                                    VerticalOptions="Start"
                                    NavigationStripPosition="Bottom"
                                    SelectedDotColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                   SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
                                    UnselectedDotColor="{DynamicResource Gray-200}">
+                    <rotator:SfRotator.SelectedIndex>
+                        <Binding x:DataType="rotator:SfRotator" Path="SelectedIndex" Mode="TwoWay"/>
+                    </rotator:SfRotator.SelectedIndex>
                     <rotator:SfRotator.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="local:CardPaymentInfo">
                             <Border Margin="10"
                                     Padding="0"
                                     StrokeShape="RoundRectangle 10"

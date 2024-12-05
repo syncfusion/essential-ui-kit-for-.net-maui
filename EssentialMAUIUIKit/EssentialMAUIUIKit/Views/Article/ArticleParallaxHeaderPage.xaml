@@ -5,7 +5,9 @@
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
-             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters">
+             xmlns:model="clr-namespace:EssentialMAUIUIKit.Models"
+             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
+             x:DataType="local:ArticleViewModel">
     <ContentView.Resources>
         <converter:BooleanToStringConverter x:Key="boolToStringConverter"/>
         <converter:BooleanToColorConverter x:Key="boolToColorConverter"/>
@@ -145,7 +147,7 @@
                                 BindableLayout.ItemsSource="{Binding Articles.ContentList}"
                                 Spacing="16">
                                 <BindableLayout.ItemTemplate>
-                                    <DataTemplate>
+                                    <DataTemplate x:DataType="local:Content">
                                         <Grid ColumnDefinitions="Auto, *">
                                             <Label
                                                 Margin="{OnPlatform iOS='0,10,0,0', Android='0,2,0,0', MacCatalyst='0,10,0,0'}"
@@ -197,7 +199,7 @@
                                 VerticalOptions="Fill">
 
                                 <listView:SfListView.ItemTemplate>
-                                    <DataTemplate>
+                                    <DataTemplate x:DataType="model:Story">
                                         <Border StrokeShape="RoundRectangle 10"
                                                 StrokeThickness="0">
                                             <Grid
@@ -314,7 +316,7 @@
                                 BindableLayout.ItemsSource="{Binding Articles.Reviews}"
                                 Spacing="0">
                                 <BindableLayout.ItemTemplate>
-                                    <DataTemplate>
+                                    <DataTemplate x:DataType="model:Review">
                                         <Grid RowDefinitions="Auto, Auto"
                                               ColumnDefinitions="Auto, *">
 

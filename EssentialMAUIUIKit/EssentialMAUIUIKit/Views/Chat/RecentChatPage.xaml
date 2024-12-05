@@ -7,7 +7,8 @@
              xmlns:badge="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             x:DataType="local:RecentChatViewModel">
     <ContentView.Resources>
         <ResourceDictionary>
             <converter:StringToBadgeIconConverter x:Key="BadgeConverter"/>
@@ -39,12 +40,6 @@
                         <Image HeightRequest="32"
                                WidthRequest="32"
                                x:Name="ProfileImage">
-                            <Image.Source>
-                                <UriImageSource
-                                    CacheValidity="14"
-                                    CachingEnabled="true"
-                                    Uri="{Binding ProfileImage}"/>
-                            </Image.Source>
                         </Image>
                     </Border>
 
@@ -61,7 +56,7 @@
                 </Grid>
 
                 <!--  Search Button  -->
-                <buttons:SfButton Grid.Column="1"
+                <buttons:SfButton Grid.Column="1" x:DataType="buttons:SfButton"
                                   x:Name="SearchButton"
                                   BindingContext="{x:Reference ProfileView}"
                                   IsVisible="{Binding Path=IsVisible}"
@@ -92,7 +87,7 @@
                                  SelectionBackground="{AppThemeBinding Light={DynamicResource SelectionBackgroundLight}, Dark={DynamicResource SelectionBackgroundDark}}">
 
                 <listView:SfListView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="local:ChatItem">
                         <ViewCell>
                             <ViewCell.View>
                                 <Grid>

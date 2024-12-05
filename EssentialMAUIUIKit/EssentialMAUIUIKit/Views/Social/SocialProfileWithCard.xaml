@@ -4,7 +4,8 @@
              x:Class="EssentialMAUIUIKit.Views.Social.SocialProfileWithCard"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             x:DataType="local:ProfileViewModel">
     <ContentView.Resources>
         <Style TargetType="listView:ListViewItem">
             <Setter Property="VisualStateManager.VisualStateGroups">
@@ -189,7 +190,7 @@
                     SelectionBackground="Transparent">
 
                     <listView:SfListView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="local:Interest">
                             <StackLayout Margin="10,16,10,0"
                                          Spacing="0">
 
@@ -254,7 +255,7 @@
                     SelectionBackground="Transparent">
                     <listView:ListViewItem Style="{DynamicResource ListViewItemStyle}"/>
                     <listView:SfListView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="local:Picture">
                             <Grid>
                                 <Border HeightRequest="{OnPlatform Default=190, Android=165, iOS=165}"
                                         WidthRequest="{OnPlatform Default=190, Android=165, iOS=165}"

@@ -4,7 +4,8 @@
              x:Class="EssentialMAUIUIKit.Views.Navigation.FileExplorerPage"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             x:DataType="local:FileExplorerViewModel">
     <ContentView.BindingContext>
         <local:FileExplorerViewModel/>
     </ContentView.BindingContext>
@@ -32,7 +33,7 @@
                     VerticalOptions="Fill">
 
                     <listView:SfListView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="local:FileExplorerFolder">
 
                             <Grid
                                 ColumnDefinitions="Auto, *"
@@ -119,7 +120,7 @@
                                  VerticalOptions="Start">
 
                 <listView:SfListView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="local:FileExplorerFolder">
 
                         <Grid
                             ColumnDefinitions="Auto, *"

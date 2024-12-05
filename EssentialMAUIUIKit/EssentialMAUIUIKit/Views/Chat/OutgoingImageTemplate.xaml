@@ -2,6 +2,8 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Chat.OutgoingImageTemplate"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             x:DataType="local:ChatMessageInfoModel"
              Padding="10">
     <ContentView.Content>
         <Border
