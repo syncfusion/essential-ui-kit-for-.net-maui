@@ -84,8 +84,6 @@ namespace EssentialMAUIUIKit
 
             this.FavouriteCommand = new Command(this.FavouriteButtonClicked);
 
-            this.AcceptCommand = new Command(this.OKButtonClicked);
-
             this.Calender = new ObservableCollection<object>() { "i" };
 
             this.previewImages = new List<RoomDetail>()
@@ -201,11 +199,6 @@ namespace EssentialMAUIUIKit
             {
                 this.RoomDetail.OverallRating = this.productRating / this.RoomDetail.Reviews.Count;
             }
-        }
-
-        private void OKButtonClicked(object obj)
-        {
-            //throw new NotImplementedException();
         }
 
         #endregion
@@ -524,8 +517,6 @@ namespace EssentialMAUIUIKit
         /// </summary>
         public Command FavouriteCommand { get; set; }
 
-        public ICommand AcceptCommand { get; set; }
-
         #endregion
 
         #region Methods
@@ -559,6 +550,8 @@ namespace EssentialMAUIUIKit
                 }
             }
         }
+
+
 
         /// <summary>
         /// Invoked when the book button is clicked.
@@ -607,7 +600,7 @@ namespace EssentialMAUIUIKit
 
         private int cost;
 
-        private string? selectedRanges;
+        private string? selectedRanges = $"{DateTime.Now:dd MMM yyyy} - {DateTime.Now.AddDays(2):dd MMM yyy}";
 
         private IReadOnlyCollection<Review> reviews = new ObservableCollection<Review>();
 

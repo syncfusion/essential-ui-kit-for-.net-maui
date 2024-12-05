@@ -176,7 +176,7 @@
                                                   HeightRequest="300">
                                                 <syncfusion:SfCalendar FooterView="{syncfusion:CalendarFooterView ShowActionButtons=True}"
                                                                        EnablePastDates="False"
-                                                                       SelectionMode="Range"/>
+                                                                       SelectionMode="Range" ActionButtonClicked="SfCalendar_ActionButtonClicked"/>
                                             </Grid>
                                         </rating:SfComboBox.DropdownHeaderView>
 
@@ -280,7 +280,7 @@
                                 <Border Style="{DynamicResource DataFormBorderlessEntryBorderStyle}"
                                         BackgroundColor="{OnPlatform Default={AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}},iOS=Transparent}">
 
-                                    <rating:SfComboBox Background="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                    <rating:SfComboBox x:Name="sfComboBoxMobile" Background="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                                                        Margin="3,3,3,3"
                                                        ItemsSource="{Binding Calender}"
                                                        DropdownFooterViewHeight="0"
@@ -303,7 +303,7 @@
                                                   HeightRequest="300">
                                                 <syncfusion:SfCalendar FooterView="{syncfusion:CalendarFooterView ShowActionButtons=True}"
                                                                        EnablePastDates="False"
-                                                                       SelectionMode="Range"/>
+                                                                       SelectionMode="Range" ActionButtonClicked="SfCalendar_ActionButtonClicked"/>
                                             </Grid>
                                         </rating:SfComboBox.DropdownHeaderView>
 
