@@ -150,7 +150,7 @@
                                     VerticalTextAlignment="Start"/>
                                 <!--  combo Box for calender  -->
                                 <Border Style="{DynamicResource DataFormBorderlessEntryBorderStyle}"
-                                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
+                                        BackgroundColor="{OnPlatform Default={AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}},MacCatalyst=Transparent}">
 
                                     <rating:SfComboBox Background="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                                                        x:Name="sfComboBox"
@@ -215,7 +215,7 @@
                                     VerticalTextAlignment="Start"/>
                                 <!--  combo Box for guests  -->
                                 <Border Style="{DynamicResource DataFormBorderlessEntryBorderStyle}"
-                                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
+                                        BackgroundColor="{OnPlatform Default={AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}},MacCatalyst=Transparent}">
 
                                     <rating:SfComboBox Background="Transparent"
                                                        Margin="3,3,3,3"
@@ -246,7 +246,7 @@
                                     VerticalTextAlignment="Start"/>
                                 <!--  combo Box for bed  -->
                                 <Border Style="{DynamicResource DataFormBorderlessEntryBorderStyle}"
-                                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
+                                        BackgroundColor="{OnPlatform Default={AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}},MacCatalyst=Transparent}">
 
                                     <rating:SfComboBox Background="Transparent"
                                                        x:Name="bedComboBox"
@@ -278,7 +278,7 @@
                                     VerticalTextAlignment="Start"/>
                                 <!--  combo Box for calender  -->
                                 <Border Style="{DynamicResource DataFormBorderlessEntryBorderStyle}"
-                                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
+                                        BackgroundColor="{OnPlatform Default={AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}},iOS=Transparent}">
 
                                     <rating:SfComboBox Background="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                                                        Margin="3,3,3,3"
@@ -342,7 +342,7 @@
                                     VerticalTextAlignment="Start"/>
                                 <!--  combo Box for guests  -->
                                 <Border Style="{DynamicResource DataFormBorderlessEntryBorderStyle}"
-                                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
+                                        BackgroundColor="{OnPlatform Default={AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}},iOS=Transparent}">
 
                                     <rating:SfComboBox Background="Transparent"
                                                        Margin="3,3,3,3"
@@ -373,7 +373,7 @@
                                     VerticalTextAlignment="Start"/>
                                 <!--  combo Box for bed  -->
                                 <Border Style="{DynamicResource DataFormBorderlessEntryBorderStyle}"
-                                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
+                                        BackgroundColor="{OnPlatform Default={AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}},iOS=Transparent}">
 
                                     <rating:SfComboBox Background="Transparent"
                                                        Margin="3,3,3,3"
