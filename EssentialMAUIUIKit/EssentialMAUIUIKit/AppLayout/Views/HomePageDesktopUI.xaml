@@ -257,26 +257,25 @@
                                          Padding="0">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
-                                <HorizontalStackLayout x:DataType="viewModels:HomePageViewModel" Padding="5"
+                                <HorizontalStackLayout Padding="5"
                                                        Spacing="5"
                                                        HeightRequest="40">
                                     <HorizontalStackLayout.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
                                     </HorizontalStackLayout.GestureRecognizers>
-                                    <Label x:DataType="model:Category" Grid.Row="0"
-                                           Text="{Binding Name}"
+                                    <Label x:DataType="viewModels:SearchModel"
+                                           Text="{Binding Category.Name}"
                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                                            FontSize="14"
                                            VerticalOptions="Center"
                                            VerticalTextAlignment="Center"/>
-                                    <Label Grid.Row="0"
-                                           Text="-"
+                                    <Label Text="-"
                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                                            FontSize="14"
                                            VerticalOptions="Center"
                                            VerticalTextAlignment="Center"/>
-                                    <Label x:DataType="model:Template" Grid.Row="0"
-                                           Text="{Binding Name }"
+                                    <Label x:DataType="viewModels:SearchModel"
+                                           Text="{Binding Template.Name}"
                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                                            FontSize="14"
                                            VerticalOptions="Center"
