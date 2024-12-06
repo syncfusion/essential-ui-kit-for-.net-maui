@@ -17,7 +17,7 @@ namespace EssentialMAUIUIKit.AppLayout.Views
             var bindingContext = (TemplatePageViewModel)this.BindingContext;
             bindingContext.SelectedCategory = selectedCategory;
             this.chipView.ItemsSource = selectedCategory.Pages;
-            Template initialPage = selectedCategory.Pages[0];
+            Template initialPage = selectedTemplate;
             this.chipView.SelectedItem = selectedTemplate;
             var page = this.LoadPage(initialPage.PageName);
             this.CategoryTextLabel.Text = selectedCategory.Name;

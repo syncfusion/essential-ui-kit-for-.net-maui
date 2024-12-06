@@ -325,7 +325,7 @@
                             Background="Transparent"
                             VerticalTextAlignment="Center"
                             WidthRequest="400"
-                            Margin="20,0,0,0"
+                            Margin="50,5,0,0"
                                       Grid.Column="1"
                                       PlaceholderColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}"
                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
@@ -373,20 +373,19 @@
                                         <HorizontalStackLayout.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
                                         </HorizontalStackLayout.GestureRecognizers>
-                                        <Label x:DataType="model:Category" Grid.Row="0"
-                                                Text="{Binding Name }"
+                                        <Label x:DataType="viewModels:SearchModel"
+                                                Text="{Binding Category.Name }"
                                                 TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                                                 FontSize="14"
                                                 VerticalOptions="Center"
                                                 VerticalTextAlignment="Center"/>
-                                        <Label Grid.Row="0"
-                                                Text="-"
+                                        <Label Text="-"
                                                 TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                                                 FontSize="14"
                                                 VerticalOptions="Center"
                                                 VerticalTextAlignment="Center"/>
-                                        <Label x:DataType="model:Template" Grid.Row="0"
-                                                Text="{Binding Name}"
+                                        <Label x:DataType="viewModels:SearchModel"
+                                                Text="{Binding Template.Name}"
                                                 TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                                                 FontSize="14"
                                                 VerticalOptions="Center"
