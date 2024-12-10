@@ -7,28 +7,6 @@
              xmlns:sfavatar="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              x:DataType="local:TaskNotificationViewModel">
-    <ContentView.Resources>
-        <Style TargetType="listView:ListViewItem">
-            <Setter Property="VisualStateManager.VisualStateGroups">
-                <VisualStateGroupList>
-                    <VisualStateGroup>
-                        <VisualState x:Name="Normal">
-                            <VisualState.Setters>
-                                <Setter Property="Background"
-                                        Value="Transparent"/>
-                            </VisualState.Setters>
-                        </VisualState>
-                        <VisualState x:Name="PointerOver">
-                            <VisualState.Setters>
-                                <Setter Property="Background"
-                                        Value="Transparent"/>
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateGroupList>
-            </Setter>
-        </Style>
-    </ContentView.Resources>
     <ContentView.BindingContext>
         <local:TaskNotificationViewModel x:Name="viewModel"/>
     </ContentView.BindingContext>
@@ -43,7 +21,7 @@
                      Grid.ColumnSpan="2"
                      Style="{DynamicResource HorizontalSeparatorStyle}"/>
 
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1" ColumnDefinitions="*,*">
 
                 <Label
                     Margin="20,20,20,20"
@@ -54,25 +32,13 @@
                     Text="Recent"
                     TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
 
-                <buttons:SfButton
-                    BackgroundColor="{DynamicResource Gray-Bg}"
-                    HeightRequest="18"
+                <buttons:SfButton Grid.Column="1"
                     HorizontalOptions="End"
                     VerticalOptions="Center"
                     Style="{DynamicResource TransparentButtonStyle}"
-                    TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
-                    WidthRequest="134">
-
-                    <Label
-                        FontFamily="Roboto-Medium"
-                        FontSize="14"
-                        HorizontalTextAlignment="Center"
-                        LineHeight="{OnPlatform Android=1.5,
-                                            Default=-1}"
-                        Text="Mark all as read"
-                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                        VerticalTextAlignment="Start"/>
-
+                                  FontSize="14"
+                                  Text="Mark all as read"
+                                  WidthRequest="134">
                 </buttons:SfButton>
             </Grid>
 

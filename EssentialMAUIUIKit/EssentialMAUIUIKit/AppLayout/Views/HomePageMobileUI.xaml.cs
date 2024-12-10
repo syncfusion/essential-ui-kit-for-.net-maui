@@ -8,6 +8,22 @@ namespace EssentialMAUIUIKit.AppLayout.Views
         public HomePageMobileUI()
         {
             InitializeComponent();
+            if (Application.Current != null)
+            {
+                if (themeSwitch == null)
+                {
+                    return;
+                }
+
+                if (Application.Current.PlatformAppTheme == AppTheme.Dark)
+                {
+                    this.themeSwitch.IsOn = true;
+                }
+                else
+                {
+                    this.themeSwitch.IsOn = false;
+                }
+            }
         }
 
         #region Methods
@@ -39,8 +55,10 @@ namespace EssentialMAUIUIKit.AppLayout.Views
             this.propertyFrameOverlay.IsVisible = !this.propertyFrameOverlay.IsVisible;
         }
 
-        private void GotoCodeViewer(object sender, EventArgs e)
+        private async void GotoCodeViewer(object sender, EventArgs e)
         {
+            string address = "https://github.com/syncfusion/essential-ui-kit-for-.net-maui";
+            await Browser.Default.OpenAsync(address, BrowserLaunchMode.SystemPreferred);
         }
 
         private void listView_ItemTapped(object sender, ItemTappedEventArgs e)

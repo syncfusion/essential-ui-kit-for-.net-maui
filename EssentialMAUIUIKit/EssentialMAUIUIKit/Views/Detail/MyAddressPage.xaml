@@ -6,28 +6,6 @@
              xmlns:ListView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              x:DataType="local:AddressViewModel">
-    <ContentView.Resources>
-        <Style TargetType="ListView:ListViewItem">
-            <Setter Property="VisualStateManager.VisualStateGroups">
-                <VisualStateGroupList>
-                    <VisualStateGroup>
-                        <VisualState x:Name="Normal">
-                            <VisualState.Setters>
-                                <Setter Property="Background"
-                                        Value="Transparent"/>
-                            </VisualState.Setters>
-                        </VisualState>
-                        <VisualState x:Name="PointerOver">
-                            <VisualState.Setters>
-                                <Setter Property="Background"
-                                        Value="Transparent"/>
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateGroupList>
-            </Setter>
-        </Style>
-    </ContentView.Resources>
     <ContentView.BindingContext>
         <local:AddressViewModel/>
     </ContentView.BindingContext>
@@ -61,7 +39,7 @@
                             StrokeThickness="1"
                             StrokeShape="RoundRectangle 4"
                             HorizontalOptions="Center"
-                            WidthRequest="343">
+                            WidthRequest="330">
                             <Grid
                                 ColumnDefinitions="Auto, *, Auto, Auto"
                                 ColumnSpacing="8"
@@ -104,13 +82,17 @@
                                     TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                                     VerticalOptions="Start"
                                     WidthRequest="32">
-                                    <Label
-                                        FontFamily="FontIcons"
-                                        FontSize="18"
-                                        HorizontalOptions="Center"
-                                        Text="{DynamicResource Edit}"
-                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                        VerticalOptions="Center"/>
+                                    <buttons:SfButton.Content>
+                                        <DataTemplate>
+                                            <Label
+     FontFamily="FontIcons"
+     FontSize="18"
+     HorizontalOptions="Center"
+     Text="{DynamicResource Edit}"
+     TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+     VerticalOptions="Center"/>
+                                        </DataTemplate>
+                                    </buttons:SfButton.Content>
                                 </buttons:SfButton>
 
                                 <!--  Delete button command  -->
@@ -124,13 +106,17 @@
                                     TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                                     VerticalOptions="Start"
                                     WidthRequest="32">
-                                    <Label
-                                        FontFamily="FontIcons"
-                                        FontSize="18"
-                                        HorizontalOptions="Center"
-                                        Text="{DynamicResource Delete}"
-                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                        VerticalOptions="Center"/>
+                                    <buttons:SfButton.Content>
+                                        <DataTemplate>
+                                            <Label
+    FontFamily="FontIcons"
+    FontSize="18"
+    HorizontalOptions="Center"
+    Text="{DynamicResource Delete}"
+    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+    VerticalOptions="Center"/>
+                                        </DataTemplate>
+                                    </buttons:SfButton.Content>
                                 </buttons:SfButton>
 
                                 <!--  Map Pin Icon  -->

@@ -8,9 +8,9 @@
 
     <converters:StringToImageResourceConverter x:Key="ImageResourceConverter" />
 
-    <x:String x:Key="HomePageTitle">Essential MAUI UI Kit</x:String>
+    <x:String x:Key="HomePageTitle">.NET MAUI Essential UI Kit</x:String>
 
-    <x:String x:Key="Description">Essential UI Kit for .NET MAUI includes elegantly designed XAML templates for MAUI apps</x:String>
+    <x:String x:Key="Description">.NET MAUI Essential UI Kit includes elegantly designed XAML templates for MAUI apps</x:String>
 
     <!--  Common style for action bar icons  -->
     <Style x:Key="ActionBarSettingIconStyle" TargetType="Button">
@@ -96,7 +96,7 @@
         <Setter Property="HeightRequest" Value="50" />
         <Setter Property="Margin" Value="0,0,8,0" />
         <Setter Property="Aspect" Value="AspectFit" />
-        <Setter Property="Source" Value="appicon.png" />
+        <Setter Property="Source" Value="applicationicon.png" />
     </Style>
 
 </ResourceDictionary>

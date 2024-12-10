@@ -13,6 +13,22 @@ namespace EssentialMAUIUIKit.AppLayout.Views
             var bindingContext = (HomePageViewModel)this.BindingContext;
             this.listView.SelectedItem = bindingContext.Categories[0];
             this.UpdateLoadedChild(new TemplatesView(bindingContext.Categories[0], bindingContext.Categories[0].Pages[0]));
+            if (Application.Current != null)
+            {
+                if (themeSwitch == null)
+                {
+                    return;
+                }
+
+                if (Application.Current.PlatformAppTheme == AppTheme.Dark)
+                {
+                    this.themeSwitch.IsOn = true;
+                }
+                else
+                {
+                    this.themeSwitch.IsOn = false;
+                }
+            }
         }
 
         #region Methods
@@ -28,8 +44,11 @@ namespace EssentialMAUIUIKit.AppLayout.Views
             this.propertyFrameOverlay.IsVisible = !this.propertyFrameOverlay.IsVisible;
         }
 
-        private void GotoCodeViewer(object sender, EventArgs e)
+        private async void GotoCodeViewer(object sender, EventArgs e)
         {
+            var selectedTemplate = (TemplatesView)this.SampleViewGrid.Children[0];
+            string address = "https://github.com/syncfusion/essential-ui-kit-for-.net-maui/blob/master/EssentialMAUIUIKit/EssentialMAUIUIKit/" + selectedTemplate.GetPageName() + "";
+            await Browser.Default.OpenAsync(address, BrowserLaunchMode.SystemPreferred);
         }
 
         private void listView_ItemTapped(object sender, Syncfusion.Maui.ListView.ItemTappedEventArgs e)

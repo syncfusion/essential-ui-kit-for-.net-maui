@@ -22,6 +22,22 @@ namespace EssentialMAUIUIKit.AppLayout.Views
             var page = this.LoadPage(initialPage.PageName);
             this.CategoryTextLabel.Text = selectedCategory.Name;
             this.SampleGrid.Children.Add(page);
+            if (Application.Current != null)
+            {
+                if (themeSwitch == null)
+                {
+                    return;
+                }
+
+                if (Application.Current.PlatformAppTheme == AppTheme.Dark)
+                {
+                    this.themeSwitch.IsOn = true;
+                }
+                else
+                {
+                    this.themeSwitch.IsOn = false;
+                }
+            }
         }
 
         #endregion
@@ -56,8 +72,10 @@ namespace EssentialMAUIUIKit.AppLayout.Views
             this.Navigation.PopAsync(true);
         }
 
-        private void GotoCodeViewer(object sender, EventArgs e)
+        private async void GotoCodeViewer(object sender, EventArgs e)
         {
+            string address = "https://github.com/syncfusion/essential-ui-kit-for-.net-maui/blob/master/EssentialMAUIUIKit/EssentialMAUIUIKit/" + this.GetCodeViewerPath() + "";
+            await Browser.Default.OpenAsync(address, BrowserLaunchMode.SystemPreferred);
         }
 
         private ContentView? LoadPage(string? pageURL)
@@ -118,6 +136,17 @@ namespace EssentialMAUIUIKit.AppLayout.Views
                     Application.Current.UserAppTheme = AppTheme.Light;
                 }
             }
+        }
+
+        public string? GetCodeViewerPath()
+        {
+            Template? template = (Template?)this.chipView.SelectedItem;
+            if (template == null)
+            {
+                return string.Empty;
+            }
+
+            return template.PageName?.Replace('.', '/') + ".xaml";
         }
 
         #endregion

@@ -77,13 +77,13 @@
                         TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
 
                     <!--  Decription image of the blog  -->
-                    <Image
+                    <Image WidthRequest="200"
                         Margin="{OnIdiom Phone='16,8',
                                      Tablet='0,24,0,8',
                                      Desktop='0,24,0,8'}"
                         Aspect="AspectFill"
                         BackgroundColor="{DynamicResource Gray-200}"
-                        HeightRequest="150"
+                        HeightRequest="200"
                         HorizontalOptions="{OnIdiom Tablet=Center,
                                                 Desktop=Center,
                                                 Phone=Fill}"

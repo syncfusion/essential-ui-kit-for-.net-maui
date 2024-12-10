@@ -165,7 +165,7 @@ namespace EssentialMAUIUIKit
                 new RoomDetail { DisplayText = "2 Guests", ValueText = 2 },
                 new RoomDetail { DisplayText = "3 Guests", ValueText = 3 },
             };
-            this.MapMarkerImage = "Pin.png";
+            this.MapMarkerImage = "pin.png";
             this.MapMarkerLatitude = "40.133808";
             this.MapMarkerLongitude = "-75.516279";
             this.GetPinLocation();

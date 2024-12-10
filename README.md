@@ -2,6 +2,10 @@
 
 The Essential UI Kit provides a collection of ready-to-use, customizable, and flexible XAML UI pages tailored for .NET MAUI applications. These pages cater to common mobile, desktop, and tablet UI patterns, offering a seamless way to elevate the end-user experience.
 
+<p align="center">
+    <img src="Images/ui-kit-template-images.png" alt="Image"/>
+</p>
+
 ## Table of Contents
 - [Key Features](#key-features)
 - [Supported Platforms](#supported-platforms)

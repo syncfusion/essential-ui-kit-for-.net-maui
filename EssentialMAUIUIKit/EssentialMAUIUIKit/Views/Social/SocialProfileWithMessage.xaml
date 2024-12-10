@@ -6,28 +6,6 @@
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              x:DataType="local:ProfileViewModel">
-    <ContentView.Resources>
-        <Style TargetType="listView:ListViewItem">
-            <Setter Property="VisualStateManager.VisualStateGroups">
-                <VisualStateGroupList>
-                    <VisualStateGroup>
-                        <VisualState x:Name="Normal">
-                            <VisualState.Setters>
-                                <Setter Property="Background"
-                                        Value="Transparent"/>
-                            </VisualState.Setters>
-                        </VisualState>
-                        <VisualState x:Name="PointerOver">
-                            <VisualState.Setters>
-                                <Setter Property="Background"
-                                        Value="Transparent"/>
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateGroupList>
-            </Setter>
-        </Style>
-    </ContentView.Resources>
     <ContentView.BindingContext>
         <local:ProfileViewModel/>
     </ContentView.BindingContext>
@@ -52,7 +30,7 @@
                         Grid.RowSpan="4"
                         Grid.ColumnSpan="2"
                         Aspect="AspectFill"
-                        BackgroundColor="{DynamicResource Gray-Bg}">
+                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
                         <Image.Source>
                             <UriImageSource
                                 CacheValidity="14"
@@ -324,14 +302,14 @@
                         <buttons:SfButton
                             Margin="16,16,16,0"
                             Padding="16"
-                            Background="{DynamicResource Gray-200}"
+                            Background="{AppThemeBinding Light={DynamicResource Gray-200}, Dark={DynamicResource Gray-900}}"
                             CornerRadius="32"
                             FontFamily="FontIcons"
                             FontSize="20"
                             HeightRequest="64"
                             HorizontalOptions="Start"
                             Text="{DynamicResource Add}"
-                            TextColor="{DynamicResource Gray-700}"
+                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                             VerticalOptions="Start"
                             WidthRequest="64"/>
 
@@ -357,8 +335,7 @@
 
                                         <Border
                                             Margin="0,0,0,4"
-                                            Stroke="{DynamicResource Gray-Bg}"
-                                            StrokeThickness="1"
+                                            StrokeThickness="0"
                                             StrokeShape="RoundRectangle 35,35,35,35"
                                             HeightRequest="64"
                                             HorizontalOptions="Center"

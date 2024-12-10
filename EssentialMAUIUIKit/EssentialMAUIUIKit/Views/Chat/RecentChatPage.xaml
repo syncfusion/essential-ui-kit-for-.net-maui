@@ -234,12 +234,16 @@
                                         HeightRequest="32"
                                         Style="{DynamicResource IconButtonStyle}"
                                         WidthRequest="32">
-                                        <Label
-                                            BackgroundColor="Transparent"
-                                            Style="{DynamicResource IconLabelStyle}"
-                                            Text="{DynamicResource PhoneFill}"
-                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                            VerticalTextAlignment="Center"/>
+                                        <buttons:SfButton.Content>
+                                            <DataTemplate>
+                                                <Label
+     BackgroundColor="Transparent"
+     Style="{DynamicResource IconLabelStyle}"
+     Text="{DynamicResource PhoneFill}"
+     TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+     VerticalTextAlignment="Center"/>
+                                            </DataTemplate>
+                                        </buttons:SfButton.Content>
                                     </buttons:SfButton>
 
                                     <!--Video call button-->
@@ -250,12 +254,16 @@
                                         HeightRequest="32"
                                         Style="{DynamicResource IconButtonStyle}"
                                         WidthRequest="32">
-                                        <Label
-                                            BackgroundColor="Transparent"
-                                            Style="{DynamicResource IconLabelStyle}"
-                                            Text="{DynamicResource Video}"
-                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                            VerticalTextAlignment="Center"/>
+                                        <buttons:SfButton.Content>
+                                            <DataTemplate>
+                                                <Label
+     BackgroundColor="Transparent"
+     Style="{DynamicResource IconLabelStyle}"
+     Text="{DynamicResource Video}"
+     TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+     VerticalTextAlignment="Center"/>
+                                            </DataTemplate>
+                                        </buttons:SfButton.Content>
                                     </buttons:SfButton>
 
                                     <!--Settings button-->
@@ -266,14 +274,17 @@
                                         HeightRequest="32"
                                         Style="{DynamicResource IconButtonStyle}"
                                         WidthRequest="32">
-                                        <Label
-                                            BackgroundColor="Transparent"
-                                            Style="{DynamicResource IconLabelStyle}"
-                                            Text="{DynamicResource Menu}"
-                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                            VerticalTextAlignment="Center"/>
+                                        <buttons:SfButton.Content>
+                                            <DataTemplate>
+                                                <Label
+    BackgroundColor="Transparent"
+    Style="{DynamicResource IconLabelStyle}"
+    Text="{DynamicResource Menu}"
+    TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+    VerticalTextAlignment="Center"/>
+                                            </DataTemplate>
+                                        </buttons:SfButton.Content>
                                     </buttons:SfButton>
-
                                 </Grid>
                             </Grid>
                         </Border>

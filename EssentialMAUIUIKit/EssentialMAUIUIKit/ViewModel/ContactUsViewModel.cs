@@ -38,7 +38,7 @@ namespace EssentialMAUIUIKit.ViewModel
         {
             this.InitializeProperties();
             this.AddValidationRules();
-            this.MapMarkerImage = "Pin.png";
+            this.MapMarkerImage = "pin.png";
             this.MapMarkerLatitude = "40.133808";
             this.MapMarkerLongitude = "-75.516279";
             this.MapMarkerHeader = "Sipes Inc";

@@ -176,9 +176,6 @@
          ItemsSource="{Binding RequestedOrders}"
          SelectionMode="None"
          VerticalOptions="Start">
-
-                            <listView:ListViewItem Style="{DynamicResource ListViewItemStyle}"/>
-
                             <listView:SfListView.ItemTemplate>
                                 <DataTemplate x:DataType="local:Order">
                                     <Grid
@@ -278,9 +275,6 @@
          ItemsSource="{Binding CompletedOrders}"
          SelectionMode="None"
          VerticalOptions="Start">
-
-                            <listView:ListViewItem Style="{DynamicResource ListViewItemStyle}"/>
-
                             <listView:SfListView.ItemTemplate>
                                 <DataTemplate x:DataType="local:Order">
                                     <Grid
@@ -380,9 +374,6 @@
          ItemsSource="{Binding CancelledOrders}"
          SelectionMode="None"
          VerticalOptions="Start">
-
-                            <listView:ListViewItem Style="{DynamicResource ListViewItemStyle}"/>
-
                             <listView:SfListView.ItemTemplate>
                                 <DataTemplate x:DataType="local:Order">
                                     <Grid

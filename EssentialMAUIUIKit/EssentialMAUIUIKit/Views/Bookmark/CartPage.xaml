@@ -200,12 +200,16 @@
                                                 VerticalOptions="Center"
                                                 Background="Transparent"
                                                 WidthRequest="92">
-                                                <Label
-                                                    FontSize="14"
-                                                    Style="{DynamicResource TitleLabelStyle}"
-                                                    Text="Remove"
-                                                    TextColor="{AppThemeBinding Dark={DynamicResource PrimaryColorDark}, Light={DynamicResource PrimaryColorLight}}"
-                                                    VerticalOptions="Center"/>
+                                                <buttons:SfButton.Content>
+                                                    <DataTemplate>
+                                                        <Label
+    FontSize="14"
+    Style="{DynamicResource TitleLabelStyle}"
+    Text="Remove"
+    TextColor="{AppThemeBinding Dark={DynamicResource PrimaryColorDark}, Light={DynamicResource PrimaryColorLight}}"
+    VerticalOptions="Center"/>
+                                                    </DataTemplate>
+                                                </buttons:SfButton.Content>
                                             </buttons:SfButton>
                                         </StackLayout>
 

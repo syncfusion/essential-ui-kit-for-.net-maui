@@ -35,11 +35,11 @@
               ColumnDefinitions="*, *, *"
               BackgroundColor="#5470FF">
             <HorizontalStackLayout>
-                <Image Source="appicon.png"
+                <Image Source="applicationicon.png"
                        HeightRequest="40"
                        Margin="10,0,10,0"
                        VerticalOptions="Center"/>
-                <Label Text="MAUI Essential UI Kit"
+                <Label Text=".NET MAUI Essential UI Kit"
                        Padding="0,0,10,0"
                        VerticalOptions="Center"
                        FontFamily="Roboto-Medium"

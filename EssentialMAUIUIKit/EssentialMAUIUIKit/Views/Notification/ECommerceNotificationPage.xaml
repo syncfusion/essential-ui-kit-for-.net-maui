@@ -13,33 +13,13 @@
             <converter:BooleanToColorConverter x:Key="BoolToColorConverter"/>
             <converter:StringToGlyphConverter x:Key="GlyphConverter"/>
         </ResourceDictionary>
-        <Style TargetType="listView:ListViewItem">
-            <Setter Property="VisualStateManager.VisualStateGroups">
-                <VisualStateGroupList>
-                    <VisualStateGroup>
-                        <VisualState x:Name="Normal">
-                            <VisualState.Setters>
-                                <Setter Property="Background"
-                                        Value="Transparent"/>
-                            </VisualState.Setters>
-                        </VisualState>
-                        <VisualState x:Name="PointerOver">
-                            <VisualState.Setters>
-                                <Setter Property="Background"
-                                        Value="Transparent"/>
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateGroupList>
-            </Setter>
-        </Style>
     </ContentView.Resources>
     <ContentView.BindingContext>
         <local:ECommerceNotificationViewModel x:Name="viewModel"/>
     </ContentView.BindingContext>
     <ContentView.Content>
         <StackLayout Spacing="0">
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1" ColumnDefinitions="*,*">
 
                 <Label
                     Margin="20,20,20,20"
@@ -50,25 +30,13 @@
                     Text="Recent"
                     TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
 
-                <buttons:SfButton
-                    BackgroundColor="{DynamicResource Gray-Bg}"
-                    HeightRequest="18"
+                <buttons:SfButton Grid.Column="1"
                     HorizontalOptions="End"
                     VerticalOptions="Center"
                     Style="{DynamicResource TransparentButtonStyle}"
-                    TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
-                    WidthRequest="134">
-
-                    <Label
-                        FontFamily="Roboto-Medium"
-                        FontSize="14"
-                        HorizontalTextAlignment="Center"
-                        LineHeight="{OnPlatform Android=1.5,
-                                Default=-1}"
-                        Text="Mark all as read"
-                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                        VerticalTextAlignment="Start"/>
-
+                    WidthRequest="134"
+                    FontSize="14"
+                    Text="Mark all as read">
                 </buttons:SfButton>
             </Grid>
 

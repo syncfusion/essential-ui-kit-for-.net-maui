@@ -32,25 +32,30 @@
                         HeightRequest="32"
                         WidthRequest="100"
                         TextColor="{DynamicResource Gray-700}">
-                        <StackLayout
-                            Padding="8,5,8,6"
-                            Orientation="Horizontal"
-                            Spacing="8"
-                            VerticalOptions="Center">
-                            <Label
-                                FontFamily="FontIcons"
-                                FontSize="18"
-                                Style="{DynamicResource DescriptionLabelStyle}"
-                                Text="{DynamicResource Filter}"
-                                VerticalOptions="Center"
-                                VerticalTextAlignment="End"/>
-                            <Label
-                                FontFamily="Roboto-Medium"
-                                Style="{DynamicResource DescriptionLabelStyle}"
-                                Text="Filter"
-                                VerticalOptions="Center"
-                                VerticalTextAlignment="Center"/>
-                        </StackLayout>
+                        <buttons:SfButton.Content>
+                            <DataTemplate>
+                                <StackLayout
+    Padding="8,5,8,6"
+    Orientation="Horizontal"
+    Spacing="8"
+    VerticalOptions="Center">
+                                    <Label
+        FontFamily="FontIcons"
+        FontSize="18"
+        Style="{DynamicResource DescriptionLabelStyle}"
+        Text="{DynamicResource Filter}"
+        VerticalOptions="Center"
+        VerticalTextAlignment="End"/>
+                                    <Label
+        FontFamily="Roboto-Medium"
+        Style="{DynamicResource DescriptionLabelStyle}"
+        Text="Filter"
+        VerticalOptions="Center"
+        VerticalTextAlignment="Center"/>
+                                </StackLayout>
+                            </DataTemplate>
+
+                        </buttons:SfButton.Content>
                     </buttons:SfButton>
 
                     <!--  Sort Button  -->
@@ -60,25 +65,30 @@
                         HeightRequest="32"
                         WidthRequest="100"
                         TextColor="{DynamicResource Gray-700}">
-                        <StackLayout
-                            Padding="8,5,16,6"
-                            Orientation="Horizontal"
-                            Spacing="8"
-                            VerticalOptions="Center">
-                            <Label
-                                FontFamily="FontIcons"
-                                FontSize="18"
-                                Style="{DynamicResource DescriptionLabelStyle}"
-                                Text="{DynamicResource Sort}"
-                                VerticalOptions="Center"
-                                VerticalTextAlignment="End"/>
-                            <Label
-                                FontFamily="Roboto-Medium"
-                                Style="{DynamicResource DescriptionLabelStyle}"
-                                Text="Sorting"
-                                VerticalOptions="Center"
-                                VerticalTextAlignment="Center"/>
-                        </StackLayout>
+                        <buttons:SfButton.Content>
+                            <DataTemplate>
+                                <StackLayout
+    Padding="8,5,16,6"
+    Orientation="Horizontal"
+    Spacing="8"
+    VerticalOptions="Center">
+                                    <Label
+        FontFamily="FontIcons"
+        FontSize="18"
+        Style="{DynamicResource DescriptionLabelStyle}"
+        Text="{DynamicResource Sort}"
+        VerticalOptions="Center"
+        VerticalTextAlignment="End"/>
+                                    <Label
+        FontFamily="Roboto-Medium"
+        Style="{DynamicResource DescriptionLabelStyle}"
+        Text="Sorting"
+        VerticalOptions="Center"
+        VerticalTextAlignment="Center"/>
+                                </StackLayout>
+                            </DataTemplate>
+                        </buttons:SfButton.Content>
+                        
                     </buttons:SfButton>
 
                 </StackLayout>
@@ -89,27 +99,6 @@
             <converter:DynamicResourceToColorConverter x:Key="DynamicResourceToColorConverter"/>
 
         </ResourceDictionary>
-
-        <Style TargetType="listView:ListViewItem">
-            <Setter Property="VisualStateManager.VisualStateGroups">
-                <VisualStateGroupList>
-                    <VisualStateGroup>
-                        <VisualState x:Name="Normal">
-                            <VisualState.Setters>
-                                <Setter Property="Background"
-                                        Value="Transparent"/>
-                            </VisualState.Setters>
-                        </VisualState>
-                        <VisualState x:Name="PointerOver">
-                            <VisualState.Setters>
-                                <Setter Property="Background"
-                                        Value="Transparent"/>
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateGroupList>
-            </Setter>
-        </Style>
     </ContentView.Resources>
 
     <ContentView.Content>

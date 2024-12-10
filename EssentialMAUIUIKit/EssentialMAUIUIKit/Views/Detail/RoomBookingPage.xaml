@@ -10,28 +10,6 @@
              xmlns:maps="clr-namespace:Syncfusion.Maui.Maps;assembly=Syncfusion.Maui.Maps"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              x:DataType="local:RoomBookingPageViewModel">
-    <ContentView.Resources>
-        <Style TargetType="listView:ListViewItem">
-            <Setter Property="VisualStateManager.VisualStateGroups">
-                <VisualStateGroupList>
-                    <VisualStateGroup>
-                        <VisualState x:Name="Normal">
-                            <VisualState.Setters>
-                                <Setter Property="Background"
-                                        Value="Transparent"/>
-                            </VisualState.Setters>
-                        </VisualState>
-                        <VisualState x:Name="PointerOver">
-                            <VisualState.Setters>
-                                <Setter Property="Background"
-                                        Value="Transparent"/>
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateGroupList>
-            </Setter>
-        </Style>
-    </ContentView.Resources>
     <ContentView.BindingContext>
         <local:RoomBookingPageViewModel x:Name="viewModel"/>
     </ContentView.BindingContext>
@@ -544,7 +522,7 @@
                                                 Margin="10,5,0,0"
                                                 HeightRequest="25"
                                                 HorizontalOptions="Start"
-                                                Source="{Binding Path=MapMarkerImage, Source={x:Reference Map}}"
+                                                Source="pin.png"
                                                 WidthRequest="25"/>
                                         </StackLayout>
                                     </DataTemplate>

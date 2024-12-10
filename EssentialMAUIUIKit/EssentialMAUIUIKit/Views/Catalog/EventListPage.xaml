@@ -15,20 +15,6 @@
             <converter:BooleanToStringConverter x:Key="boolToStringConverter"/>
             <converter:BooleanToColorConverter x:Key="boolToColorConverter"/>
         </ResourceDictionary>
-        <Style TargetType="listView:ListViewItem">
-            <Setter Property="VisualStateManager.VisualStateGroups">
-                <VisualStateGroupList>
-                    <VisualStateGroup>
-                        <VisualState x:Name="PointerOver">
-                            <VisualState.Setters>
-                                <Setter Property="Background"
-                                        Value="Transparent"/>
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateGroupList>
-            </Setter>
-        </Style>
     </ContentView.Resources>
     <ContentView.BindingContext>
         <local:EventListViewModel/>

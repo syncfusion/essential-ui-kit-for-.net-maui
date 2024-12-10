@@ -17,27 +17,6 @@
             <converter:DateTimeToStringConverter x:Key="DateTimeToStringConverter"/>
             <templateSelector:MessageDataTemplateSelector x:Key="MessageDataTemplateSelector"/>
         </ResourceDictionary>
-
-        <Style TargetType="listView:ListViewItem">
-            <Setter Property="VisualStateManager.VisualStateGroups">
-                <VisualStateGroupList>
-                    <VisualStateGroup>
-                        <VisualState x:Name="Normal">
-                            <VisualState.Setters>
-                                <Setter Property="Background"
-                                        Value="Transparent"/>
-                            </VisualState.Setters>
-                        </VisualState>
-                        <VisualState x:Name="PointerOver">
-                            <VisualState.Setters>
-                                <Setter Property="Background"
-                                        Value="Transparent"/>
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateGroupList>
-            </Setter>
-        </Style>
     </ContentView.Resources>
 
     <ContentView.Content>
@@ -148,7 +127,8 @@
                                         <controls:BorderlessEditor
                                             Margin="5,0"
                                             Placeholder="Type here"
-                                            Style="{DynamicResource BorderlessEditorStyle}"/>
+                                            Style="{DynamicResource BorderlessEditorStyle}"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
 
                                         <!--  Camera Button  -->
                                         <buttons:SfButton

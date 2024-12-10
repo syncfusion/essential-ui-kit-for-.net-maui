@@ -77,10 +77,11 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\applicationicon.png" />
+		<MauiIcon Include="Resources\AppIcon\appicon.png" />
 		
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splashscreen.svg" BaseSize="*,*" />
+		
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
 		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
@@ -171,11 +172,12 @@
 	  <None Remove="Resources\Fonts\Roboto-Medium.ttf" />
 	  <None Remove="Resources\Fonts\Roboto-Regular.ttf" />
 	  <None Remove="Resources\Fonts\UIFontIcons.ttf" />
+	  <None Remove="Resources\Splash\splashscreen.png" />
 	  <None Remove="Resources\Splash\splashscreen.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiImage Include="AppLayout\Icons\appicon.png" />
+	  <MauiImage Include="AppLayout\Icons\applicationicon.png" />
 	  <EmbeddedResource Include="AppLayout\TemplateList.xml" />
 	</ItemGroup>
 
