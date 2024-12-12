@@ -107,9 +107,9 @@
 
 
                     <Grid
-                        Grid.Row="1"
+                        Grid.Row="1" HorizontalOptions="Fill"
                         Grid.RowSpan="2"
-                        ColumnDefinitions="45*, 55*"
+                        ColumnDefinitions="35*, 65*"
                         ColumnSpacing="0"
                         HeightRequest="200"
                         Opacity="0.9"
