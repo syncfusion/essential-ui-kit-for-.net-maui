@@ -36,7 +36,6 @@
         <Grid>
             <!--  ListView for Category  -->
             <listView:SfListView BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                 x:Name="CategoryTile"
                                  Grid.Row="1"
                                  Padding="8"
                                  AutoFitMode="Height"

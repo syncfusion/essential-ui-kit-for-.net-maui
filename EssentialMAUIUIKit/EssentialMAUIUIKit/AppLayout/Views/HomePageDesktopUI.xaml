@@ -40,7 +40,7 @@
                        HeightRequest="40"
                        Margin="10,0,10,0"
                        VerticalOptions="Center"/>
-                <Label Text=".NET MAUI Essential UI Kit"
+                <Label Text="Essential® UI Kit for .NET MAUI"
                        Padding="0,0,10,0"
                        VerticalOptions="Center"
                        FontFamily="Roboto-Medium"

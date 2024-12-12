@@ -27,7 +27,7 @@
 		<MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
 
 		<!-- Display name -->
-		<ApplicationTitle>Essential MAUI UI Kit</ApplicationTitle>
+		<ApplicationTitle>Essential UI Kit for .NET MAUI</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.essentialmauiuikit</ApplicationId>
