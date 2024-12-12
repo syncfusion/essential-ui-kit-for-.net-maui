@@ -4,7 +4,7 @@
              x:Class="EssentialMAUIUIKit.Views.History.TransactionHistoryPage"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters;assembly=EssentialMAUIUIKit"
-             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Toolkit.EffectsView;assembly=Syncfusion.Maui.Toolkit"
              x:DataType="local:TransactionHistoryViewModel">
     <ContentView.BindingContext>
         <local:TransactionHistoryViewModel x:Name="viewModel"/>
@@ -17,124 +17,122 @@
     </ContentView.Resources>
 
     <ContentView.Content>
+        <ScrollView>
+            <Grid RowDefinitions="Auto">
 
-        <Grid RowDefinitions="Auto">
+                <Border WidthRequest="{OnPlatform WinUI=650, MacCatalyst=650}"
+            StrokeShape="RoundRectangle 10"
+            Margin="10">
+                    <StackLayout>
+                        <Label Margin="10"
+                   Text="Payment History"
+                   FontSize="20"
+                   FontFamily="Roboto-Medium"/>
 
-            <Border WidthRequest="{OnPlatform WinUI=650, MacCatalyst=650}"
-                    StrokeShape="RoundRectangle 10"
-                    Margin="10">
-                <StackLayout>
-                    <Label Margin="10"
-                           Text="Payment History"
-                           FontSize="20"
-                           FontFamily="Roboto-Medium"/>
+                        <BoxView HeightRequest="1"
+                     Style="{DynamicResource HorizontalSeparatorStyle}"/>
+                        <StackLayout
+                x:Name="transactionList"
+                Padding="10"
+                BindableLayout.ItemsSource="{Binding TransactionDetails}"
+                Spacing="16">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="local:TransactionDetail">
+                                    <Border
+                            Margin="0"
+                            Padding="0"
+                            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                            Stroke="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                            StrokeShape="RoundRectangle 4"
+                            HeightRequest="70">
+                                        <syncEffectsView:SfEffectsView
+                                RippleBackground="{DynamicResource Gray-300}"
+                                TouchDownEffects="Ripple">
 
-                    <BoxView HeightRequest="1"
-                             Style="{DynamicResource HorizontalSeparatorStyle}"/>
-                    <StackLayout
-                        x:Name="transactionList"
-                        Padding="10"
-                        BindableLayout.ItemsSource="{Binding TransactionDetails}"
-                        Spacing="16">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="local:TransactionDetail">
-                                <Border
-                                    Margin="0"
-                                    Padding="0"
-                                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                    Stroke="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                    StrokeShape="RoundRectangle 4"
-                                    HeightRequest="70">
-                                    <syncEffectsView:SfEffectsView
-                                        RippleBackground="{DynamicResource Gray-300}"
-                                        TouchDownEffects="Ripple">
+                                            <Grid
+                                    ColumnDefinitions="Auto, *"
+                                    ColumnSpacing="0"
+                                    RowDefinitions="Auto, Auto"
+                                    RowSpacing="0">
 
-                                        <Grid
-                                            ColumnDefinitions="Auto, *"
-                                            ColumnSpacing="0"
-                                            RowDefinitions="Auto, Auto"
-                                            RowSpacing="0">
+                                                <!--  Profile image  -->
+                                                <Border
+                                        Grid.RowSpan="2"
+                                        Margin="16,10,16,16"
+                                        Stroke="{DynamicResource Gray-Bg}"
+                                        StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 24"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center">
+                                                    <Image
+                                            Aspect="Fill"
+                                            BackgroundColor="{DynamicResource Gray-200}"
+                                            HeightRequest="48"
+                                            WidthRequest="48">
+                                                        <Image.Source>
+                                                            <UriImageSource
+                                                    CacheValidity="14"
+                                                    CachingEnabled="true"
+                                                    Uri="{Binding CustomerImage}"/>
+                                                        </Image.Source>
+                                                    </Image>
+                                                </Border>
 
-                                            <!--  Profile image  -->
-                                            <Border
-                                                Grid.RowSpan="2"
-                                                Margin="16,10,16,16"
-                                                Stroke="{DynamicResource Gray-Bg}"
-                                                StrokeThickness="1"
-                                                StrokeShape="RoundRectangle 24"
-                                                HorizontalOptions="Center"
-                                                VerticalOptions="Center">
-                                                <Image
-                                                    Aspect="Fill"
-                                                    BackgroundColor="{DynamicResource Gray-200}"
-                                                    HeightRequest="48"
-                                                    WidthRequest="48">
-                                                    <Image.Source>
-                                                        <UriImageSource
-                                                            CacheValidity="14"
-                                                            CachingEnabled="true"
-                                                            Uri="{Binding CustomerImage}"/>
-                                                    </Image.Source>
-                                                </Image>
-                                            </Border>
+                                                <!--  Customer name and transaction amount label  -->
+                                                <Grid ColumnDefinitions="*,*"
+                                          Grid.Row="0"
+                                          Grid.Column="1"
+                                          Padding="0,0,0,0"
+                                          VerticalOptions="Center">
+                                                    <Label
+                                            FontFamily="Roboto-Medium"
+                                            FontSize="14"
+                                            HorizontalOptions="Start"
+                                            Text="{Binding CustomerName}"
+                                            HorizontalTextAlignment="Center"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
 
-                                            <!--  Customer name and transaction amount label  -->
-                                            <Grid ColumnDefinitions="*,*"
-                                                  Grid.Row="0"
-                                                  Grid.Column="1"
-                                                  Padding="0,0,0,0"
-                                                  VerticalOptions="Center">
-                                                <Label
-                                                    FontFamily="Roboto-Medium"
-                                                    FontSize="14"
-                                                    HorizontalOptions="Start"
-                                                    Text="{Binding CustomerName}"
-                                                    HorizontalTextAlignment="Center"
-                                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+                                                    <Label Grid.Column="1"
+                                                Margin="0,0,16,0"
+                                               FontFamily="Roboto-Medium"
+                                               FontSize="14"
+                                               HorizontalOptions="End"
+                                               HorizontalTextAlignment="End"
+                                               Text="{Binding TransactionAmount}"
+                                               TextColor="{Binding IsCredited, Converter={x:StaticResource BooleanToColorConverter}, ConverterParameter=5}"/>
+                                                </Grid>
 
-                                                <Label Grid.Column="1"
-                                                        Margin="0,0,16,0"
-                                                       FontFamily="Roboto-Medium"
-                                                       FontSize="14"
-                                                       HorizontalOptions="End"
-                                                       HorizontalTextAlignment="End"
-                                                       Text="{Binding TransactionAmount}"
-                                                       TextColor="{Binding IsCredited, Converter={x:StaticResource BooleanToColorConverter}, ConverterParameter=5}"/>
+                                                <!--  Transaction description and date  -->
+                                                <Grid ColumnDefinitions="*,*"
+                                          Grid.Row="1"
+                                          Grid.Column="1"
+                                          Padding="0">
+                                                    <Label
+                                            FontFamily="Roboto-Regular"
+                                            FontSize="12"
+                                            HorizontalOptions="Start"
+                                            Text="{Binding TransactionDescription}"
+                                            TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                                                    <Label Margin="0,0,16,0"
+                                                Grid.Column="1"
+                                               FontFamily="Roboto-Regular"
+                                               FontSize="12"
+                                               HorizontalOptions="End"
+                                               HorizontalTextAlignment="End"
+                                               Text="{Binding TransactionDate}"
+                                               TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+                                                </Grid>
+
                                             </Grid>
-
-                                            <!--  Transaction description and date  -->
-                                            <Grid ColumnDefinitions="*,*"
-                                                  Grid.Row="1"
-                                                  Grid.Column="1"
-                                                  Padding="0">
-                                                <Label
-                                                    FontFamily="Roboto-Regular"
-                                                    FontSize="12"
-                                                    HorizontalOptions="Start"
-                                                    Text="{Binding TransactionDescription}"
-                                                    TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
-
-                                                <Label Margin="0,0,16,0"
-                                                        Grid.Column="1"
-                                                       FontFamily="Roboto-Regular"
-                                                       FontSize="12"
-                                                       HorizontalOptions="End"
-                                                       HorizontalTextAlignment="End"
-                                                       Text="{Binding TransactionDate}"
-                                                       TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
-                                            </Grid>
-
-                                        </Grid>
-                                    </syncEffectsView:SfEffectsView>
-                                </Border>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
+                                        </syncEffectsView:SfEffectsView>
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
                     </StackLayout>
-                </StackLayout>
-            </Border>
-        </Grid>
-
-
-
+                </Border>
+            </Grid>
+        </ScrollView>
     </ContentView.Content>
 </ContentView>

@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              xmlns:model="clr-namespace:EssentialMAUIUIKit.Models"
              x:DataType="local:HealthProfileViewModel">
+    <ContentView.BindingContext>
+        <local:HealthProfileViewModel x:Name="viewModel"/>
+    </ContentView.BindingContext>
     <ContentView.Resources>
         <Style TargetType="listView:ListViewItem">
             <Setter Property="VisualStateManager.VisualStateGroups">
@@ -14,13 +17,13 @@
                         <VisualState x:Name="Normal">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                                        Value="Transparent"/>
+                    Value="Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                         <VisualState x:Name="PointerOver">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                                        Value="Transparent"/>
+                    Value= "Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -28,9 +31,6 @@
             </Setter>
         </Style>
     </ContentView.Resources>
-    <ContentView.BindingContext>
-        <local:HealthProfileViewModel x:Name="viewModel"/>
-    </ContentView.BindingContext>
     <ContentView.Content>
         <ScrollView>
             <Grid RowDefinitions="Auto, *">

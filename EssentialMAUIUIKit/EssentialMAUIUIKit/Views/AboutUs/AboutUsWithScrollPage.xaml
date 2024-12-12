@@ -17,13 +17,13 @@
                         <VisualState x:Name="Normal">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                                        Value="Transparent"/>
+                        Value="Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                         <VisualState x:Name="PointerOver">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                                        Value="Transparent"/>
+                        Value= "Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>

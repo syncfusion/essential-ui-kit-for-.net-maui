@@ -4,7 +4,8 @@
              x:Class="EssentialMAUIUIKit.Views.Detail.ProductDetailPage"
              xmlns:rotator="clr-namespace:Syncfusion.Maui.Rotator;assembly=Syncfusion.Maui.Rotator"
              xmlns:rating="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:segmentedControl="clr-namespace:Syncfusion.Maui.Toolkit.SegmentedControl;assembly=Syncfusion.Maui.Toolkit"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              x:DataType="local:ProductDetailsViewModel">
     <ContentView.BindingContext>
@@ -144,13 +145,13 @@
                                    FontSize="16"
                                    Margin="5"/>
                             <!--  Size variant buttons  -->
-                            <buttons:SfSegmentedControl
+                            <segmentedControl:SfSegmentedControl
                                 Margin="5"
                                 HorizontalOptions="Start"
                                 ItemsSource="{Binding Product.SizeVariants}"
                                 Style="{DynamicResource SegmentedControlStyle}"
-                                TextStyle="{buttons:SegmentTextStyle TextColor={AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}}">
-                            </buttons:SfSegmentedControl>
+                                TextStyle="{segmentedControl:SegmentTextStyle TextColor={AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}}">
+                            </segmentedControl:SfSegmentedControl>
                         </StackLayout>
 
                     </Border>

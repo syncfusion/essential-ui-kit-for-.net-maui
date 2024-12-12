@@ -5,9 +5,37 @@ namespace EssentialMAUIUIKit.AppLayout.Views
 {
     public partial class HomePageMobileUI : ContentPage
     {
+        ICollection<ResourceDictionary>? mergedDictionaries;
         public HomePageMobileUI()
         {
             InitializeComponent();
+            if (Application.Current != null)
+            {
+                mergedDictionaries = Application.Current.Resources.MergedDictionaries;
+                if (themeSwitch == null)
+                {
+                    return;
+                }
+
+                if (Application.Current.PlatformAppTheme == AppTheme.Dark)
+                {
+                    this.themeSwitch.IsOn = true;
+                    if (mergedDictionaries != null)
+                    {
+                        var theme = mergedDictionaries.OfType<Syncfusion.Maui.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        var themeToolkit = mergedDictionaries.OfType<Syncfusion.Maui.Toolkit.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        if (theme != null && themeToolkit != null)
+                        {
+                            theme.VisualTheme = Syncfusion.Maui.Themes.SfVisuals.MaterialDark;
+                            themeToolkit.VisualTheme = Syncfusion.Maui.Toolkit.Themes.SfVisuals.MaterialDark;
+                        }
+                    }
+                }
+                else
+                {
+                    this.themeSwitch.IsOn = false;
+                }
+            }
         }
 
         #region Methods
@@ -27,10 +55,32 @@ namespace EssentialMAUIUIKit.AppLayout.Views
             {
                 if (Application.Current.UserAppTheme == AppTheme.Dark)
                 {
+                    if (mergedDictionaries != null)
+                    {
+                        var theme = mergedDictionaries.OfType<Syncfusion.Maui.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        var themeToolkit = mergedDictionaries.OfType<Syncfusion.Maui.Toolkit.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        if (theme != null && themeToolkit != null)
+                        {
+                            theme.VisualTheme = Syncfusion.Maui.Themes.SfVisuals.MaterialDark;
+                            themeToolkit.VisualTheme = Syncfusion.Maui.Toolkit.Themes.SfVisuals.MaterialDark;
+                        }
+                    }
+
                     this.themeSwitch.IsOn = true;
                 }
                 else
                 {
+                    if (mergedDictionaries != null)
+                    {
+                        var theme = mergedDictionaries.OfType<Syncfusion.Maui.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        var themeToolkit = mergedDictionaries.OfType<Syncfusion.Maui.Toolkit.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        if (theme != null && themeToolkit != null)
+                        {
+                            theme.VisualTheme = Syncfusion.Maui.Themes.SfVisuals.MaterialLight;
+                            themeToolkit.VisualTheme = Syncfusion.Maui.Toolkit.Themes.SfVisuals.MaterialLight;
+                        }
+                    }
+
                     this.themeSwitch.IsOn = false;
                 }
             }
@@ -39,8 +89,10 @@ namespace EssentialMAUIUIKit.AppLayout.Views
             this.propertyFrameOverlay.IsVisible = !this.propertyFrameOverlay.IsVisible;
         }
 
-        private void GotoCodeViewer(object sender, EventArgs e)
+        private async void GotoCodeViewer(object sender, EventArgs e)
         {
+            string address = "https://github.com/syncfusion/essential-ui-kit-for-.net-maui";
+            await Browser.Default.OpenAsync(address, BrowserLaunchMode.SystemPreferred);
         }
 
         private void listView_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -77,10 +129,30 @@ namespace EssentialMAUIUIKit.AppLayout.Views
                 if ((bool)themeSwitch.IsOn!)
                 {
                     Application.Current.UserAppTheme = AppTheme.Dark;
+                    if (mergedDictionaries != null)
+                    {
+                        var theme = mergedDictionaries.OfType<Syncfusion.Maui.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        var themeToolkit = mergedDictionaries.OfType<Syncfusion.Maui.Toolkit.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        if (theme != null && themeToolkit != null)
+                        {
+                            theme.VisualTheme = Syncfusion.Maui.Themes.SfVisuals.MaterialDark;
+                            themeToolkit.VisualTheme = Syncfusion.Maui.Toolkit.Themes.SfVisuals.MaterialDark;
+                        }
+                    }
                 }
                 else
                 {
                     Application.Current.UserAppTheme = AppTheme.Light;
+                    if (mergedDictionaries != null)
+                    {
+                        var theme = mergedDictionaries.OfType<Syncfusion.Maui.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        var themeToolkit = mergedDictionaries.OfType<Syncfusion.Maui.Toolkit.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        if (theme != null && themeToolkit != null)
+                        {
+                            theme.VisualTheme = Syncfusion.Maui.Themes.SfVisuals.MaterialLight;
+                            themeToolkit.VisualTheme = Syncfusion.Maui.Toolkit.Themes.SfVisuals.MaterialLight;
+                        }
+                    }
                 }
             }
 
@@ -90,10 +162,17 @@ namespace EssentialMAUIUIKit.AppLayout.Views
         {
         }
 
-        private void Search_Clicked(object sender, EventArgs e)
+        private async void Search_ClickedAsync(object sender, EventArgs e)
         {
             this.searchGridView.IsVisible = !this.searchGridView.IsVisible;
             this.searchView.IsEnabled = true;
+            this.searchListGrid.IsVisible = true;
+
+            if (this.BindingContext is HomePageViewModel viewModel)
+            {
+                await Task.Delay(16);
+                viewModel.PopulateSearchItem(String.Empty);
+            }
         }
 
         private void searchView_Unfocused(object sender, FocusEventArgs e)

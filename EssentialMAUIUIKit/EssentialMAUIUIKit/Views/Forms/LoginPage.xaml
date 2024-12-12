@@ -4,7 +4,8 @@
              x:Class="EssentialMAUIUIKit.Views.Forms.LoginPage"
              xmlns:dataForm="clr-namespace:Syncfusion.Maui.DataForm;assembly=Syncfusion.Maui.DataForm"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
-             xmlns:button="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:button="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:checkBox="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              x:DataType="local:LoginPageViewModel">
 
     <ContentView.BindingContext>
@@ -61,7 +62,7 @@
                 </dataForm:SfDataForm>
 
                 <Grid Grid.Row="3">
-                    <button:SfCheckBox Text="Remember me"
+                    <checkBox:SfCheckBox Text="Remember me"
                                        FontSize="14"
                                        FontFamily="Roboto-Medium"
                                        TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"

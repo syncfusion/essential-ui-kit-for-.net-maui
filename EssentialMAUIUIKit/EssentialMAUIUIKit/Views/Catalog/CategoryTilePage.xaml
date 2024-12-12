@@ -4,9 +4,11 @@
              x:Class="EssentialMAUIUIKit.Views.Catalog.CategoryTilePage"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
-             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Toolkit.EffectsView;assembly=Syncfusion.Maui.Toolkit"
              x:DataType="local:CategoryTileViewModel">
-
+    <ContentView.BindingContext>
+        <local:CategoryTileViewModel x:Name="viewModel"/>
+    </ContentView.BindingContext>
     <ContentView.Resources>
         <Style TargetType="listView:ListViewItem">
             <Setter Property="VisualStateManager.VisualStateGroups">
@@ -15,13 +17,13 @@
                         <VisualState x:Name="Normal">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                                        Value="Transparent"/>
+                        Value="Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                         <VisualState x:Name="PointerOver">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                                        Value="Transparent"/>
+                        Value= "Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -29,9 +31,6 @@
             </Setter>
         </Style>
     </ContentView.Resources>
-    <ContentView.BindingContext>
-        <local:CategoryTileViewModel x:Name="viewModel"/>
-    </ContentView.BindingContext>
     <ContentView.Content>
 
         <Grid>
@@ -47,7 +46,7 @@
                                  Style="{DynamicResource TransparentSelectionListView}">
 
                 <listView:SfListView.ItemTemplate>
-                    <DataTemplate x:DataType="local:CategoryTile">
+                    <DataTemplate x:DataType="local:CategoryItem">
                         <syncEffectsView:SfEffectsView
                             RippleBackground="{DynamicResource Gray-300}"
                             TouchDownEffects="Ripple">

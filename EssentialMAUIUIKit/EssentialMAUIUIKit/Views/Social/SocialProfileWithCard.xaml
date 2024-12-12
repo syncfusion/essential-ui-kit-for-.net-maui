@@ -2,10 +2,13 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Social.SocialProfileWithCard"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              x:DataType="local:ProfileViewModel">
+    <ContentView.BindingContext>
+        <local:ProfileViewModel/>
+    </ContentView.BindingContext>
     <ContentView.Resources>
         <Style TargetType="listView:ListViewItem">
             <Setter Property="VisualStateManager.VisualStateGroups">
@@ -14,13 +17,13 @@
                         <VisualState x:Name="Normal">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                                        Value="Transparent"/>
+                        Value="Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                         <VisualState x:Name="PointerOver">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                                        Value="Transparent"/>
+                        Value= "Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -28,9 +31,6 @@
             </Setter>
         </Style>
     </ContentView.Resources>
-    <ContentView.BindingContext>
-        <local:ProfileViewModel/>
-    </ContentView.BindingContext>
 
     <ContentView.Content>
         <ScrollView
@@ -57,7 +57,7 @@
                             <!--  Header image path  -->
                             <Image
                                 Aspect="Fill"
-                                BackgroundColor="{DynamicResource GrayShadowColor}"
+                                BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                                 HeightRequest="120"
                                 HorizontalOptions="Fill">
                                 <Image.Source>
@@ -70,7 +70,7 @@
 
                             <Border
                                 Margin="0,-60,0,16"
-                                BackgroundColor="{DynamicResource Gray-100}"
+                                BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                                 Stroke="{DynamicResource Gray-White}"
                                 StrokeThickness="2"
                                 StrokeShape="RoundRectangle 10,10,10,10"
@@ -81,7 +81,7 @@
                                 <!--  Profile image  -->
                                 <Image Margin="-10"
                                        Aspect="Fill"
-                                       BackgroundColor="{DynamicResource Gray-200}"
+                                       BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                                        HeightRequest="80"
                                        WidthRequest="80">
                                     <Image.Source>
@@ -196,8 +196,7 @@
 
                                 <Border
                                     Margin="0,0,0,4"
-                                    Stroke="{DynamicResource Gray-Bg}"
-                                    StrokeThickness="1"
+                                    StrokeThickness="0"
                                     StrokeShape="RoundRectangle 35,35,35,35"
                                     HeightRequest="64"
                                     HorizontalOptions="Center"
@@ -205,7 +204,7 @@
 
                                     <Image
                                         Aspect="AspectFill"
-                                        BackgroundColor="{DynamicResource Gray-200}"
+                                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                                         HeightRequest="64"
                                         HorizontalOptions="Center"
                                         WidthRequest="64">
@@ -253,7 +252,6 @@
                     ItemSpacing="0,0,16,16"
                     ItemsSource="{Binding Profile.Pictures}"
                     SelectionBackground="Transparent">
-                    <listView:ListViewItem Style="{DynamicResource ListViewItemStyle}"/>
                     <listView:SfListView.ItemTemplate>
                         <DataTemplate x:DataType="local:Picture">
                             <Grid>

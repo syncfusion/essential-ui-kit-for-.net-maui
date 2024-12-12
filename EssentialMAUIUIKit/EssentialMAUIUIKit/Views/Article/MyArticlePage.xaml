@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              xmlns:model="clr-namespace:EssentialMAUIUIKit.Models"
              x:DataType="local:ArticleViewModel">
+    <ContentView.BindingContext>
+        <local:ArticleViewModel/>
+    </ContentView.BindingContext>
     <ContentView.Resources>
         <Style TargetType="listView:ListViewItem">
             <Setter Property="VisualStateManager.VisualStateGroups">
@@ -14,13 +17,13 @@
                         <VisualState x:Name="Normal">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                                        Value="Transparent"/>
+                        Value="Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                         <VisualState x:Name="PointerOver">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                                        Value="Transparent"/>
+                        Value= "Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -28,18 +31,14 @@
             </Setter>
         </Style>
     </ContentView.Resources>
-    <ContentView.BindingContext>
-        <local:ArticleViewModel/>
-    </ContentView.BindingContext>
     <ContentView.Content>
-        <ScrollView>
+        <Grid>
             <listView:SfListView BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                                  x:Name="CategoryTile"
                                  AutoFitMode="Height"
                                  HorizontalOptions="Fill"
                                  ItemSpacing="8"
                                  ItemsSource="{Binding Articles.ArticleList}"
-                                 HeightRequest="800"
                                  Style="{DynamicResource TransparentSelectionListView}">
 
                 <listView:SfListView.ItemTemplate>
@@ -78,7 +77,7 @@
                 </listView:SfListView.ItemsLayout>
 
             </listView:SfListView>
-        </ScrollView>
+        </Grid>
 
 
 

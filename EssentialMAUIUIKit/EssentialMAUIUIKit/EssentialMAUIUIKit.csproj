@@ -27,7 +27,7 @@
 		<MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
 
 		<!-- Display name -->
-		<ApplicationTitle>EssentialMAUIUIKit</ApplicationTitle>
+		<ApplicationTitle>Essential MAUI UI Kit</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.essentialmauiuikit</ApplicationId>
@@ -77,10 +77,11 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\applicationicon.png" />
+		<MauiIcon Include="Resources\AppIcon\appicon.png" />
 		
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splashscreen.svg" BaseSize="*,*" />
+		<MauiSplashScreen Include="Resources\Splash\splashscreen.svg" Color="#3754EB" BaseSize="*,*" />
+		
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
 		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
@@ -171,11 +172,12 @@
 	  <None Remove="Resources\Fonts\Roboto-Medium.ttf" />
 	  <None Remove="Resources\Fonts\Roboto-Regular.ttf" />
 	  <None Remove="Resources\Fonts\UIFontIcons.ttf" />
+	  <None Remove="Resources\Splash\splashscreen.png" />
 	  <None Remove="Resources\Splash\splashscreen.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiImage Include="AppLayout\Icons\appicon.png" />
+	  <MauiImage Include="AppLayout\Icons\applicationicon.png" />
 	  <EmbeddedResource Include="AppLayout\TemplateList.xml" />
 	</ItemGroup>
 
@@ -254,7 +256,6 @@
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="Syncfusion.Maui.Buttons" Version="*" />
-		<PackageReference Include="Syncfusion.Maui.Calendar" Version="*" />
 		<PackageReference Include="Syncfusion.Maui.Cards" Version="*" />
 		<PackageReference Include="Syncfusion.Maui.Charts" Version="*" />
 		<PackageReference Include="Syncfusion.Maui.Core" Version="*" />
@@ -266,8 +267,7 @@
 		<PackageReference Include="Syncfusion.Maui.Maps" Version="*" />
 		<PackageReference Include="Syncfusion.Maui.ProgressBar" Version="*" />
 		<PackageReference Include="Syncfusion.Maui.Rotator" Version="*" />
-		<PackageReference Include="Syncfusion.Maui.TabView" Version="*" />
-		<PackageReference Include="Syncfusion.Maui.Popup" Version="*" />
+		<PackageReference Include="Syncfusion.Maui.Toolkit" Version="*" />
 	</ItemGroup>
 
 	<ItemGroup>

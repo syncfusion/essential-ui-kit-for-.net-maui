@@ -2,8 +2,9 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Navigation.SelectableNamePage"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:checkBox="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              x:DataType="local:NameListViewModel">
     <ContentView.BindingContext>
@@ -14,7 +15,7 @@
         <Grid RowDefinitions="{OnPlatform Default=*, MacCatalyst=Auto}"
               RowSpacing="0" Padding="0,10,0,0">
             <Border StrokeShape="RoundRectangle 10"
-                    WidthRequest="{OnPlatform WinUI=550, MacCatalyst=550}"
+                    WidthRequest="{OnPlatform WinUI=550, MacCatalyst=550}" HeightRequest="{OnPlatform MacCatalyst=600}"
                     BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                     Padding="20"
                     IsVisible="{OnPlatform Android=False, iOS=False}">
@@ -63,7 +64,7 @@
                                             RowDefinitions="Auto, Auto"
                                             RowSpacing="0">
 
-                                            <buttons:SfCheckBox
+                                            <checkBox:SfCheckBox
                                                 Grid.Row="0"
                                                 Margin="16,0"
                                                 StrokeThickness="1"
@@ -133,7 +134,7 @@
                                         RowDefinitions="Auto, Auto"
                                         RowSpacing="0">
 
-                                        <buttons:SfCheckBox
+                                        <checkBox:SfCheckBox
                                             Grid.Row="0"
                                             Margin="16,0"
                                             StrokeThickness="1"

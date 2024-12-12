@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Bookmark.CartPage"
              xmlns:combobox="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              xmlns:model="clr-namespace:EssentialMAUIUIKit.Models"
              x:DataType="local:CartPageViewModel">
@@ -155,7 +155,7 @@
                                                     x:Name="QuantityComboBox"
                                                     Stroke="{DynamicResource Gray-300}"
                                                     ItemsSource="{Binding Quantities}"
-                                                    DropDownBackground="{DynamicResource Gray-Bg}"
+                                                    DropDownBackground="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                                                     HeightRequest="32"
                                                     HorizontalOptions="Start"
                                                     MaximumHeightRequest="200"
@@ -185,7 +185,7 @@
                                                                     FontSize="25"
                                                                     HorizontalTextAlignment="Center"
                                                                     Text="{DynamicResource DropDownButtonIcon}"
-                                                                    TextColor="{DynamicResource Gray-600}"
+                                                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                                                                     VerticalTextAlignment="Center"/>
                                                             </combobox:DropDownButtonSettings.View>
                                                         </combobox:DropDownButtonSettings>
@@ -200,12 +200,16 @@
                                                 VerticalOptions="Center"
                                                 Background="Transparent"
                                                 WidthRequest="92">
-                                                <Label
-                                                    FontSize="14"
-                                                    Style="{DynamicResource TitleLabelStyle}"
-                                                    Text="Remove"
-                                                    TextColor="{AppThemeBinding Dark={DynamicResource PrimaryColorDark}, Light={DynamicResource PrimaryColorLight}}"
-                                                    VerticalOptions="Center"/>
+                                                <buttons:SfButton.Content>
+                                                    <DataTemplate>
+                                                        <Label
+    FontSize="14"
+    Style="{DynamicResource TitleLabelStyle}"
+    Text="Remove"
+    TextColor="{AppThemeBinding Dark={DynamicResource PrimaryColorDark}, Light={DynamicResource PrimaryColorLight}}"
+    VerticalOptions="Center"/>
+                                                    </DataTemplate>
+                                                </buttons:SfButton.Content>
                                             </buttons:SfButton>
                                         </StackLayout>
 

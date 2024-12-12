@@ -2,7 +2,7 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Detail.ArticleDetailPage"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              xmlns:model="clr-namespace:EssentialMAUIUIKit.Models"
              xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
@@ -80,13 +80,13 @@
                         TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
 
                     <!--  Decription image of the blog  -->
-                    <Image
+                    <Image WidthRequest="200"
                         Margin="{OnIdiom Phone='16,8',
                                      Tablet='0,24,0,8',
                                      Desktop='0,24,0,8'}"
                         Aspect="AspectFill"
                         BackgroundColor="{DynamicResource Gray-200}"
-                        HeightRequest="150"
+                        HeightRequest="200"
                         HorizontalOptions="{OnIdiom Tablet=Center,
                                                 Desktop=Center,
                                                 Phone=Fill}"

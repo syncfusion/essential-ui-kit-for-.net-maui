@@ -6,7 +6,8 @@
              xmlns:model="clr-namespace:EssentialMAUIUIKit.AppLayout.Models;assembly=EssentialMAUIUIKit"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:controls="clr-namespace:EssentialMAUIUIKit.AppLayout.Controls"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:switch="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              x:DataType="viewModels:HomePageViewModel"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
@@ -169,7 +170,7 @@
                         Orientation="Horizontal"
                         Spacing="0">
                         <Button
-                            Clicked="Search_Clicked"
+                            Clicked="Search_ClickedAsync"
                             FontSize="18"
                             Style="{DynamicResource ActionBarSettingIconStyle}"
                             Text="&#xe705;"
@@ -225,7 +226,7 @@
                 Spacing="0">
 
                 <Button
-                    Clicked="Search_Clicked"
+                    Clicked="Search_ClickedAsync"
                     FontSize="18"
                     Style="{DynamicResource ActionBarSettingIconStyle}"
                     Text="&#xe705;"
@@ -294,7 +295,7 @@
                             FontFamily="Roboto-Medium"
                             TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                             VerticalOptions="Center"/>
-                    <buttons:SfSwitch x:Name="themeSwitch"
+                    <switch:SfSwitch x:Name="themeSwitch"
                             Grid.Column="1"
                             IsOn="False"
                             StateChanged="SfSwitch_StateChanged"
@@ -324,8 +325,7 @@
                             Placeholder="Search"
                             Background="Transparent"
                             VerticalTextAlignment="Center"
-                            WidthRequest="400"
-                            Margin="50,5,0,0"
+                            Margin="0,5,0,0"
                                       Grid.Column="1"
                                       PlaceholderColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}"
                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
@@ -350,13 +350,11 @@
                       HorizontalOptions="Center"
                       x:Name="shadowGrid"
                       Margin="0,0,0,0"
-                      MaximumHeightRequest="300"
                       IsClippedToBounds="True">
                     <ScrollView x:Name="searchScrollView"
                             Orientation="Vertical"
                             WidthRequest="400"
                             Margin="0,0,0,5"
-                            MaximumHeightRequest="296"
                             VerticalOptions="Fill"
                             VerticalScrollBarVisibility="Always"
                             HorizontalOptions="Center">
@@ -374,9 +372,9 @@
                                             <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
                                         </HorizontalStackLayout.GestureRecognizers>
                                         <Label x:DataType="viewModels:SearchModel"
-                                                Text="{Binding Category.Name }"
+                                                Text="{Binding Category.Name }" FontFamily="Roboto-Medium"
                                                 TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                                FontSize="14"
+                                                FontSize="16"
                                                 VerticalOptions="Center"
                                                 VerticalTextAlignment="Center"/>
                                         <Label Text="-"
@@ -385,9 +383,9 @@
                                                 VerticalOptions="Center"
                                                 VerticalTextAlignment="Center"/>
                                         <Label x:DataType="viewModels:SearchModel"
-                                                Text="{Binding Template.Name}"
+                                                Text="{Binding Template.Name}" FontFamily="Roboto-Regular"
                                                 TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                                FontSize="14"
+                                                FontSize="16"
                                                 VerticalOptions="Center"
                                                 VerticalTextAlignment="Center"/>
 

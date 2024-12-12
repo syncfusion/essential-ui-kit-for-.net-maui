@@ -1,17 +1,44 @@
 using EssentialMAUIUIKit.AppLayout.Models;
 using EssentialMAUIUIKit.AppLayout.ViewModels;
-using Syncfusion.Maui.Buttons;
-using System.Collections.ObjectModel;
 
 namespace EssentialMAUIUIKit.AppLayout.Views
 {
     public partial class HomePageDesktopUI : ContentPage
     {
+        ICollection<ResourceDictionary>? mergedDictionaries;
         public HomePageDesktopUI()
         {
             InitializeComponent();
             var bindingContext = (HomePageViewModel)this.BindingContext;
             this.listView.SelectedItem = bindingContext.Categories[0];
+            if (Application.Current != null)
+            {
+                mergedDictionaries = Application.Current.Resources.MergedDictionaries;
+                if (themeSwitch == null)
+                {
+                    return;
+                }
+
+                if (Application.Current.PlatformAppTheme == AppTheme.Dark)
+                {
+                    this.themeSwitch.IsOn = true;
+                    if (mergedDictionaries != null)
+                    {
+                        var theme = mergedDictionaries.OfType<Syncfusion.Maui.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        var themeToolkit = mergedDictionaries.OfType<Syncfusion.Maui.Toolkit.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        if (theme != null && themeToolkit != null)
+                        {
+                            theme.VisualTheme = Syncfusion.Maui.Themes.SfVisuals.MaterialDark;
+                            themeToolkit.VisualTheme = Syncfusion.Maui.Toolkit.Themes.SfVisuals.MaterialDark;
+                        }
+                    }
+                }
+                else
+                {
+                    this.themeSwitch.IsOn = false;
+                }
+            }
+
             this.UpdateLoadedChild(new TemplatesView(bindingContext.Categories[0], bindingContext.Categories[0].Pages[0]));
         }
 
@@ -28,8 +55,11 @@ namespace EssentialMAUIUIKit.AppLayout.Views
             this.propertyFrameOverlay.IsVisible = !this.propertyFrameOverlay.IsVisible;
         }
 
-        private void GotoCodeViewer(object sender, EventArgs e)
+        private async void GotoCodeViewer(object sender, EventArgs e)
         {
+            var selectedTemplate = (TemplatesView)this.SampleViewGrid.Children[0];
+            string address = "https://github.com/syncfusion/essential-ui-kit-for-.net-maui/blob/master/EssentialMAUIUIKit/EssentialMAUIUIKit/" + selectedTemplate.GetPageName() + "";
+            await Browser.Default.OpenAsync(address, BrowserLaunchMode.SystemPreferred);
         }
 
         private void listView_ItemTapped(object sender, Syncfusion.Maui.ListView.ItemTappedEventArgs e)
@@ -72,10 +102,30 @@ namespace EssentialMAUIUIKit.AppLayout.Views
                 if ((bool)themeSwitch.IsOn!)
                 {
                     Application.Current.UserAppTheme = AppTheme.Dark;
+                    if (mergedDictionaries != null)
+                    {
+                        var theme = mergedDictionaries.OfType<Syncfusion.Maui.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        var themeToolkit = mergedDictionaries.OfType<Syncfusion.Maui.Toolkit.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        if (theme != null && themeToolkit != null)
+                        {
+                            theme.VisualTheme = Syncfusion.Maui.Themes.SfVisuals.MaterialDark;
+                            themeToolkit.VisualTheme = Syncfusion.Maui.Toolkit.Themes.SfVisuals.MaterialDark;
+                        }
+                    }
                 }
                 else
                 {
                     Application.Current.UserAppTheme = AppTheme.Light;
+                    if (mergedDictionaries != null)
+                    {
+                        var theme = mergedDictionaries.OfType<Syncfusion.Maui.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        var themeToolkit = mergedDictionaries.OfType<Syncfusion.Maui.Toolkit.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        if (theme != null && themeToolkit != null)
+                        {
+                            theme.VisualTheme = Syncfusion.Maui.Themes.SfVisuals.MaterialLight;
+                            themeToolkit.VisualTheme = Syncfusion.Maui.Toolkit.Themes.SfVisuals.MaterialLight;
+                        }
+                    }
                 }
             }
 

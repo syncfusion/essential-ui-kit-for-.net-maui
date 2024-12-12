@@ -4,16 +4,36 @@
              x:Class="EssentialMAUIUIKit.Views.Catalog.ArticleTilePage"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:rotator="clr-namespace:Syncfusion.Maui.Rotator;assembly=Syncfusion.Maui.Rotator"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              xmlns:model="clr-namespace:EssentialMAUIUIKit.Models"
              xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
-             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Toolkit.EffectsView;assembly=Syncfusion.Maui.Toolkit"
              x:DataType="local:ArticleListViewModel">
     <ContentView.BindingContext>
         <local:ArticleListViewModel/>
     </ContentView.BindingContext>
     <ContentView.Resources>
+        <Style TargetType="listView:ListViewItem">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                        Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                        Value= "Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
         <ResourceDictionary>
             <DataTemplate x:Key="HeaderView" x:DataType="model:Story">
                 <StackLayout Spacing="8">
@@ -60,27 +80,6 @@
             </DataTemplate>
 
         </ResourceDictionary>
-
-        <Style TargetType="listView:ListViewItem">
-            <Setter Property="VisualStateManager.VisualStateGroups">
-                <VisualStateGroupList>
-                    <VisualStateGroup>
-                        <VisualState x:Name="Normal">
-                            <VisualState.Setters>
-                                <Setter Property="Background"
-                                        Value="Transparent"/>
-                            </VisualState.Setters>
-                        </VisualState>
-                        <VisualState x:Name="PointerOver">
-                            <VisualState.Setters>
-                                <Setter Property="Background"
-                                        Value="Transparent"/>
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateGroupList>
-            </Setter>
-        </Style>
     </ContentView.Resources>
 
     <ContentView.Content>

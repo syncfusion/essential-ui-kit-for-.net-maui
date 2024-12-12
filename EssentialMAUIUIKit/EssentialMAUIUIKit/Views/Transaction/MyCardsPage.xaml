@@ -3,10 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Transaction.MyCardsPage"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
              xmlns:card="clr-namespace:Syncfusion.Maui.Cards;assembly=Syncfusion.Maui.Cards"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              x:DataType="local:MyCardsViewModel">
+    <ContentView.BindingContext>
+        <local:MyCardsViewModel x:Name="viewModel"/>
+    </ContentView.BindingContext>
     <ContentView.Resources>
         <Style TargetType="listView:ListViewItem">
             <Setter Property="VisualStateManager.VisualStateGroups">
@@ -15,13 +18,13 @@
                         <VisualState x:Name="Normal">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                                        Value="Transparent"/>
+                        Value="Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                         <VisualState x:Name="PointerOver">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                                        Value="Transparent"/>
+                        Value= "Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -29,9 +32,6 @@
             </Setter>
         </Style>
     </ContentView.Resources>
-    <ContentView.BindingContext>
-        <local:MyCardsViewModel x:Name="viewModel"/>
-    </ContentView.BindingContext>
     <ContentView.Content>
         <Grid
             ColumnSpacing="0"

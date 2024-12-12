@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Chat.ChatMessagePage"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
              xmlns:controls="clr-namespace:EssentialMAUIUIKit.Controls"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              xmlns:templateSelector="clr-namespace:EssentialMAUIUIKit.Views.Chat"
@@ -17,7 +17,6 @@
             <converter:DateTimeToStringConverter x:Key="DateTimeToStringConverter"/>
             <templateSelector:MessageDataTemplateSelector x:Key="MessageDataTemplateSelector"/>
         </ResourceDictionary>
-
         <Style TargetType="listView:ListViewItem">
             <Setter Property="VisualStateManager.VisualStateGroups">
                 <VisualStateGroupList>
@@ -25,13 +24,13 @@
                         <VisualState x:Name="Normal">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                                        Value="Transparent"/>
+                                Value="Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                         <VisualState x:Name="PointerOver">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                                        Value="Transparent"/>
+                                Value="Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -148,7 +147,8 @@
                                         <controls:BorderlessEditor
                                             Margin="5,0"
                                             Placeholder="Type here"
-                                            Style="{DynamicResource BorderlessEditorStyle}"/>
+                                            Style="{DynamicResource BorderlessEditorStyle}"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
 
                                         <!--  Camera Button  -->
                                         <buttons:SfButton

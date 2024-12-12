@@ -2,7 +2,7 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Chat.RecentChatPage"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
              xmlns:controls="clr-namespace:EssentialMAUIUIKit.Controls"
              xmlns:badge="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
@@ -234,12 +234,16 @@
                                         HeightRequest="32"
                                         Style="{DynamicResource IconButtonStyle}"
                                         WidthRequest="32">
-                                        <Label
-                                            BackgroundColor="Transparent"
-                                            Style="{DynamicResource IconLabelStyle}"
-                                            Text="{DynamicResource PhoneFill}"
-                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                            VerticalTextAlignment="Center"/>
+                                        <buttons:SfButton.Content>
+                                            <DataTemplate>
+                                                <Label
+     BackgroundColor="Transparent"
+     Style="{DynamicResource IconLabelStyle}"
+     Text="{DynamicResource PhoneFill}"
+     TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+     VerticalTextAlignment="Center"/>
+                                            </DataTemplate>
+                                        </buttons:SfButton.Content>
                                     </buttons:SfButton>
 
                                     <!--Video call button-->
@@ -250,12 +254,16 @@
                                         HeightRequest="32"
                                         Style="{DynamicResource IconButtonStyle}"
                                         WidthRequest="32">
-                                        <Label
-                                            BackgroundColor="Transparent"
-                                            Style="{DynamicResource IconLabelStyle}"
-                                            Text="{DynamicResource Video}"
-                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                            VerticalTextAlignment="Center"/>
+                                        <buttons:SfButton.Content>
+                                            <DataTemplate>
+                                                <Label
+     BackgroundColor="Transparent"
+     Style="{DynamicResource IconLabelStyle}"
+     Text="{DynamicResource Video}"
+     TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+     VerticalTextAlignment="Center"/>
+                                            </DataTemplate>
+                                        </buttons:SfButton.Content>
                                     </buttons:SfButton>
 
                                     <!--Settings button-->
@@ -266,14 +274,17 @@
                                         HeightRequest="32"
                                         Style="{DynamicResource IconButtonStyle}"
                                         WidthRequest="32">
-                                        <Label
-                                            BackgroundColor="Transparent"
-                                            Style="{DynamicResource IconLabelStyle}"
-                                            Text="{DynamicResource Menu}"
-                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                            VerticalTextAlignment="Center"/>
+                                        <buttons:SfButton.Content>
+                                            <DataTemplate>
+                                                <Label
+    BackgroundColor="Transparent"
+    Style="{DynamicResource IconLabelStyle}"
+    Text="{DynamicResource Menu}"
+    TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+    VerticalTextAlignment="Center"/>
+                                            </DataTemplate>
+                                        </buttons:SfButton.Content>
                                     </buttons:SfButton>
-
                                 </Grid>
                             </Grid>
                         </Border>

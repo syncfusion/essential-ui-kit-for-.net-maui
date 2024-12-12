@@ -1,4 +1,4 @@
-using Syncfusion.Maui.Calendar;
+using Syncfusion.Maui.Toolkit.Calendar;
 using System.Globalization;
 
 namespace EssentialMAUIUIKit.Views.Detail
@@ -10,12 +10,19 @@ namespace EssentialMAUIUIKit.Views.Detail
             InitializeComponent();
         }
 
-        private void SfCalendar_ActionButtonClicked(object sender, Syncfusion.Maui.Calendar.CalendarSubmittedEventArgs e)
+        private void SfCalendar_ActionButtonClicked(object sender, Syncfusion.Maui.Toolkit.Calendar.CalendarSubmittedEventArgs e)
         {
             CalendarDateRange? dateRange = e.Value as CalendarDateRange;
             if (dateRange != null)
             {
-                this.viewModel.RoomDetail!.SelectedRanges = $"{dateRange.StartDate:dd MMM yyyy} - {dateRange.EndDate:dd MMM yyyy}";
+                if (dateRange.EndDate == null)
+                {
+                    this.viewModel.RoomDetail!.SelectedRanges = $"{dateRange.StartDate:dd MMM yyyy}";
+                }
+                else
+                {
+                    this.viewModel.RoomDetail!.SelectedRanges = $"{dateRange.StartDate:dd MMM yyyy} - {dateRange.EndDate:dd MMM yyyy}";
+                }
 #if WINDOWS || MACCATALYST
                 sfComboBox.Text = this.viewModel.RoomDetail!.SelectedRanges;
                 sfComboBox.IsDropDownOpen = false;

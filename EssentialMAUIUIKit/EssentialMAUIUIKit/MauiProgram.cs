@@ -2,6 +2,7 @@
 {
     using Microsoft.Extensions.Logging;
     using Syncfusion.Maui.Core.Hosting;
+    using Syncfusion.Maui.Toolkit.Hosting;
 
     public static class MauiProgram
     {
@@ -10,6 +11,7 @@
             var builder = MauiApp.CreateBuilder();
             builder
                 .ConfigureSyncfusionCore()
+                .ConfigureSyncfusionToolkit()
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
                 {

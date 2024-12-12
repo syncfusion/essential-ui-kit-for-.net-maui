@@ -13,7 +13,7 @@ namespace EssentialMAUIUIKit
 
         private RoomDetail? roomDetail;
 
-        private ObservableCollection<Review> reviews;
+        private ObservableCollection<RoomBookingReview> reviews;
 
         private List<RoomDetail> facilities;
 
@@ -120,9 +120,9 @@ namespace EssentialMAUIUIKit
                },
             };
 
-            this.reviews = new ObservableCollection<Review>
+            this.reviews = new ObservableCollection<RoomBookingReview>
             {
-                new Review
+                new RoomBookingReview
                 {
                     CustomerImage = "ProfileImage10.png",
                     CustomerName = "Jane Deo",
@@ -136,7 +136,7 @@ namespace EssentialMAUIUIKit
                         "HotelImage6.jpeg",
                     },
                 },
-                new Review
+                new RoomBookingReview
                 {
                     CustomerImage = "ProfileImage11.png",
                     CustomerName = "Alise Valasquez",
@@ -165,7 +165,7 @@ namespace EssentialMAUIUIKit
                 new RoomDetail { DisplayText = "2 Guests", ValueText = 2 },
                 new RoomDetail { DisplayText = "3 Guests", ValueText = 3 },
             };
-            this.MapMarkerImage = "Pin.png";
+            this.MapMarkerImage = "pin.png";
             this.MapMarkerLatitude = "40.133808";
             this.MapMarkerLongitude = "-75.516279";
             this.GetPinLocation();
@@ -602,7 +602,7 @@ namespace EssentialMAUIUIKit
 
         private string? selectedRanges = $"{DateTime.Now:dd MMM yyyy} - {DateTime.Now.AddDays(2):dd MMM yyy}";
 
-        private IReadOnlyCollection<Review> reviews = new ObservableCollection<Review>();
+        private IReadOnlyCollection<RoomBookingReview> reviews = new ObservableCollection<RoomBookingReview>();
 
         #endregion
 
@@ -722,7 +722,7 @@ namespace EssentialMAUIUIKit
         /// <summary>
         /// Gets or sets the review of the customers .
         /// </summary>
-        public IReadOnlyCollection<Review> Reviews
+        public IReadOnlyCollection<RoomBookingReview> Reviews
         {
             get
             {
@@ -737,5 +737,43 @@ namespace EssentialMAUIUIKit
         }
 
         #endregion    
+    }
+
+    public class RoomBookingReview
+    {
+        private string? customerImage;
+        private List<string>? customerReviewImages;
+        public string? ProfileImage { get; set; }
+        public string? CustomerName { get; set; }
+        public string? Comment { get; set; }
+        public string? ReviewedDate { get; set; }
+        public string CustomerImage
+        {
+            get { return App.ImageServerPath + this.customerImage; }
+            set { this.customerImage = value; }
+        }
+
+        public List<string>? CustomerReviewImages
+        {
+            get
+            {
+                if (this.customerReviewImages != null)
+                {
+                    for (var i = 0; i < this.customerReviewImages.Count; i++)
+                    {
+                        this.customerReviewImages[i] = this.customerReviewImages[i].Contains(App.ImageServerPath) ? this.customerReviewImages[i] : App.ImageServerPath + this.customerReviewImages[i];
+                    }
+                }
+
+                return this.customerReviewImages;
+            }
+
+            set
+            {
+                this.customerReviewImages = value;
+            }
+        }
+
+        public int Rating { get; set; }
     }
 }

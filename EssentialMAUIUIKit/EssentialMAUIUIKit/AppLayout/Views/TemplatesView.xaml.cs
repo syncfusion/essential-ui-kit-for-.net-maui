@@ -73,6 +73,17 @@ namespace EssentialMAUIUIKit.AppLayout.Views
             this.SampleGrid.Children.Add(page);
         }
 
-        #endregion
+        public string? GetPageName()
+        {
+            Template? template = (Template?)this.chipView.SelectedItem;
+            if (template == null)
+            {
+                return string.Empty;
+            }
+
+            return template.PageName?.Replace('.', '/') + ".xaml";
+        }
     }
+
+        #endregion
 }

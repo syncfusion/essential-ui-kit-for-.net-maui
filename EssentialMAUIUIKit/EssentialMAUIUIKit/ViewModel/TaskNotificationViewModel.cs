@@ -7,14 +7,14 @@ namespace EssentialMAUIUIKit
 {
     public class TaskNotificationViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<TaskNotification>? taskNotifications;
+        private ObservableCollection<TaskNotificationItem>? taskNotifications;
 
         public TaskNotificationViewModel()
         {
             this.PopulateData();
         }
 
-        public ObservableCollection<TaskNotification>? TaskNotifications
+        public ObservableCollection<TaskNotificationItem>? TaskNotifications
         {
             get => taskNotifications;
             set
@@ -96,7 +96,7 @@ namespace EssentialMAUIUIKit
                 var notificationsList = JsonSerializer.Deserialize<TaskNotificationsList>(jsonData, options);
                 if (notificationsList != null && notificationsList.TaskNotificationPageList != null)
                 {
-                    TaskNotifications = new ObservableCollection<TaskNotification>(notificationsList.TaskNotificationPageList);
+                    TaskNotifications = new ObservableCollection<TaskNotificationItem>(notificationsList.TaskNotificationPageList);
                 }
             }
             catch (Exception ex)
@@ -114,7 +114,7 @@ namespace EssentialMAUIUIKit
         }
     }
 
-    public class TaskNotification
+    public class TaskNotificationItem
     {
         public string? UserName { get; set; }
         public string? BackgroundColor { get; set; }
@@ -127,7 +127,7 @@ namespace EssentialMAUIUIKit
 
     public class TaskNotificationsList
     {
-        public List<TaskNotification>? TaskNotificationPageList { get; set; }
+        public List<TaskNotificationItem>? TaskNotificationPageList { get; set; }
     }
 
 }

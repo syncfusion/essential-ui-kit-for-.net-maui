@@ -15,7 +15,7 @@
               ColumnSpacing="0"
               RowSpacing="0"
                 RowDefinitions="{OnPlatform Default=*, MacCatalyst=Auto}">
-            <Border StrokeShape="RoundRectangle 10"
+            <Border StrokeShape="RoundRectangle 10" HeightRequest="{OnPlatform MacCatalyst=600}"
                     WidthRequest="{OnPlatform WinUI=550, MacCatalyst=550}"
                     BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                     IsVisible="{OnPlatform Android=False, iOS=False}">

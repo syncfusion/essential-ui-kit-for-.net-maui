@@ -4,16 +4,15 @@
              x:Class="EssentialMAUIUIKit.Views.Navigation.MoviesPage"
              xmlns:rating="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
              xmlns:rotator="clr-namespace:Syncfusion.Maui.Rotator;assembly=Syncfusion.Maui.Rotator"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
-             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Toolkit.EffectsView;assembly=Syncfusion.Maui.Toolkit"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              x:DataType="local:MoviesPageViewModel">
     <ContentView.BindingContext>
         <local:MoviesPageViewModel/>
     </ContentView.BindingContext>
     <ContentView.Resources>
-
         <Style TargetType="listView:ListViewItem">
             <Setter Property="VisualStateManager.VisualStateGroups">
                 <VisualStateGroupList>
@@ -21,13 +20,13 @@
                         <VisualState x:Name="Normal">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                                        Value="Transparent"/>
+                    Value="Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                         <VisualState x:Name="PointerOver">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                                        Value="Transparent"/>
+                    Value= "Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -130,7 +129,7 @@
                                             LineHeight="{OnPlatform Android=1.5,
                     Default=-1}"
                                             Text="{Binding Moviename}"
-                                            TextColor="{DynamicResource Gray-900}"/>
+                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
 
                                         <rating:SfRating BackgroundColor="Transparent"
                                                          HorizontalOptions="Start"
@@ -212,7 +211,7 @@
                                             LineHeight="{OnPlatform Android=1.5,
                     Default=-1}"
                                             Text="{Binding Moviename}"
-                                            TextColor="{DynamicResource Gray-900}"/>
+                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
 
                                     </StackLayout>
                                 </ViewCell.View>
@@ -274,7 +273,7 @@
                                             LineHeight="{OnPlatform Android=1.5,
                     Default=-1}"
                                             Text="{Binding Moviename}"
-                                            TextColor="{DynamicResource Gray-900}"/>
+                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
 
                                     </StackLayout>
                                 </ViewCell.View>

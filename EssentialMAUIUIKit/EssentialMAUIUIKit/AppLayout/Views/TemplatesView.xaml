@@ -4,7 +4,8 @@
              x:Class="EssentialMAUIUIKit.AppLayout.Views.TemplatesView"
              xmlns:viewModels="clr-namespace:EssentialMAUIUIKit.AppLayout.ViewModels"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
-             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Toolkit.EffectsView;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:chip="clr-namespace:Syncfusion.Maui.Toolkit.Chips;assembly=Syncfusion.Maui.Toolkit"
              xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
              x:DataType="viewModels:TemplatePageViewModel">
 
@@ -14,27 +15,6 @@
                 <ResourceDictionary Source="AppLayoutStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-
-        <Style TargetType="listView:ListViewItem">
-            <Setter Property="VisualStateManager.VisualStateGroups">
-                <VisualStateGroupList>
-                    <VisualStateGroup>
-                        <VisualState x:Name="Normal">
-                            <VisualState.Setters>
-                                <Setter Property="Background"
-                                        Value="Transparent"/>
-                            </VisualState.Setters>
-                        </VisualState>
-                        <VisualState x:Name="PointerOver">
-                            <VisualState.Setters>
-                                <Setter Property="Background"
-                                        Value="Transparent"/>
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateGroupList>
-            </Setter>
-        </Style>
     </ContentView.Resources>
 
     <ContentView.BindingContext>
@@ -61,7 +41,7 @@
                 Grid.Row="1"
                 Padding="10"
                 HorizontalScrollBarVisibility="Never">
-            <syncEffectsView:SfChipGroup x:Name="chipView"
+            <chip:SfChipGroup x:Name="chipView"
                     ChipClicked="chipView_ChipClicked"
                     ChipFontFamily="Roboto-Medium"
                     Background="Transparent"
@@ -74,7 +54,7 @@
                                          SelectedChipBackground="{AppThemeBinding Dark={DynamicResource BackgroundColorLight}, Light={DynamicResource BackgroundColorDark}}"
                                          ChipTextColor="{AppThemeBinding Light=Black, Dark={DynamicResource White}}"
                                          SelectedChipTextColor="{AppThemeBinding Light=White, Dark={DynamicResource Black}}">
-            </syncEffectsView:SfChipGroup>
+            </chip:SfChipGroup>
         </ScrollView>
         <BoxView HeightRequest="1"
                  Grid.Row="2"

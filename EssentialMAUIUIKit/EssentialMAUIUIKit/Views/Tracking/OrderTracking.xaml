@@ -4,7 +4,7 @@
              x:Class="EssentialMAUIUIKit.Views.Tracking.OrderTracking"
              xmlns:progressBar="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
              x:DataType="local:OrderTrackingViewModel">
 
     <ContentView.BindingContext>
@@ -146,8 +146,7 @@
                                     Margin="{OnIdiom Default='0,16,0,0',
                          Desktop=0}"
                                     BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                    HorizontalOptions="{OnIdiom Default=Fill,
-                                    Desktop=End}">
+                                    HorizontalOptions="Fill">
                                     <StackLayout>
                                         <Grid
                                             BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"

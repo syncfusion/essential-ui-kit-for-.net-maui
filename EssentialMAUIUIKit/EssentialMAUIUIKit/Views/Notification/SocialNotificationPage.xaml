@@ -10,6 +10,26 @@
         <local:SocialNotificationViewModel x:Name="viewModel"/>
     </ContentView.BindingContext>
     <ContentView.Resources>
+        <Style TargetType="listView:ListViewItem">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                        Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                        Value= "Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
         <ResourceDictionary>
             <converter:BooleanToColorConverter x:Key="BoolToColorConverter"/>
         </ResourceDictionary>
@@ -55,14 +75,14 @@
                     </listView:SfListView.HeaderTemplate>
 
                     <listView:SfListView.ItemTemplate>
-                        <DataTemplate x:DataType="local:SocialNotification">
+                        <DataTemplate x:DataType="local:SocialNotificationItem">
                             <Grid HeightRequest="70"
                                   ColumnDefinitions="Auto, *"
                                   ColumnSpacing="16"
                                   RowDefinitions="Auto, Auto, Auto"
                                   RowSpacing="0">
 
-                                <!--  Profile image  -->
+                                  <!--Profile image-->  
                                 <Border Grid.RowSpan="2"
                                         Margin="16,0,0,0"
                                         HeightRequest="44"
@@ -73,7 +93,7 @@
                                            Source="{Binding ProfileImage}"/>
                                 </Border>
 
-                                <!--  Notification Detail  -->
+                                  <!--Notification Detail-->  
                                 <Label
                                     Grid.Row="0"
                                     Grid.Column="1"
@@ -86,7 +106,7 @@
                                     Text="{Binding Name}"
                                     TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
 
-                                <!--  Received Time  -->
+                                  <!--Received Time-->  
                                 <Label
                                     Grid.Row="1"
                                     Grid.Column="1"
@@ -99,7 +119,7 @@
                                     Text="{Binding ReceivedTime}"
                                     TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
 
-                                <!--  Seperator  -->
+                                  <!--Seperator-->  
                                 <BoxView
                                     Grid.Row="2"
                                     Grid.ColumnSpan="2"
@@ -124,8 +144,6 @@
                                      SelectionMode="Single"
                                      VerticalOptions="Fill">
 
-                    <listView:ListViewItem Style="{DynamicResource ListViewItemStyle}"/>
-
                     <listView:SfListView.HeaderTemplate>
                         <DataTemplate>
 
@@ -141,14 +159,14 @@
                     </listView:SfListView.HeaderTemplate>
 
                     <listView:SfListView.ItemTemplate>
-                        <DataTemplate x:DataType="local:SocialNotification">
+                        <DataTemplate x:DataType="local:SocialNotificationItem">
                             <Grid HeightRequest="70"
                                   ColumnDefinitions="Auto, *"
                                   ColumnSpacing="16"
                                   RowDefinitions="Auto, Auto, Auto"
                                   RowSpacing="0">
 
-                                <!--  Profile image  -->
+                                  <!--Profile image-->  
                                 <Border Grid.RowSpan="3"
                                         Margin="16,0,0,0"
                                         HeightRequest="44"
@@ -159,7 +177,7 @@
                                            Source="{Binding ProfileImage}"/>
                                 </Border>
 
-                                <!--  Notification Detail  -->
+                                  <!--Notification Detail-->  
                                 <Label
                                     Grid.Row="0"
                                     Grid.Column="1"
@@ -172,7 +190,7 @@
                                     Text="{Binding Name}"
                                     TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
 
-                                <!--  Received Time  -->
+                                  <!--Received Time-->  
                                 <Label
                                     Grid.Row="1"
                                     Grid.Column="1"
@@ -185,7 +203,7 @@
                                     Text="{Binding ReceivedTime}"
                                     TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
 
-                                <!--  Seperator  -->
+                                  <!--Seperator-->  
                                 <BoxView
                                     Grid.Row="2"
                                     Grid.ColumnSpan="2"

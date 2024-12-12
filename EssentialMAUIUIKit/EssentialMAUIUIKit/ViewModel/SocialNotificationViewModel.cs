@@ -7,15 +7,15 @@ namespace EssentialMAUIUIKit
 {
     public class SocialNotificationViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<SocialNotification>? recentSocialNotifications;
-        private ObservableCollection<SocialNotification>? earlierSocialNotifications;
+        private ObservableCollection<SocialNotificationItem>? recentSocialNotifications;
+        private ObservableCollection<SocialNotificationItem>? earlierSocialNotifications;
 
         public SocialNotificationViewModel()
         {
             PopulateData();
         }
 
-        public ObservableCollection<SocialNotification>? RecentSocialNotifications
+        public ObservableCollection<SocialNotificationItem>? RecentSocialNotifications
         {
             get => recentSocialNotifications;
             set
@@ -25,7 +25,7 @@ namespace EssentialMAUIUIKit
             }
         }
 
-        public ObservableCollection<SocialNotification>? EarlierSocialNotifications
+        public ObservableCollection<SocialNotificationItem>? EarlierSocialNotifications
         {
             get => earlierSocialNotifications;
             set
@@ -82,14 +82,14 @@ namespace EssentialMAUIUIKit
         }";
 
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            var data = JsonSerializer.Deserialize<SocialNotifications>(jsonData, options);
+            var data = JsonSerializer.Deserialize<SocialNotificationList>(jsonData, options);
             if (data?.RecentSocialNotificationList == null || data?.EarlierSocialNotificationList == null)
             {
                 return;
             }
 
-            RecentSocialNotifications = new ObservableCollection<SocialNotification>(data.RecentSocialNotificationList);
-            EarlierSocialNotifications = new ObservableCollection<SocialNotification>(data.EarlierSocialNotificationList);
+            RecentSocialNotifications = new ObservableCollection<SocialNotificationItem>(data.RecentSocialNotificationList);
+            EarlierSocialNotifications = new ObservableCollection<SocialNotificationItem>(data.EarlierSocialNotificationList);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -100,7 +100,7 @@ namespace EssentialMAUIUIKit
         }
     }
 
-    public class SocialNotification
+    public class SocialNotificationItem
     {
         private string? profileImage;
         public string? Name { get; set; }
@@ -117,9 +117,9 @@ namespace EssentialMAUIUIKit
         public bool IsRead { get; set; }
     }
 
-    public class SocialNotifications
+    public class SocialNotificationList
     {
-        public List<SocialNotification>? RecentSocialNotificationList { get; set; }
-        public List<SocialNotification>? EarlierSocialNotificationList { get; set; }
+        public List<SocialNotificationItem>? RecentSocialNotificationList { get; set; }
+        public List<SocialNotificationItem>? EarlierSocialNotificationList { get; set; }
     }
 }

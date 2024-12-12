@@ -2,10 +2,13 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Social.SocialProfileWithInterest"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              x:DataType="local:ProfileViewModel">
+    <ContentView.BindingContext>
+        <local:ProfileViewModel/>
+    </ContentView.BindingContext>
     <ContentView.Resources>
         <Style TargetType="listView:ListViewItem">
             <Setter Property="VisualStateManager.VisualStateGroups">
@@ -14,13 +17,13 @@
                         <VisualState x:Name="Normal">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                                        Value="Transparent"/>
+                        Value="Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                         <VisualState x:Name="PointerOver">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                                        Value="Transparent"/>
+                        Value= "Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -28,9 +31,6 @@
             </Setter>
         </Style>
     </ContentView.Resources>
-    <ContentView.BindingContext>
-        <local:ProfileViewModel/>
-    </ContentView.BindingContext>
     <ContentView.Content>
         <ScrollView
             Padding="10"
@@ -47,7 +47,7 @@
                     <Image
                         x:Name="ProfileImage"
                         Aspect="AspectFill"
-                        BackgroundColor="{DynamicResource Gray-200}"
+                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                         HeightRequest="200"
                         HorizontalOptions="Fill"
                         Source="{Binding Profile.HeaderImagePath}"/>
@@ -100,7 +100,7 @@
                     <Image Margin="-10"
                            x:Name="picture"
                            Aspect="AspectFill"
-                           BackgroundColor="{DynamicResource Gray-200}"
+                           BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                            HeightRequest="80"
                            Source="{Binding Profile.ProfileImage}"
                            WidthRequest="80"/>
@@ -276,8 +276,7 @@
 
                                 <Border
                                     Margin="0,0,0,4"
-                                    Stroke="{DynamicResource Gray-Bg}"
-                                    StrokeThickness="1"
+                                    StrokeThickness="0"
                                     StrokeShape="RoundRectangle 35,35,35,35"
                                     HeightRequest="64"
                                     HorizontalOptions="Center"
@@ -330,12 +329,9 @@
                                      Padding="0,0,16,0"
                                      AutoFitMode="Height"
                                      ScrollBarVisibility="Never"
-                                     ItemSize="90"
                                      ItemSpacing="4"
                                      ItemsSource="{Binding Profile.Pictures}"
                                      SelectionBackground="Transparent">
-                    <listView:ListViewItem Style="{DynamicResource ListViewItemStyle}"/>
-
                     <listView:SfListView.ItemTemplate>
                         <DataTemplate x:DataType="local:Picture">
                             <Grid BackgroundColor="{DynamicResource Gray-F0}">

@@ -1,4 +1,4 @@
-using Syncfusion.Maui.Buttons;
+using Syncfusion.Maui.Toolkit.Buttons;
 
 namespace EssentialMAUIUIKit.Views.Detail
 {

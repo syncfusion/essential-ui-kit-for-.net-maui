@@ -2,7 +2,8 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Settings.SettingsPage"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:switch="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:controls="clr-namespace:EssentialMAUIUIKit.Controls">
    <ContentView.Content>
       <ScrollView>
@@ -64,7 +65,6 @@
 
             <!--  Grid for Edit profile label and navigation bar icon  -->
             <controls:TapAnimationGrid
-               BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                ColumnDefinitions="Auto, *, Auto"
                ColumnSpacing="0"
                RowSpacing="0"
@@ -95,7 +95,6 @@
 
             <!--  Grid for Change password label and navigation bar icon  -->
             <controls:TapAnimationGrid
-               BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                ColumnDefinitions="Auto, *, Auto"
                ColumnSpacing="0"
                RowSpacing="0"
@@ -126,7 +125,6 @@
 
             <!--  Grid for Account link label and navigation bar icon  -->
             <controls:TapAnimationGrid
-               BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                ColumnDefinitions="Auto, *, Auto"
                ColumnSpacing="0"
                RowSpacing="0"
@@ -171,7 +169,6 @@
 
             <!--  Grid for Notifications label and switch  -->
             <Grid
-               BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                ColumnDefinitions="Auto, *, Auto"
                ColumnSpacing="0"
                RowSpacing="0">
@@ -191,18 +188,17 @@
                   Text="Notifications"
                   VerticalOptions="Center"/>
                <!--  Notifications switch  -->
-               <buttons:SfSwitch
+               <switch:SfSwitch
                   Grid.Column="2"
                   Margin="8,0"
                   AllowIndeterminateState="False"
                   VerticalOptions="Center">
-               </buttons:SfSwitch>
+               </switch:SfSwitch>
             </Grid>
             <BoxView/>
 
             <!--  Grid for Email notifications and switch  -->
             <Grid
-               BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                ColumnDefinitions="Auto, *, Auto"
                ColumnSpacing="0"
                RowSpacing="0">
@@ -222,11 +218,11 @@
                   Text="Email Notifications"
                   VerticalOptions="Center"/>
                <!--  Email notification switch  -->
-               <buttons:SfSwitch
+               <switch:SfSwitch
                   Grid.Column="2"
                   Margin="8,0"
                   AllowIndeterminateState="False">
-               </buttons:SfSwitch>
+               </switch:SfSwitch>
             </Grid>
 
             <BoxView/>
@@ -246,7 +242,6 @@
 
             <!--  Grid for Help label and navigation bar icon  -->
             <controls:TapAnimationGrid
-               BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                ColumnDefinitions="Auto, *, Auto"
                ColumnSpacing="0"
                RowSpacing="0"
@@ -277,7 +272,6 @@
 
             <!--  Grid for Terms of service label and navigation bar icon  -->
             <controls:TapAnimationGrid
-               BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                ColumnDefinitions="Auto, *, Auto"
                ColumnSpacing="0"
                RowSpacing="0"
@@ -308,7 +302,6 @@
 
             <!--  Grid for Privacy policy label and navigation bar icon  -->
             <controls:TapAnimationGrid
-               BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                ColumnDefinitions="Auto, *, Auto"
                ColumnSpacing="0"
                RowSpacing="0"
@@ -339,7 +332,6 @@
 
             <!--  Grid for FAQs label and navigation bar icon  -->
             <controls:TapAnimationGrid
-               BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                ColumnDefinitions="Auto, *, Auto"
                ColumnSpacing="0"
                RowSpacing="0"

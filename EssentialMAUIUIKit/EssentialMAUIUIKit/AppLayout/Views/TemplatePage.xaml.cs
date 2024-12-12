@@ -6,6 +6,7 @@ namespace EssentialMAUIUIKit.AppLayout.Views
 {
     public partial class TemplatePage : ContentPage
     {
+        ICollection<ResourceDictionary>? mergedDictionaries;
         #region Constructor
 
         /// <summary>
@@ -22,6 +23,33 @@ namespace EssentialMAUIUIKit.AppLayout.Views
             var page = this.LoadPage(initialPage.PageName);
             this.CategoryTextLabel.Text = selectedCategory.Name;
             this.SampleGrid.Children.Add(page);
+            if (Application.Current != null)
+            {
+                mergedDictionaries = Application.Current.Resources.MergedDictionaries;
+                if (themeSwitch == null)
+                {
+                    return;
+                }
+
+                if (Application.Current.PlatformAppTheme == AppTheme.Dark)
+                {
+                    this.themeSwitch.IsOn = true;
+                    if (mergedDictionaries != null)
+                    {
+                        var theme = mergedDictionaries.OfType<Syncfusion.Maui.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        var themeToolkit = mergedDictionaries.OfType<Syncfusion.Maui.Toolkit.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        if (theme != null && themeToolkit != null)
+                        {
+                            theme.VisualTheme = Syncfusion.Maui.Themes.SfVisuals.MaterialDark;
+                            themeToolkit.VisualTheme = Syncfusion.Maui.Toolkit.Themes.SfVisuals.MaterialDark;
+                        }
+                    }
+                }
+                else
+                {
+                    this.themeSwitch.IsOn = false;
+                }
+            }
         }
 
         #endregion
@@ -39,10 +67,32 @@ namespace EssentialMAUIUIKit.AppLayout.Views
             {
                 if (Application.Current.UserAppTheme == AppTheme.Dark)
                 {
+                    if (mergedDictionaries != null)
+                    {
+                        var theme = mergedDictionaries.OfType<Syncfusion.Maui.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        var themeToolkit = mergedDictionaries.OfType<Syncfusion.Maui.Toolkit.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        if (theme != null && themeToolkit != null)
+                        {
+                            theme.VisualTheme = Syncfusion.Maui.Themes.SfVisuals.MaterialDark;
+                            themeToolkit.VisualTheme = Syncfusion.Maui.Toolkit.Themes.SfVisuals.MaterialDark;
+                        }
+                    }
+
                     this.themeSwitch.IsOn = true;
                 }
                 else
                 {
+                    if (mergedDictionaries != null)
+                    {
+                        var theme = mergedDictionaries.OfType<Syncfusion.Maui.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        var themeToolkit = mergedDictionaries.OfType<Syncfusion.Maui.Toolkit.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        if (theme != null && themeToolkit != null)
+                        {
+                            theme.VisualTheme = Syncfusion.Maui.Themes.SfVisuals.MaterialLight;
+                            themeToolkit.VisualTheme = Syncfusion.Maui.Toolkit.Themes.SfVisuals.MaterialLight;
+                        }
+                    }
+
                     this.themeSwitch.IsOn = false;
                 }
             }
@@ -56,8 +106,10 @@ namespace EssentialMAUIUIKit.AppLayout.Views
             this.Navigation.PopAsync(true);
         }
 
-        private void GotoCodeViewer(object sender, EventArgs e)
+        private async void GotoCodeViewer(object sender, EventArgs e)
         {
+            string address = "https://github.com/syncfusion/essential-ui-kit-for-.net-maui/blob/master/EssentialMAUIUIKit/EssentialMAUIUIKit/" + this.GetCodeViewerPath() + "";
+            await Browser.Default.OpenAsync(address, BrowserLaunchMode.SystemPreferred);
         }
 
         private ContentView? LoadPage(string? pageURL)
@@ -112,12 +164,43 @@ namespace EssentialMAUIUIKit.AppLayout.Views
                 if ((bool)themeSwitch.IsOn!)
                 {
                     Application.Current.UserAppTheme = AppTheme.Dark;
+                    if (mergedDictionaries != null)
+                    {
+                        var theme = mergedDictionaries.OfType<Syncfusion.Maui.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        var themeToolkit = mergedDictionaries.OfType<Syncfusion.Maui.Toolkit.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        if (theme != null && themeToolkit != null)
+                        {
+                            theme.VisualTheme = Syncfusion.Maui.Themes.SfVisuals.MaterialDark;
+                            themeToolkit.VisualTheme = Syncfusion.Maui.Toolkit.Themes.SfVisuals.MaterialDark;
+                        }
+                    }
                 }
                 else
                 {
                     Application.Current.UserAppTheme = AppTheme.Light;
+                    if (mergedDictionaries != null)
+                    {
+                        var theme = mergedDictionaries.OfType<Syncfusion.Maui.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        var themeToolkit = mergedDictionaries.OfType<Syncfusion.Maui.Toolkit.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        if (theme != null && themeToolkit != null)
+                        {
+                            theme.VisualTheme = Syncfusion.Maui.Themes.SfVisuals.MaterialLight;
+                            themeToolkit.VisualTheme = Syncfusion.Maui.Toolkit.Themes.SfVisuals.MaterialLight;
+                        }
+                    }
                 }
             }
+        }
+
+        public string? GetCodeViewerPath()
+        {
+            Template? template = (Template?)this.chipView.SelectedItem;
+            if (template == null)
+            {
+                return string.Empty;
+            }
+
+            return template.PageName?.Replace('.', '/') + ".xaml";
         }
 
         #endregion
