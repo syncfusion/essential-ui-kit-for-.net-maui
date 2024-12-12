@@ -1,6 +1,6 @@
 # Essential UI Kit for .NET MAUI
 
-The Essential UI Kit provides a collection of ready-to-use, customizable, and flexible XAML UI pages tailored for .NET MAUI applications. These pages cater to common mobile, desktop, and tablet UI patterns, offering a seamless way to elevate the end-user experience.
+[The Essential UI Kit](https://www.syncfusion.com/essential-maui-ui-kit) provides a collection of ready-to-use, customizable, and flexible XAML UI pages tailored for .NET MAUI applications. These pages cater to common mobile, desktop, and tablet UI patterns, offering a seamless way to elevate the end-user experience.
 
 <p align="center">
     <img src="Images/ui-kit-template-images.png" alt="Image"/>
