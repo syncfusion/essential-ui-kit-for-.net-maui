@@ -103,8 +103,6 @@ namespace EssentialMAUIUIKit.AppLayout.ViewModels
 
                 sender.exitLoop = true;
                 sender.PopulateSearchItem(searchText);
-
-
             }
         }
 
@@ -123,7 +121,7 @@ namespace EssentialMAUIUIKit.AppLayout.ViewModels
             }
         }
 
-        private void PopulateSearchItem(string searchText)
+        internal void PopulateSearchItem(string searchText)
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
@@ -223,20 +221,21 @@ namespace EssentialMAUIUIKit.AppLayout.ViewModels
             return string.Empty;
         }
 
-        private void PopulateSearchText(string searchText)
+        private async void PopulateSearchText(string searchText)
         {
-            if (this.SearchList != null)
+            await Task.Delay(searchText == string.Empty ? 40 : 0);
+            // Ensure SearchList is initialized and cleared
+            if (this.SearchList == null)
             {
-                this.SearchList.Clear();
+                this.SearchList = new ObservableCollection<SearchModel>();
+                this.OnPropertyRaised(nameof(SearchList));
             }
             else
             {
-                this.SearchList = new ObservableCollection<SearchModel>();
-                this.OnPropertyRaised("SearchList");
+                this.SearchList.Clear();
             }
 
             exitLoop = false;
-
             foreach (var category in this.Categories)
             {
                 if (ExitLoop()) return;
@@ -255,9 +254,11 @@ namespace EssentialMAUIUIKit.AppLayout.ViewModels
                         if (ExitLoop()) return;
                         var searchModel = new SearchModel() { Category = category, Template = samples };
                         this.SearchList.Add(searchModel);
+                        if (this.SearchList.Count % 5 == 0)
+                            await Task.Delay(searchText == string.Empty ? 40 : 0);
                     }
                 }
-            }
+            }     
         }
 
         private void OnPropertyRaised(string propertyname)

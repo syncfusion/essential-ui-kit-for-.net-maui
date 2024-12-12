@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              xmlns:model="clr-namespace:EssentialMAUIUIKit.Models.Notification"
              xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
              x:DataType="local:ECommerceNotificationViewModel">
     <ContentView.Resources>
         <ResourceDictionary>

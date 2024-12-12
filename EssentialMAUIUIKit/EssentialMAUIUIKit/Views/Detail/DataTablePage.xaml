@@ -16,8 +16,7 @@
             <Border StrokeShape="RoundRectangle 10"
                     WidthRequest="{OnPlatform WinUI=650, MacCatalyst=650}"
                     BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                    IsVisible="{OnPlatform Android=False, iOS=False}"
-                    HeightRequest="{OnPlatform MacCatalyst=800}">
+                    IsVisible="{OnPlatform Android=False, iOS=False}">
                 <Grid>
 
                     <listView:SfListView

@@ -5,11 +5,11 @@ namespace EssentialMAUIUIKit
 {
     public class SuggestionViewModel
     {
-        public ObservableCollection<Suggestion> SuggestionsList { get; set; }
+        public ObservableCollection<SuggestionItem> SuggestionsList { get; set; }
 
         public SuggestionViewModel()
         {
-            SuggestionsList = new ObservableCollection<Suggestion>();
+            SuggestionsList = new ObservableCollection<SuggestionItem>();
             LoadData();
         }
 
@@ -65,7 +65,7 @@ namespace EssentialMAUIUIKit
         }
     }
 
-    public class Suggestion
+    public class SuggestionItem
     {
         private string? imagePath;
         public string ImagePath
@@ -80,7 +80,7 @@ namespace EssentialMAUIUIKit
 
     public class SuggestionsData
     {
-        public List<Suggestion>? SuggestionList { get; set; }
+        public List<SuggestionItem>? SuggestionList { get; set; }
     }
 
 }

@@ -1,4 +1,4 @@
-﻿using Syncfusion.Maui.Buttons;
+﻿using Syncfusion.Maui.Toolkit.Buttons;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 

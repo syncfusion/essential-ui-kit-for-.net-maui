@@ -3,11 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Catalog.CatalogTilePage"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              xmlns:model="clr-namespace:EssentialMAUIUIKit.Models"
              xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
              xmlns:badge="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Toolkit.EffectsView;assembly=Syncfusion.Maui.Toolkit"
              xmlns:rating="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
              x:DataType="local:CartPageViewModel">
 
@@ -15,6 +16,26 @@
         <local:CartPageViewModel/>
     </ContentView.BindingContext>
     <ContentView.Resources>
+        <Style TargetType="listView:ListViewItem">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                        Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                        Value= "Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
         <ResourceDictionary>
 
             <OnIdiom x:Key="ListItemMargin"
@@ -122,7 +143,7 @@
 
                 <listView:SfListView.ItemTemplate>
                     <DataTemplate x:DataType="model:Product">
-                        <badge:SfEffectsView
+                        <syncEffectsView:SfEffectsView
                             RippleBackground="{DynamicResource Gray-300}"
                             TouchDownEffects="Ripple">
                             <Grid>
@@ -227,7 +248,7 @@
 
 
                             </Grid>
-                        </badge:SfEffectsView>
+                        </syncEffectsView:SfEffectsView>
                     </DataTemplate>
                 </listView:SfListView.ItemTemplate>
 

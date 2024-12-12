@@ -7,7 +7,8 @@
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              x:DataType="viewModels:HomePageViewModel"
              xmlns:controls="clr-namespace:EssentialMAUIUIKit.AppLayout.Controls"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:switch="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:local="clr-namespace:EssentialMAUIUIKit">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -218,7 +219,7 @@
                            FontFamily="Roboto-Medium"
                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                            VerticalOptions="Center"/>
-                    <buttons:SfSwitch x:Name="themeSwitch"
+                    <switch:SfSwitch x:Name="themeSwitch"
                                       Grid.Column="1"
                                       IsOn="False"
                                       StateChanged="SfSwitch_StateChanged"
@@ -264,7 +265,7 @@
                                         <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
                                     </HorizontalStackLayout.GestureRecognizers>
                                     <Label x:DataType="viewModels:SearchModel"
-                                           Text="{Binding Category.Name}"
+                                           Text="{Binding Category.Name}" FontFamily="Roboto-Medium"
                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                                            FontSize="14"
                                            VerticalOptions="Center"
@@ -275,7 +276,7 @@
                                            VerticalOptions="Center"
                                            VerticalTextAlignment="Center"/>
                                     <Label x:DataType="viewModels:SearchModel"
-                                           Text="{Binding Template.Name}"
+                                           Text="{Binding Template.Name}" FontFamily="Roboto-Regular"
                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                                            FontSize="14"
                                            VerticalOptions="Center"

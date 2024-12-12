@@ -2,10 +2,10 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Detail.RoomBookingPage"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
              xmlns:rotator="clr-namespace:Syncfusion.Maui.Rotator;assembly=Syncfusion.Maui.Rotator"
              xmlns:rating="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
-             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Calendar;assembly=Syncfusion.Maui.Calendar"
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Toolkit.Calendar;assembly=Syncfusion.Maui.Toolkit"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:maps="clr-namespace:Syncfusion.Maui.Maps;assembly=Syncfusion.Maui.Maps"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
@@ -605,7 +605,7 @@
                             BindableLayout.ItemsSource="{Binding RoomDetail.Reviews}"
                             Spacing="0">
                             <BindableLayout.ItemTemplate>
-                                <DataTemplate x:DataType="local:Review">
+                                <DataTemplate x:DataType="local:RoomBookingReview">
                                     <StackLayout Spacing="0">
 
                                         <BoxView HeightRequest="{OnIdiom Default=1, Desktop=0}"

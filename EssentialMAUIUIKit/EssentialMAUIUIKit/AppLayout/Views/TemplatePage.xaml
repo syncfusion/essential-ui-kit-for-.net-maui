@@ -4,9 +4,11 @@
              x:Class="EssentialMAUIUIKit.AppLayout.Views.TemplatePage"
              xmlns:viewModels="clr-namespace:EssentialMAUIUIKit.AppLayout.ViewModels"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
-             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Toolkit.EffectsView;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:chip="clr-namespace:Syncfusion.Maui.Toolkit.Chips;assembly=Syncfusion.Maui.Toolkit"
              xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:switch="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              x:DataType="viewModels:TemplatePageViewModel"
              NavigationPage.HasNavigationBar="False"
              NavigationPage.HasBackButton="True">
@@ -63,7 +65,7 @@
                 Grid.Row="1"
                 Padding="10"
                 HorizontalScrollBarVisibility="Never">
-            <syncEffectsView:SfChipGroup x:Name="chipView"
+            <chip:SfChipGroup x:Name="chipView"
                     ChipClicked="chipView_ChipClicked"
                     ChipFontFamily="Roboto-Medium"
                                          ItemsSource="{Binding SelectedCategory.Pages}"
@@ -75,7 +77,7 @@
                                          SelectedChipBackground="{AppThemeBinding Dark={DynamicResource BackgroundColorLight}, Light={DynamicResource BackgroundColorDark}}"
                                          ChipTextColor="{AppThemeBinding Light=Black, Dark={DynamicResource White}}"
                                          SelectedChipTextColor="{AppThemeBinding Light=White, Dark={DynamicResource Black}}">
-            </syncEffectsView:SfChipGroup>
+            </chip:SfChipGroup>
 
         </ScrollView>
 
@@ -128,7 +130,7 @@
                             FontFamily="Roboto-Medium"
                             TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                             VerticalOptions="Center"/>
-                    <buttons:SfSwitch x:Name="themeSwitch"
+                    <switch:SfSwitch x:Name="themeSwitch"
                             Grid.Column="1"
                             IsOn="False"
                             StateChanged="SfSwitch_StateChanged"

@@ -2,7 +2,8 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Transaction.CheckoutPage"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:radioButtons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              xmlns:templateSelector="clr-namespace:EssentialMAUIUIKit.Views.Transaction"
              x:DataType="local:CheckoutViewModel">
@@ -11,7 +12,7 @@
     </ContentView.BindingContext>
     <ContentView.Resources>
         <ResourceDictionary>
-            <buttons:SfRadioGroupKey x:Key="PaymentModeGroup"/>
+            <radioButtons:SfRadioGroupKey x:Key="PaymentModeGroup"/>
         </ResourceDictionary>
     </ContentView.Resources>
 
@@ -85,7 +86,7 @@
                                    FontSize="16"/>
                             <BoxView HeightRequest="1"
                                      Style="{DynamicResource HorizontalSeparatorStyle}"/>
-                            <buttons:SfRadioGroup
+                            <radioButtons:SfRadioGroup
                                 x:Name="RadioGroup"
                                 BindableLayout.ItemsSource="{Binding PaymentModes}"
                                 Spacing="0">
@@ -102,7 +103,7 @@
                                                 <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
 
-                                            <buttons:SfRadioButton
+                                            <radioButtons:SfRadioButton
                                                 Grid.Row="0"
                                                 BackgroundColor="Transparent"
                                                 CheckedColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
@@ -140,7 +141,7 @@
                                         </Grid>
                                     </DataTemplate>
                                 </BindableLayout.ItemTemplate>
-                            </buttons:SfRadioGroup>
+                            </radioButtons:SfRadioGroup>
                             <buttons:SfButton Text="Add new card"
                                               Style="{DynamicResource FormsButtonStyle}"
                                               Margin="0,10,0,10"/>

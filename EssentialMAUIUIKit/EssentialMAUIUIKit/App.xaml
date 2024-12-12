@@ -2,6 +2,8 @@
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:syncTheme="clr-namespace:Syncfusion.Maui.Themes;assembly=Syncfusion.Maui.Core"
+             xmlns:syncThemeToolkit="clr-namespace:Syncfusion.Maui.Toolkit.Themes;assembly=Syncfusion.Maui.Toolkit"
              x:Class="EssentialMAUIUIKit.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -24,6 +26,8 @@
                 <ResourceDictionary Source="Styles/SegmentedControlStyles.xaml"/>
                 <ResourceDictionary Source="Themes/DarkTheme.xaml"/>
                 <ResourceDictionary Source="Themes/LightTheme.xaml"/>
+                <syncTheme:SyncfusionThemeResourceDictionary />
+                <syncThemeToolkit:SyncfusionThemeResourceDictionary />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

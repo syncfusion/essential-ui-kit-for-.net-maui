@@ -4,7 +4,8 @@
              x:Class="EssentialMAUIUIKit.Views.Forms.SignupPage"
              xmlns:dataForm="clr-namespace:Syncfusion.Maui.DataForm;assembly=Syncfusion.Maui.DataForm"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
-             xmlns:button="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:button="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:checkBox="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              x:DataType="local:SignupPageViewModel">
     <ContentView.BindingContext>
         <local:SignupPageViewModel/>
@@ -58,7 +59,7 @@
                                                     FontFamily="Roboto-Regular"/>
                     </dataForm:SfDataForm.EditorTextStyle>
                 </dataForm:SfDataForm>
-                <button:SfCheckBox Grid.Row="3"
+                <checkBox:SfCheckBox Grid.Row="3"
                         Text="I agree to the Terms and Conditions"
                                    FontSize="14"
                                    TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"

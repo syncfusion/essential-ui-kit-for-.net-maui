@@ -2,7 +2,7 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Navigation.SuggestionPage"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              x:DataType="local:SuggestionViewModel">
@@ -16,7 +16,7 @@
                 RowDefinitions="{OnPlatform Default=*, MacCatalyst=Auto}">
 
             <Border StrokeShape="RoundRectangle 10"
-                    WidthRequest="{OnPlatform WinUI=550, MacCatalyst=550}"
+                    WidthRequest="{OnPlatform WinUI=550, MacCatalyst=550}" HeightRequest="{OnPlatform MacCatalyst=600}"
                     BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                     Padding="20"
                     IsVisible="{OnPlatform Android=False, iOS=False}">
@@ -33,7 +33,7 @@
                         VerticalOptions="Fill">
 
                         <listView:SfListView.ItemTemplate>
-                            <DataTemplate x:DataType="local:Suggestion">
+                            <DataTemplate x:DataType="local:SuggestionItem">
                                 <ViewCell>
                                     <StackLayout BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                                                  Spacing="0">
@@ -122,7 +122,7 @@
                     VerticalOptions="Fill">
 
                     <listView:SfListView.ItemTemplate>
-                        <DataTemplate x:DataType="local:Suggestion">
+                        <DataTemplate x:DataType="local:SuggestionItem">
                             <ViewCell>
                                 <StackLayout BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                                              Spacing="0">

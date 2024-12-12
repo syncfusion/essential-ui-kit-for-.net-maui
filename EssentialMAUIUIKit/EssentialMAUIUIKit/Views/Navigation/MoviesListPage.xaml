@@ -17,7 +17,7 @@
 
             <Border Padding="20"
                     StrokeShape="RoundRectangle 10"
-                    WidthRequest="{OnPlatform WinUI=550, MacCatalyst=550}"
+                    WidthRequest="{OnPlatform WinUI=550, MacCatalyst=550}" HeightRequest="{OnPlatform MacCatalyst=600}"
                     BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                     IsVisible="{OnPlatform Android=False, iOS=False}">
                 <Grid>

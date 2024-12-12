@@ -4,14 +4,14 @@ namespace EssentialMAUIUIKit
 {
     public class CategoryTileViewModel
     {
-        public ObservableCollection<CategoryTile> Categories { get; set; }
+        public ObservableCollection<CategoryItem> Categories { get; set; }
 
         public CategoryTileViewModel()
         {
             // Load the JSON data
-            Categories = new ObservableCollection<CategoryTile>
+            Categories = new ObservableCollection<CategoryItem>
             {
-                new CategoryTile
+                new CategoryItem
                 {
                     Icon = "Electronics.png",
                     Name = "Electronics",
@@ -24,7 +24,7 @@ namespace EssentialMAUIUIKit
                         "Printers and Monitors"
                     }
                 },
-                new CategoryTile
+                new CategoryItem
                 {
                     Icon = "Fashion.png",
                     Name = "Fashion",
@@ -37,7 +37,7 @@ namespace EssentialMAUIUIKit
                         "Kurtis"
                     }
                 },
-                new CategoryTile
+                new CategoryItem
                 {
                     Icon = "HomeFurniture.png",
                     Name = "Home and Furniture",
@@ -48,7 +48,7 @@ namespace EssentialMAUIUIKit
                         "Curtains"
                     }
                 },
-                new CategoryTile
+                new CategoryItem
                 {
                     Icon = "PersonalCare.png",
                     Name = "Personal Care",
@@ -61,7 +61,7 @@ namespace EssentialMAUIUIKit
                         "Personal Hygiene"
                     }
                 },
-                new CategoryTile
+                new CategoryItem
                 {
                     Icon = "Books.png",
                     Name = "Books",
@@ -74,7 +74,7 @@ namespace EssentialMAUIUIKit
                         "Comics"
                     }
                 },
-                new CategoryTile
+                new CategoryItem
                 {
                     Icon = "Clothes.png",
                     Name = "Clothes",
@@ -87,7 +87,7 @@ namespace EssentialMAUIUIKit
                         "Innerwear"
                     }
                 },
-                new CategoryTile
+                new CategoryItem
                 {
                     Icon = "MobilePhones.png",
                     Name = "Mobile Phones",
@@ -100,7 +100,7 @@ namespace EssentialMAUIUIKit
                         "Wearable Technology"
                     }
                 },
-                new CategoryTile
+                new CategoryItem
                 {
                     Icon = "Accessories.png",
                     Name = "Accessories",
@@ -113,7 +113,7 @@ namespace EssentialMAUIUIKit
                         "Belts"
                     }
                 },
-                new CategoryTile
+                new CategoryItem
                 {
                     Icon = "Toys.png",
                     Name = "Toys and Baby",
@@ -130,7 +130,7 @@ namespace EssentialMAUIUIKit
         }
     }
 
-    public class CategoryTile
+    public class CategoryItem
     {
         private string? icon;
         public string Icon
@@ -145,6 +145,6 @@ namespace EssentialMAUIUIKit
 
     public class CategoryTilesRoot
     {
-        public List<CategoryTile>? Categories { get; set; }
+        public List<CategoryItem>? Categories { get; set; }
     }
 }

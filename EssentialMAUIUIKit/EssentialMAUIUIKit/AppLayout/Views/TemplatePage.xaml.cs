@@ -6,6 +6,7 @@ namespace EssentialMAUIUIKit.AppLayout.Views
 {
     public partial class TemplatePage : ContentPage
     {
+        ICollection<ResourceDictionary>? mergedDictionaries;
         #region Constructor
 
         /// <summary>
@@ -24,6 +25,7 @@ namespace EssentialMAUIUIKit.AppLayout.Views
             this.SampleGrid.Children.Add(page);
             if (Application.Current != null)
             {
+                mergedDictionaries = Application.Current.Resources.MergedDictionaries;
                 if (themeSwitch == null)
                 {
                     return;
@@ -32,6 +34,16 @@ namespace EssentialMAUIUIKit.AppLayout.Views
                 if (Application.Current.PlatformAppTheme == AppTheme.Dark)
                 {
                     this.themeSwitch.IsOn = true;
+                    if (mergedDictionaries != null)
+                    {
+                        var theme = mergedDictionaries.OfType<Syncfusion.Maui.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        var themeToolkit = mergedDictionaries.OfType<Syncfusion.Maui.Toolkit.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        if (theme != null && themeToolkit != null)
+                        {
+                            theme.VisualTheme = Syncfusion.Maui.Themes.SfVisuals.MaterialDark;
+                            themeToolkit.VisualTheme = Syncfusion.Maui.Toolkit.Themes.SfVisuals.MaterialDark;
+                        }
+                    }
                 }
                 else
                 {
@@ -55,10 +67,32 @@ namespace EssentialMAUIUIKit.AppLayout.Views
             {
                 if (Application.Current.UserAppTheme == AppTheme.Dark)
                 {
+                    if (mergedDictionaries != null)
+                    {
+                        var theme = mergedDictionaries.OfType<Syncfusion.Maui.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        var themeToolkit = mergedDictionaries.OfType<Syncfusion.Maui.Toolkit.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        if (theme != null && themeToolkit != null)
+                        {
+                            theme.VisualTheme = Syncfusion.Maui.Themes.SfVisuals.MaterialDark;
+                            themeToolkit.VisualTheme = Syncfusion.Maui.Toolkit.Themes.SfVisuals.MaterialDark;
+                        }
+                    }
+
                     this.themeSwitch.IsOn = true;
                 }
                 else
                 {
+                    if (mergedDictionaries != null)
+                    {
+                        var theme = mergedDictionaries.OfType<Syncfusion.Maui.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        var themeToolkit = mergedDictionaries.OfType<Syncfusion.Maui.Toolkit.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        if (theme != null && themeToolkit != null)
+                        {
+                            theme.VisualTheme = Syncfusion.Maui.Themes.SfVisuals.MaterialLight;
+                            themeToolkit.VisualTheme = Syncfusion.Maui.Toolkit.Themes.SfVisuals.MaterialLight;
+                        }
+                    }
+
                     this.themeSwitch.IsOn = false;
                 }
             }
@@ -130,10 +164,30 @@ namespace EssentialMAUIUIKit.AppLayout.Views
                 if ((bool)themeSwitch.IsOn!)
                 {
                     Application.Current.UserAppTheme = AppTheme.Dark;
+                    if (mergedDictionaries != null)
+                    {
+                        var theme = mergedDictionaries.OfType<Syncfusion.Maui.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        var themeToolkit = mergedDictionaries.OfType<Syncfusion.Maui.Toolkit.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        if (theme != null && themeToolkit != null)
+                        {
+                            theme.VisualTheme = Syncfusion.Maui.Themes.SfVisuals.MaterialDark;
+                            themeToolkit.VisualTheme = Syncfusion.Maui.Toolkit.Themes.SfVisuals.MaterialDark;
+                        }
+                    }
                 }
                 else
                 {
                     Application.Current.UserAppTheme = AppTheme.Light;
+                    if (mergedDictionaries != null)
+                    {
+                        var theme = mergedDictionaries.OfType<Syncfusion.Maui.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        var themeToolkit = mergedDictionaries.OfType<Syncfusion.Maui.Toolkit.Themes.SyncfusionThemeResourceDictionary>().FirstOrDefault();
+                        if (theme != null && themeToolkit != null)
+                        {
+                            theme.VisualTheme = Syncfusion.Maui.Themes.SfVisuals.MaterialLight;
+                            themeToolkit.VisualTheme = Syncfusion.Maui.Toolkit.Themes.SfVisuals.MaterialLight;
+                        }
+                    }
                 }
             }
         }

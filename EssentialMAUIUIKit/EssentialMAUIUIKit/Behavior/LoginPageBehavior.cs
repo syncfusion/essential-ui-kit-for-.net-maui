@@ -1,6 +1,6 @@
 ﻿using EssentialMAUIUIKit.Common;
 using EssentialMAUIUIKit.Views.Forms;
-using Syncfusion.Maui.Buttons;
+using Syncfusion.Maui.Toolkit.Buttons;
 using Syncfusion.Maui.DataForm;
 
 namespace EssentialMAUIUIKit

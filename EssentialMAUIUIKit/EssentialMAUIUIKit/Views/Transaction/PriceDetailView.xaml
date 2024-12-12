@@ -2,7 +2,7 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Transaction.PriceDetailView"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons">
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit">
     <Border Margin="10,0,10,0"
             StrokeShape="RoundRectangle 10"
             HeightRequest="{OnPlatform Default=220, Android=240, iOS=240}">
@@ -10,8 +10,7 @@
         <StackLayout
             Margin="{OnIdiom Default='0,16,0,0',
                          Desktop=0}"
-            HorizontalOptions="{OnIdiom Default=Fill,
-                                    Desktop=End}">
+            HorizontalOptions="Fill">
             <StackLayout>
                 <Grid
                     ColumnDefinitions="*, Auto"
@@ -72,7 +71,7 @@
                         HorizontalOptions="Start"
                         Style="{DynamicResource SimpleLabelStyle}"
                         Text="Coupon Discount"/>
-                    <buttons:SfButton Margin="16,5,16,0"
+                    <buttons:SfButton Margin="16,5,10,0"
                                       Text="Apply coupon"
                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
                                       FontFamily="Roboto-Regular"
@@ -82,7 +81,7 @@
                                       Grid.Column="1"
                                       HorizontalOptions="End"
                                       Background="Transparent"
-                                      WidthRequest="85">
+                                      WidthRequest="90">
                     </buttons:SfButton>
                     <!--  Delivery Charges  -->
                     <Label

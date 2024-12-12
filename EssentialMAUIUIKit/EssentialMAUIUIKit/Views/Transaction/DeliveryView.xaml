@@ -2,12 +2,13 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Transaction.DeliveryView"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:radioButtons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              x:DataType="local:CheckoutViewModel">
     <ContentView.Resources>
         <ResourceDictionary>
-            <buttons:SfRadioGroupKey x:Key="DeliveryAddressGroup"/>
+            <radioButtons:SfRadioGroupKey x:Key="DeliveryAddressGroup"/>
         </ResourceDictionary>
     </ContentView.Resources>
 
@@ -33,7 +34,7 @@
 
         <Border Margin="10"
                 StrokeShape="RoundRectangle 10">
-            <buttons:SfRadioGroup
+            <radioButtons:SfRadioGroup
                 x:Name="RadioGroup"
                 BindableLayout.ItemsSource="{Binding DeliveryAddress}"
                 Spacing="0">
@@ -50,7 +51,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <buttons:SfRadioButton
+                            <radioButtons:SfRadioButton
                                 Grid.Row="0"
                                 BackgroundColor="Transparent"
                                 CheckedColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
@@ -125,7 +126,7 @@
                         </Grid>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
-            </buttons:SfRadioGroup>
+            </radioButtons:SfRadioGroup>
 
         </Border>
 
