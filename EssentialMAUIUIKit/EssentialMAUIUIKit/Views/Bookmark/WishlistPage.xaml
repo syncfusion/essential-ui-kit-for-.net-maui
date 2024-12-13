@@ -12,7 +12,7 @@
     </ContentView.BindingContext>
     <ContentView.Content>
 
-        <Grid RowDefinitions="{OnPlatform Default=*, MacCatalyst=Auto}"
+        <Grid RowDefinitions="Auto"
                 RowSpacing="0">
 
             <Border Margin="10,10,10,10"
