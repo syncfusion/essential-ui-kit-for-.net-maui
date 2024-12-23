@@ -147,7 +147,7 @@
                                                 Margin="0"
                                                 Padding="0"
                                                 StrokeShape="RoundRectangle 3,3,3,3"
-                                                HeightRequest="32"
+                                                HeightRequest="40"
                                                 HorizontalOptions="Start">
 
                                                 <!--  Product quantity dropdown  -->
@@ -156,40 +156,18 @@
                                                     Stroke="{DynamicResource Gray-300}"
                                                     ItemsSource="{Binding Quantities}"
                                                     DropDownBackground="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                                    HeightRequest="32"
+                                                    HeightRequest="40"
                                                     HorizontalOptions="Start"
-                                                    MaximumHeightRequest="200"
+                                                    VerticalOptions="Center"
+                                                    VerticalTextAlignment="Center"
                                                     SelectedDropDownItemBackground="Transparent"
                                                     SelectedItem="{Binding TotalQuantity, Mode=TwoWay}"
+                                                    IsClearButtonVisible="False"
                                                     ShowBorder="False"
                                                     Style="{DynamicResource SimpleComboBoxStyle}"
-                                                    TextColor="Transparent"
+                                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                    Text="{Binding Source={x:Reference QuantityComboBox}}"
                                                     WidthRequest="90">
-
-                                                    <combobox:SfComboBox.CustomView>
-                                                        <Label x:DataType="combobox:SfComboBox"
-                                                            Margin="10,0,24,0"
-                                                            Background="Transparent"
-                                                            FontFamily="Roboto-Regular"
-                                                            Style="{DynamicResource DescriptionLabelStyle}"
-                                                            Text="{Binding Source={x:Reference QuantityComboBox}, Path=SelectedItem, StringFormat='QTY: {0}'}"
-                                                            VerticalTextAlignment="Center"/>
-                                                    </combobox:SfComboBox.CustomView>
-
-                                                    <combobox:SfComboBox.DropDownButtonSettings>
-                                                        <combobox:DropDownButtonSettings>
-                                                            <combobox:DropDownButtonSettings.View>
-                                                                <Label
-                                                                    Margin="0"
-                                                                    FontFamily="FontIcons"
-                                                                    FontSize="25"
-                                                                    HorizontalTextAlignment="Center"
-                                                                    Text="{DynamicResource DropDownButtonIcon}"
-                                                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                                                    VerticalTextAlignment="Center"/>
-                                                            </combobox:DropDownButtonSettings.View>
-                                                        </combobox:DropDownButtonSettings>
-                                                    </combobox:SfComboBox.DropDownButtonSettings>
                                                 </combobox:SfComboBox>
 
                                             </Border>

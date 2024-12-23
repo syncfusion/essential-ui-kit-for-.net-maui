@@ -37,9 +37,9 @@
                                 RowSpacing="0">
 
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="0.4*"/>
+                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition Width="0.1*"/>
                                 </Grid.ColumnDefinitions>
 
                                 <!--  Blog image  -->
@@ -49,8 +49,7 @@
                                     BackgroundColor="{DynamicResource Gray-200}"
                                     HeightRequest="110"
                                     Source="{Binding ImagePath}"
-                                    VerticalOptions="Center"
-                                    WidthRequest="120"/>
+                                    VerticalOptions="Center"/>
 
                                 <!--  Blog title  -->
                                 <Label
@@ -112,7 +111,7 @@
                                     TextColor="{Binding IsBookmarked, Converter={StaticResource BoolToColorConverter}, ConverterParameter=4}"
                                     Clicked="BookmarkButton_Clicked"
                                     VerticalOptions="Start"
-                                    WidthRequest="-1">
+                                    WidthRequest="20">
                                 </buttons:SfButton>
 
                             </Grid>

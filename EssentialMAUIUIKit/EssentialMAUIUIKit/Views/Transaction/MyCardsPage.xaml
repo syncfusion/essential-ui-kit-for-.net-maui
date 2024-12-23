@@ -57,7 +57,7 @@
                             CornerRadius="10"
                             HeightRequest="180"
                             HorizontalOptions="Center"
-                            WidthRequest="343">
+                            WidthRequest="{OnPlatform MacCatalyst=343,WinUI=343}">
                             <Border StrokeThickness="0">
                                 <Border.Background>
                                     <LinearGradientBrush>

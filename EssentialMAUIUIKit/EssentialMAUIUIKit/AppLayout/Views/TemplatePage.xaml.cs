@@ -31,7 +31,7 @@ namespace EssentialMAUIUIKit.AppLayout.Views
                     return;
                 }
 
-                if (Application.Current.PlatformAppTheme == AppTheme.Dark)
+                if (Application.Current.UserAppTheme == AppTheme.Dark)
                 {
                     this.themeSwitch.IsOn = true;
                     if (mergedDictionaries != null)
