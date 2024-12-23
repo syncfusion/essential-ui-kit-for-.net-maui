@@ -30,7 +30,7 @@
                         <Button BackgroundColor="Transparent"
         FontFamily="Roboto-Medium"
         FontSize="12"
-        HeightRequest="32"
+        HeightRequest="35"
         Text="EDIT"
         TextColor="{DynamicResource Gray-White}"
         VerticalOptions="End"/>

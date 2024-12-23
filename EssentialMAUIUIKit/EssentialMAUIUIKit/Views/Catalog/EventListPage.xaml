@@ -126,7 +126,7 @@
                                                                           TextColor="{Binding IsPopular, Converter={StaticResource boolToColorConverter}, ConverterParameter=4}"
                                                                           Clicked="FavouriteButton_Clicked"
                                                                           VerticalOptions="Start"
-                                                                          WidthRequest="-1"/>
+                                                                          WidthRequest="30"/>
 
                                                     </Grid>
                                                 </Border>
@@ -231,7 +231,7 @@
                                                                           TextColor="{Binding IsPopular, Converter={StaticResource boolToColorConverter}, ConverterParameter=4}"
                                                                           Clicked="FavouriteButton_Clicked"
                                                                           VerticalOptions="Start"
-                                                                          WidthRequest="-1"/>
+                                                                          WidthRequest="30"/>
 
                                                     </Grid>
                                                 </Border>
@@ -330,13 +330,13 @@
                                                         <buttons:SfButton Grid.Column="2"
                                                                           Margin="0,2,2,0"
                                                                           HeightRequest="-1"
-                                                                          HorizontalOptions="End"
                                                                           Style="{DynamicResource IconButtonStyle}"
+                                                                          HorizontalOptions="End"
                                                                           Text="{Binding IsPopular, Converter={StaticResource boolToStringConverter}, ConverterParameter=1}"
                                                                           TextColor="{Binding IsPopular, Converter={StaticResource boolToColorConverter}, ConverterParameter=4}"
                                                                           Clicked="FavouriteButton_Clicked"
                                                                           VerticalOptions="Start"
-                                                                          WidthRequest="-1"/>
+                                                                          WidthRequest="30"/>
 
                                                     </Grid>
                                                 </Border>

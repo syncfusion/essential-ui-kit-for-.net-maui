@@ -334,7 +334,7 @@
                                      SelectionBackground="Transparent">
                     <listView:SfListView.ItemTemplate>
                         <DataTemplate x:DataType="local:Picture">
-                            <Grid BackgroundColor="{DynamicResource Gray-F0}">
+                            <Grid>
 
                                 <Border HeightRequest="{OnPlatform Default=190, Android=165, iOS=165}"
                                         WidthRequest="{OnPlatform Default=190, Android=165, iOS=165}"
@@ -343,8 +343,14 @@
                                     <!--  Photos  -->
                                     <Image
                                         Aspect="AspectFill"
-                                        BackgroundColor="{DynamicResource Gray-200}"
-                                        Source="{Binding ImagePath}"/>
+                                        BackgroundColor="{DynamicResource Gray-200}">
+                                        <Image.Source>
+                                            <UriImageSource
+                                                CacheValidity="14"
+                                                CachingEnabled="true"
+                                                Uri="{Binding ImagePath}"/>
+                                        </Image.Source>
+                                    </Image>
                                 </Border>
 
                             </Grid>

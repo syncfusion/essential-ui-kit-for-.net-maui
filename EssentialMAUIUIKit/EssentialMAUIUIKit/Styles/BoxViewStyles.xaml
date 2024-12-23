@@ -13,7 +13,7 @@
     <Style x:Key="VerticalSeparatorStyle" TargetType="BoxView">
         <Setter Property="WidthRequest" Value="1" />
         <Setter Property="HeightRequest" Value="12" />
-        <Setter Property="BackgroundColor" Value="{DynamicResource Gray-700}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" />
         <Setter Property="VerticalOptions" Value="Center" />
     </Style>
 

@@ -198,61 +198,6 @@
             </ListView.Header>
         </controls:ParallaxListView>
 
-        <Grid
-            x:Name="ActionBar"
-            Padding="0,0,0,20"
-            IsClippedToBounds="True"
-            IsVisible="false"
-            RowSpacing="0">
-
-            <Grid.RowDefinitions>
-                <RowDefinition x:Name="iOSSafeAreaTitle"
-                               Height="0"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="20"/>
-            </Grid.RowDefinitions>
-
-            <Label
-                Grid.Row="1"
-                Margin="15,0,0,0"
-                Style="{DynamicResource ActionBarLabelStyle}"
-                Text="{DynamicResource HomePageTitle}"
-                VerticalOptions="Center"/>
-
-            <StackLayout
-                Grid.Row="1"
-                HorizontalOptions="End"
-                Orientation="Horizontal"
-                Spacing="0">
-
-                <Button
-                    Clicked="Search_ClickedAsync"
-                    FontSize="18"
-                    Style="{DynamicResource ActionBarSettingIconStyle}"
-                    Text="&#xe705;"
-                    VerticalOptions="Start"/>
-
-                <Button
-                    Clicked="GotoCodeViewer"
-                    FontSize="18"
-                    Style="{DynamicResource ActionBarSettingIconStyle}"
-                    Text="&#xe753;"
-                    VerticalOptions="Start"/>
-
-                <Button
-                    Clicked="ShowSettings"
-                    FontSize="18"
-                    Style="{DynamicResource ActionBarSettingIconStyle}"
-                    VerticalOptions="Center"/>
-            </StackLayout>
-
-            <Border
-                Grid.Row="2"
-                Padding="0"
-                BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                StrokeShape="RoundRectangle 10"/>
-
-        </Grid>
         <Grid Grid.RowSpan="2"
                 x:Name="propertyFrameOverlay"
                 BindingContext="{x:Reference propertyFrame }"

@@ -18,7 +18,7 @@
     </ContentView.Resources>
 
     <ContentView.Content>
-        <Grid Padding="10" VerticalOptions="{OnPlatform iOS=Start}"
+        <Grid Padding="10" VerticalOptions="Start"
                 RowDefinitions="{OnPlatform Default=*, MacCatalyst=Auto}">
             <Border StrokeShape="RoundRectangle 10"
                     IsVisible="{OnPlatform Android=False, iOS=False}"
@@ -129,7 +129,7 @@
 
             <Grid IsVisible="{OnPlatform WinUI=False, MacCatalyst=False}">
 
-                <listView:SfListView HeightRequest="700"
+                <listView:SfListView HeightRequest="600"
                                      ScrollBarVisibility="Never"
                                      ItemSize="72"
                                      ItemSpacing="0"
