@@ -35,94 +35,41 @@
 Refer to the [MAUI System requirements documentation](https://help.syncfusion.com/maui/system-requirements) to learn more about the development environments.
 
 ## Screenshots
-<p align="center">
-    <img src="Images/ui-kit-forms.png" alt="Image"/>
-</p>
+<div style="display: flex; justify-content: space-around; gap: 20px;">
+<img src="Images/ui-kit-forms.png" alt="Image 1" style="width: 30%;"/>
+<img src="Images/ui-kit-catalog.png" alt="Image 2" style="width: 30%;"/>
+<img src="Images/ui-kit-detail.png" alt="Image 3" style="width: 30%;"/>
+</div>
 <br/><br/>
 
-<p align="center">
-    <img src="Images/ui-kit-catalog.png" alt="Image"/>
-</p>
+<div style="display: flex; justify-content: space-around; gap: 20px;">
+<img src="Images/ui-kit-chat.png" alt="Image 1" style="width: 30%;"/><t/>
+<img src="Images/ui-kit-article.png" alt="Image 2" style="width: 30%;"/> 
+<img src="Images/ui-kit-review.png" alt="Image 3" style="width: 30%;"/></div>
 <br/><br/>
 
-<p align="center">
-    <img src="Images/ui-kit-detail.png" alt="Image"/>
-</p>
+<div style="display: flex; justify-content: space-around; gap: 20px;">
+<img src="Images/ui-kit-contactus.png" alt="Image 1" style="width: 30%;"/>
+<img src="Images/ui-kit-aboutus.png" alt="Image 2" style="width: 30%;"/>
+<img src="Images/ui-kit-navigation.png" alt="Image 3" style="width: 30%;"/></div>
 <br/><br/>
 
-<p align="center">
-    <img src="Images/ui-kit-chat.png" alt="Image"/>
-</p>
+<div style="display: flex; justify-content: space-around; gap: 20px;">
+<img src="Images/ui-kit-errorandempty.png" alt="Image 1" style="width: 30%;"/>
+<img src="Images/ui-kit-transaction.png" alt="Image 2" style="width: 30%;"/>
+<img src="Images/ui-kit-bookmark.png" alt="Image 3" style="width: 30%;"/></div>
 <br/><br/>
 
-<p align="center">
-    <img src="Images/ui-kit-article.png" alt="Image"/>
-</p>
+<div style="display: flex; justify-content: space-around; gap: 20px;">
+<img src="Images/ui-kit-history.png" alt="Image 1" style="width: 30%;"/>
+<img src="Images/ui-kit-social.png" alt="Image 2" style="width: 30%;"/>
+<img src="Images/ui-kit-profile.png" alt="Image 3" style="width: 30%;"/></div>
 <br/><br/>
 
-<p align="center">
-    <img src="Images/ui-kit-review.png" alt="Image"/>
-</p>
-<br/><br/>
-
-<p align="center">
-    <img src="Images/ui-kit-contactus.png" alt="Image"/>
-</p>
-<br/><br/>
-
-<p align="center">
-    <img src="Images/ui-kit-aboutus.png" alt="Image"/>
-</p>
-<br/><br/>
-
-<p align="center">
-    <img src="Images/ui-kit-navigation.png" alt="Image"/>
-</p>
-<br/><br/>
-
-<p align="center">
-    <img src="Images/ui-kit-errorandempty.png" alt="Image"/>
-</p>
-<br/><br/>
-
-<p align="center">
-    <img src="Images/ui-kit-transaction.png" alt="Image"/>
-</p>
-<br/><br/>
-
-<p align="center">
-    <img src="Images/ui-kit-bookmark.png" alt="Image"/>
-</p>
-<br/><br/>
-
-<p align="center">
-    <img src="Images/ui-kit-history.png" alt="Image"/>
-</p>
-<br/><br/>
-
-<p align="center">
-    <img src="Images/ui-kit-social.png" alt="Image"/>
-</p>
-<br/><br/>
-
-<p align="center">
-    <img src="Images/ui-kit-profile.png" alt="Image"/>
-</p>
-<br/><br/>
-
-<p align="center">
-    <img src="Images/ui-kit-tracking.png" alt="Image"/>
-</p>
-<br/><br/>
-
-<p align="center">
-    <img src="Images/ui-kit-settings.png" alt="Image"/>
-</p>
-<br/><br/>
-
-<p align="center">
-    <img src="Images/ui-kit-notification.png" alt="Image"/>
-</p>
+<div style="display: flex; justify-content: space-around; gap: 20px;">
+<img src="Images/ui-kit-tracking.png" alt="Image 1" style="width: 30%;"/>
+<img src="Images/ui-kit-settings.png" alt="Image 2" style="width: 30%;"/>
+<img src="Images/ui-kit-notification.png" alt="Image 3" style="width: 30%;"/></div>
 <br/><br/>
 
 
