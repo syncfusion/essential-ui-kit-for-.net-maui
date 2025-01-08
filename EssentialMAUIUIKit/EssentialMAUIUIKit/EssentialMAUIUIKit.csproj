@@ -30,7 +30,7 @@
 		<ApplicationTitle>Essential UI Kit for .NET MAUI</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.essentialmauiuikit</ApplicationId>
+		<ApplicationId>com.syncfusion.essentialuikit.maui</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -80,7 +80,7 @@
 		<MauiIcon Include="Resources\AppIcon\appicon.png" />
 		
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splashscreen.svg" Color="#3754EB" BaseSize="*,*" />
+		<MauiSplashScreen Include="Resources\AppIcon\appicon.png" Color="#3754EB" BaseSize="*,*" />
 		
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
