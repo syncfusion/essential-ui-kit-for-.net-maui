@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Dashboard.MyWalletPage"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:combobox="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+             xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
+             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"   
+             xmlns:rotator="clr-namespace:Syncfusion.Maui.Rotator;assembly=Syncfusion.Maui.Rotator"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"             
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core">
+
+    <ContentView.BindingContext>
+        <local:MyWalletViewModel/>
+    </ContentView.BindingContext>
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converter:BooleanToColorConverter x:Key="BooleanToColorConverter"/>
+            <converter:BooleanToStringConverter x:Key="BoolToStringConverter"/>
+
+            <ResourceDictionary>
+                <DataTemplate x:Key="RegularCardTemplate">
+                    <StackLayout Margin="0,0,20,0">
+                        <Border Margin="10,0" HeightRequest="175" WidthRequest="343" Stroke="Transparent" StrokeThickness="0" StrokeShape="RoundRectangle 6,6,6,6">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="{Binding ColorGradientStart}" Offset="0"/>
+                                    <GradientStop Color="{Binding ColorGradientStop}" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Grid Padding="10"  RowDefinitions="*,*,Auto" Background="Transparent">
+                                <Grid Grid.Row="0" Margin="16,0,0,16">
+                                    <Label FontFamily="Roboto-Regular" FontSize="14" Text="{Binding CardType}" TextColor="#FFFFFF"  HorizontalOptions="Start" VerticalOptions="Center"/>
+                                    <Image Source="{Binding CardLogo}" HorizontalOptions="End" HeightRequest="42"/>
+                                </Grid>
+                                <Grid Grid.Row="1" Margin="16,0,0,16">
+                                    <Label FontFamily="Roboto-Regular" FontSize="16" Text="{Binding CardNumber}" TextColor="#FFFFFF"  HorizontalOptions="Start" VerticalOptions="Center"/>
+                                </Grid>
+                                <Grid Grid.Row="2" ColumnDefinitions="Auto,*,*" HeightRequest="40" Margin="16,0,0,0">
+                                    <VerticalStackLayout Grid.Column="0" HorizontalOptions="Start">
+                                        <Label FontFamily="Roboto-Thin" FontSize="12" Text="Card holder" TextColor="#FFFFFF"  HorizontalOptions="Start" VerticalOptions="Center"/>
+                                        <Label FontFamily="Roboto-Regular" FontSize="14" Text="{Binding CardHolderName}" TextColor="#FFFFFF"  HorizontalOptions="Start" VerticalOptions="Center"/>
+                                    </VerticalStackLayout>
+                                    <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center">
+                                        <Label FontFamily="Roboto-Thin" FontSize="12" Text="Expires" TextColor="#FFFFFF"  HorizontalOptions="Start" VerticalOptions="Center"/>
+                                        <Label FontFamily="Roboto-Regular" FontSize="14" Text="{Binding CardExpiry, StringFormat='{0:MM/yy}'}" TextColor="#FFFFFF"  HorizontalOptions="Start" VerticalOptions="Center"/>
+                                    </VerticalStackLayout>
+                                    <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center">
+                                        <Label FontFamily="Roboto-Thin" FontSize="12" Text="CVV" TextColor="#FFFFFF"  HorizontalOptions="Start" VerticalOptions="Center"/>
+                                        <Label FontFamily="Roboto-Regular" FontSize="14" Text="{Binding CardCVV}" TextColor="#FFFFFF"  HorizontalOptions="Start" VerticalOptions="Center"/>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </StackLayout>
+                </DataTemplate>
+
+                <DataTemplate x:Key="LastCardTemplate">
+                    <StackLayout Margin="0,0,20,0">
+                        <Border Margin="10,0" HeightRequest="175" WidthRequest="343" Stroke="#C9C6C8" StrokeThickness="1" StrokeDashArray="4,3" StrokeShape="RoundRectangle 6,6,6,6">
+                            <buttons:SfButton Background="Transparent" x:Name="addCardbutton">
+                                <buttons:SfButton.Content>
+                                    <DataTemplate>
+                                        <VerticalStackLayout Spacing="10" VerticalOptions="Center" HorizontalOptions="Center">
+
+                                            <!--Font Icon-->
+
+                                            <Label Text="&#xe730;" FontFamily="UIFontIcons" HeightRequest="38" WidthRequest="38" FontSize="38" TextColor="#ADAAAC" VerticalOptions="Center" HorizontalOptions="Center" />
+
+                                            <!--Button Text-->
+
+                                            <Label Text="Add Card" TextColor="#ADAAAC" FontSize="14" VerticalOptions="Fill" HorizontalOptions="Fill" />
+                                        </VerticalStackLayout>
+                                    </DataTemplate>
+                                </buttons:SfButton.Content>
+                            </buttons:SfButton>
+                        </Border>
+                    </StackLayout>
+                </DataTemplate>
+            </ResourceDictionary>
+        </ResourceDictionary>
+
+        <Style TargetType="listView:ListViewItem">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <ScrollView VerticalScrollBarVisibility="{OnPlatform WinUI='Default',MacCatalyst='Default', Android='Never', iOS='Never'}">
+            <StackLayout>
+                <Grid HeightRequest="{OnPlatform WinUI=60, MacCatalyst=60}" Padding="0,10,24,10" IsVisible="{OnPlatform Android=False, iOS=False}">
+
+                    <Label Text="{Binding DashboardTitle}" FontSize="22" VerticalOptions="Center" HorizontalOptions="Start" TextColor="{StaticResource PrimaryFormsColor}" FontFamily="Righteous" Margin="{OnPlatform WinUI='24,0,0,0', MacCatalyst='24,0,0,0'}"/>
+
+                    <!-- Notification Bell Icon with Badge -->
+                    <syncfusion:SfBadgeView HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,99,0" IsVisible="{OnPlatform Android=False, iOS=False}">
+                        <syncfusion:SfBadgeView.Content>
+                            <Label Text="&#xe708;" FontFamily="DashboardFontIcons" HeightRequest="16" WidthRequest="16"  />
+                        </syncfusion:SfBadgeView.Content>
+                    </syncfusion:SfBadgeView>
+
+                    <!-- Profile Image Avatar -->
+                    <syncfusion:SfAvatarView ContentType="Custom" AvatarSize="Medium" AvatarShape="Circle" ImageSource="{Binding ProfileImage}" HorizontalOptions="End" Background="White" Margin="0,0,24,0" IsVisible="{OnPlatform Android=False, iOS=False}"/>
+                </Grid>
+                <BoxView HeightRequest="1" Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" HorizontalOptions="Fill" />
+                <Grid RowDefinitions="{OnPlatform WinUI='*', MacCatalyst='*'}" VerticalOptions="FillAndExpand" ColumnDefinitions="*" HorizontalOptions="FillAndExpand">
+                    <Grid ColumnDefinitions="{OnPlatform WinUI='Auto,Auto,*', MacCatalyst='Auto,Auto,*'}" RowDefinitions="*" VerticalOptions="FillAndExpand" HeightRequest="{OnPlatform MacCatalyst={Binding LayoutHeight}}">
+
+                        <!-- Menu Item list -->
+                        <Grid Grid.Column="0" VerticalOptions="StartAndExpand" WidthRequest="{OnPlatform MacCatalyst=350}" HorizontalOptions="Start" IsVisible="{OnPlatform Android=False, iOS=False}">
+                            <VerticalStackLayout>
+                                <CollectionView ItemsSource="{Binding MenuItemList}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Padding="10" Stroke="Transparent">
+                                                <!-- Menu Item Text -->
+                                                <Label Text="{Binding Name}" FontSize="14" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" VerticalOptions="Center" Margin="0,0,5,0">
+                                                    <Label.Triggers>
+                                                        <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
+                                                            <Setter Property="TextColor" Value="{StaticResource PrimaryFormsColor}" />
+                                                        </DataTrigger>
+                                                    </Label.Triggers>
+                                                </Label>
+                                            </Border>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </VerticalStackLayout>
+                        </Grid>
+                        <BoxView Grid.Column="1"  WidthRequest="1" Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" HorizontalOptions="Start" VerticalOptions="FillAndExpand" IsVisible="{OnPlatform Android=False, iOS=False}"/>
+                        <!-- Card Details-->
+                        <!--<ScrollView  Orientation="Vertical" VerticalScrollBarVisibility="Never" VerticalOptions="Fill">-->
+                        <Grid Grid.Column="{OnPlatform WinUI=2,MacCatalyst=2}" RowDefinitions="{OnPlatform WinUI='1* ,Auto, 3*',MacCatalyst='Auto,Auto, *', Android='Auto,*', iOS='Auto,*'}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                            <ScrollView Grid.Row="0" HeightRequest="{OnPlatform MacCatalyst='240', WinUI=240}" Orientation="Horizontal" HorizontalOptions="Fill" HorizontalScrollBarVisibility="Default" VerticalScrollBarVisibility="Never">
+                                <HorizontalStackLayout  Margin="{OnPlatform WinUI='0,16,0,16',MacCatalyst='0,16,0,16', Android='32,16,0,16', iOS='16,16,16,16'}" HorizontalOptions="Center" VerticalOptions="Center">
+                                    <rotator:SfRotator ItemsSource="{Binding CardDetails}" HorizontalOptions="Center" VerticalOptions="Start" HeightRequest="200" WidthRequest="343" SelectedDotColor="{OnPlatform Default='White', Android='#7633DA',iOS='#7633DA'}" UnselectedDotColor="{OnPlatform Default='White', Android='#FCF8FA',iOS='#FCF8FA'}" IsVisible="{OnPlatform WinUI='False', MacCatalyst='False'}" >
+                                        <rotator:SfRotator.ItemTemplate>
+                                            <local:CardTemplateSelector RegularTemplate="{StaticResource RegularCardTemplate}" LastItemTemplate="{StaticResource LastCardTemplate}" />
+                                        </rotator:SfRotator.ItemTemplate>
+                                    </rotator:SfRotator>
+                                    <CollectionView ItemsSource="{Binding FilteredCardDetails}" HorizontalScrollBarVisibility="Never" HorizontalOptions="FillAndExpand" VerticalOptions="Start" IsVisible="{OnPlatform Android='False', iOS='False'}">
+                                        <CollectionView.ItemsLayout>
+                                            <LinearItemsLayout Orientation="Horizontal"/>
+                                        </CollectionView.ItemsLayout>
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackLayout Margin="0,0,20,0" IsVisible="{Binding IsVisible}">
+                                                    <Border Margin="10,0" HeightRequest="200" WidthRequest="343" Stroke="Transparent" StrokeThickness="0" StrokeShape="RoundRectangle 6,6,6,6">
+                                                        <Grid Padding="10"  RowDefinitions="*,*,Auto">
+                                                            <Grid.Background>
+                                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                                    <GradientStop Color="{Binding ColorGradientStart}" Offset="0"/>
+                                                                    <GradientStop Color="{Binding ColorGradientStop}" Offset="1"/>
+                                                                </LinearGradientBrush>
+                                                            </Grid.Background>
+                                                            <Grid Grid.Row="0" Margin="16,0,0,16">
+                                                                <Label FontFamily="Roboto-Regular" FontSize="14" Text="{Binding CardType}" TextColor="#FFFFFF"  HorizontalOptions="Start" VerticalOptions="Center"/>
+                                                                <Image Source="{Binding CardLogo}" HorizontalOptions="End" HeightRequest="42"/>
+                                                            </Grid>
+                                                            <Grid Grid.Row="1" Margin="16,0,0,16">
+                                                                <Label FontFamily="Roboto-Regular" FontSize="16" Text="{Binding CardNumber}" TextColor="#FFFFFF"  HorizontalOptions="Start" VerticalOptions="Center"/>
+                                                            </Grid>
+                                                            <Grid Grid.Row="2" ColumnDefinitions="Auto,*,*" HeightRequest="40" Margin="16,0,0,0">
+                                                                <VerticalStackLayout Grid.Column="0" HorizontalOptions="Start">
+                                                                    <Label FontFamily="Roboto-Thin" FontSize="12" Text="Card holder" TextColor="#FFFFFF"  HorizontalOptions="Start" VerticalOptions="Center"/>
+                                                                    <Label FontFamily="Roboto-Regular" FontSize="14" Text="{Binding CardHolderName}" TextColor="#FFFFFF"  HorizontalOptions="Start" VerticalOptions="Center"/>
+                                                                </VerticalStackLayout>
+                                                                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center">
+                                                                    <Label FontFamily="Roboto-Thin" FontSize="12" Text="Expires" TextColor="#FFFFFF"  HorizontalOptions="Start" VerticalOptions="Center"/>
+                                                                    <Label FontFamily="Roboto-Regular" FontSize="14" Text="{Binding CardExpiry, StringFormat='{0:MM/yy}'}" TextColor="#FFFFFF"  HorizontalOptions="Start" VerticalOptions="Center"/>
+                                                                </VerticalStackLayout>
+                                                                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center">
+                                                                    <Label FontFamily="Roboto-Thin" FontSize="12" Text="CVV" TextColor="#FFFFFF"  HorizontalOptions="Start" VerticalOptions="Center"/>
+                                                                    <Label FontFamily="Roboto-Regular" FontSize="14" Text="{Binding CardCVV}" TextColor="#FFFFFF"  HorizontalOptions="Start" VerticalOptions="Center"/>
+                                                                </VerticalStackLayout>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </StackLayout>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+
+
+                                    <Border Margin="10,0" HeightRequest="200" VerticalOptions="Start" HorizontalOptions="Start" WidthRequest="343" Stroke="#C9C6C8" StrokeThickness="1" StrokeDashArray="4,3" StrokeShape="RoundRectangle 6,6,6,6" IsVisible="{OnPlatform Android=False,iOS=False}">
+                                        <buttons:SfButton Background="Transparent" x:Name="addCardbutton">
+                                            <buttons:SfButton.Content>
+                                                <DataTemplate>
+                                                    <VerticalStackLayout Spacing="10" VerticalOptions="Center" HorizontalOptions="Center">
+                                                        <!--Font Icon-->
+                                                        <Label Text="&#xe730;" FontFamily="UIFontIcons" HeightRequest="38" WidthRequest="38" FontSize="38" TextColor="#ADAAAC" VerticalOptions="Center" HorizontalOptions="Center" />
+                                                        <!--Button Text-->
+                                                        <Label Text="Add Card" TextColor="#ADAAAC" FontSize="14" VerticalOptions="Fill" HorizontalOptions="Fill" />
+                                                    </VerticalStackLayout>
+                                                </DataTemplate>
+                                            </buttons:SfButton.Content>
+                                        </buttons:SfButton>
+                                    </Border>
+
+                                </HorizontalStackLayout>
+                            </ScrollView>
+
+                            <BoxView Grid.Row="{OnPlatform WinUI='1', MacCatalyst='1'}" HeightRequest="8" Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" HorizontalOptions="Fill" VerticalOptions="End" IsVisible="{OnPlatform Android=False, iOS=False}" />
+                            <Grid Grid.Row="{OnPlatform WinUI='2',MacCatalyst='2', Android='1', iOS='1'}" RowDefinitions="{OnPlatform Android='Auto,Auto,*', iOS='Auto,Auto,*'}" ColumnDefinitions="{OnPlatform WinUI='3* ,Auto, 2*', MacCatalyst='3*,Auto,2*', Android='*'}" >
+                                <Grid Grid.Column="{OnPlatform WinUI='0',MacCatalyst=0}" Grid.Row="{OnPlatform Android='0', iOS='0'}" RowDefinitions='Auto,Auto,*' Margin="{OnPlatform WinUI='16,16,16,0'}">
+                                    <!-- Available Balance-->
+                                    <Grid BindingContext="{Binding SelectedCard}" Grid.Row="0" HeightRequest="{OnPlatform WinUI=88,MacCatalyst=88}" Margin="16,16,16,0">
+                                        <Border HeightRequest="73" Background="{AppThemeBinding Light={DynamicResource Gray-Black}, Dark={DynamicResource Gray-White}}" StrokeShape="RoundRectangle 5,5,5,5" Margin="0,0,0,16">
+                                            <Grid ColumnDefinitions="*,*" RowDefinitions="*,*" Margin="8,8,8,8">
+                                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding CardHolderName}" HorizontalOptions="Start" TextColor="{AppThemeBinding Light={DynamicResource Gray-White}, Dark={DynamicResource Gray-Black}}" FontSize="16" FontFamily="Roboto-Regular" />
+                                                <Label Grid.Row="0" Grid.Column="1" Text="Avl Balance" HorizontalOptions="End" TextColor="{AppThemeBinding Light={DynamicResource Gray-White}, Dark={DynamicResource Gray-Black}}" FontSize="12" FontFamily="Roboto-Thin" HeightRequest="16"/>
+                                                <Label Grid.Row="1" Grid.Column="0" Text="{Binding CardNumber}" HorizontalOptions="Start" TextColor="{AppThemeBinding Light={DynamicResource Gray-White}, Dark={DynamicResource Gray-Black}}" FontSize="12" FontFamily="Roboto-Thin" HeightRequest="16" />
+                                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding AvailableBalance, StringFormat='${0:F2}'}" FontSize="22" HorizontalOptions="End" TextColor="{AppThemeBinding Light={DynamicResource Gray-White}, Dark={DynamicResource Gray-Black}}" FontFamily="Roboto-Regular" VerticalOptions="Start" />
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                    <BoxView Grid.Row="1" HeightRequest="8" Color="#FCF8FA" HorizontalOptions="FillAndExpand" IsVisible="{OnPlatform WinUI='False', MacCatalyst='False'}"/>
+                                    <Grid Grid.Row="2" RowDefinitions="Auto,*" VerticalOptions="{OnPlatform WinUI='Fill', MacCatalyst='Fill'}" Margin="16,16,16,0">
+
+                                        <!-- Combo Box -->
+                                        <StackLayout Grid.Row="0" HeightRequest="{OnPlatform WinUI=40, MacCatalyst=40}" Margin="0,0,0,10">
+                                            <Grid HorizontalOptions="FillAndExpand">
+                                                <Label Text="{Binding ChartLabel}" HorizontalOptions="Start" VerticalOptions="Center" FontFamily="Roboto-Medium" FontSize="{OnPlatform MacCatalyst=24}" FontAttributes="Bold"></Label>
+                                                <Border BackgroundColor="{AppThemeBinding Light={DynamicResource Gray-White}, Dark={DynamicResource GrayBorderBackgroundColor}}"
+VerticalOptions="End" StrokeShape="RoundRectangle 20,20,20,20" HeightRequest="40" WidthRequest="85" Margin="{OnPlatform Android='0,0,10,0', iOS='0,0,10,0'}" HorizontalOptions="End">
+                                                    <Border.Shadow>
+                                                        <!-- First Shadow -->
+                                                        <Shadow Brush="#000000" Offset="0,2" Opacity="0.15" Radius="3" />
+                                                    </Border.Shadow>
+                                                    <combobox:SfComboBox
+                                                            x:Name="comboBox"
+                                                            ItemsSource="{Binding DataSource}"
+                                                            DisplayMemberPath="Duration"
+                                                            DropDownBackground="Transparent"
+                                                            DropDownStroke="{DynamicResource Gray-Bg}"
+                                                            WidthRequest="{OnPlatform Android=70,iOS=70,
+                                                                                Default=86}"
+                                                            FontFamily="Roboto-Medium"
+                                                            HorizontalOptions="End"
+                                                            IsEditable="False"
+                                                            SelectedDropDownItemBackground="{AppThemeBinding Light={DynamicResource Gray-White}, Dark={DynamicResource GrayBorderBackgroundColor}}"
+                                                            SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                                                            SelectedItem="{Binding DataSource[0], Mode=OneTime}"
+                                                            ShowBorder="False"
+                                                            FontSize="16"
+                                                            VerticalOptions="Center">
+                                                        <combobox:SfComboBox.DropDownButtonSettings>
+                                                            <combobox:DropDownButtonSettings>
+                                                                <combobox:DropDownButtonSettings.View>
+                                                                    <Label
+                                                                        Padding="{OnPlatform WinUI='0,3,6,0',MacCatalyst='0,3,6,0', Android='0,8,6,0', iOS='0,8,6,0'}"
+                                                                        FontFamily="FontIcons"
+                                                                        FontSize="16"
+                                                                        HorizontalTextAlignment="Center"
+                                                                        Text="{DynamicResource DropDownButtonIcon}"
+                                                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                                                                                        FontAttributes="Bold"
+                                                                        VerticalTextAlignment="Center"/>
+                                                                </combobox:DropDownButtonSettings.View>
+                                                            </combobox:DropDownButtonSettings>
+                                                        </combobox:SfComboBox.DropDownButtonSettings>
+                                                        <combobox:SfComboBox.CustomView>
+
+                                                            <Label
+                                                                BindingContext="{Binding SelectedItem, Source={x:Reference comboBox}}"
+                                                                FontFamily="Roboto-Regular"
+                                                                FontSize="14" 
+                                                                FontAttributes="Bold"
+                                                                HorizontalOptions="Start"
+                                                                HorizontalTextAlignment="Start"
+                                                                Text="{Binding Duration}"
+                                                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                                VerticalOptions="Center"
+                                                                VerticalTextAlignment="Center" Margin="{OnPlatform WinUI='16,0,0,0', MacCatalyst='16,0,0,0'}"/>
+
+                                                        </combobox:SfComboBox.CustomView>
+                                                    </combobox:SfComboBox>
+                                                </Border>
+                                            </Grid>
+                                        </StackLayout>
+
+                                        <!-- Analysis Chart -->
+                                        <Grid Grid.Row="1"  Margin="0,16,0,0" >
+                                            <chart:SfCartesianChart BackgroundColor="{DynamicResource Transparent}" HorizontalOptions="Fill" VerticalOptions="Fill">
+                                                <chart:SfCartesianChart.XAxes>
+                                                    <chart:CategoryAxis Interval="1" ShowMajorGridLines="False">
+                                                        <chart:CategoryAxis.LabelStyle>
+                                                            <chart:ChartAxisLabelStyle Margin="0,8,0,0" FontFamily="Roboto-Regular" FontSize="14" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+                                                        </chart:CategoryAxis.LabelStyle>
+                                                        <chart:CategoryAxis.AxisLineStyle>
+                                                            <chart:ChartLineStyle StrokeWidth="0"/>
+                                                        </chart:CategoryAxis.AxisLineStyle>
+                                                        <chart:CategoryAxis.MajorTickStyle>
+                                                            <chart:ChartAxisTickStyle StrokeWidth="0" TickSize="0"/>
+                                                        </chart:CategoryAxis.MajorTickStyle>
+                                                    </chart:CategoryAxis>
+                                                </chart:SfCartesianChart.XAxes>
+                                                <chart:SfCartesianChart.YAxes>
+                                                    <chart:NumericalAxis Interval="10" IsVisible="False" Maximum="100" Minimum="0" ShowMajorGridLines="False" ShowMinorGridLines="False">
+                                                        <chart:NumericalAxis.AxisLineStyle>
+                                                            <chart:ChartLineStyle StrokeWidth="0"/>
+                                                        </chart:NumericalAxis.AxisLineStyle>
+                                                    </chart:NumericalAxis>
+                                                </chart:SfCartesianChart.YAxes>
+                                                <chart:SfCartesianChart.Legend>
+                                                    <chart:ChartLegend Placement="Bottom" ToggleSeriesVisibility="True" />
+                                                </chart:SfCartesianChart.Legend>
+                                                <chart:SfCartesianChart.Series>
+                                                    <chart:StackingColumn100Series Width="{OnPlatform WinUI='0.05', MacCatalyst='0.05', Android='0.15', iOS='0.15'}" CornerRadius="4" EnableAnimation="True" EnableTooltip="False" ItemsSource="{Binding ChartData}" Label="Expense" LegendIcon="Circle" XBindingPath="Section" YBindingPath="Expense" Fill="#25E739" />
+                                                    <chart:StackingColumn100Series Width="0" CornerRadius="4" IsVisibleOnLegend="False" ItemsSource="{Binding ChartData}" XBindingPath="Section" YBindingPath="Difference"/>
+                                                    <chart:StackingColumn100Series Width="{OnPlatform WinUI='0.05', MacCatalyst='0.05', Android='0.15', iOS='0.15'}" CornerRadius="4" EnableAnimation="True" EnableTooltip="False" ItemsSource="{Binding ChartData}" Label="Income" LegendIcon="Circle" XBindingPath="Section" YBindingPath="Income" Fill="#2196F3"
+                                                    DataLabelSettings="{chart:CartesianDataLabelSettings LabelStyle={chart:ChartDataLabelStyle Background=red }}"/>
+
+                                                </chart:SfCartesianChart.Series>
+                                            </chart:SfCartesianChart>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+
+                                <!-- Vertical Border Line -->
+                                <BoxView Grid.Column="1" WidthRequest="8" Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" VerticalOptions="FillAndExpand" IsVisible="{OnPlatform Android='False', iOS='False'}"/>
+                                <!--Horizontal Border Line-->
+                                <BoxView Grid.Row="{OnPlatform Android='1', iOS='1'}" HeightRequest="8" Color="#FCF8FA" HorizontalOptions="FillAndExpand" IsVisible="{OnPlatform WinUI='False', MacCatalyst='False'}" VerticalOptions="{OnPlatform Android='Start'}"/>
+                                <!-- Transaction Details -->
+                                <Grid Grid.Column="2" Grid.Row="{OnPlatform Android='1', iOS='1'}" RowDefinitions="Auto, *" Margin="16,16,16,16">
+                                    <Label Grid.Row="0" HeightRequest="{OnPlatform WinUI=30, MacCatalyst=30}" Text="Transactions" FontFamily="Roboto-Regular" FontSize="{OnPlatform WinUI=22, MacCatalyst=22, Android=14, iOS=14}" FontAttributes="{OnPlatform Android='Bold', iOS='Bold'}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
+                                    <listView:SfListView
+                                        Grid.Row="1"
+                                        AutoFitMode="Height"
+                                        ScrollBarVisibility="Default"
+                                        IsScrollingEnabled="True" 
+                                        ItemsSource="{Binding ListItems}"
+                                        SelectionBackground="{AppThemeBinding Light={DynamicResource SelectionBackgroundLight}, Dark={DynamicResource SelectionBackgroundDark}}" Margin="{OnPlatform WinUI='0,16,0,0',MacCatalyst='0,16,0,0', Android='0,8,0,0', iOS='0,8,0,0'}">
+                                        <listView:SfListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackLayout Spacing="0">
+                                                    <Grid
+                                                        ColumnDefinitions="Auto, *, *"
+                                                        ColumnSpacing="0"                   
+                                                        RowSpacing="0">
+                                                        <!--Profile Image-->
+
+                                                        <Border
+                                                            Grid.RowSpan="3"
+                                                            Margin="16"
+                                                            Stroke="{DynamicResource Gray-100}"
+                                                            StrokeThickness="1"
+                                                            StrokeShape="RoundRectangle 20"
+                                                            VerticalOptions="Center">
+                                                            <Image
+                                                                Aspect="Fill"
+                                                                HeightRequest="40"
+                                                                WidthRequest="40">
+                                                                <Image.Source>
+                                                                    <UriImageSource
+                                                                        CacheValidity="14"
+                                                                        CachingEnabled="True"
+                                                                        Uri="{Binding ProfileImage}"/>
+                                                                </Image.Source>
+                                                            </Image>
+                                                        </Border>
+                                                        <Grid Grid.Column="1" RowDefinitions="*,*">
+                                                            <!--Name-->
+
+                                                            <Label
+                                                            Grid.Row="0"
+                                                                Margin="0,15,0,4"
+                                                                FontSize="14"
+                                                                HorizontalOptions="Start"
+                                                                Style="{DynamicResource TitleLabelStyle}"
+                                                                Text="{Binding Name}"/>
+
+                                                            <!--Date-->
+
+                                                            <Label
+                                                                Grid.Row="1"
+                                                                Margin="0,0,16,16"
+                                                                FontSize="12"
+                                                                HorizontalOptions="Start"
+                                                                Style="{DynamicResource DescriptionLabelStyle}"
+                                                                TextColor="{AppThemeBinding Light={DynamicResource ContentTextColorLight}, Dark={DynamicResource ContentTextColorDark}}"
+                                                                Text="{Binding Date, StringFormat='{0:dd MMM yyyy \\a\\t hh:mm tt}'}"/>
+                                                        </Grid>
+
+                                                        <!--Amount-->
+                                                        <Label
+                                                            Grid.Column="2"
+                                                            Margin="0,0,16,4"
+                                                            FontSize="16"
+                                                            HorizontalOptions="End"
+                                                            VerticalOptions="Center"
+                                                            Style="{DynamicResource TitleLabelStyle}">
+                                                            <Label.FormattedText>
+                                                                <FormattedString>
+                                                                    <Span Text="{Binding IsCredited, Converter={StaticResource BoolToStringConverter}, ConverterParameter=2}"
+                                                    TextColor="{Binding IsCredited, Converter={x:StaticResource BooleanToColorConverter}, ConverterParameter=4}"/>
+                                                                    <Span Text=" $"
+                                                    TextColor="{Binding IsCredited, Converter={x:StaticResource BooleanToColorConverter}, ConverterParameter=4}"/>
+                                                                    <Span Text="{Binding Amount}"
+                                                    TextColor="{Binding IsCredited, Converter={x:StaticResource BooleanToColorConverter}, ConverterParameter=4}"/>
+                                                                </FormattedString>
+                                                            </Label.FormattedText>
+                                                        </Label>
+                                                    </Grid>
+                                                </StackLayout>
+                                            </DataTemplate>
+                                        </listView:SfListView.ItemTemplate>
+                                    </listView:SfListView>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </StackLayout>
+        </ScrollView>
+    </ContentView.Content>
+</ContentView>    

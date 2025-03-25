@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Rotator;assembly=Syncfusion.Maui.Rotator"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
+             x:Class="EssentialMAUIUIKit.Views.OnBoarding.OnboardingPage"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             x:DataType="local:OnboardingViewModel">
+
+
+    <ContentView.BindingContext>
+        <local:OnboardingViewModel/>
+    </ContentView.BindingContext>
+
+    <ContentView.Content>
+        <Grid VerticalOptions="Center"
+                BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height=".1*"/>
+                <RowDefinition Height="{OnPlatform MacCatalyst=600, iOS=500,Default=*}"/>
+                <RowDefinition Height=".1*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0"
+                    HeightRequest="50">
+                <buttons:SfButton x:Name="skipButton"
+                                  Text="Skip"
+                                  Style="{DynamicResource TransparentButtonStyle}"
+                                  HorizontalOptions="End"
+                        VerticalTextAlignment="Center"/>
+            </Grid>
+
+
+            <syncfusion:SfRotator x:Name="rotator"
+                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                  EnableLooping="False"
+                                  Grid.Row="1"
+                                  ItemsSource="{Binding OnboardingItems}"
+                                  HorizontalOptions="Center"
+                                  VerticalOptions="Start"
+                                  SelectedIndex="{Binding SelectedIndex}"
+                                  SelectedDotColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}">
+
+                <syncfusion:SfRotator.Margin>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="Android"
+                                Value="10,100,10,10"/>
+                        <On Platform="iOS"
+                                Value="10,100,10,10"/>
+                        <On Platform="Windows"
+                                Value="10,0,10,10"/>
+                        <On Platform="MacCatalyst"
+                                Value="10,100,10,10"/>
+                    </OnPlatform>
+                </syncfusion:SfRotator.Margin>
+
+                <!-- Rotator Item Template -->
+                <syncfusion:SfRotator.ItemTemplate>
+                    <DataTemplate x:DataType="local:OnBoardingModel">
+                        <Grid VerticalOptions="Center"
+                                Padding="0"
+                                RowDefinitions=".6*, .4*">
+                            <Image x:Name="RotatorImage"
+                                   HeightRequest="200"
+                                    Grid.Row="0"
+                                   Source="{Binding Image}"
+                                   Loaded="ContentLoaded"/>
+
+                            <VerticalStackLayout Grid.Row="1"
+                                    VerticalOptions="End">
+                                <Label x:Name="RotatorTitle"
+                                       Padding="0,20,0,10"
+                                       Text="{Binding Title}"
+                                       Style="{DynamicResource TitleLabelStyle}"
+                                       FontSize="24"
+                                        HorizontalOptions="Center"
+                                       Loaded="ContentLoaded"/>
+
+                                <Label x:Name="RotatorDescription"
+                                        Text="{Binding Description}"
+                                       Style="{DynamicResource DescriptionLabelStyle}"
+                                       FontSize="16"
+                                       HorizontalOptions="Center"
+                                       Loaded="ContentLoaded"/>
+                            </VerticalStackLayout>
+
+
+                        </Grid>
+                    </DataTemplate>
+                </syncfusion:SfRotator.ItemTemplate>
+            </syncfusion:SfRotator>
+
+            <buttons:SfButton x:Name="nextButton"
+                              WidthRequest="{OnPlatform WinUI=400, MacCatalyst=400}"
+                              Grid.Row="2"
+                    Text="Next"
+                              Style="{DynamicResource FormsButtonStyle}"
+                    Margin="{OnPlatform Android=20, iOS=20}"
+                              HorizontalOptions="{OnPlatform Default=Center, Android=Fill, iOS=Fill}"
+                              VerticalTextAlignment="Center"/>
+        </Grid>
+    </ContentView.Content>
+
+    <ContentView.Behaviors>
+        <local:OnBoardingBehavior/>
+    </ContentView.Behaviors>
+
+</ContentView>

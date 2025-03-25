@@ -131,6 +131,16 @@
 		<Page Name="Product Delivery Tracking" Description="This page displays a live train’s present status with the estimated time of arrival at a specified destination." PageName="Views.Tracking.OrderTracking" />
 	</Category>
 
+	<Category Icon="dashboard.png" Name="Dashboard"  Description="A beautifully presented interface relevant to common real-world use cases.">
+		<Page Name="Stock Overview" Description="This page displays a dashboard for stock market data visualization." PageName="Views.Dashboard.StockOverviewPage" />
+		<Page Name="Health Care"  Description="This page displays a dashboard for health-care data visualization." PageName="Views.Dashboard.HealthCarePage" />
+    <Page Name="Daily Calories Report"  Description="This page displays a dashboard for daily calories report data visualization." PageName="Views.Dashboard.DailyCaloriesReportPage" />
+    <Page Name="Daily Timeline"  Description="This page displays a dashboard for daily timeline data visualization." PageName="Views.Dashboard.DailyTimelinePage" />
+    <Page Name="Company History"  Description="This page displays a dashboard for company history data visualization." PageName="Views.Dashboard.CompanyHistoryPage" />		
+		<Page Name="My Wallet"  Description="This page shows income and expense charts as well as transaction details." PageName="Views.Dashboard.MyWalletPage" />
+    <Page Name="Restaurant Dashboard"  Description="This page shows order details of a restaurant" PageName="Views.Dashboard.RestaurantDashboardPage" />
+	</Category>
+
 	<Category Icon="setting.png" Name="Settings" Description="Display various types of settings pages.">
 		<Page Name="Setting" Description="This page displays a simple settings page that includes account, notification, and support settings." PageName="Views.Settings.SettingsPage" />
 		<Page Name="Help"  Description="This page displays a simple help page that provides help with recent orders and other queries." PageName="Views.Settings.HelpPage" />
@@ -140,6 +150,10 @@
 		<Page Name="Task Notification" Description="This page displays notifications for tasks, showing descriptions, task IDs, and times." PageName="Views.Notification.TaskNotificationPage" />
 		<Page Name="Social Notification" Description="This page displays social media notifications, containing a list of recent notifications and a list of earlier ones." PageName="Views.Notification.SocialNotificationPage" />
 		<Page Name="E-commerce Notification"  Description="This page displays e-commerce notifications that include description and time." PageName="Views.Notification.ECommerceNotificationPage" />
+	</Category>
+
+	<Category Icon="onboarding.png" Name="Onboarding" Description="Get your users started with a new app or experience with step-by-step instructions.">
+		<Page Name="Walk-through" Description="Guide users through a setup process on color gradient pages." PageName="Views.OnBoarding.OnboardingPage" />
 	</Category>
 
 </Samples>

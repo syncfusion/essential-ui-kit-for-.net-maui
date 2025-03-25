@@ -12,6 +12,7 @@
     <Color x:Key="Secondary">#DFD8F7</Color>
     <Color x:Key="SecondaryDarkText">#9880e5</Color>
     <Color x:Key="Tertiary">#2B0B98</Color>
+    <Color x:Key="BorderLight">#E5E1E3</Color>
 
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>
@@ -27,12 +28,25 @@
     <Color x:Key="Gray600">#404040</Color>
     <Color x:Key="Gray900">#212121</Color>
     <Color x:Key="Gray950">#141414</Color>
+  
+    <Color x:Key="PrimaryLighter">#F7EDFF</Color>
+    <Color x:Key="WarningLight">#FFEFDD</Color>
+    <Color x:Key="InfoLight">#EFF1FF</Color>
+    <Color x:Key="SuccessLight">#CEFFC9</Color>
+    <Color x:Key="PrimaryLighterDark">#35303C</Color>
+    <Color x:Key="WarningLightDark">#34240D</Color>
+    <Color x:Key="InfoLightDark">#0D2354</Color>
+    <Color x:Key="SuccessLightDark">#1C2F1E</Color>
+    <Color x:Key="Alt1">#FCF8FA</Color>
+    <Color x:Key="SuccessGreen">#1C7E39</Color>
+    <Color x:Key="DangerRed">#C20D32</Color>
+    <Color x:Key="ContentText">#313032</Color>
 
-    <SolidColorBrush x:Key="PrimaryBrush" Color="{DynamicResource Primary}"/>
-    <SolidColorBrush x:Key="SecondaryBrush" Color="{DynamicResource Secondary}"/>
-    <SolidColorBrush x:Key="TertiaryBrush" Color="{DynamicResource Tertiary}"/>
-    <SolidColorBrush x:Key="WhiteBrush" Color="{DynamicResource White}"/>
-    <SolidColorBrush x:Key="BlackBrush" Color="{DynamicResource Black}"/>
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
+    <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
+    <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}"/>
+    <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}"/>
+    <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource Black}"/>
 
     <SolidColorBrush x:Key="Gray100Brush" Color="{DynamicResource Gray100}"/>
     <SolidColorBrush x:Key="Gray200Brush" Color="{DynamicResource Gray200}"/>

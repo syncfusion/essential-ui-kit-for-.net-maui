@@ -57,5 +57,7 @@
     <Color x:Key="SentMessageColorLight">#FCF8FA</Color>
     <Color x:Key="ReceivedMessageColorLight">#F7EDFF</Color>
     <Color x:Key="SelectionBackgroundLight">#e8e4ec</Color>
+    <Color x:Key="ContentTextColorLight">#474648</Color>
+    <Color x:Key="DataVisualizationLight">#E7E0EC</Color>
 
 </ResourceDictionary>

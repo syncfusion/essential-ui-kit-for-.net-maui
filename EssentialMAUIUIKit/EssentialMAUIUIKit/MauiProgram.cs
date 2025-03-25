@@ -19,7 +19,9 @@
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                     fonts.AddFont("Roboto-Medium.ttf", "Roboto-Medium");
                     fonts.AddFont("Roboto-Regular.ttf", "Roboto-Regular");
+                    fonts.AddFont("Righteous-Regular.ttf", "Righteous");
                     fonts.AddFont("UIFontIcons.ttf", "FontIcons");
+                    fonts.AddFont("Dashboard.ttf", "DashboardFontIcons");
                 });
 
 #if DEBUG
