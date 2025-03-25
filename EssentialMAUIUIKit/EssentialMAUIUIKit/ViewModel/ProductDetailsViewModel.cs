@@ -103,10 +103,10 @@ namespace EssentialMAUIUIKit
         }
 
         public List<string>? SizeVariants { get; set; }
-        public List<Review>? DetailPageReviews { get; set; }
+        public List<ProductDetailsModel>? DetailPageReviews { get; set; }
     }
 
-    public class Review
+    public class ProductDetailsModel
     {
         private string? customerImage;
         private List<string>? customerReviewImages;

@@ -72,6 +72,11 @@ Refer to the [MAUI System requirements documentation](https://help.syncfusion.co
 <img src="Images/ui-kit-notification.png" alt="Image 3" style="width: 30%;"/></div>
 <br/><br/>
 
+<div style="display: flex; justify-content: space-around; gap: 20px;">
+<img src="Images/ui-kit-dashboard.png" alt="Image 1" style="width: 30%;"/>
+<img src="Images/ui-kit-onboard.png" alt="Image 2" style="width: 30%;"/>
+<br/><br/>
+
 
 
 ## Requesting Screens & Reporting Bugs

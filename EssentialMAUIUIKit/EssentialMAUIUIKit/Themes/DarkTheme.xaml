@@ -47,6 +47,7 @@
     <Color x:Key="Gray-White">#ffffff</Color>
     <Color x:Key="GrayShadowColor">#333942</Color>
     <Color x:Key="GrayShadowBackgroundColor">#2F343C</Color>
+    <Color x:Key="GrayBorderBackgroundColor">#3C3B3D</Color>
 
     <Color x:Key="PrimaryColorDark">#8D4CF5</Color>
     <Color x:Key="SecondaryTextColorDark">#929092</Color>
@@ -57,5 +58,7 @@
     <Color x:Key="SentMessageColorDark">#313032</Color>
     <Color x:Key="ReceivedMessageColorDark">#35303C</Color>
     <Color x:Key="SelectionBackgroundDark">#2e2e2e</Color>
+    <Color x:Key="ContentTextColorDark">#C9C6C8</Color>
+    <Color x:Key="DataVisualizationDark">#36323B</Color>
 
 </ResourceDictionary>

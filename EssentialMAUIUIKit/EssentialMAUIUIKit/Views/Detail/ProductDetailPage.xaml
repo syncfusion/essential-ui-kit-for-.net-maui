@@ -280,7 +280,7 @@
                             <StackLayout x:Name="StackLayout"
                                          BindableLayout.ItemsSource="{Binding Product.DetailPageReviews}">
                                 <BindableLayout.ItemTemplate>
-                                    <DataTemplate x:DataType="local:Review">
+                                    <DataTemplate x:DataType="local:ProductDetailsModel">
                                         <Grid RowDefinitions="*,*,*"
                                               ColumnDefinitions="Auto,*,Auto">
                                             <!--  Profile Image  -->
@@ -357,7 +357,7 @@
                                                          Orientation="Horizontal"
                                                          Spacing="8">
                                                 <BindableLayout.ItemTemplate>
-                                                    <DataTemplate x:DataType="local:Review">
+                                                    <DataTemplate x:DataType="local:ProductDetailsModel">
                                                         <Image x:DataType="x:String"
                                                             Margin="0,8,0,0"
                                                             Aspect="AspectFill"

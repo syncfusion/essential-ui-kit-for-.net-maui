@@ -127,6 +127,7 @@
 	  <None Remove="Images\chatmessagebackground.png" />
 	  <None Remove="Images\ChooseGradient.png" />
 	  <None Remove="Images\close.png" />
+	  <None Remove="Images\companylogo.png" />
 	  <None Remove="Images\ConfirmGradient.png" />
 	  <None Remove="Images\DeliverGradient.png" />
 	  <None Remove="Images\emptycart.png" />
@@ -143,6 +144,7 @@
 	  <None Remove="Images\loginbackgroundscale100.png" />
 	  <None Remove="Images\loginbackgroundscale200.png" />
 	  <None Remove="Images\loginbackgroundscale400.png" />
+	  <None Remove="Images\mastercardlogo.png" />
 	  <None Remove="Images\microsoft.png" />
 	  <None Remove="Images\nocredits.png" />
 	  <None Remove="Images\nointernet.png" />
@@ -151,6 +153,9 @@
 	  <None Remove="Images\notasks.png" />
 	  <None Remove="Images\notenoughcredit.png" />
 	  <None Remove="Images\novideos.png" />
+	  <None Remove="Images\onboardingimage1.png" />
+	  <None Remove="Images\onboardingimage2.png" />
+	  <None Remove="Images\onboardingimage3.png" />
 	  <None Remove="Images\ourteam.png" />
 	  <None Remove="Images\paymentfailed.png" />
 	  <None Remove="Images\paymentfailure.png" />
@@ -159,6 +164,8 @@
 	  <None Remove="Images\pin.png" />
 	  <None Remove="Images\placeholder.png" />
 	  <None Remove="Images\placeholderrectangle.png" />
+	  <None Remove="Images\profile.png" />
+	  <None Remove="Images\profileavatar.png" />
 	  <None Remove="Images\reschedule.png" />
 	  <None Remove="Images\SleepDuration.png" />
 	  <None Remove="Images\somethingwentwrong.png" />
@@ -166,11 +173,13 @@
 	  <None Remove="Images\timezone.png" />
 	  <None Remove="Images\viewmode.png" />
 	  <None Remove="Images\visa.png" />
+	  <None Remove="Images\visalogo.png" />
 	  <None Remove="Images\WaterConsumed.png" />
 	  <None Remove="Images\word.png" />
 	  <None Remove="Resources\AppIcon\applicationicon.png" />
 	  <None Remove="Resources\Fonts\Roboto-Medium.ttf" />
-	  <None Remove="Resources\Fonts\Roboto-Regular.ttf" />
+    <None Remove="Resources\Fonts\Roboto-Regular.ttf" />
+    <None Remove="Resources\Fonts\Righteous-Regular.ttf" />
 	  <None Remove="Resources\Fonts\UIFontIcons.ttf" />
 	  <None Remove="Resources\Splash\splashscreen.png" />
 	  <None Remove="Resources\Splash\splashscreen.svg" />
@@ -178,6 +187,7 @@
 
 	<ItemGroup>
 	  <MauiImage Include="AppLayout\Icons\applicationicon.png" />
+	  <EmbeddedResource Include="AppLayout\Icons\onboarding.png" />
 	  <EmbeddedResource Include="AppLayout\TemplateList.xml" />
 	</ItemGroup>
 
@@ -210,6 +220,7 @@
 	  <MauiImage Include="Images\chatmessagebackground.png" />
 	  <MauiImage Include="Images\choosegradient.png" />
 	  <MauiImage Include="Images\close.png" />
+	  <MauiImage Include="Images\companylogo.png" />
 	  <MauiImage Include="Images\confirmgradient.png" />
 	  <MauiImage Include="Images\delivergradient.png" />
 	  <MauiImage Include="Images\emptycart.png" />
@@ -226,6 +237,7 @@
 	  <MauiImage Include="Images\loginbackgroundscale100.png" />
 	  <MauiImage Include="Images\loginbackgroundscale200.png" />
 	  <MauiImage Include="Images\loginbackgroundscale400.png" />
+	  <MauiImage Include="Images\mastercardlogo.png" />
 	  <MauiImage Include="Images\microsoft.png" />
 	  <MauiImage Include="Images\nocredits.png" />
 	  <MauiImage Include="Images\nointernet.png" />
@@ -234,6 +246,9 @@
 	  <MauiImage Include="Images\notasks.png" />
 	  <MauiImage Include="Images\notenoughcredit.png" />
 	  <MauiImage Include="Images\novideos.png" />
+	  <MauiImage Include="Images\onboardingimage1.png" />
+	  <MauiImage Include="Images\onboardingimage2.png" />
+	  <MauiImage Include="Images\onboardingimage3.png" />
 	  <MauiImage Include="Images\ourteam.png" />
 	  <MauiImage Include="Images\paymentfailed.png" />
 	  <MauiImage Include="Images\paymentfailure.png" />
@@ -242,12 +257,15 @@
 	  <MauiImage Include="Images\pin.png" />
 	  <MauiImage Include="Images\placeholder.png" />
 	  <MauiImage Include="Images\placeholderrectangle.png" />
+	  <MauiImage Include="Images\profile.png" />
+	  <MauiImage Include="Images\profileavatar.png" />
 	  <MauiImage Include="Images\reschedule.png" />
 	  <MauiImage Include="Images\sleepduration.png" />
 	  <MauiImage Include="Images\somethingwentwrong.png" />
 	  <MauiImage Include="Images\timezone.png" />
 	  <MauiImage Include="Images\viewmode.png" />
 	  <MauiImage Include="Images\visa.png" />
+	  <MauiImage Include="Images\visalogo.png" />
 	  <MauiImage Include="Images\waterconsumed.png" />
 	  <MauiImage Include="Images\word.png" />
 	</ItemGroup>
@@ -265,6 +283,8 @@
 		<PackageReference Include="Syncfusion.Maui.Inputs" Version="*" />
 		<PackageReference Include="Syncfusion.Maui.ListView" Version="*" />
 		<PackageReference Include="Syncfusion.Maui.Maps" Version="*" />
+		<PackageReference Include="Syncfusion.Maui.Picker" Version="*" />
+		<PackageReference Include="Syncfusion.Maui.Popup" Version="*" />
 		<PackageReference Include="Syncfusion.Maui.ProgressBar" Version="*" />
 		<PackageReference Include="Syncfusion.Maui.Rotator" Version="*" />
 		<PackageReference Include="Syncfusion.Maui.Toolkit" Version="*" />
@@ -365,6 +385,15 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Chat\OutgoingTextTemplate.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Dashboard\CompanyHistoryPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Dashboard\DailyTimelinePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Dashboard\RestaurantDashboardPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Forms\AddProfilePage.xaml">

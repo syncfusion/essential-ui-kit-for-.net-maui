@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EssentialMAUIUIKit.Views.Dashboard.DailyTimelinePage"
+             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+    <ContentView.BindingContext>
+        <local:DailyTimelineViewModel/>
+    </ContentView.BindingContext>
+    <StackLayout >
+
+        <Border StrokeThickness="1" Stroke="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" VerticalOptions="FillAndExpand" WidthRequest="{OnPlatform WinUI=647, MacCatalyst=647}" HorizontalOptions="CenterAndExpand" Margin="{OnPlatform WinUI='0,32,0,32'}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="8"/>
+            </Border.StrokeShape>
+            <Grid RowDefinitions="Auto,Auto,*">
+                <Grid Grid.Row="0" HeightRequest="80">
+                    <Border Stroke="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource GrayBorderBackgroundColor}}"  HeightRequest="40" WidthRequest="{OnPlatform WinUI=145, MacCatalyst=145}"  BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource GrayBorderBackgroundColor}}" HorizontalOptions="Start" Margin="16,0,0,0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20"/>
+                        </Border.StrokeShape>
+                        <Border.Shadow>
+                            <Shadow Brush="#000000" Offset="0,2" Opacity="0.15" Radius="20" />
+                        </Border.Shadow>
+                        <Grid Margin="{OnPlatform Android='20,0,0,0', iOS='20,0,0,0'}">                            
+                             <!--DatePicker control--> 
+                            <DatePicker Date="{Binding SelectedDate, Mode=TwoWay}" HeightRequest="60" WidthRequest="145" FontSize="14" Format="dd MMM, yyyy" MinimumDate="2000-01-01" MaximumDate="2030-12-31" BackgroundColor="Transparent" VerticalOptions="CenterAndExpand" HorizontalOptions="{OnPlatform WinUI=End, MacCatalyst=End, Android=Center, iOS=Center}" FontFamily="Roboto-Medium" Margin="{OnPlatform Default='10,0,0,0', MacCatalyst='10,40,0,0'}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+                            <!--Datepicker Icon-->
+                            <Label FontFamily="DashboardFontIcons" Text="&#xe711;" Grid.Row="0" VerticalOptions="Center" HorizontalOptions="End" Margin="{OnPlatform Android='0,0,25,0', iOS='0,0,25,0', WinUI='0,0,10,0', MacCatalyst='0,0,10,0'}" IsVisible="{OnPlatform WinUI=True}" HeightRequest="14" WidthRequest="12" Background = "{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource GrayBorderBackgroundColor}}" />
+                        </Grid>
+                    </Border>
+                </Grid>
+                <BoxView Grid.Row="1" HeightRequest="1" HorizontalOptions="FillAndExpand" Margin="16,0,16,0" Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" />
+                <Grid Grid.Row="2" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="16,16,0,16">
+                    <CollectionView HorizontalOptions="FillAndExpand" ItemsSource="{Binding DailyActivities}" SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <VerticalStackLayout>
+                                    <Grid ColumnDefinitions="Auto,Auto,Auto" >
+                                        <Border Stroke="Transparent" WidthRequest="42" HeightRequest="32" VerticalOptions="Start">
+                                            <Label Text="{Binding Time}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"  Grid.Column="0" FontSize="14" FontFamily="{OnPlatform WinUI=Roboto-Thin,MacCatalyst=Roboto-Thin, Android=Roboto-Medium, iOS=Roboto-Medium}" VerticalOptions="Center"/>
+                                        </Border>
+                                        <Grid Grid.Column="1" RowDefinitions="Auto,Auto">
+                                            <Border Grid.Row="0" VerticalOptions="Start"   WidthRequest="32" HeightRequest="32" Stroke="Transparent" BackgroundColor="#7633DA" HorizontalOptions="Center">
+                                                <Border.StrokeShape>
+                                                    <RoundRectangle CornerRadius="100" />
+                                                </Border.StrokeShape>
+                                                <Label FontFamily="DashboardFontIcons" Text="{Binding Icon}"  WidthRequest="16" HeightRequest="16" HorizontalOptions="Center" TextColor="{DynamicResource White}"/>                                               
+                                            </Border>
+                                            <Border Grid.Row="1" HeightRequest="52" WidthRequest="2" BackgroundColor="#7633DA" Stroke="#7633DA" Margin="0,2,0,2">
+                                                <Border.Triggers>
+                                                    <DataTrigger TargetType="Border" Binding="{Binding IsLastItem}" Value="True">
+                                                        <Setter Property="IsVisible" Value="False" />
+                                                    </DataTrigger>
+                                                </Border.Triggers>
+                                            </Border>
+                                        </Grid>
+                                        <Grid RowDefinitions="Auto,Auto" Grid.Column="2" WidthRequest="210" HeightRequest="80" Margin="10,0,0,0">
+                                            <Label Text="{Binding ActivityTitle}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" HeightRequest="20"  Grid.Row="0" FontFamily="Roboto-Medium" FontAttributes="{OnPlatform Android='Bold', iOS='Bold'}" FontSize="14" VerticalOptions="Start" />
+                                            <Label Text="{Binding ActivityDescription}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" HeightRequest="60" Grid.Row="1" FontFamily="{OnPlatform WinUI=Roboto-Thin, MacCatalyst=Roboto-Thin, Android=Roboto-Medium, iOS=Roboto-Medium}" FontSize="14" VerticalOptions="FillAndExpand" />
+                                        </Grid>
+                                    </Grid>
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </Grid>
+        </Border>
+    </StackLayout>
+</ContentView>
