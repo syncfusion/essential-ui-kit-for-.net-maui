@@ -8,7 +8,8 @@
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"   
              xmlns:rotator="clr-namespace:Syncfusion.Maui.Rotator;assembly=Syncfusion.Maui.Rotator"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit"             
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             x:DataType="local:MyWalletViewModel"
              xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core">
 
     <ContentView.BindingContext>
@@ -22,7 +23,7 @@
             <ResourceDictionary>
                 <DataTemplate x:Key="RegularCardTemplate">
                     <StackLayout Margin="0,0,20,0">
-                        <Border Margin="10,0" HeightRequest="175" WidthRequest="343" Stroke="Transparent" StrokeThickness="0" StrokeShape="RoundRectangle 6,6,6,6">
+                        <Border x:DataType="local:CardDetails" Margin="10,0" HeightRequest="175" WidthRequest="343" Stroke="Transparent" StrokeThickness="0" StrokeShape="RoundRectangle 6,6,6,6">
                             <Border.Background>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                     <GradientStop Color="{Binding ColorGradientStart}" Offset="0"/>
@@ -120,18 +121,18 @@
                     <syncfusion:SfAvatarView ContentType="Custom" AvatarSize="Medium" AvatarShape="Circle" ImageSource="{Binding ProfileImage}" HorizontalOptions="End" Background="White" Margin="0,0,24,0" IsVisible="{OnPlatform Android=False, iOS=False}"/>
                 </Grid>
                 <BoxView HeightRequest="1" Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" HorizontalOptions="Fill" />
-                <Grid RowDefinitions="{OnPlatform WinUI='*', MacCatalyst='*'}" VerticalOptions="FillAndExpand" ColumnDefinitions="*" HorizontalOptions="FillAndExpand">
-                    <Grid ColumnDefinitions="{OnPlatform WinUI='Auto,Auto,*', MacCatalyst='Auto,Auto,*'}" RowDefinitions="*" VerticalOptions="FillAndExpand" HeightRequest="{OnPlatform MacCatalyst={Binding LayoutHeight}}">
+                <Grid RowDefinitions="{OnPlatform WinUI='*', MacCatalyst='*'}" VerticalOptions="Fill" ColumnDefinitions="*" HorizontalOptions="Fill">
+                    <Grid ColumnDefinitions="{OnPlatform WinUI='Auto,Auto,*', MacCatalyst='Auto,Auto,*'}" RowDefinitions="*" VerticalOptions="Fill" HeightRequest="{OnPlatform MacCatalyst={Binding LayoutHeight}}">
 
                         <!-- Menu Item list -->
-                        <Grid Grid.Column="0" VerticalOptions="StartAndExpand" WidthRequest="{OnPlatform MacCatalyst=350}" HorizontalOptions="Start" IsVisible="{OnPlatform Android=False, iOS=False}">
+                        <Grid Grid.Column="0" VerticalOptions="Start" WidthRequest="{OnPlatform MacCatalyst=350}" HorizontalOptions="Start" IsVisible="{OnPlatform Android=False, iOS=False}">
                             <VerticalStackLayout>
                                 <CollectionView ItemsSource="{Binding MenuItemList}">
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate>
                                             <Border Padding="10" Stroke="Transparent">
                                                 <!-- Menu Item Text -->
-                                                <Label Text="{Binding Name}" FontSize="14" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" VerticalOptions="Center" Margin="0,0,5,0">
+                                                <Label x:DataType="local:MyWalletMenuItems" Text="{Binding Name}" FontSize="14" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" VerticalOptions="Center" Margin="0,0,5,0">
                                                     <Label.Triggers>
                                                         <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
                                                             <Setter Property="TextColor" Value="{StaticResource PrimaryFormsColor}" />
@@ -144,24 +145,24 @@
                                 </CollectionView>
                             </VerticalStackLayout>
                         </Grid>
-                        <BoxView Grid.Column="1"  WidthRequest="1" Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" HorizontalOptions="Start" VerticalOptions="FillAndExpand" IsVisible="{OnPlatform Android=False, iOS=False}"/>
+                        <BoxView Grid.Column="1"  WidthRequest="1" Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" HorizontalOptions="Start" VerticalOptions="Fill" IsVisible="{OnPlatform Android=False, iOS=False}"/>
                         <!-- Card Details-->
                         <!--<ScrollView  Orientation="Vertical" VerticalScrollBarVisibility="Never" VerticalOptions="Fill">-->
-                        <Grid Grid.Column="{OnPlatform WinUI=2,MacCatalyst=2}" RowDefinitions="{OnPlatform WinUI='1* ,Auto, 3*',MacCatalyst='Auto,Auto, *', Android='Auto,*', iOS='Auto,*'}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                        <Grid Grid.Column="{OnPlatform WinUI=2,MacCatalyst=2}" RowDefinitions="{OnPlatform WinUI='1* ,Auto, 3*',MacCatalyst='Auto,Auto, *', Android='Auto,*', iOS='Auto,*'}" VerticalOptions="Fill" HorizontalOptions="Fill">
                             <ScrollView Grid.Row="0" HeightRequest="{OnPlatform MacCatalyst='240', WinUI=240}" Orientation="Horizontal" HorizontalOptions="Fill" HorizontalScrollBarVisibility="Default" VerticalScrollBarVisibility="Never">
-                                <HorizontalStackLayout  Margin="{OnPlatform WinUI='0,16,0,16',MacCatalyst='0,16,0,16', Android='32,16,0,16', iOS='16,16,16,16'}" HorizontalOptions="Center" VerticalOptions="Center">
-                                    <rotator:SfRotator ItemsSource="{Binding CardDetails}" HorizontalOptions="Center" VerticalOptions="Start" HeightRequest="200" WidthRequest="343" SelectedDotColor="{OnPlatform Default='White', Android='#7633DA',iOS='#7633DA'}" UnselectedDotColor="{OnPlatform Default='White', Android='#FCF8FA',iOS='#FCF8FA'}" IsVisible="{OnPlatform WinUI='False', MacCatalyst='False'}" >
+                                <HorizontalStackLayout Margin="{OnPlatform WinUI='0,16,0,16',MacCatalyst='0,16,0,16', Android='32,16,0,16', iOS='16,16,16,16'}" HorizontalOptions="Center" VerticalOptions="Center">
+                                    <rotator:SfRotator EnableLooping="False" ItemsSource="{Binding CardDetails}" HorizontalOptions="Center" VerticalOptions="Start" HeightRequest="200" WidthRequest="343" SelectedDotColor="{OnPlatform Default='White', Android='#7633DA',iOS='#7633DA'}" UnselectedDotColor="{OnPlatform Default='White', Android='#FCF8FA',iOS='#FCF8FA'}" IsVisible="{OnPlatform WinUI='False', MacCatalyst='False'}" >
                                         <rotator:SfRotator.ItemTemplate>
                                             <local:CardTemplateSelector RegularTemplate="{StaticResource RegularCardTemplate}" LastItemTemplate="{StaticResource LastCardTemplate}" />
                                         </rotator:SfRotator.ItemTemplate>
                                     </rotator:SfRotator>
-                                    <CollectionView ItemsSource="{Binding FilteredCardDetails}" HorizontalScrollBarVisibility="Never" HorizontalOptions="FillAndExpand" VerticalOptions="Start" IsVisible="{OnPlatform Android='False', iOS='False'}">
+                                    <CollectionView ItemsSource="{Binding FilteredCardDetails}" HorizontalScrollBarVisibility="Never" HorizontalOptions="Fill" VerticalOptions="Start" IsVisible="{OnPlatform Android='False', iOS='False'}">
                                         <CollectionView.ItemsLayout>
                                             <LinearItemsLayout Orientation="Horizontal"/>
                                         </CollectionView.ItemsLayout>
                                         <CollectionView.ItemTemplate>
                                             <DataTemplate>
-                                                <StackLayout Margin="0,0,20,0" IsVisible="{Binding IsVisible}">
+                                                <StackLayout x:DataType="local:CardDetails" Margin="0,0,20,0" IsVisible="{Binding IsVisible}">
                                                     <Border Margin="10,0" HeightRequest="200" WidthRequest="343" Stroke="Transparent" StrokeThickness="0" StrokeShape="RoundRectangle 6,6,6,6">
                                                         <Grid Padding="10"  RowDefinitions="*,*,Auto">
                                                             <Grid.Background>
@@ -222,7 +223,7 @@
                                 <Grid Grid.Column="{OnPlatform WinUI='0',MacCatalyst=0}" Grid.Row="{OnPlatform Android='0', iOS='0'}" RowDefinitions='Auto,Auto,*' Margin="{OnPlatform WinUI='16,16,16,0'}">
                                     <!-- Available Balance-->
                                     <Grid BindingContext="{Binding SelectedCard}" Grid.Row="0" HeightRequest="{OnPlatform WinUI=88,MacCatalyst=88}" Margin="16,16,16,0">
-                                        <Border HeightRequest="73" Background="{AppThemeBinding Light={DynamicResource Gray-Black}, Dark={DynamicResource Gray-White}}" StrokeShape="RoundRectangle 5,5,5,5" Margin="0,0,0,16">
+                                        <Border HeightRequest="73" x:DataType="local:CardDetails" Background="{AppThemeBinding Light={DynamicResource Gray-Black}, Dark={DynamicResource Gray-White}}" StrokeShape="RoundRectangle 5,5,5,5" Margin="0,0,0,16">
                                             <Grid ColumnDefinitions="*,*" RowDefinitions="*,*" Margin="8,8,8,8">
                                                 <Label Grid.Row="0" Grid.Column="0" Text="{Binding CardHolderName}" HorizontalOptions="Start" TextColor="{AppThemeBinding Light={DynamicResource Gray-White}, Dark={DynamicResource Gray-Black}}" FontSize="16" FontFamily="Roboto-Regular" />
                                                 <Label Grid.Row="0" Grid.Column="1" Text="Avl Balance" HorizontalOptions="End" TextColor="{AppThemeBinding Light={DynamicResource Gray-White}, Dark={DynamicResource Gray-Black}}" FontSize="12" FontFamily="Roboto-Thin" HeightRequest="16"/>
@@ -231,12 +232,12 @@
                                             </Grid>
                                         </Border>
                                     </Grid>
-                                    <BoxView Grid.Row="1" HeightRequest="8" Color="#FCF8FA" HorizontalOptions="FillAndExpand" IsVisible="{OnPlatform WinUI='False', MacCatalyst='False'}"/>
+                                    <BoxView Grid.Row="1" HeightRequest="8" Color="#FCF8FA" HorizontalOptions="Fill" IsVisible="{OnPlatform WinUI='False', MacCatalyst='False'}"/>
                                     <Grid Grid.Row="2" RowDefinitions="Auto,*" VerticalOptions="{OnPlatform WinUI='Fill', MacCatalyst='Fill'}" Margin="16,16,16,0">
 
                                         <!-- Combo Box -->
                                         <StackLayout Grid.Row="0" HeightRequest="{OnPlatform WinUI=40, MacCatalyst=40}" Margin="0,0,0,10">
-                                            <Grid HorizontalOptions="FillAndExpand">
+                                            <Grid HorizontalOptions="Fill">
                                                 <Label Text="{Binding ChartLabel}" HorizontalOptions="Start" VerticalOptions="Center" FontFamily="Roboto-Medium" FontSize="{OnPlatform MacCatalyst=24}" FontAttributes="Bold"></Label>
                                                 <Border BackgroundColor="{AppThemeBinding Light={DynamicResource Gray-White}, Dark={DynamicResource GrayBorderBackgroundColor}}"
 VerticalOptions="End" StrokeShape="RoundRectangle 20,20,20,20" HeightRequest="40" WidthRequest="85" Margin="{OnPlatform Android='0,0,10,0', iOS='0,0,10,0'}" HorizontalOptions="End">
@@ -271,24 +272,27 @@ VerticalOptions="End" StrokeShape="RoundRectangle 20,20,20,20" HeightRequest="40
                                                                         HorizontalTextAlignment="Center"
                                                                         Text="{DynamicResource DropDownButtonIcon}"
                                                                         TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                                                                                                        FontAttributes="Bold"
+                                                                        FontAttributes="Bold"
                                                                         VerticalTextAlignment="Center"/>
                                                                 </combobox:DropDownButtonSettings.View>
                                                             </combobox:DropDownButtonSettings>
                                                         </combobox:SfComboBox.DropDownButtonSettings>
                                                         <combobox:SfComboBox.CustomView>
-
                                                             <Label
-                                                                BindingContext="{Binding SelectedItem, Source={x:Reference comboBox}}"
                                                                 FontFamily="Roboto-Regular"
                                                                 FontSize="14" 
+                                                                x:DataType="local:PaymentDetail"
                                                                 FontAttributes="Bold"
                                                                 HorizontalOptions="Start"
                                                                 HorizontalTextAlignment="Start"
-                                                                Text="{Binding Duration}"
                                                                 TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                                                                 VerticalOptions="Center"
-                                                                VerticalTextAlignment="Center" Margin="{OnPlatform WinUI='16,0,0,0', MacCatalyst='16,0,0,0'}"/>
+                                                                Text="{Binding Duration}"
+                                                                VerticalTextAlignment="Center" Margin="{OnPlatform WinUI='16,0,0,0', MacCatalyst='16,0,0,0'}">
+                                                                <Label.BindingContext>
+                                                                    <x:Binding x:DataType="combobox:SfComboBox" Source="{x:Reference comboBox}" Path="SelectedItem"/>
+                                                                </Label.BindingContext>
+                                                            </Label>
 
                                                         </combobox:SfComboBox.CustomView>
                                                     </combobox:SfComboBox>
@@ -335,9 +339,9 @@ VerticalOptions="End" StrokeShape="RoundRectangle 20,20,20,20" HeightRequest="40
                                 </Grid>
 
                                 <!-- Vertical Border Line -->
-                                <BoxView Grid.Column="1" WidthRequest="8" Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" VerticalOptions="FillAndExpand" IsVisible="{OnPlatform Android='False', iOS='False'}"/>
+                                <BoxView Grid.Column="1" WidthRequest="8" Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" VerticalOptions="Fill" IsVisible="{OnPlatform Android='False', iOS='False'}"/>
                                 <!--Horizontal Border Line-->
-                                <BoxView Grid.Row="{OnPlatform Android='1', iOS='1'}" HeightRequest="8" Color="#FCF8FA" HorizontalOptions="FillAndExpand" IsVisible="{OnPlatform WinUI='False', MacCatalyst='False'}" VerticalOptions="{OnPlatform Android='Start'}"/>
+                                <BoxView Grid.Row="{OnPlatform Android='1', iOS='1'}" HeightRequest="8" Color="#FCF8FA" HorizontalOptions="Fill" IsVisible="{OnPlatform WinUI='False', MacCatalyst='False'}" VerticalOptions="{OnPlatform Android='Start'}"/>
                                 <!-- Transaction Details -->
                                 <Grid Grid.Column="2" Grid.Row="{OnPlatform Android='1', iOS='1'}" RowDefinitions="Auto, *" Margin="16,16,16,16">
                                     <Label Grid.Row="0" HeightRequest="{OnPlatform WinUI=30, MacCatalyst=30}" Text="Transactions" FontFamily="Roboto-Regular" FontSize="{OnPlatform WinUI=22, MacCatalyst=22, Android=14, iOS=14}" FontAttributes="{OnPlatform Android='Bold', iOS='Bold'}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
@@ -350,7 +354,7 @@ VerticalOptions="End" StrokeShape="RoundRectangle 20,20,20,20" HeightRequest="40
                                         SelectionBackground="{AppThemeBinding Light={DynamicResource SelectionBackgroundLight}, Dark={DynamicResource SelectionBackgroundDark}}" Margin="{OnPlatform WinUI='0,16,0,0',MacCatalyst='0,16,0,0', Android='0,8,0,0', iOS='0,8,0,0'}">
                                         <listView:SfListView.ItemTemplate>
                                             <DataTemplate>
-                                                <StackLayout Spacing="0">
+                                                <StackLayout x:DataType="local:PaymentDetail" Spacing="0">
                                                     <Grid
                                                         ColumnDefinitions="Auto, *, *"
                                                         ColumnSpacing="0"                   

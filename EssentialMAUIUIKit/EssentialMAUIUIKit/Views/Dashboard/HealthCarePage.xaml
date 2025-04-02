@@ -5,7 +5,7 @@
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:controls="clr-namespace:EssentialMAUIUIKit.Controls"
              xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit"             
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
              xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
              xmlns:segmentedControl="clr-namespace:Syncfusion.Maui.Toolkit.SegmentedControl;assembly=Syncfusion.Maui.Toolkit"
              xmlns:gauge="clr-namespace:Syncfusion.Maui.Gauges;assembly=Syncfusion.Maui.Gauges">
@@ -26,21 +26,21 @@
                 </syncfusion:SfBadgeView>
 
                 <!-- Profile Image Avatar -->
-                <syncfusion:SfAvatarView ContentType="Custom" AvatarSize="Medium" AvatarShape="Circle" ImageSource="{Binding ProfileImage}" HorizontalOptions="End" Background="White" Margin="0,0,24,0" IsVisible="{OnPlatform Android=False, iOS=False}"/>
+                <syncfusion:SfAvatarView ContentType="Custom" AvatarSize="Medium" AvatarShape="Circle" x:DataType="local:HealthCareViewModel" ImageSource="{Binding ProfileImage}" HorizontalOptions="End" Background="White" Margin="0,0,24,0" IsVisible="{OnPlatform Android=False, iOS=False}"/>
             </Grid>
             <BoxView HeightRequest="1" Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" HorizontalOptions="Fill" />
-            <Grid RowDefinitions="{OnPlatform WinUI='*', MacCatalyst='*'}" VerticalOptions="FillAndExpand" ColumnDefinitions="*" HorizontalOptions="FillAndExpand" Background="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
+            <Grid RowDefinitions="{OnPlatform WinUI='*', MacCatalyst='*'}" VerticalOptions="{OnPlatform Default= 'FillAndExpand'}" ColumnDefinitions="*" HorizontalOptions="Fill" Background="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
                 <ScrollView Grid.Row="{OnPlatform WinUI='0', MacCatalyst='0'}">
-                    <Grid ColumnDefinitions="{OnPlatform WinUI='Auto, 5*, 3*', MacCatalyst='Auto, 4*, 2*'}" RowDefinitions="*" VerticalOptions="FillAndExpand">
+                    <Grid ColumnDefinitions="{OnPlatform WinUI='Auto, 5*, 3*', MacCatalyst='Auto, 4*, 2*'}" RowDefinitions="*" VerticalOptions="Fill">
                         <!-- First Layout with Width 257 and Height 769 -->
-                        <Grid Grid.Column="0" VerticalOptions="StartAndExpand" HorizontalOptions="Start" WidthRequest="{OnPlatform MacCatalyst=350}" IsVisible="{OnPlatform Android=False, iOS=False}">
+                        <Grid Grid.Column="0" VerticalOptions="Start" HorizontalOptions="Start" WidthRequest="{OnPlatform MacCatalyst=350}" IsVisible="{OnPlatform Android=False, iOS=False}">
                             <VerticalStackLayout>
-                                <CollectionView ItemsSource="{Binding MenuItemList}">
+                                <CollectionView x:DataType="local:HealthCareViewModel" ItemsSource="{Binding MenuItemList}">
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate>
                                             <Border Padding="10" Stroke="Transparent">
                                                 <!-- Menu Item Text -->
-                                                <Label Text="{Binding Name}" FontSize="16" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" VerticalOptions="Center" Margin="0,0,5,0">
+                                                <Label x:DataType="local:HealthCareMenuItem" Text="{Binding Name}" FontSize="16" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" VerticalOptions="Center" Margin="0,0,5,0">
                                                     <Label.Triggers>
                                                         <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
                                                             <Setter Property="TextColor" Value="{StaticResource PrimaryFormsColor}" />
@@ -55,7 +55,7 @@
                         </Grid>
                         <!-- Second Layout with Width 631 and Height 769 -->
                         <Grid Grid.Column="{OnPlatform WinUI='1', MacCatalyst='1'}" Grid.Row="{OnPlatform Android='0',iOS='0'}" VerticalOptions="{OnPlatform WinUI=FillAndExpand, MacCatalyst=FillAndExpand, Android=Start}" IsVisible="{OnPlatform Android=False, iOS=False}">
-                            <BoxView WidthRequest="2" Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" HorizontalOptions="Start" VerticalOptions="FillAndExpand" />
+                            <BoxView WidthRequest="2" Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" HorizontalOptions="Start" VerticalOptions="Fill" />
                             <Grid RowDefinitions="Auto,Auto,*" Margin="{OnPlatform WinUI='10,0,10,0', MacCatalyst='10,0,10,0'}" IsVisible="{OnPlatform Android=False, iOS=False}" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
                                 <Grid Grid.Row="0" RowDefinitions="Auto,*" VerticalOptions="Start">
                                     <Grid Grid.Row="0" ColumnDefinitions="*,*"  Margin="{OnPlatform WinUI='32,0,32,0', MacCatalyst='32,0,32,0', Android='16,0,16,0', iOS='16,0,16,0'}" HeightRequest="{OnPlatform WinUI=60, MacCatalyst=60}" IsVisible="{OnPlatform Android=False, iOS=False}">
@@ -72,14 +72,14 @@
                                                 </Border.Shadow>
                                                 <Grid Margin="{OnPlatform Android='20,0,0,0',iOS='20,0,0,0'}">
                                                     <!--DatePicker control-->
-                                                    <DatePicker Date="{Binding Date, Mode=TwoWay}" HeightRequest="{OnPlatform WinUI=40, MacCatalyst=40}" WidthRequest="145" FontSize="14" Format="dd MMM, yyyy" MinimumDate="2000-01-01" MaximumDate="2030-12-31" BackgroundColor="Transparent" VerticalOptions="CenterAndExpand" HorizontalOptions="{OnPlatform Default=End, Android=Center, iOS=Center}" FontFamily="Roboto-Regular" Margin="{OnPlatform Default='15,0,0,0',MacCatalyst='15,20,0,0'}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+                                                    <DatePicker x:DataType="local:CaloriesConsumedData"  Date="{Binding Date, Mode=TwoWay}" HeightRequest="{OnPlatform WinUI=40, MacCatalyst=40}" WidthRequest="145" FontSize="14" Format="dd MMM, yyyy" MinimumDate="2000-01-01" MaximumDate="2030-12-31" BackgroundColor="Transparent" VerticalOptions="Center" HorizontalOptions="{OnPlatform Default=End, Android=Center, iOS=Center}" FontFamily="Roboto-Regular" Margin="{OnPlatform Default='15,0,0,0',MacCatalyst='15,20,0,0'}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
                                                     <!--Datepicker Icon-->
                                                     <Label FontFamily="DashboardFontIcons" Text="&#xe711;" Grid.Row="0" VerticalOptions="Center" HorizontalOptions="End" Margin="{OnPlatform Android='0,0,25,0', iOS='0,0,25,0', WinUI='0,0,10,0', MacCatalyst='0,0,10,0'}" IsVisible="{OnPlatform WinUI=True}" HeightRequest="14" WidthRequest="12" Background = "{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource GrayBorderBackgroundColor}}"/>
                                                 </Grid>
                                             </Border>
                                         </HorizontalStackLayout>
                                     </Grid>
-                                    <Grid Grid.Row="1" VerticalOptions="FillAndExpand">
+                                    <Grid x:DataType="local:HealthCareViewModel" Grid.Row="1" VerticalOptions="Fill">
                                         <chart:SfCircularChart>
                                             <!-- Series Definition -->
                                             <chart:SfCircularChart.Series>
@@ -100,14 +100,14 @@
                                 </Grid>
                                 <Grid Grid.Row="2">
                                     <Grid Padding="0" RowDefinitions="Auto,Auto">
-                                        <CollectionView ItemsSource="{Binding CaloriesConsumedList}">
+                                        <CollectionView x:DataType="local:HealthCareViewModel" ItemsSource="{Binding CaloriesConsumedList}">
                                             <CollectionView.ItemTemplate>
                                                 <DataTemplate>
-                                                    <StackLayout IsVisible ="{Binding IsSelected}">
-                                                        <syncfusion:SfChipGroup ItemsSource="{Binding CaloriesConsumedPerMeal}" SelectedItem="{Binding CaloriesConsumedPerMeal[0],Mode=OneTime}" SelectionChanged="OnChipSelectionChanging"  ChipType="Choice" ChipCornerRadius="25" Margin="16,16,0,0" ChipStroke="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}"  ChipFontFamily="Roboto-Medium" ImageMemberPath="{Binding MealOptions}" ChipTextColor="{AppThemeBinding Light={DynamicResource BackgroundColorDark}, Dark={DynamicResource BackgroundColorLight}}" SelectedChipBackground="{DynamicResource PrimaryColorLight}" SelectedChipTextColor="{DynamicResource BackgroundColorLight}" >
+                                                    <StackLayout x:DataType="local:CaloriesConsumedData" IsVisible ="{Binding IsSelected}">
+                                                        <syncfusion:SfChipGroup ItemsSource="{Binding CaloriesConsumedPerMeal}" SelectedItem="{Binding CaloriesConsumedPerMeal[0],Mode=OneTime}" SelectionChanged="OnChipSelectionChanging"  ChipType="Choice" ChipCornerRadius="25" Margin="16,16,0,0" ChipStroke="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}"  ChipFontFamily="Roboto-Medium" ChipTextColor="{AppThemeBinding Light={DynamicResource BackgroundColorDark}, Dark={DynamicResource BackgroundColorLight}}" SelectedChipBackground="{DynamicResource PrimaryColorLight}" SelectedChipTextColor="{DynamicResource BackgroundColorLight}" >
                                                             <syncfusion:SfChipGroup.ItemTemplate>
                                                                 <DataTemplate>
-                                                                    <Grid HeightRequest="32" >
+                                                                    <Grid x:DataType="local:MealCalorieConsumed" HeightRequest="32" >
                                                                         <Grid.ColumnDefinitions>
                                                                             <ColumnDefinition Width="Auto" />
                                                                             <ColumnDefinition Width="*" />
@@ -123,8 +123,8 @@
                                                 </DataTemplate>
                                             </CollectionView.ItemTemplate>
                                             
-                                        </CollectionView>                                        
-                                        <CollectionView ItemsSource="{Binding CaloriesChartDataValue.SelectedMealDetails, Mode=TwoWay}" Margin="{OnPlatform MacCatalyst='120,0,120,0'}" WidthRequest="{OnPlatform WinUI=383, Android=383}" HeightRequest="{OnPlatform MacCatalyst=420, Default=206}" SelectionMode="None" Grid.Row="1">
+                                        </CollectionView>
+                                        <CollectionView x:DataType="local:HealthCareViewModel" ItemsSource="{Binding CaloriesChartDataValue.SelectedMealDetails, Mode=TwoWay}" Margin="{OnPlatform MacCatalyst='120,0,120,0'}" WidthRequest="{OnPlatform WinUI=383, Android=383}" HeightRequest="{OnPlatform MacCatalyst=420, Default=206}" SelectionMode="None" Grid.Row="1">
                                             <CollectionView.ItemTemplate>
                                                 <DataTemplate>
                                                     <Grid RowSpacing="16" ColumnSpacing="16" HorizontalOptions="Fill" Margin="16,75,10,0"  Padding="10">
@@ -143,7 +143,7 @@
                                                                 <!--Combined Shadow Effect-->
                                                                 <Shadow Brush="{AppThemeBinding Dark={DynamicResource SeparatorColorDark}, Light={DynamicResource SeparatorColorLight}}" Offset="0,1" Radius="3" />
                                                             </Border.Shadow>
-                                                            <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                                                            <StackLayout x:DataType="local:MealCalorieConsumed" VerticalOptions="Center" HorizontalOptions="Center">
                                                                 <Label Text="{Binding CaloriesFromFiber}" FontSize="28" FontFamily="Roboto-Thin" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" HorizontalTextAlignment="Center"/>
                                                                 <Label Text="Fiber" FontSize="14" FontFamily="Roboto-Thin" TextColor="{AppThemeBinding Dark={DynamicResource SecondaryTextColorDark}, Light={DynamicResource SecondaryTextColorLight}}" HorizontalTextAlignment="Center"/>
                                                                 <BoxView Color="{Binding NutrientColorValue.FiberColor}" WidthRequest="52" HeightRequest="4" HorizontalOptions="Center" Margin="0,2,0,0" />
@@ -151,60 +151,60 @@
 
                                                         </Border>
 
-                                                        <Border Grid.Row="0" Grid.Column="1" Stroke="Gray" StrokeThickness="1" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"   HorizontalOptions="FillAndExpand" Margin="5,0,5,0">
+                                                        <Border Grid.Row="0" Grid.Column="1" Stroke="Gray" StrokeThickness="1" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"   HorizontalOptions="Fill" Margin="5,0,5,0">
                                                             <Border.Shadow>
                                                                 <!--Combined Shadow Effect-->
                                                                 <Shadow Brush="{AppThemeBinding Dark={DynamicResource SeparatorColorDark}, Light={DynamicResource SeparatorColorLight}}" Offset="0,1" Radius="3" />
                                                             </Border.Shadow>
-                                                            <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                                                            <StackLayout x:DataType="local:MealCalorieConsumed" VerticalOptions="Center" HorizontalOptions="Center">
                                                                 <Label Text="{Binding CaloriesFromProtein}" FontSize="28" FontFamily="Roboto-Thin" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" HorizontalTextAlignment="Center"/>
                                                                 <Label Text="Protein" FontSize="14" FontFamily="Roboto-Thin" TextColor="{AppThemeBinding Dark={DynamicResource SecondaryTextColorDark}, Light={DynamicResource SecondaryTextColorLight}}" HorizontalTextAlignment="Center"/>
                                                                 <BoxView Color="{Binding NutrientColorValue.ProteinColor}" WidthRequest="52" HeightRequest="4" HorizontalOptions="Center" Margin="0,2,0,0" />
                                                             </StackLayout>
                                                         </Border>
 
-                                                        <Border Grid.Row="0" Grid.Column="2" Stroke="Gray" StrokeThickness="1" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}" HorizontalOptions="FillAndExpand" Margin="5,0,0,0" >
+                                                        <Border Grid.Row="0" Grid.Column="2" Stroke="Gray" StrokeThickness="1" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}" HorizontalOptions="Fill" Margin="5,0,0,0" >
                                                             <Border.Shadow>
                                                                 <!--Combined Shadow Effect-->
                                                                 <Shadow Brush="{AppThemeBinding Dark={DynamicResource SeparatorColorDark}, Light={DynamicResource SeparatorColorLight}}" Offset="0,1" Radius="3" />
                                                             </Border.Shadow>
-                                                            <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                                                            <StackLayout x:DataType="local:MealCalorieConsumed" VerticalOptions="Center" HorizontalOptions="Center">
                                                                 <Label Text="{Binding CaloriesFromCarbs}" FontSize="28" FontFamily="Roboto-Thin" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" HorizontalTextAlignment="Center"/>
                                                                 <Label Text="Carbs" FontSize="14" FontFamily="Roboto-Thin" TextColor="{AppThemeBinding Dark={DynamicResource SecondaryTextColorDark}, Light={DynamicResource SecondaryTextColorLight}}" HorizontalTextAlignment="Center"/>
                                                                 <BoxView Color="{Binding NutrientColorValue.CarbsColor}" WidthRequest="52" HeightRequest="4" HorizontalOptions="Center" Margin="0,2,0,0" />
                                                             </StackLayout>
                                                         </Border>
 
-                                                        <Border Grid.Row="1" Grid.Column="0" Stroke="Gray" StrokeThickness="1" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"  HorizontalOptions="FillAndExpand" Margin="0,0,5,0">
+                                                        <Border Grid.Row="1" Grid.Column="0" Stroke="Gray" StrokeThickness="1" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"  HorizontalOptions="Fill" Margin="0,0,5,0">
                                                             <Border.Shadow>
                                                                 <!--Combined Shadow Effect-->
                                                                 <Shadow Brush="{AppThemeBinding Dark={DynamicResource SeparatorColorDark}, Light={DynamicResource SeparatorColorLight}}" Offset="0,1" Radius="3" />
                                                             </Border.Shadow>
-                                                            <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                                                            <StackLayout x:DataType="local:MealCalorieConsumed" VerticalOptions="Center" HorizontalOptions="Center">
                                                                 <Label Text="{Binding CaloriesFromVitamin}" FontSize="28" FontFamily="Roboto-Thin" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" HorizontalTextAlignment="Center"/>
                                                                 <Label Text="Vitamin" FontSize="14" FontFamily="Roboto-Thin" TextColor="{AppThemeBinding Dark={DynamicResource SecondaryTextColorDark}, Light={DynamicResource SecondaryTextColorLight}}" HorizontalTextAlignment="Center"/>
                                                                 <BoxView Color="{Binding NutrientColorValue.VitaminColor}" WidthRequest="52" HeightRequest="4" HorizontalOptions="Center" Margin="0,2,0,0" />
                                                             </StackLayout>
                                                         </Border>
 
-                                                        <Border Grid.Row="1" Grid.Column="1" Stroke="Gray" StrokeThickness="1" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"  HorizontalOptions="FillAndExpand" Margin="5,0,5,0">
+                                                        <Border Grid.Row="1" Grid.Column="1" Stroke="Gray" StrokeThickness="1" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"  HorizontalOptions="Fill" Margin="5,0,5,0">
                                                             <Border.Shadow>
                                                                 <!--Combined Shadow Effect-->
                                                                 <Shadow Brush="{AppThemeBinding Dark={DynamicResource SeparatorColorDark}, Light={DynamicResource SeparatorColorLight}}" Offset="0,1" Radius="3" />
                                                             </Border.Shadow>
-                                                            <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                                                            <StackLayout x:DataType="local:MealCalorieConsumed" VerticalOptions="Center" HorizontalOptions="Center">
                                                                 <Label Text="{Binding CaloriesFromCalcium}" FontSize="28" FontFamily="Roboto-Thin" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" HorizontalTextAlignment="Center"/>
                                                                 <Label Text="Calcium" FontSize="14" FontFamily="Roboto-Thin" TextColor="{AppThemeBinding Dark={DynamicResource SecondaryTextColorDark}, Light={DynamicResource SecondaryTextColorLight}}" HorizontalTextAlignment="Center"/>
                                                                 <BoxView Color="{Binding NutrientColorValue.CalciumColor}" WidthRequest="52" HeightRequest="4" HorizontalOptions="Center" Margin="0,2,0,0" />
                                                             </StackLayout>
                                                         </Border>
 
-                                                        <Border Grid.Row="1" Grid.Column="2" Stroke="Gray" StrokeThickness="1" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"  HorizontalOptions="FillAndExpand" Margin="5,0,0,0">
+                                                        <Border Grid.Row="1" Grid.Column="2" Stroke="Gray" StrokeThickness="1" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"  HorizontalOptions="Fill" Margin="5,0,0,0">
                                                             <Border.Shadow>
                                                                 <!--Combined Shadow Effect-->
                                                                 <Shadow Brush="{AppThemeBinding Dark={DynamicResource SeparatorColorDark}, Light={DynamicResource SeparatorColorLight}}" Offset="0,1" Radius="3" />
                                                             </Border.Shadow>
-                                                            <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                                                            <StackLayout x:DataType="local:MealCalorieConsumed" VerticalOptions="Center" HorizontalOptions="Center">
                                                                 <Label Text="{Binding CaloriesFromFat}" FontSize="28" FontFamily="Roboto-Thin" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" HorizontalTextAlignment="Center"/>
                                                                 <Label Text="Fat" FontSize="14" FontFamily="Roboto-Thin" TextColor="{AppThemeBinding Dark={DynamicResource SecondaryTextColorDark}, Light={DynamicResource SecondaryTextColorLight}}" HorizontalTextAlignment="Center"/>
                                                                 <BoxView Color="{Binding NutrientColorValue.FatColor}" WidthRequest="52" HeightRequest="4" HorizontalOptions="Center" Margin="0,2,0,0" />
@@ -219,16 +219,16 @@
                             </Grid>
                         </Grid>
 
-                        <Grid Grid.Column="{OnPlatform WinUI='2',MacCatalyst='2'}" Grid.Row="{OnPlatform Android='0', iOS='0'}" VerticalOptions="FillAndExpand" HorizontalOptions="{OnPlatform WinUI=End, MacCatalyst=End, Android=Start}" Margin="{OnPlatform WinUI='0,0,10,0', MacCatalyst='0,0,10,0'}">
-                            <BoxView WidthRequest="8" HorizontalOptions="Start" VerticalOptions="FillAndExpand" Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" />
+                        <Grid x:DataType="local:HealthCareViewModel" Grid.Column="{OnPlatform WinUI='2',MacCatalyst='2'}" Grid.Row="{OnPlatform Android='0', iOS='0'}" VerticalOptions="Fill" HorizontalOptions="{OnPlatform WinUI=End, MacCatalyst=End, Android=Start}" Margin="{OnPlatform WinUI='0,0,10,0', MacCatalyst='0,0,10,0'}">
+                            <BoxView WidthRequest="8" HorizontalOptions="Start" VerticalOptions="Fill" Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" />
                             <Grid RowDefinitions="{OnPlatform WinUI='*,*',MacCatalyst='Auto,*', Android='Auto,*', iOS='Auto,*'}" RowSpacing="0">
                                 <Grid Grid.Row="0" RowDefinitions="{OnPlatform WinUI='*,*', MacCatalyst='*,*'}">
                                     <HorizontalStackLayout Grid.Row="0" VerticalOptions="Start" IsVisible="{OnPlatform Android=False, iOS=False}">
                                         <Label Text="Tracking" FontSize="22" FontFamily="Roboto-Regular" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" HeightRequest="28" Margin="16,16,0,16"></Label>
                                     </HorizontalStackLayout>
                                     <Grid Grid.Row="1" RowDefinitions="*,*" ColumnDefinitions="*,*" HorizontalOptions="Fill" VerticalOptions="{OnPlatform WinUI='StartAndExpand',MacCatalyst='Start', Android='FillAndExpand', iOS='FillAndExpand'}" Margin="{OnPlatform WinUI='8,0,0,0',MacCatalyst='8,0,0,0', Android='0,16,0,0', iOS='0,16,0,0'}">
-                                        <Border  BindingContext="{Binding TrackingNutrientData[0]}" Grid.Row="0" Grid.Column="0" Margin='16,0,8,16' Stroke="Transparent" StrokeThickness="0" StrokeShape="RoundRectangle 4,4,4,4" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="{OnPlatform Android=136, iOS=136}" >
-                                            <Grid RowDefinitions="*" VerticalOptions="FillAndExpand">
+                                        <Border  BindingContext="{Binding TrackingNutrientData[0]}" Grid.Row="0" Grid.Column="0" Margin='16,0,8,16' Stroke="Transparent" StrokeThickness="0" StrokeShape="RoundRectangle 4,4,4,4" HorizontalOptions="Fill" VerticalOptions="Fill" HeightRequest="{OnPlatform Android=136, iOS=136}" >
+                                            <Grid x:DataType="local:HealthCareModel" RowDefinitions="*" VerticalOptions="Fill">
                                                 <Grid Padding="0"  RowDefinitions="2*,1*,1*">
                                                     <Grid.Background>
                                                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -242,8 +242,8 @@
                                                 </Grid>
                                             </Grid>
                                         </Border>
-                                        <Border BindingContext="{Binding TrackingNutrientData[1]}" Grid.Row="0" Grid.Column="1" Margin='8,0,16,16' Stroke="Transparent" StrokeThickness="0" StrokeShape="RoundRectangle 4,4,4,4" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="{OnPlatform Android=136, iOS=136}" >
-                                            <Grid RowDefinitions="{OnPlatform WinUI='Auto',MacCatalyst='Auto', Android='*', iOS='*'}" VerticalOptions="FillAndExpand">
+                                        <Border BindingContext="{Binding TrackingNutrientData[1]}" Grid.Row="0" Grid.Column="1" Margin='8,0,16,16' Stroke="Transparent" StrokeThickness="0" StrokeShape="RoundRectangle 4,4,4,4" HorizontalOptions="Fill" VerticalOptions="Fill" HeightRequest="{OnPlatform Android=136, iOS=136}" >
+                                            <Grid x:DataType="local:HealthCareModel" RowDefinitions="{OnPlatform WinUI='Auto',MacCatalyst='Auto', Android='*', iOS='*'}" VerticalOptions="Fill">
                                                 <Grid Padding="0"  RowDefinitions="Auto,Auto,Auto">
                                                     <Grid.Background>
                                                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -257,8 +257,8 @@
                                                 </Grid>
                                             </Grid>
                                         </Border>
-                                        <Border BindingContext="{Binding TrackingNutrientData[2]}" Grid.Row="1" Grid.Column="0" Margin='16,0,8,16' Stroke="Transparent" StrokeThickness="0" StrokeShape="RoundRectangle 4,4,4,4" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="{OnPlatform Android=136, iOS=136}" >
-                                            <Grid RowDefinitions="{OnPlatform WinUI='Auto',MacCatalyst='Auto', Android='*', iOS='*'}" VerticalOptions="FillAndExpand">
+                                        <Border BindingContext="{Binding TrackingNutrientData[2]}" Grid.Row="1" Grid.Column="0" Margin='16,0,8,16' Stroke="Transparent" StrokeThickness="0" StrokeShape="RoundRectangle 4,4,4,4" HorizontalOptions="Fill" VerticalOptions="Fill" HeightRequest="{OnPlatform Android=136, iOS=136}" >
+                                            <Grid x:DataType="local:HealthCareModel" RowDefinitions="{OnPlatform WinUI='Auto',MacCatalyst='Auto', Android='*', iOS='*'}" VerticalOptions="Fill">
                                                 <Grid Padding="0"  RowDefinitions="Auto,Auto,Auto">
                                                     <Grid.Background>
                                                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -272,8 +272,8 @@
                                                 </Grid>
                                             </Grid>
                                         </Border>
-                                        <Border BindingContext="{Binding TrackingNutrientData[3]}" Grid.Row="1" Grid.Column="1" Margin='8,0,16,16' Stroke="Transparent" StrokeThickness="0" StrokeShape="RoundRectangle 4,4,4,4" HeightRequest="{OnPlatform Android=136, iOS=136}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
-                                            <Grid RowDefinitions="{OnPlatform WinUI='Auto',MacCatalyst='Auto', Android='*', iOS='*'}" VerticalOptions="FillAndExpand">
+                                        <Border BindingContext="{Binding TrackingNutrientData[3]}" Grid.Row="1" Grid.Column="1" Margin='8,0,16,16' Stroke="Transparent" StrokeThickness="0" StrokeShape="RoundRectangle 4,4,4,4" HeightRequest="{OnPlatform Android=136, iOS=136}" HorizontalOptions="Fill" VerticalOptions="Fill" >
+                                            <Grid x:DataType="local:HealthCareModel" RowDefinitions="{OnPlatform WinUI='Auto',MacCatalyst='Auto', Android='*', iOS='*'}" VerticalOptions="Fill">
                                                 <Grid Padding="0"  RowDefinitions="Auto,Auto,Auto">
                                                     <Grid.Background>
                                                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -293,18 +293,18 @@
                                     <listView:SfListView Grid.Row="1" IsScrollingEnabled="False" ItemSize="80" ItemsSource="{Binding TrackingData}" SelectionMode="None">
                                         <listView:SfListView.ItemTemplate>
                                             <DataTemplate>
-                                                <Border HeightRequest="72" Stroke="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource BackgroundColorDark}}" StrokeThickness="2" StrokeShape="RoundRectangle 4,4,4,4" BackgroundColor="{AppThemeBinding Dark={DynamicResource BackgroundColorDark}, Light={DynamicResource BackgroundColorLight}}" Margin="16,0,16,0">
+                                                <Border x:DataType="local:HealthCareModel" HeightRequest="72" Stroke="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource BackgroundColorDark}}" StrokeThickness="2" StrokeShape="RoundRectangle 4,4,4,4" BackgroundColor="{AppThemeBinding Dark={DynamicResource BackgroundColorDark}, Light={DynamicResource BackgroundColorLight}}" Margin="16,0,16,0">
                                                     <Border.Shadow>
                                                         <!-- First Shadow -->
                                                         <Shadow Brush="#000000" Offset="0,1" Radius="3" Opacity="0.15" />
                                                     </Border.Shadow>
                                                     <Grid ColumnDefinitions="Auto,*">
                                                         <BoxView BackgroundColor="{Binding BackgroundGradientStart}" CornerRadius="4,0,4,0" HorizontalOptions="Center" WidthRequest="4"  HeightRequest="72" />
-                                                        <Grid Grid.Column="1" RowDefinitions="*, *" ColumnDefinitions="*,Auto" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="8,0,8,0">
+                                                        <Grid Grid.Column="1" RowDefinitions="*, *" ColumnDefinitions="*,Auto" VerticalOptions="Fill" HorizontalOptions="Fill" Margin="8,0,8,0">
                                                             <Label Grid.Row="0" Grid.Column="0" LineHeight="1.5" CharacterSpacing="0.15" HorizontalTextAlignment="Start" Text="{Binding Category}" FontFamily="Roboto-Medium" Margin="0,10,0,0"/>
                                                             <Label Grid.Row="0" Grid.Column="1" Text="{Binding CategoryValue}" VerticalOptions="Center" HorizontalOptions="End" FontFamily="Roboto-Medium" LineHeight="1.5" CharacterSpacing="0.15" Margin="0,10,0,0"/>
                                                             <Label Grid.Row="1" Grid.Column="0" FontAttributes="None"  LineHeight="1.42857" TextColor="{AppThemeBinding Light={DynamicResource ContentTextColorLight}, Dark={DynamicResource ContentTextColorDark}}" CharacterSpacing="0.25" HorizontalTextAlignment="Start" Text="{Binding CategoryPercentage}" FontFamily="Roboto-Medium" Margin="0,0,0,10"/>
-                                                            <Label Grid.Row="1" Grid.Column="1" FontAttributes="None" LineHeight="1.42857" Text="{Binding CategoryStage}" CharacterSpacing="0.25" HorizontalOptions="EndAndExpand" FontFamily="Roboto-Medium" Margin="0,0,0,10" TextColor="{Binding CategoryStageColor}"/>
+                                                            <Label Grid.Row="1" Grid.Column="1" FontAttributes="None" LineHeight="1.42857" Text="{Binding CategoryStage}" CharacterSpacing="0.25" HorizontalOptions="End" FontFamily="Roboto-Medium" Margin="0,0,0,10" TextColor="{Binding CategoryStageColor}"/>
                                                         </Grid>
                                                     </Grid>
                                                 </Border>
