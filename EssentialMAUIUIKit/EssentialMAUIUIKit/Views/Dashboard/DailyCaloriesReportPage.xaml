@@ -10,11 +10,11 @@
         <local:DailyCaloriesReportViewModel/>
     </ContentView.BindingContext>
     <ContentView.Content>
-        <StackLayout>            
-            <Grid RowDefinitions="{OnPlatform WinUI='*'}" VerticalOptions="FillAndExpand" ColumnDefinitions="*" HorizontalOptions="FillAndExpand" Background="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
+        <StackLayout>
+            <Grid RowDefinitions="{OnPlatform WinUI='*'}" VerticalOptions="{OnPlatform Default=FillAndExpand}" ColumnDefinitions="*" HorizontalOptions="Fill" Background="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
                 <ScrollView Grid.Row="{OnPlatform WinUI='0'}">
                     <Grid Grid.Column="{OnPlatform WinUI='1'}" Grid.Row="{OnPlatform Android='0', iOS='0'}" VerticalOptions="{OnPlatform WinUI=FillAndExpand, Android=Start, iOS=Start}">
-                        <BoxView WidthRequest="2" Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" HorizontalOptions="Start" VerticalOptions="FillAndExpand" />
+                        <BoxView WidthRequest="2" Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" HorizontalOptions="Start" VerticalOptions="Fill" />
                          <Grid RowDefinitions="Auto,*" Margin="{OnPlatform WinUI='10,0,10,0'}" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
                             <Grid Grid.Row="0" RowDefinitions="Auto,*" VerticalOptions="{OnPlatform WinUI='Start', Android='Start',iOS='Start'}">
                                 <Grid Grid.Row="0" ColumnDefinitions="*,*"  HeightRequest="{OnPlatform WinUI=60}" Margin="0,16,16,0">                                   
@@ -28,7 +28,7 @@
                                             </Border.Shadow>
                                             <Grid Margin="{OnPlatform Android='20,0,0,0', iOS='20,0,0,0'}">
                                                 <!--DatePicker control-->
-                                                <DatePicker Date="{Binding Date, Mode=TwoWay}" HeightRequest="{OnPlatform WinUI=40, Android=60, iOS=60}" WidthRequest="145" FontSize="14" Format="dd MMM, yyyy" MinimumDate="2000-01-01" MaximumDate="2030-12-31" BackgroundColor="Transparent" VerticalOptions="CenterAndExpand" HorizontalOptions="{OnPlatform WinUI=End, Android=Center}" FontFamily="Roboto-Regular" Margin="15,0,0,0" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+                                                <DatePicker x:DataType="local:CaloriesConsumedData" Date="{Binding Date, Mode=TwoWay}" HeightRequest="{OnPlatform WinUI=40, Android=60, iOS=60}" WidthRequest="145" FontSize="14" Format="dd MMM, yyyy" MinimumDate="2000-01-01" MaximumDate="2030-12-31" BackgroundColor="Transparent" VerticalOptions="Center" HorizontalOptions="{OnPlatform WinUI=End, Android=Center}" FontFamily="Roboto-Regular" Margin="15,0,0,0" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
                                                 <!--Datepicker Icon-->
                                                 <!--Datepicker Icon-->
                                                 <Label FontFamily="DashboardFontIcons" Text="&#xe711;" Grid.Row="0" VerticalOptions="Center" HorizontalOptions="End" Margin="{OnPlatform Android='0,0,25,0',iOS='0,0,25,0', WinUI='0,0,10,0'}" IsVisible="{OnPlatform WinUI=True}" HeightRequest="14" WidthRequest="12" Background = "{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource GrayBorderBackgroundColor}}"/>
@@ -36,11 +36,11 @@
                                         </Border>
                                     </HorizontalStackLayout>
                                 </Grid>
-                                <Grid Grid.Row="1" VerticalOptions="FillAndExpand">
+                                <Grid Grid.Row="1" x:DataType="local:DailyCaloriesReportViewModel" VerticalOptions="Fill">
                                     <chart:SfCircularChart>
                                         <!-- Series Definition -->
                                         <chart:SfCircularChart.Series>
-                                            <chart:DoughnutSeries  x:Name="doughnutSeries" ItemsSource="{Binding CaloriesChartDataValue.CaloriesConsumedInADay}" XBindingPath="Nutrient" YBindingPath="Value" InnerRadius ="0.8" PaletteBrushes="{Binding CaloriesChartDataValue.SegmentColors}" ShowDataLabels="False" StrokeWidth="5"  
+                                            <chart:DoughnutSeries x:Name="doughnutSeries" ItemsSource="{Binding CaloriesChartDataValue.CaloriesConsumedInADay}" XBindingPath="Nutrient" YBindingPath="Value" InnerRadius ="0.8" PaletteBrushes="{Binding CaloriesChartDataValue.SegmentColors}" ShowDataLabels="False" StrokeWidth="5"  
                                                 Stroke="{AppThemeBinding Dark={DynamicResource BackgroundColorDark}, Light={DynamicResource BackgroundColorLight}}">
                                             </chart:DoughnutSeries>
                                         </chart:SfCircularChart.Series>
@@ -54,14 +54,14 @@
                             </Grid>
                             <Grid Grid.Row="1">
                                 <Grid Padding="0" RowDefinitions="Auto,Auto">
-                                    <CollectionView ItemsSource="{Binding CaloriesConsumedList}">
+                                    <CollectionView x:DataType="local:DailyCaloriesReportViewModel" ItemsSource="{Binding CaloriesConsumedList}">
                                         <CollectionView.ItemTemplate>
                                             <DataTemplate>
-                                                <StackLayout IsVisible ="{Binding IsSelected}" HorizontalOptions="Fill">
-                                                    <syncfusion:SfChipGroup ItemsSource="{Binding CaloriesConsumedPerMeal}" SelectedItem="{Binding CaloriesConsumedPerMeal[0],Mode=OneTime}" SelectionChanged="OnChipSelectionChanging"  ChipType="Choice" ChipCornerRadius="25" Margin="16,0,0,0" ChipStroke="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}"  ChipFontFamily="Roboto-Medium" ImageMemberPath="{Binding MealOptions}" ChipTextColor="{AppThemeBinding Light={DynamicResource BackgroundColorDark}, Dark={DynamicResource BackgroundColorLight}}" SelectedChipBackground="{DynamicResource PrimaryColorLight}" SelectedChipTextColor="{DynamicResource BackgroundColorLight}" >
+                                                <StackLayout x:DataType="local:CaloriesConsumedData" IsVisible ="{Binding IsSelected}" HorizontalOptions="Fill">
+                                                    <syncfusion:SfChipGroup ItemsSource="{Binding CaloriesConsumedPerMeal}" SelectedItem="{Binding CaloriesConsumedPerMeal[0],Mode=OneTime}" SelectionChanged="OnChipSelectionChanging"  ChipType="Choice" ChipCornerRadius="25" Margin="16,0,0,0" ChipStroke="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" ChipFontFamily="Roboto-Medium" ChipTextColor="{AppThemeBinding Light={DynamicResource BackgroundColorDark}, Dark={DynamicResource BackgroundColorLight}}" SelectedChipBackground="{DynamicResource PrimaryColorLight}" SelectedChipTextColor="{DynamicResource BackgroundColorLight}" >
                                                         <syncfusion:SfChipGroup.ItemTemplate>
                                                             <DataTemplate>
-                                                                <Grid HeightRequest="32">
+                                                                <Grid x:DataType="local:MealCalorieConsumed" HeightRequest="32">
                                                                     <Grid.ColumnDefinitions>
                                                                         <ColumnDefinition Width="Auto" />
                                                                         <ColumnDefinition Width="Auto" />
@@ -78,10 +78,10 @@
                                         </CollectionView.ItemTemplate>
 
                                     </CollectionView>
-                                    <CollectionView ItemsSource="{Binding CaloriesChartDataValue.SelectedMealDetails, Mode=TwoWay}" SelectionMode="None" Grid.Row="1">
+                                    <CollectionView x:DataType="local:DailyCaloriesReportViewModel" ItemsSource="{Binding CaloriesChartDataValue.SelectedMealDetails, Mode=TwoWay}" SelectionMode="None" Grid.Row="1">
                                         <CollectionView.ItemTemplate>
                                             <DataTemplate>
-                                                <Grid RowSpacing="16" HorizontalOptions="FillAndExpand" Margin="16,0,16,0" MaximumWidthRequest="383" HeightRequest="206" Padding="10">
+                                                <Grid x:DataType="local:MealCalorieConsumed"  RowSpacing="16" HorizontalOptions="Fill" Margin="16,0,16,0" MaximumWidthRequest="383" HeightRequest="206" Padding="10">
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition Height="*"/>
                                                         <RowDefinition Height="*"/>
@@ -92,7 +92,7 @@
                                                         <ColumnDefinition Width="*"/>
                                                     </Grid.ColumnDefinitions>
                                                     <!--Nutritional Data Boxes-->
-                                                    <Border Grid.Row="0" Grid.Column="0" Stroke="Gray" StrokeThickness="1" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"  HorizontalOptions="FillAndExpand" Margin="0,0,5,0">
+                                                    <Border Grid.Row="0" Grid.Column="0" Stroke="Gray" StrokeThickness="1" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"  HorizontalOptions="Fill" Margin="0,0,5,0">
                                                         <Border.Shadow>
                                                             <!--Combined Shadow Effect-->
                                                             <Shadow Brush="{AppThemeBinding Dark={DynamicResource SeparatorColorDark}, Light={DynamicResource SeparatorColorLight}}" Offset="0,1" Radius="3" />
@@ -105,7 +105,7 @@
 
                                                     </Border>
 
-                                                    <Border Grid.Row="0" Grid.Column="1" Stroke="Gray" StrokeThickness="1" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"   HorizontalOptions="FillAndExpand" Margin="5,0,5,0">
+                                                    <Border Grid.Row="0" Grid.Column="1" Stroke="Gray" StrokeThickness="1" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"   HorizontalOptions="Fill" Margin="5,0,5,0">
                                                         <Border.Shadow>
                                                             <!--Combined Shadow Effect-->
                                                             <Shadow Brush="{AppThemeBinding Dark={DynamicResource SeparatorColorDark}, Light={DynamicResource SeparatorColorLight}}" Offset="0,1" Radius="3" />
@@ -117,7 +117,7 @@
                                                         </StackLayout>
                                                     </Border>
 
-                                                    <Border Grid.Row="0" Grid.Column="2" Stroke="Gray" StrokeThickness="1" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}" HorizontalOptions="FillAndExpand" Margin="5,0,0,0" >
+                                                    <Border Grid.Row="0" Grid.Column="2" Stroke="Gray" StrokeThickness="1" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}" HorizontalOptions="Fill" Margin="5,0,0,0" >
                                                         <Border.Shadow>
                                                             <!--Combined Shadow Effect-->
                                                             <Shadow Brush="{AppThemeBinding Dark={DynamicResource SeparatorColorDark}, Light={DynamicResource SeparatorColorLight}}" Offset="0,1" Radius="3" />
@@ -129,7 +129,7 @@
                                                         </StackLayout>
                                                     </Border>
 
-                                                    <Border Grid.Row="1" Grid.Column="0" Stroke="Gray" StrokeThickness="1" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"  HorizontalOptions="FillAndExpand" Margin="0,0,5,0">
+                                                    <Border Grid.Row="1" Grid.Column="0" Stroke="Gray" StrokeThickness="1" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"  HorizontalOptions="Fill" Margin="0,0,5,0">
                                                         <Border.Shadow>
                                                             <!--Combined Shadow Effect-->
                                                             <Shadow Brush="{AppThemeBinding Dark={DynamicResource SeparatorColorDark}, Light={DynamicResource SeparatorColorLight}}" Offset="0,1" Radius="3" />
@@ -141,7 +141,7 @@
                                                         </StackLayout>
                                                     </Border>
 
-                                                    <Border Grid.Row="1" Grid.Column="1" Stroke="Gray" StrokeThickness="1" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"  HorizontalOptions="FillAndExpand" Margin="5,0,5,0">
+                                                    <Border Grid.Row="1" Grid.Column="1" Stroke="Gray" StrokeThickness="1" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"  HorizontalOptions="Fill" Margin="5,0,5,0">
                                                         <Border.Shadow>
                                                             <!--Combined Shadow Effect-->
                                                             <Shadow Brush="{AppThemeBinding Dark={DynamicResource SeparatorColorDark}, Light={DynamicResource SeparatorColorLight}}" Offset="0,1" Radius="3" />
@@ -153,7 +153,7 @@
                                                         </StackLayout>
                                                     </Border>
 
-                                                    <Border Grid.Row="1" Grid.Column="2" Stroke="Gray" StrokeThickness="1" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"  HorizontalOptions="FillAndExpand" Margin="5,0,0,0">
+                                                    <Border Grid.Row="1" Grid.Column="2" Stroke="Gray" StrokeThickness="1" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"  HorizontalOptions="Fill" Margin="5,0,0,0">
                                                         <Border.Shadow>
                                                             <!--Combined Shadow Effect-->
                                                             <Shadow Brush="{AppThemeBinding Dark={DynamicResource SeparatorColorDark}, Light={DynamicResource SeparatorColorLight}}" Offset="0,1" Radius="3" />

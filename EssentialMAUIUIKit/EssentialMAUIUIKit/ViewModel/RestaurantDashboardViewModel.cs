@@ -163,12 +163,6 @@ namespace EssentialMAUIUIKit
 
         #region methods
 
-        private void OnDetailsClicked()
-        {
-            // Action on click
-            
-        }
-
         private void UpdateOrderDetails()
         {
             this.orderDetails = new ObservableCollection<RestaurantOrder>
