@@ -27,11 +27,6 @@ namespace EssentialMAUIUIKit
             }
 
             this.logInForm = (SfDataForm)loginPage.Content.FindByName("logInForm");
-            if (this.logInForm != null)
-            {
-                logInForm.ItemsSourceProvider = new ItemsSourceProvider();
-            }
-
             this.saveButton = (SfButton)loginPage.Content.FindByName("saveButton");
             if (this.saveButton != null)
             {
@@ -49,11 +44,6 @@ namespace EssentialMAUIUIKit
             }
 
             this.logInForm = (SfDataForm?)loginPage.Content.FindByName("logInForm");
-            if (this.logInForm != null)
-            {
-                logInForm.ItemsSourceProvider = new ItemsSourceProvider();
-            }
-
             this.saveButton = (SfButton?)loginPage.Content.FindByName("saveButton");
             if (this.saveButton != null)
             {

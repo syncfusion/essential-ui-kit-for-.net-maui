@@ -220,7 +220,7 @@
                         </Grid>
 
                         <Grid Grid.Column="{OnPlatform WinUI='2',MacCatalyst='2'}" Grid.Row="{OnPlatform Android='0', iOS='0'}" VerticalOptions="FillAndExpand" HorizontalOptions="{OnPlatform WinUI=End, MacCatalyst=End, Android=Start}" Margin="{OnPlatform WinUI='0,0,10,0', MacCatalyst='0,0,10,0'}">
-                            <BoxView WidthRequest="8" HorizontalOptions="Start" VerticalOptions="FillAndExpand" Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" />
+                            <BoxView HorizontalOptions="Start" VerticalOptions="FillAndExpand" Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" />
                             <Grid RowDefinitions="{OnPlatform WinUI='*,*',MacCatalyst='Auto,*', Android='Auto,*', iOS='Auto,*'}" RowSpacing="0">
                                 <Grid Grid.Row="0" RowDefinitions="{OnPlatform WinUI='*,*', MacCatalyst='*,*'}">
                                     <HorizontalStackLayout Grid.Row="0" VerticalOptions="Start" IsVisible="{OnPlatform Android=False, iOS=False}">
