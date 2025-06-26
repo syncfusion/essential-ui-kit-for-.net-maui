@@ -48,8 +48,8 @@
                               WidthRequest="{OnPlatform WinUI=210,MacCatalyst= 210}">
                             <Border StrokeThickness="0" Grid.Row="0"
                                     StrokeShape="RoundRectangle 10">
-                                <Image HeightRequest="{OnPlatform MacCatalyst=300, iOS=260}"
-                                    Aspect="AspectFill"
+                                <Image HeightRequest="{OnPlatform MacCatalyst=300, iOS=260, Android=260}"
+                                    Aspect="AspectFit"
                                     BackgroundColor="{DynamicResource Gray-Bg}"
                                     Source="{Binding ImagePath}"/>
 

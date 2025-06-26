@@ -259,7 +259,7 @@
                                         <Border
                                             StrokeThickness="0"
                                             StrokeShape="RoundRectangle 8,8,8,8">
-                                            <Image HeightRequest="{OnPlatform MacCatalyst=230, iOS=230}"
+                                            <Image WidthRequest="150" HeightRequest="220"
                                                 Aspect="AspectFill"
                                                 BackgroundColor="Transparent"
                                                 Source="{Binding Image}">
