@@ -164,7 +164,7 @@
                                                     SelectedItem="{Binding TotalQuantity, Mode=TwoWay}"
                                                     IsClearButtonVisible="False"
                                                     ShowBorder="False"
-                                                    Style="{DynamicResource SimpleComboBoxStyle}"
+                                                    Style="{DynamicResource TextInputLayoutComboBoxStyle}"
                                                     TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                                                     Text="{Binding Source={x:Reference QuantityComboBox}}"
                                                     WidthRequest="90">

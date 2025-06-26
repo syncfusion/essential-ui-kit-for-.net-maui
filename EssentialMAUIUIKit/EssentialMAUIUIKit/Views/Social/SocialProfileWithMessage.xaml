@@ -37,7 +37,7 @@
 
             <Grid WidthRequest="{OnPlatform WinUI=650, MacCatalyst=650}"
                   ColumnSpacing="0"
-                  RowDefinitions="Auto, *"
+                  RowDefinitions="300, *"
                   RowSpacing="0">
 
                 <Grid
