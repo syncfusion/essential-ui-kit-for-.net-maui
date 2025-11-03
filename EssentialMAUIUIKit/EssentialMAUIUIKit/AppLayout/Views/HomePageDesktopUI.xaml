@@ -123,49 +123,46 @@
 
                 <listView:SfListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
-                            <!--  The image at the left will be rendered with some space.  -->
-                            <Grid
-                                Margin="0,10,10,8"
-                                ColumnDefinitions="Auto, *"
-                                RowSpacing="8">
+                        <!--  The image at the left will be rendered with some space.  -->
+                        <Grid
+                            Margin="0,10,10,8"
+                            ColumnDefinitions="Auto, *"
+                            RowSpacing="8">
 
-                                <Image Margin="10,0,10,0"
-                                       Grid.RowSpan="2"
-                                       Grid.Column="0"
-                                       Aspect="AspectFit"
-                                       HeightRequest="32"
-                                       Style="{DynamicResource ItemImageStyle}"
-                                       WidthRequest="32"/>
+                            <Image Margin="10,0,10,0"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="0"
+                                    Aspect="AspectFit"
+                                    HeightRequest="32"
+                                    Style="{DynamicResource ItemImageStyle}"
+                                    WidthRequest="32"/>
 
-                                <Grid ColumnDefinitions="*,*"
-                                      Grid.Column="1"
-                                      Grid.ColumnSpan="2">
-                                    <Label FontSize="14"
-                                           VerticalOptions="Center"
-                                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                           Style="{DynamicResource ItemTitleStyle}"/>
+                            <Grid ColumnDefinitions="*,*"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2">
+                                <Label FontSize="14"
+                                        VerticalOptions="Center"
+                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                        Style="{DynamicResource ItemTitleStyle}"/>
 
-                                    <Border Grid.Column="1"
-                                            HorizontalOptions="End"
-                                            Stroke="Transparent"
-                                            WidthRequest="100"
-                                            HeightRequest="20"
-                                            VerticalOptions="Center"
-                                            Margin="0"
-                                            Padding="0"
-                                            BackgroundColor="{AppThemeBinding Light=#EDF0F3, Dark={DynamicResource BackgroundColorDark}}"
-                                            StrokeShape="RoundRectangle 10">
-                                        <Border.Content>
-                                            <Label HorizontalOptions="Center"
-                                                   Padding="10,0,10,0"
-                                                   Style="{DynamicResource ItemCountLabelStyle}"/>
-                                        </Border.Content>
-                                    </Border>
-                                </Grid>
-
+                                <Border Grid.Column="1"
+                                        HorizontalOptions="End"
+                                        Stroke="Transparent"
+                                        WidthRequest="100"
+                                        HeightRequest="20"
+                                        VerticalOptions="Center"
+                                        Margin="0"
+                                        Padding="0"
+                                        BackgroundColor="{AppThemeBinding Light=#EDF0F3, Dark={DynamicResource BackgroundColorDark}}"
+                                        StrokeShape="RoundRectangle 10">
+                                    <Border.Content>
+                                        <Label HorizontalOptions="Center"
+                                                Padding="10,0,10,0"
+                                                Style="{DynamicResource ItemCountLabelStyle}"/>
+                                    </Border.Content>
+                                </Border>
                             </Grid>
-                        </ViewCell>
+                        </Grid>
                     </DataTemplate>
                 </listView:SfListView.ItemTemplate>
             </listView:SfListView>

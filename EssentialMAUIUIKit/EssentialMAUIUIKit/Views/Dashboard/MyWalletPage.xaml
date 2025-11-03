@@ -67,7 +67,7 @@
 
                                             <!--Font Icon-->
 
-                                            <Label Text="&#xe730;" FontFamily="UIFontIcons" HeightRequest="38" WidthRequest="38" FontSize="38" TextColor="#ADAAAC" VerticalOptions="Center" HorizontalOptions="Center" />
+                                            <Label Text="&#xe730;" FontFamily="FontIcons" HeightRequest="38" WidthRequest="38" FontSize="38" TextColor="#ADAAAC" VerticalOptions="Center" HorizontalOptions="Center" />
 
                                             <!--Button Text-->
 
@@ -164,13 +164,14 @@
                                             <DataTemplate>
                                                 <StackLayout x:DataType="local:CardDetails" Margin="0,0,20,0" IsVisible="{Binding IsVisible}">
                                                     <Border Margin="10,0" HeightRequest="200" WidthRequest="343" Stroke="Transparent" StrokeThickness="0" StrokeShape="RoundRectangle 6,6,6,6">
-                                                        <Grid Padding="10"  RowDefinitions="*,*,Auto">
-                                                            <Grid.Background>
+                                                        <Border.Background>
                                                                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                                                     <GradientStop Color="{Binding ColorGradientStart}" Offset="0"/>
                                                                     <GradientStop Color="{Binding ColorGradientStop}" Offset="1"/>
                                                                 </LinearGradientBrush>
-                                                            </Grid.Background>
+                                                            </Border.Background>
+                                                        <Grid Padding="10"  RowDefinitions="*,*,Auto">
+                                                            
                                                             <Grid Grid.Row="0" Margin="16,0,0,16">
                                                                 <Label FontFamily="Roboto-Regular" FontSize="14" Text="{Binding CardType}" TextColor="#FFFFFF"  HorizontalOptions="Start" VerticalOptions="Center"/>
                                                                 <Image Source="{Binding CardLogo}" HorizontalOptions="End" HeightRequest="42"/>
@@ -206,7 +207,7 @@
                                                 <DataTemplate>
                                                     <VerticalStackLayout Spacing="10" VerticalOptions="Center" HorizontalOptions="Center">
                                                         <!--Font Icon-->
-                                                        <Label Text="&#xe730;" FontFamily="UIFontIcons" HeightRequest="38" WidthRequest="38" FontSize="38" TextColor="#ADAAAC" VerticalOptions="Center" HorizontalOptions="Center" />
+                                                        <Label Text="&#xe730;" FontFamily="FontIcons" HeightRequest="38" WidthRequest="38" FontSize="38" TextColor="#ADAAAC" VerticalOptions="Center" HorizontalOptions="Center" />
                                                         <!--Button Text-->
                                                         <Label Text="Add Card" TextColor="#ADAAAC" FontSize="14" VerticalOptions="Fill" HorizontalOptions="Fill" />
                                                     </VerticalStackLayout>
@@ -341,7 +342,7 @@ VerticalOptions="End" StrokeShape="RoundRectangle 20,20,20,20" HeightRequest="40
                                 <!-- Vertical Border Line -->
                                 <BoxView Grid.Column="1" WidthRequest="8" Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" VerticalOptions="Fill" IsVisible="{OnPlatform Android='False', iOS='False'}"/>
                                 <!--Horizontal Border Line-->
-                                <BoxView Grid.Row="{OnPlatform Android='1', iOS='1'}" HeightRequest="8" Color="#FCF8FA" HorizontalOptions="Fill" IsVisible="{OnPlatform WinUI='False', MacCatalyst='False'}" VerticalOptions="{OnPlatform Android='Start'}"/>
+                                <BoxView Grid.Row="{OnPlatform Android='1', iOS='1'}" HeightRequest="8" Color="#FCF8FA" HorizontalOptions="Fill" IsVisible="{OnPlatform WinUI='False', MacCatalyst='False'}" VerticalOptions="{OnPlatform Android='Start', iOS='Start'}"/>
                                 <!-- Transaction Details -->
                                 <Grid Grid.Column="2" Grid.Row="{OnPlatform Android='1', iOS='1'}" RowDefinitions="Auto, *" Margin="16,16,16,16">
                                     <Label Grid.Row="0" HeightRequest="{OnPlatform WinUI=30, MacCatalyst=30}" Text="Transactions" FontFamily="Roboto-Regular" FontSize="{OnPlatform WinUI=22, MacCatalyst=22, Android=14, iOS=14}" FontAttributes="{OnPlatform Android='Bold', iOS='Bold'}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />

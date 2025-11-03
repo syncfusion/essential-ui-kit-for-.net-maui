@@ -16,6 +16,20 @@
                 <ResourceDictionary Source="AppLayoutStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
+        <Style TargetType="Grid">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
     </ContentPage.Resources>
 
     <ContentPage.BindingContext>
@@ -34,24 +48,21 @@
             Grid.Row="0"
             Grid.RowSpan="2"
             BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-            HasUnevenRows="True"
             ItemsSource="{Binding Categories}"
             SelectionChanged="ListView_OnSelectionChanged"
-            SeparatorVisibility="None"
             ScrollChanged="listView_ScrollChanged"
-            ItemTapped="listView_ItemTapped">
+            SelectionMode="Single">
 
-            <ListView.ItemTemplate>
+            <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <ViewCell>
-                        <!--  The image at the left will be rendered with some space.  -->
-                        <Grid BackgroundColor="Transparent"
+                    <!--  The image at the left will be rendered with some space.  -->
+                    <Grid BackgroundColor="Transparent"
                               Margin="0,16,16,8"
                               ColumnDefinitions="Auto, *"
                               RowDefinitions="Auto, Auto"
                               RowSpacing="8">
 
-                            <Image Margin="20,0,20,0"
+                        <Image Margin="20,0,20,0"
                                    Grid.RowSpan="2"
                                    Grid.Column="0"
                                    Aspect="AspectFit"
@@ -59,38 +70,37 @@
                                    Style="{DynamicResource ItemImageStyle}"
                                    WidthRequest="40"/>
 
-                            <Grid ColumnDefinitions="*,*"
+                        <Grid ColumnDefinitions="*,*"
                                   Grid.Row="0"
                                   Grid.Column="1"
                                   Grid.ColumnSpan="2">
-                                <Label Style="{DynamicResource ItemTitleStyle}"/>
+                            <Label Style="{DynamicResource ItemTitleStyle}"/>
 
-                                <Border Grid.Column="1"
+                            <Border Grid.Column="1"
                                         BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                                         HorizontalOptions="End"
                                         Stroke="Transparent"
                                         Margin="0"
                                         Padding="0"
                                         StrokeShape="RoundRectangle 40">
-                                    <Border.Content>
-                                        <Label Padding="10,0,10,0"
+                                <Border.Content>
+                                    <Label Padding="10,0,10,0"
                                                Style="{DynamicResource ItemCountLabelStyle}"/>
-                                    </Border.Content>
-                                </Border>
-                            </Grid>
+                                </Border.Content>
+                            </Border>
+                        </Grid>
 
-                            <Label
+                        <Label
                                 Grid.Row="1"
                                 Grid.Column="1"
                                 Grid.ColumnSpan="2"
                                 Style="{DynamicResource ItemDescriptionStyle}"/>
 
-                        </Grid>
-                    </ViewCell>
+                    </Grid>
                 </DataTemplate>
-            </ListView.ItemTemplate>
+            </CollectionView.ItemTemplate>
 
-            <ListView.Header>
+            <CollectionView.Header>
                 <Grid
                     x:Name="ListViewHeader"
                     BackgroundColor="#5470FF"
@@ -195,7 +205,7 @@
 
 
                 </Grid>
-            </ListView.Header>
+            </CollectionView.Header>
         </controls:ParallaxListView>
 
         <Grid Grid.RowSpan="2"

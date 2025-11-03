@@ -2,23 +2,17 @@
 
 namespace EssentialMAUIUIKit.AppLayout.Controls
 {
-    public class ParallaxListView : ListView
+    public class ParallaxListView : CollectionView
     {
         public ParallaxListView()
-            : base(ListViewCachingStrategy.RetainElement)
+            : base()
         {
-            if (DeviceInfo.Platform != DevicePlatform.iOS)
-            {
-                this.ItemSelected += ParallaxListView_ItemSelected1;
-            }
         }
 
-        private void ParallaxListView_ItemSelected1(object? sender, SelectedItemChangedEventArgs e)
+        private void ParallaxListView_SelectionChanged(object? sender, SelectionChangedEventArgs e)
         {
-            OnSelectionChanged(this, e);
+            OnSelectionChanged(this, e.CurrentSelection);
         }
-
-        public event EventHandler<SelectedItemChangedEventArgs>? SelectionChanged;
 
         public event EventHandler<ScrollChangedEventArgs>? ScrollChanged;
 
@@ -29,25 +23,14 @@ namespace EssentialMAUIUIKit.AppLayout.Controls
             ((ParallaxListView)sender)?.ScrollChanged?.Invoke((ParallaxListView)sender, e);
         }
 
-        public static void OnSelectionChanged(object sender, SelectedItemChangedEventArgs e)
-        {
-            ParallaxListView listView = (ParallaxListView)sender;
-            if (listView != null)
-            {
-                listView.SelectionChanged?.Invoke(sender, e);
-                listView.SelectedItem = e?.SelectedItem;
-                listView.SelectedItem = null;
-            }
-        }
-
-        public static void OnSelectionChanged(object sender, int index)
+        public static void OnSelectionChanged(object sender, object selectedItem)
         {
             if (sender is ParallaxListView)
             {
                 var listView = sender as ParallaxListView;
                 if (listView != null)
                 {
-                    OnSelectionChanged(sender, new SelectedItemChangedEventArgs(((IList)listView.ItemsSource)[index], index));
+                    OnSelectionChanged(sender, new SelectedItemChangedEventArgs(selectedItem, ((IList)listView.ItemsSource).IndexOf(selectedItem)));
                 }
             }
         }
