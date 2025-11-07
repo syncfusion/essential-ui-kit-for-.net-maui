@@ -250,7 +250,6 @@ VerticalOptions="End" StrokeShape="RoundRectangle 20,20,20,20" HeightRequest="40
                                                             x:Name="comboBox"
                                                             ItemsSource="{Binding DataSource}"
                                                             DisplayMemberPath="Duration"
-                                                            DropDownBackground="Transparent"
                                                             DropDownStroke="{DynamicResource Gray-Bg}"
                                                             WidthRequest="{OnPlatform Android=70,iOS=70,
                                                                                 Default=86}"

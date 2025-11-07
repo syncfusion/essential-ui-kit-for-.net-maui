@@ -21,7 +21,6 @@
         <Setter Property="Margin" Value="8,3,0,-3" />
         <Setter Property="HeightRequest" Value="40" />
         <Setter Property="DropDownStroke" Value="{DynamicResource Gray-300}" />
-        <Setter Property="SelectedDropDownItemBackground" Value="Transparent" />
         <Setter Property="DropDownBackground" Value="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}" />
         <Setter Property="DropDownItemTextColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
     </Style>
