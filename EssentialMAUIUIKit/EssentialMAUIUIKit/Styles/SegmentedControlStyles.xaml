@@ -7,7 +7,7 @@
     <Style x:Key="SegmentedControlStyle" TargetType="buttons:SfSegmentedControl">
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="StrokeThickness" Value="0" />
-        <Setter Property="SegmentBackground" Value="{DynamicResource Gray-Bg}" />
+        <Setter Property="SegmentBackground" Value="{AppThemeBinding Light=#ffffff, Dark=#2F343C}" />
         <Setter Property="SegmentCornerRadius" Value="20" />
         <Setter Property="SegmentHeight" Value="40" />
         <Setter Property="SegmentWidth" Value="40" />

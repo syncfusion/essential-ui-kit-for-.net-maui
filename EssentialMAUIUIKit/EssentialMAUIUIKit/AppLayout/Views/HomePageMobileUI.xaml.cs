@@ -45,8 +45,20 @@ namespace EssentialMAUIUIKit.AppLayout.Views
             return true;
         }
 
-        private void ListView_OnSelectionChanged(object sender, SelectedItemChangedEventArgs e)
+        private void ListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (e.CurrentSelection == null)
+            {
+                return;
+            }
+
+            Category? category = e.CurrentSelection?.FirstOrDefault() as Category;
+            if (category == null)
+            {
+                return;
+            }
+
+            this.Navigation.PushAsync(new TemplatePage(category, category.Pages[0]));
         }
 
         private void ShowSettings(object sender, EventArgs e)
@@ -93,22 +105,6 @@ namespace EssentialMAUIUIKit.AppLayout.Views
         {
             string address = "https://github.com/syncfusion/essential-ui-kit-for-.net-maui";
             await Browser.Default.OpenAsync(address, BrowserLaunchMode.SystemPreferred);
-        }
-
-        private void listView_ItemTapped(object sender, ItemTappedEventArgs e)
-        {
-            if (e.Item == null)
-            {
-                return;
-            }
-
-            Category? category = e.Item as Category;
-            if (category == null)
-            {
-                return;
-            }
-
-            this.Navigation.PushAsync(new TemplatePage(category, category.Pages[0]));
         }
 
         private void PropertiesTapped(object sender, TappedEventArgs e)

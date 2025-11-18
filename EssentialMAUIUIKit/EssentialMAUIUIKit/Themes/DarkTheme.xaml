@@ -18,6 +18,7 @@
         <styles:EditorStyles />
         <styles:RadioButtonStyles />
         <styles:SegmentedControlStyles />
+        <styles:ComboBoxStyles />
     </ResourceDictionary.MergedDictionaries>
 
     <Color x:Key="PrimaryDarkColor">#2A89FF</Color>

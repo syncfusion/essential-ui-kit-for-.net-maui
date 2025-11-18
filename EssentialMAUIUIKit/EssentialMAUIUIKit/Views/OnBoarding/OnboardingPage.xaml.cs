@@ -1,12 +1,10 @@
-using Microsoft.Maui.Controls;
-
 namespace EssentialMAUIUIKit.Views.OnBoarding;
 
 public partial class OnboardingPage : ContentView
 {
-	public OnboardingPage()
-	{
-		InitializeComponent();
+    public OnboardingPage()
+    {
+        InitializeComponent();
     }
 
     private async void ContentLoaded(object sender, EventArgs e)
@@ -19,8 +17,8 @@ public partial class OnboardingPage : ContentView
 
             // Perform fade and scale animations
             await Task.WhenAll(
-                element.FadeTo(1, 2000, Easing.CubicInOut),
-                element.ScaleTo(1, 2000, Easing.CubicInOut)
+                element.FadeToAsync(1, 2000, Easing.CubicInOut),
+                element.ScaleToAsync(1, 2000, Easing.CubicInOut)
             );
         }
     }
