@@ -101,14 +101,14 @@
                            x:Name="picture"
                            Aspect="AspectFill"
                            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                           HeightRequest="80"
+                           HeightRequest="90"
                            Source="{Binding Profile.ProfileImage}"
-                           WidthRequest="80"/>
+                           WidthRequest="90"/>
                 </Border>
 
                 <Grid Grid.Row="3"
                       Margin="16,0,0,24"
-                      ColumnDefinitions="Auto, Auto"
+                      ColumnDefinitions="*, Auto"
                       ColumnSpacing="0"
                       RowDefinitions="Auto, Auto"
                       RowSpacing="0">
@@ -117,7 +117,7 @@
                     <Label
                         Grid.Row="0"
                         Grid.Column="0"
-                        Margin="0,0,0,2"
+                        Margin="0,20,0,2"
                         FontSize="20"
                         HorizontalOptions="Start"
                         HorizontalTextAlignment="Start"
@@ -170,16 +170,16 @@
                         Text="Follow"
                         VerticalOptions="End"
                         HorizontalOptions="End"
-                        WidthRequest="120">
+                        WidthRequest="100">
                     </buttons:SfButton>
 
                 </Grid>
 
-                <Grid Grid.Row="4"
-                      Margin="16,0,16,32"
-                      ColumnDefinitions="Auto, *, Auto, *, Auto"
-                      ColumnSpacing="0"
-                      HorizontalOptions="Fill"
+                <Grid Grid.Row="2"
+                      Margin="-240,0,0,0"
+                      ColumnDefinitions="Auto,Auto,Auto,Auto,Auto"
+                      ColumnSpacing="12"
+                      HorizontalOptions="Center"
                       RowDefinitions="Auto, Auto"
                       RowSpacing="0">
 

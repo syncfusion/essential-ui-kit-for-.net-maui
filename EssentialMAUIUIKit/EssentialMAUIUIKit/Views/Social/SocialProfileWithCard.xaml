@@ -44,6 +44,12 @@
                         Stroke="Transparent"
                         Grid.Row="0"
                         Margin="16,0,16,32">
+                    <Border.Shadow>
+                        <Shadow Brush="Black"
+                                    Opacity="0.16"
+                                    Radius="3"
+                                    Offset="0,1"/>
+                    </Border.Shadow>
 
                     <Border
                         Stroke="Transparent"
@@ -58,7 +64,7 @@
                             <Image
                                 Aspect="Fill"
                                 BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                HeightRequest="120"
+                                HeightRequest="190"
                                 HorizontalOptions="Fill">
                                 <Image.Source>
                                     <UriImageSource
@@ -69,7 +75,7 @@
                             </Image>
 
                             <Border
-                                Margin="0,-60,0,16"
+                                Margin="0,-45,0,16"
                                 BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                                 Stroke="{DynamicResource Gray-White}"
                                 StrokeThickness="2"
@@ -130,19 +136,6 @@
 
                             </StackLayout>
 
-                            <!--  Follow button  -->
-                            <buttons:SfButton
-                                Margin="0,0,0,16"
-                                CornerRadius="24"
-                                FontSize="14"
-                                Stroke="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                FontFamily="Roboto-Medium"
-                                Background="Transparent"
-                                Text="Follow"
-                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                WidthRequest="120">
-                            </buttons:SfButton>
-
                             <!--  About title label  -->
                             <Label
                                 Margin="16,0,0,4"
@@ -160,6 +153,20 @@
                                 HorizontalTextAlignment="Start"
                                 Style="{DynamicResource DescriptionLabelStyle}"
                                 Text="{Binding Profile.About}"/>
+
+                            <!--  Follow button  -->
+                            <buttons:SfButton
+                                Margin="0,0,0,16"
+                                CornerRadius="24"
+                                FontSize="14"
+                                Stroke="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                StrokeThickness="2"
+                                FontFamily="Roboto-Medium"
+                                Background="Transparent"
+                                Text="Follow"
+                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                WidthRequest="180">
+                            </buttons:SfButton>
 
                         </StackLayout>
                     </Border>

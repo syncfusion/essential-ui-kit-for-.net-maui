@@ -201,27 +201,27 @@
                              Orientation="Horizontal">
                     <buttons:SfButton Margin="10"
                                       Text="Edit Profile"
-                                      Stroke="Gray"
-                                      StrokeThickness="1"
+                                      Stroke="#E5E1E3"
+                                      StrokeThickness="2"
                                       Background="Transparent"
                                       FontFamily="Roboto-Medium"
                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                      WidthRequest="{OnPlatform MacCatalyst=280, WinUI=280}"/>
+                                      WidthRequest="{OnPlatform MacCatalyst=300, WinUI=300}"/>
                     <buttons:SfButton Margin="10"
                                       Text="Share Profile"
-                                      Stroke="Gray"
-                                      StrokeThickness="1"
+                                      Stroke="#E5E1E3"
+                                      StrokeThickness="2"
                                       Background="Transparent"
                                       FontFamily="Roboto-Medium"
                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                      WidthRequest="{OnPlatform MacCatalyst=280, WinUI=280}"/>
+                                      WidthRequest="{OnPlatform MacCatalyst=300, WinUI=300}"/>
                 </StackLayout>
 
                 <!--  Connection title label  -->
                 <Label
                     Grid.Row="4"
                     Grid.ColumnSpan="2"
-                    Margin="16,0,0,0"
+                    Margin="16,25,0,0"
                     FontSize="16"
                     HorizontalOptions="Start"
                     Style="{DynamicResource TitleLabelStyle}"
