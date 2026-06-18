@@ -5,6 +5,7 @@
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters;assembly=EssentialMAUIUIKit"
              xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Toolkit.EffectsView;assembly=Syncfusion.Maui.Toolkit"
+			 xmlns:sfavatar="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
              x:DataType="local:TransactionHistoryViewModel">
     <ContentView.BindingContext>
         <local:TransactionHistoryViewModel x:Name="viewModel"/>
@@ -67,6 +68,8 @@
 													  RowSpacing="0">
 
 													<!-- Profile Image -->
+
+													<!-- Profile Image / Avatar -->
 													<Border Grid.RowSpan="2"
 															Margin="20,10,16,16"
 															Stroke="{DynamicResource Gray-Bg}"
@@ -75,19 +78,31 @@
 															HorizontalOptions="Center"
 															VerticalOptions="Center">
 
-														<Image Aspect="Fill"
-															   BackgroundColor="{DynamicResource Gray-200}"
-															   HeightRequest="48"
-															   WidthRequest="48">
+														<Grid>
+															<Image Aspect="Fill"
+																   HeightRequest="48"
+																   WidthRequest="48">
 
-															<Image.Source>
-																<UriImageSource CacheValidity="14"
-																				CachingEnabled="true"
-																				Uri="{Binding CustomerImage}" />
-															</Image.Source>
+																<Image.Source>
+																	<UriImageSource Uri="{Binding CustomerImage}" />
+																</Image.Source>
+															</Image>
 
-														</Image>
+															<sfavatar:SfAvatarView ContentType="Initials"
+																				   InitialsType="SingleCharacter"
+																				   WidthRequest="48"
+																				   HeightRequest="48"
+																				   CornerRadius="24"
+																				   FontAttributes="Bold"
+																				   AvatarName="{Binding CustomerName}"
+																				   Background="LightGreen"
+																				   InitialsColor="Green"
+																				   Stroke="Black"
+																				   IsVisible="{Binding UseAvatar}" />
+														</Grid>
+
 													</Border>
+
 
 													<!-- Name + Amount -->
 													<Grid ColumnDefinitions="*,*"

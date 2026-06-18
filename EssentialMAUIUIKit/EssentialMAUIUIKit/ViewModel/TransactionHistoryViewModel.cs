@@ -36,10 +36,10 @@ namespace EssentialMAUIUIKit
 
 
 
+
 		public void PopulateData()
 		{
 			var today = DateTime.Now.Date;
-
 
 			var list = new List<TransactionDetail>
 			{
@@ -51,44 +51,40 @@ namespace EssentialMAUIUIKit
 					TransactionDateTime=today.AddHours(12)
 				},
 				new TransactionDetail {
-					CustomerName="Jessica Park",
-					CustomerImage="ProfileImage10.png",
-					AmountValue=80,
-					IsCredited=true,
-					TransactionDateTime=today.AddHours(11)
+					CustomerName="Shell petrol bunk", 
+					AmountValue=180,					
+					TransactionDateTime=today.AddHours(10)
 				},
 				new TransactionDetail {
 					CustomerName="Lisa",
 					CustomerImage="ProfileImage11.png",
 					AmountValue=50,
-					TransactionDateTime=today.AddHours(10)
-				},
-				new TransactionDetail {
-					CustomerName="Rebecca",
-					CustomerImage="ProfileImage12.png",
-					AmountValue=180,
 					IsFailed=true,
 					TransactionDateTime=today.AddHours(9)
 				},
 
-				// YESTERDAY
+				// ✅ YESTERDAY
 				new TransactionDetail {
-					CustomerName="John Chris",
-					CustomerImage="ProfileImage1.png",
+					CustomerName="Recharge",
 					AmountValue=50,
-					IsCredited=true,
 					TransactionDateTime=today.AddDays(-1).AddHours(13)
 				},
 				new TransactionDetail {
 					CustomerName="Steve",
 					CustomerImage="ProfileImage2.png",
+					IsCredited=true,
 					AmountValue=180,
 					TransactionDateTime=today.AddDays(-1).AddHours(11)
+				},
+				new TransactionDetail {
+					CustomerName="Rebecca",
+					CustomerImage="ProfileImage12.png",
+					AmountValue=120,
+					IsFailed=true,
+					TransactionDateTime=today.AddDays(-1).AddHours(10)
 				}
 			};
 
-
-			// Show "Yesterday" only once
 			bool headerShown = false;
 
 			foreach (var item in list.OrderByDescending(x => x.TransactionDateTime))
@@ -105,7 +101,9 @@ namespace EssentialMAUIUIKit
 					list.OrderByDescending(x => x.TransactionDateTime));
 		}
 
+
 	}
+
 
 
 	public class TransactionDetail
@@ -120,11 +118,11 @@ namespace EssentialMAUIUIKit
 			set => customerImage = value;
 		}
 
-		public double AmountValue { get; set; }
-
 		public bool IsCredited { get; set; }
 
 		public bool IsFailed { get; set; }
+
+		public double AmountValue { get; set; }
 
 		public DateTime TransactionDateTime { get; set; }
 
@@ -134,6 +132,9 @@ namespace EssentialMAUIUIKit
 		public string DisplayAmount =>
 			IsCredited ? $"+${AmountValue}" : $"${AmountValue}";
 
+		public bool UseAvatar =>
+			CustomerName == "Shell petrol bunk" || CustomerName == "Recharge";
+
 		public string GroupHeader =>
 			TransactionDateTime.Date == DateTime.Now.Date.AddDays(-1)
 				? "Yesterday"
@@ -141,6 +142,7 @@ namespace EssentialMAUIUIKit
 
 		public bool ShowHeader { get; set; }
 	}
+
 
 
 	public class TransactionHistoryGroup : ObservableCollection<TransactionDetail>
@@ -157,6 +159,6 @@ namespace EssentialMAUIUIKit
 
 	public class TransactionInfo
     {
-        public ObservableCollection<TransactionDetail>? TransactionDetails { get; set; }
+        public ObservableCollection<TransactionDetail>? TransactionDetails { get; set; } = new ObservableCollection<TransactionDetail>();
     }
 }
