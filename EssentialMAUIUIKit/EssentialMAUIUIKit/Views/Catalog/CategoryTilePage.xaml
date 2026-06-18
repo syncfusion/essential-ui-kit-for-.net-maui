@@ -4,6 +4,7 @@
              x:Class="EssentialMAUIUIKit.Views.Catalog.CategoryTilePage"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
              xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Toolkit.EffectsView;assembly=Syncfusion.Maui.Toolkit"
              x:DataType="local:CategoryTileViewModel">
     <ContentView.BindingContext>
@@ -17,13 +18,13 @@
                         <VisualState x:Name="Normal">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                        Value="Transparent" />
+                                        Value="Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                         <VisualState x:Name="PointerOver">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                        Value= "Transparent" />
+                                        Value="Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -32,68 +33,107 @@
         </Style>
     </ContentView.Resources>
     <ContentView.Content>
+        <Grid RowDefinitions="Auto,*">
 
-        <Grid>
-            <!--  ListView for Category  -->
-            <listView:SfListView BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                 Grid.Row="1"
-                                 Padding="8"
-                                 AutoFitMode="Height"
-                                 HorizontalOptions="Fill"
-                                 ItemSpacing="8"
-                                 ItemsSource="{Binding Categories}"
-                                 Style="{DynamicResource TransparentSelectionListView}">
+            <HorizontalStackLayout HorizontalOptions="End">
+                <buttons:SfButton Background="Transparent"
+                                  CornerRadius="4"
+                                  TextColor="{DynamicResource Gray-700}">
+                    <buttons:SfButton.Content>
+                        <DataTemplate>
+                            <StackLayout Padding="8,5,8,6"
+                                         VerticalOptions="Center">
+                                <Label FontFamily="FontIcons"
+                                       FontSize="18"
+                                       Style="{DynamicResource DescriptionLabelStyle}"
+                                       Text="{DynamicResource Search}"
+                                       VerticalOptions="Center"
+                                       VerticalTextAlignment="Center" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </buttons:SfButton.Content>
+                </buttons:SfButton>
 
-                <listView:SfListView.ItemTemplate>
-                    <DataTemplate x:DataType="local:CategoryItem">
-                        <syncEffectsView:SfEffectsView
-                            RippleBackground="{DynamicResource Gray-300}"
-                            TouchDownEffects="Ripple">
-                            <Grid RowDefinitions="Auto, Auto"
-                                  RowSpacing="8">
+                <buttons:SfButton Background="Transparent"
+                                  CornerRadius="4"
+                                  TextColor="{DynamicResource Gray-700}">
+                    <buttons:SfButton.Content>
+                        <DataTemplate>
+                            <StackLayout Padding="8,5,8,6"
+                                         VerticalOptions="Center">
+                                <Label FontFamily="FontIcons"
+                                       FontSize="18"
+                                       Style="{DynamicResource DescriptionLabelStyle}"
+                                       Text="{DynamicResource Cart}"
+                                       VerticalOptions="Center"
+                                       VerticalTextAlignment="Center" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </buttons:SfButton.Content>
+                </buttons:SfButton>
+            </HorizontalStackLayout>
+            <Border Margin="20"
+                    Grid.Row="1"
+                    Padding="20"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 8">
 
-                                <!--  Category Image  -->
-                                <Border Stroke="Transparent"
-                                        StrokeShape="RoundRectangle 10"
-                                        HeightRequest="{OnIdiom Phone=170,
-                        Tablet=240,
-                        Desktop=170}"
-                                        WidthRequest="{OnIdiom Phone=160,
-                       Tablet=224,
-                       Desktop=164}">
-                                    <Image
-                                        Grid.Row="0"
-                                        Aspect="Fill"
-                                        BackgroundColor="Transparent">
-                                        <Image.Source>
-                                            <UriImageSource
-                                                CacheValidity="14"
-                                                CachingEnabled="true"
-                                                Uri="{Binding Icon}"/>
-                                        </Image.Source>
-                                    </Image>
-                                </Border>
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Catalog"
+                           FontSize="14"
+                           VerticalOptions="End"
+                           Margin="30,0,0,0"
+                           TextColor="#666" />
+                    <BoxView HeightRequest="1"
+                             Color="#EAEAEA" />
 
+                    <!--  ListView for Category  -->
+                    <listView:SfListView Padding="0"
+                                         AutoFitMode="Height"
+                                         BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                         HeightRequest="450"
+                                         ItemSpacing="10"
+                                         ItemsSource="{Binding Categories}"
+                                         Style="{DynamicResource TransparentSelectionListView}">
 
-                                <!--  Category Name  -->
-                                <Label
-                                    Grid.Row="1"
-                                    Margin="0,0,0,8"
-                                    FontSize="14"
-                                    Style="{DynamicResource TitleLabelStyle}"
-                                    Text="{Binding Name}"/>
+                        <listView:SfListView.ItemTemplate>
+                            <DataTemplate x:DataType="local:CategoryItem">
+                                <VerticalStackLayout Spacing="6"
+                                                     HeightRequest="185"
+                                                     HorizontalOptions="Center">
+                                    <syncEffectsView:SfEffectsView TouchDownEffects="Ripple"
+                                                                   RippleBackground="{DynamicResource Gray-300}">
+                                        <Border Stroke="Transparent"
+                                                StrokeShape="RoundRectangle 10"
+                                                HeightRequest="{OnIdiom Phone=170, Tablet=240, Desktop=160}"
+                                                WidthRequest="{OnIdiom Phone=160, Tablet=224, Desktop=170}">
 
-                            </Grid>
-                        </syncEffectsView:SfEffectsView>
-                    </DataTemplate>
-                </listView:SfListView.ItemTemplate>
-                <!--  Layout to customize no. of columns in SfListView  -->
-                <listView:SfListView.ItemsLayout>
-                    <listView:GridLayout SpanCount="{OnPlatform WinUI=4, Android=2, iOS=2, MacCatalyst=4}"/>
-                </listView:SfListView.ItemsLayout>
+                                            <Image Aspect="AspectFill"
+                                                   BackgroundColor="Transparent">
+                                                <Image.Source>
+                                                    <UriImageSource Uri="{Binding Icon}"
+                                                                    CachingEnabled="true"
+                                                                    CacheValidity="14" />
+                                                </Image.Source>
+                                            </Image>
+                                        </Border>
+                                    </syncEffectsView:SfEffectsView>
+                                    
+                                    <!--  Category Name  -->
+                                    <Label Text="{Binding Name}"
+                                           FontSize="14"
+                                           Style="{DynamicResource TitleLabelStyle}" />
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </listView:SfListView.ItemTemplate>
 
-            </listView:SfListView>
-
+                        <!--  Layout to customize no. of columns in SfListView  -->
+                        <listView:SfListView.ItemsLayout>
+                            <listView:GridLayout SpanCount="{OnPlatform WinUI=5, Android=3, iOS=3, MacCatalyst=5}" />
+                        </listView:SfListView.ItemsLayout>
+                    </listView:SfListView>
+                </VerticalStackLayout>
+            </Border>
         </Grid>
     </ContentView.Content>
 </ContentView>
