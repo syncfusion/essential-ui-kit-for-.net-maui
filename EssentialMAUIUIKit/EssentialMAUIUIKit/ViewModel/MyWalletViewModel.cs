@@ -1044,8 +1044,8 @@ namespace EssentialMAUIUIKit
     {
         #region Properties
 
-        public required DataTemplate RegularTemplate { get; set; }
-        public required DataTemplate LastItemTemplate { get; set; }
+        public DataTemplate RegularTemplate { get; set; } = new DataTemplate();
+        public DataTemplate LastItemTemplate { get; set; } = new DataTemplate();
         public ObservableCollection<CardDetails>? ItemsSource { get; set; }
 
         #endregion

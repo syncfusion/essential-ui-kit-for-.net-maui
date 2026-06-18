@@ -147,7 +147,7 @@
                                                 Margin="0"
                                                 Padding="0"
                                                 StrokeShape="RoundRectangle 3,3,3,3"
-                                                HeightRequest="40"
+                                                HeightRequest="45"
                                                 HorizontalOptions="Start">
 
                                                 <!--  Product quantity dropdown  -->
@@ -156,7 +156,7 @@
                                                     Stroke="{DynamicResource Gray-300}"
                                                     ItemsSource="{Binding Quantities}"
                                                     DropDownBackground="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                                    HeightRequest="40"
+                                                    HeightRequest="35"
                                                     HorizontalOptions="Start"
                                                     VerticalOptions="Center"
                                                     VerticalTextAlignment="Center"
@@ -267,7 +267,6 @@
                                 HorizontalOptions="End"
                                 TextColor="{DynamicResource HyperLink}"
                                 Text="Apply Coupon"
-                                FontFamily="Roboto-Regular"
                                 FontSize="12"
                                 Background="Transparent"
                                 HeightRequest="25"

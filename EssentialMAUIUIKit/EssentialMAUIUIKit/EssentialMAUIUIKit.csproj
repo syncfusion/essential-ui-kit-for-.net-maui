@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net10.0-android;net10.0-ios;net10.0-maccatalyst</TargetFrameworks>
@@ -38,7 +38,7 @@
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">29.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
@@ -53,7 +53,9 @@
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
 		<DefineConstants>TRACE;RELEASE;</DefineConstants>
 		<WarningLevel>5</WarningLevel>
-		<!-- NOTE: not recommended for Debug builds! -->
+		<!-- Enable R8 with custom rules to strip logs in release -->
+		<AndroidEnableProguard>true</AndroidEnableProguard>
+		<AndroidProguardConfiguration>Platforms/Android/proguard-rules.pro</AndroidProguardConfiguration>
 		<AndroidLinkTool>r8</AndroidLinkTool>
 	</PropertyGroup>
 
@@ -67,7 +69,9 @@
 		<DefineConstants>TRACE;RELEASE;</DefineConstants>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<WarningLevel>5</WarningLevel>
-		<!-- NOTE: not recommended for Debug builds! -->
+		<!-- Enable R8 with custom rules to strip logs in release-xml builds too -->
+		<AndroidEnableProguard>true</AndroidEnableProguard>
+		<AndroidProguardConfiguration>Platforms/Android/proguard-rules.pro</AndroidProguardConfiguration>
 		<AndroidLinkTool>r8</AndroidLinkTool>
 	</PropertyGroup>
 
