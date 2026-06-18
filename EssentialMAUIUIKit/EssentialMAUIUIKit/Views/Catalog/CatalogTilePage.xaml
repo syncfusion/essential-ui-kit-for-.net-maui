@@ -122,8 +122,37 @@
                     <converter:BooleanToColorConverter x:Key="boolToColorConverter" />
                 </ResourceDictionary>
             </Grid.Resources>
-
-            <HorizontalStackLayout HorizontalOptions="End">
+<Grid ColumnDefinitions="Auto,*">
+     <buttons:SfButton Background="Transparent"
+                                   IsVisible="{OnIdiom Phone=True, Tablet=True, Desktop=False}"
+                                      CornerRadius="4"
+                                      Margin="10,0,0,0"
+                                      HeightRequest="32"
+                                      WidthRequest="100"
+                                      TextColor="{DynamicResource Gray-700}">
+                        <buttons:SfButton.Content>
+                            <DataTemplate>
+                                <StackLayout Padding="8,5,8,6"
+                                             Orientation="Horizontal"
+                                             Spacing="8"
+                                             VerticalOptions="Center">
+                                    <Label FontFamily="FontIcons"
+                                        Rotation="180"
+                                           FontSize="18"
+                                           Style="{DynamicResource DescriptionLabelStyle}"
+                                           Text="{DynamicResource ArrowRight}"
+                                           VerticalOptions="Center"
+                                           VerticalTextAlignment="Center" />
+                                    <Label FontFamily="Roboto-Medium"
+                                           Style="{DynamicResource DescriptionLabelStyle}"
+                                           Text="Dress"
+                                           VerticalOptions="Center"
+                                           VerticalTextAlignment="Center" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </buttons:SfButton.Content>
+                    </buttons:SfButton>
+            <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End">
                 <buttons:SfButton Background="Transparent"
                                   CornerRadius="4"
                                   TextColor="{DynamicResource Gray-700}">
@@ -160,6 +189,7 @@
                     </buttons:SfButton.Content>
                 </buttons:SfButton>
             </HorizontalStackLayout>
+            </Grid>
             <!--  ListView for catalog  -->
             <listView:SfListView BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                                  x:Name="ListViewTile"
@@ -169,7 +199,7 @@
                                  HeaderTemplate="{DynamicResource CatalogDefaultHeaderTemplate}"
                                  HorizontalOptions="Fill"
                                  IsStickyHeader="False"
-                                 ItemSpacing="10"
+                                 ItemSpacing="{OnIdiom Phone=5, Tablet=10, Desktop=10}"
                                  ItemsSource="{Binding Products}"
                                  Style="{DynamicResource TransparentSelectionListView}">
 
@@ -180,7 +210,7 @@
                             <Border Stroke="#e3e3e3"
                                     StrokeThickness="2"
                                     StrokeShape="RoundRectangle 10"
-                                    WidthRequest="178"
+                                    WidthRequest="{OnIdiom Phone=188, Tablet=188, Desktop=178}"
                                     HeightRequest="245">
                                 <Border.Shadow>
                                     <Shadow Brush="#000000"
@@ -266,7 +296,7 @@
 
                 <!--  Layout to customize number of columns in SfListView  -->
                 <listView:SfListView.ItemsLayout>
-                    <listView:GridLayout SpanCount="{OnPlatform Default=4, Android=2, iOS=2}" />
+                    <listView:GridLayout SpanCount="{OnIdiom Phone=2, Tablet=4, Desktop=4}" />
                 </listView:SfListView.ItemsLayout>
             </listView:SfListView>
         </Grid>

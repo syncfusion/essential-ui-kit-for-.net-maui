@@ -111,7 +111,37 @@
         <Grid RowDefinitions="Auto,*"
               ColumnSpacing="0"
               RowSpacing="0">
-            <HorizontalStackLayout HorizontalOptions="End">
+             <Grid ColumnDefinitions="Auto,*">
+                <buttons:SfButton Background="Transparent"
+                                   IsVisible="{OnIdiom Phone=True, Tablet=True, Desktop=False}"
+                                      CornerRadius="4"
+                                      Margin="10,0,0,0"
+                                      HeightRequest="32"
+                                      WidthRequest="100"
+                                      TextColor="{DynamicResource Gray-700}">
+                        <buttons:SfButton.Content>
+                            <DataTemplate>
+                                <StackLayout Padding="8,5,8,6"
+                                             Orientation="Horizontal"
+                                             Spacing="8"
+                                             VerticalOptions="Center">
+                                    <Label FontFamily="FontIcons"
+                                        Rotation="180"
+                                           FontSize="18"
+                                           Style="{DynamicResource DescriptionLabelStyle}"
+                                           Text="{DynamicResource ArrowRight}"
+                                           VerticalOptions="Center"
+                                           VerticalTextAlignment="Center" />
+                                    <Label FontFamily="Roboto-Medium"
+                                           Style="{DynamicResource DescriptionLabelStyle}"
+                                           Text="Dress"
+                                           VerticalOptions="Center"
+                                           VerticalTextAlignment="Center" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </buttons:SfButton.Content>
+                    </buttons:SfButton>
+            <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End">
                 <buttons:SfButton Background="Transparent"
                                   CornerRadius="4"
                                   TextColor="{DynamicResource Gray-700}">
@@ -148,6 +178,7 @@
                     </buttons:SfButton.Content>
                 </buttons:SfButton>
             </HorizontalStackLayout>
+            </Grid>
             <!--  ListView for catalog list  -->
             <listView:SfListView WidthRequest="{OnPlatform MacCatalyst=800}"
                                  BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
@@ -172,7 +203,7 @@
                                     Stroke="#e3e3e3"
                                     StrokeThickness="2"
                                     StrokeShape="RoundRectangle 10"
-                                    WidthRequest="600"
+                                    WidthRequest="{OnIdiom Phone=385, Tablet=528, Desktop=600}"
                                     HeightRequest="140">
                                 <Border.Shadow>
                                     <Shadow Brush="#000000"

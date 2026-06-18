@@ -34,8 +34,37 @@
     </ContentView.Resources>
     <ContentView.Content>
         <Grid RowDefinitions="Auto,*">
-
-            <HorizontalStackLayout HorizontalOptions="End">
+            <Grid ColumnDefinitions="Auto,*">
+               <buttons:SfButton Background="Transparent"
+                                   IsVisible="{OnIdiom Phone=True, Tablet=True, Desktop=False}"
+                                      CornerRadius="4"
+                                      Margin="10,0,0,0"
+                                      HeightRequest="32"
+                                      WidthRequest="110"
+                                      TextColor="{DynamicResource Gray-700}">
+                        <buttons:SfButton.Content>
+                            <DataTemplate>
+                                <StackLayout Padding="8,5,8,6"
+                                             Orientation="Horizontal"
+                                             Spacing="8"
+                                             VerticalOptions="Center">
+                                    <Label FontFamily="FontIcons"
+                                        Rotation="180"
+                                           FontSize="18"
+                                           Style="{DynamicResource DescriptionLabelStyle}"
+                                           Text="{DynamicResource ArrowRight}"
+                                           VerticalOptions="Center"
+                                           VerticalTextAlignment="Center" />
+                                    <Label FontFamily="Roboto-Medium"
+                                           Style="{DynamicResource DescriptionLabelStyle}"
+                                           Text="Categories"
+                                           VerticalOptions="Center"
+                                           VerticalTextAlignment="Center" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </buttons:SfButton.Content>
+                    </buttons:SfButton>
+<HorizontalStackLayout Grid.Column="1" HorizontalOptions="End">
                 <buttons:SfButton Background="Transparent"
                                   CornerRadius="4"
                                   TextColor="{DynamicResource Gray-700}">
@@ -72,26 +101,31 @@
                     </buttons:SfButton.Content>
                 </buttons:SfButton>
             </HorizontalStackLayout>
-            <Border Margin="20"
+            </Grid>
+
+            
+            <Border Margin="20" 
                     Grid.Row="1"
-                    Padding="20"
+                    Padding="{OnIdiom Phone=0, Tablet=20, Desktop=20}"
                     StrokeThickness="0"
                     StrokeShape="RoundRectangle 8">
 
                 <VerticalStackLayout Spacing="15">
                     <Label Text="Catalog"
+                            IsVisible="{OnIdiom Phone=False, Tablet=False, Desktop=True}"
                            FontSize="14"
                            VerticalOptions="End"
                            Margin="30,0,0,0"
                            TextColor="#666" />
                     <BoxView HeightRequest="1"
+                             IsVisible="{OnIdiom Phone=False, Tablet=False, Desktop=True}"
                              Color="#EAEAEA" />
 
                     <!--  ListView for Category  -->
                     <listView:SfListView Padding="0"
                                          AutoFitMode="Height"
                                          BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                         HeightRequest="450"
+                                         HeightRequest="{OnIdiom Phone=700, Tablet=900, Desktop=500}"
                                          ItemSpacing="10"
                                          ItemsSource="{Binding Categories}"
                                          Style="{DynamicResource TransparentSelectionListView}">
@@ -99,14 +133,14 @@
                         <listView:SfListView.ItemTemplate>
                             <DataTemplate x:DataType="local:CategoryItem">
                                 <VerticalStackLayout Spacing="6"
-                                                     HeightRequest="185"
+                                                     HeightRequest="{OnIdiom Phone=195, Tablet=230, Desktop=185}"
                                                      HorizontalOptions="Center">
                                     <syncEffectsView:SfEffectsView TouchDownEffects="Ripple"
                                                                    RippleBackground="{DynamicResource Gray-300}">
                                         <Border Stroke="Transparent"
-                                                StrokeShape="RoundRectangle 10"
-                                                HeightRequest="{OnIdiom Phone=170, Tablet=240, Desktop=160}"
-                                                WidthRequest="{OnIdiom Phone=160, Tablet=224, Desktop=170}">
+                                                StrokeShape="RoundRectangle 12"
+                                                HeightRequest="{OnIdiom Phone=170, Tablet=200, Desktop=160}"
+                                                WidthRequest="{OnIdiom Phone=180, Tablet=224, Desktop=170}">
 
                                             <Image Aspect="AspectFill"
                                                    BackgroundColor="Transparent">
@@ -129,7 +163,7 @@
 
                         <!--  Layout to customize no. of columns in SfListView  -->
                         <listView:SfListView.ItemsLayout>
-                            <listView:GridLayout SpanCount="{OnPlatform WinUI=5, Android=3, iOS=3, MacCatalyst=5}" />
+                            <listView:GridLayout SpanCount="{OnIdiom Phone=2, Tablet=4, Desktop=5}" />
                         </listView:SfListView.ItemsLayout>
                     </listView:SfListView>
                 </VerticalStackLayout>
