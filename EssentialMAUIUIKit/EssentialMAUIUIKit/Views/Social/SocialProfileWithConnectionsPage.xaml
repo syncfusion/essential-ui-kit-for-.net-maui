@@ -206,7 +206,7 @@
                                       Background="Transparent"
                                       FontFamily="Roboto-Medium"
                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                      WidthRequest="{OnPlatform MacCatalyst=300, WinUI=300}"/>
+                                      WidthRequest="{OnPlatform Android=170, MacCatalyst=300, WinUI=300}"/>
                     <buttons:SfButton Margin="10"
                                       Text="Share Profile"
                                       Stroke="#E5E1E3"
@@ -214,7 +214,7 @@
                                       Background="Transparent"
                                       FontFamily="Roboto-Medium"
                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                      WidthRequest="{OnPlatform MacCatalyst=300, WinUI=300}"/>
+                                      WidthRequest="{OnPlatform Android=170, MacCatalyst=300, WinUI=300}"/>
                 </StackLayout>
 
                 <!--  Connection title label  -->
