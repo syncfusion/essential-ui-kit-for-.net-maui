@@ -176,7 +176,7 @@
                 </Grid>
 
                 <Grid Grid.Row="2"
-                      Margin="{OnPlatform Default='-240,0,0,0', Android='0,0,-100,0'}"
+                      Margin="{OnIdiom Phone='0,0,-100,0',  Tablet='-360,0,0,0', Desktop='-240,0,0,0'}"
                       ColumnDefinitions="Auto,Auto,Auto,Auto,Auto"
                       ColumnSpacing="12"
                       HorizontalOptions="Center"
