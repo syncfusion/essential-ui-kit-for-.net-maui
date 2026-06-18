@@ -1,6 +1,29 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-	<application android:allowBackup="true" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true"></application>
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<uses-permission android:name="android.permission.INTERNET" />
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools">
+
+  <!-- App-specific signature-level permission to satisfy dynamic receiver requirement -->
+  <permission
+      android:name="${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+      android:protectionLevel="signature" />
+
+  <!-- Required permissions -->
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.INTERNET" />
+
+  <application
+      android:allowBackup="false"
+      android:fullBackupContent="false"
+      android:icon="@mipmap/appicon"
+      android:roundIcon="@mipmap/appicon_round"
+      android:supportsRtl="true"
+      android:usesCleartextTraffic="false">
+
+    <!-- Override library receiver to be non-exported -->
+    <receiver
+        android:name="androidx.profileinstaller.ProfileInstallReceiver"
+        android:exported="false"
+        tools:replace="exported" />
+
+  </application>
 </manifest>
