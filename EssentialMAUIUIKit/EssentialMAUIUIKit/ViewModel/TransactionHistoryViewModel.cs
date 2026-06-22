@@ -9,7 +9,9 @@ namespace EssentialMAUIUIKit
     {
         private ObservableCollection<TransactionDetail>? transactionDetails;
 
-        public TransactionHistoryViewModel()
+		public ObservableCollection<TransactionHistoryGroup> GroupedTransactions { get; set; }
+
+		public TransactionHistoryViewModel()
         {
             PopulateData();
         }
@@ -31,93 +33,143 @@ namespace EssentialMAUIUIKit
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void PopulateData()
-        {
-            // JSON data string
-            string jsonData = @"
-            {
-             ""transactionDetails"": [
-    {
-      ""customerName"": ""Alice"",
-      ""transactionDescription"": ""Cashback"",
-      ""customerImage"": ""ProfileImage15.png"",
-      ""transactionAmount"": ""+ $70"",
-      ""isCredited"": true,
-      ""transactionDate"": ""12 Jan 2024""
-    },
-    {
-      ""customerName"": ""Jessica Park"",
-      ""transactionDescription"": ""XXXXXXX6585"",
-      ""customerImage"": ""ProfileImage10.png"",
-      ""transactionAmount"": ""+ $80"",
-      ""isCredited"": true,
-      ""transactionDate"": ""18 Jan 2024""
-    },
-    {
-      ""customerName"": ""Lisa"",
-      ""transactionDescription"": ""Recharge"",
-      ""customerImage"": ""ProfileImage11.png"",
-      ""transactionAmount"": ""- $50"",
-      ""isCredited"": false,
-      ""transactionDate"": ""10 Mar 2024""
-    },
-    {
-      ""customerName"": ""Rebecca"",
-      ""transactionDescription"": ""Credit Card Bill"",
-      ""customerImage"": ""ProfileImage12.png"",
-      ""transactionAmount"": ""- $180"",
-      ""isCredited"": false,
-      ""transactionDate"": ""12 Mar 2024""
-    },
-{
-      ""customerName"": ""John Chris"",
-      ""transactionDescription"": ""Cashback"",
-      ""customerImage"": ""ProfileImage1.png"",
-      ""transactionAmount"": ""+ $50"",
-      ""isCredited"": true,
-      ""transactionDate"": ""10 Mar 2024""
-    },
-    {
-      ""customerName"": ""Steve"",
-      ""transactionDescription"": ""Household expense"",
-      ""customerImage"": ""ProfileImage2.png"",
-      ""transactionAmount"": ""- $180"",
-      ""isCredited"": false,
-      ""transactionDate"": ""12 Mar 2024""
-    }
-  ]
-            }";
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
 
-            var transactionInfo = JsonSerializer.Deserialize<TransactionInfo>(jsonData, options);
-            if (transactionInfo?.TransactionDetails != null)
-            {
-                TransactionDetails = new ObservableCollection<TransactionDetail>(transactionInfo.TransactionDetails);
-            }
-        }
-    }
 
-    public class TransactionDetail
+
+
+		public void PopulateData()
+		{
+			var today = DateTime.Now.Date;
+
+			var list = new List<TransactionDetail>
+			{
+				new TransactionDetail {
+					CustomerName="Alice",
+					CustomerImage="ProfileImage15.png",
+					AmountValue=70,
+					IsCredited=true,
+					TransactionDateTime=today.AddHours(12)
+				},
+				new TransactionDetail {
+					CustomerName="Shell petrol bunk", 
+					AmountValue=180,					
+					TransactionDateTime=today.AddHours(10)
+				},
+				new TransactionDetail {
+					CustomerName="Lisa",
+					CustomerImage="ProfileImage11.png",
+					AmountValue=50,
+					IsFailed=true,
+					TransactionDateTime=today.AddHours(9)
+				},
+				new TransactionDetail {
+					CustomerName="Mark",
+					CustomerImage="ProfileImage3.png",
+					AmountValue=45,
+					TransactionDateTime=today.AddHours(8)
+				},
+
+				// ✅ YESTERDAY
+				new TransactionDetail {
+					CustomerName="Recharge",
+					AmountValue=50,
+					TransactionDateTime=today.AddDays(-1).AddHours(13)
+				},
+				new TransactionDetail {
+					CustomerName="Steve",
+					CustomerImage="ProfileImage2.png",
+					IsCredited=true,
+					AmountValue=80,
+					TransactionDateTime=today.AddDays(-1).AddHours(11)
+				},
+				new TransactionDetail {
+					CustomerName="Rebecca",
+					CustomerImage="ProfileImage12.png",
+					AmountValue=120,
+					IsFailed=true,
+					TransactionDateTime=today.AddDays(-1).AddHours(10)
+				}
+			};
+
+			bool headerShown = false;
+
+			foreach (var item in list.OrderByDescending(x => x.TransactionDateTime))
+			{
+				if (item.GroupHeader == "Yesterday" && !headerShown)
+				{
+					item.ShowHeader = true;
+					headerShown = true;
+				}
+			}
+
+			TransactionDetails =
+				new ObservableCollection<TransactionDetail>(
+					list.OrderByDescending(x => x.TransactionDateTime));
+		}
+
+
+	}
+
+
+
+	public class TransactionDetail
+	{
+		private string? customerImage;
+
+		public string? CustomerName { get; set; }
+
+		public string CustomerImage
+		{
+			get => App.ImageServerPath + this.customerImage;
+			set => customerImage = value;
+		}
+
+		public bool IsCredited { get; set; }
+
+		public bool IsFailed { get; set; }
+
+		public double AmountValue { get; set; }
+
+		public DateTime TransactionDateTime { get; set; }
+
+
+		public string DisplayDate =>
+			TransactionDateTime.ToString("dd MMM yyyy ");
+
+		public string DisplayTime =>
+			TransactionDateTime.ToString(" 'at' hh:mm tt");
+
+
+		public string DisplayAmount =>
+			IsCredited ? $"+${AmountValue}" : $"${AmountValue}";
+
+		public bool UseAvatar =>
+			CustomerName == "Shell petrol bunk" || CustomerName == "Recharge";
+
+		public string GroupHeader =>
+			TransactionDateTime.Date == DateTime.Now.Date.AddDays(-1)
+				? "Yesterday"
+				: "";
+
+		public bool ShowHeader { get; set; }
+	}
+
+
+
+	public class TransactionHistoryGroup : ObservableCollection<TransactionDetail>
+	{
+		public string? Title { get; set; }
+
+		public TransactionHistoryGroup(string? title, IEnumerable<TransactionDetail> items)
+			: base(items)
+		{
+			Title = title;
+		}
+	}
+
+
+	public class TransactionInfo
     {
-        private string? customerImage;
-        public string? CustomerName { get; set; }
-        public string? TransactionDescription { get; set; }
-        public string CustomerImage
-        {
-            get { return App.ImageServerPath + this.customerImage; }
-            set { customerImage = value; }
-        }
-
-        public string? TransactionAmount { get; set; }
-        public string? TransactionDate { get; set; }
-        public bool IsCredited { get; set; }
-    }
-
-    public class TransactionInfo
-    {
-        public ObservableCollection<TransactionDetail>? TransactionDetails { get; set; }
+        public ObservableCollection<TransactionDetail>? TransactionDetails { get; set; } = new ObservableCollection<TransactionDetail>();
     }
 }
