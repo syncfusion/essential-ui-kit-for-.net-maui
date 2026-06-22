@@ -62,6 +62,12 @@ namespace EssentialMAUIUIKit
 					IsFailed=true,
 					TransactionDateTime=today.AddHours(9)
 				},
+				new TransactionDetail {
+					CustomerName="Mark",
+					CustomerImage="ProfileImage3.png",
+					AmountValue=45,
+					TransactionDateTime=today.AddHours(8)
+				},
 
 				// ✅ YESTERDAY
 				new TransactionDetail {
@@ -73,7 +79,7 @@ namespace EssentialMAUIUIKit
 					CustomerName="Steve",
 					CustomerImage="ProfileImage2.png",
 					IsCredited=true,
-					AmountValue=180,
+					AmountValue=80,
 					TransactionDateTime=today.AddDays(-1).AddHours(11)
 				},
 				new TransactionDetail {
@@ -126,8 +132,13 @@ namespace EssentialMAUIUIKit
 
 		public DateTime TransactionDateTime { get; set; }
 
-		public string DisplayDateTime =>
-			TransactionDateTime.ToString("dd MMM yyyy 'at' hh:mm tt");
+
+		public string DisplayDate =>
+			TransactionDateTime.ToString("dd MMM yyyy ");
+
+		public string DisplayTime =>
+			TransactionDateTime.ToString(" 'at' hh:mm tt");
+
 
 		public string DisplayAmount =>
 			IsCredited ? $"+${AmountValue}" : $"${AmountValue}";

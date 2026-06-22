@@ -25,9 +25,9 @@ namespace EssentialMAUIUIKit
 			Tabs = new ObservableCollection<string>
 		    {
 			    "All Orders",
-			    "Requested",
-			    "Completed",
-			    "Cancelled"
+			    "Ordered",
+			    "Cancelled",
+			    "Completed"
 		    };
 
             SelectedTab = "All Orders";
@@ -116,9 +116,6 @@ namespace EssentialMAUIUIKit
 
 			switch (SelectedTab)
 			{
-				case "Requested":
-					FilteredOrders = RequestedOrders;
-					break;
 
 				case "Completed":
 					FilteredOrders = CompletedOrders;
@@ -126,6 +123,10 @@ namespace EssentialMAUIUIKit
 
 				case "Cancelled":
 					FilteredOrders = CancelledOrders;
+					break;
+
+				case "Ordered":
+					FilteredOrders = RequestedOrders;
 					break;
 
 				default:
@@ -154,18 +155,18 @@ namespace EssentialMAUIUIKit
             {
                 ""orders"": [
                     {
-                        ""orderid"": ""83533963"",
-                        ""productimage"": ""Image1.png"",
-                        ""name"": ""Full-Length Skirt"",
-                        ""description"": ""Delivery expected on 10 Aug 2026."",
-                        ""status"": ""Dispatched""
-                    },
-                    {
                         ""orderid"": ""63428737"",
                         ""productimage"": ""Image2.png"",
                         ""name"": ""Peasant Blouse"",
                         ""description"": ""Order was cancelled."",
                         ""status"": ""Cancelled""
+                    },
+                    {
+                        ""orderid"": ""83533963"",
+                        ""productimage"": ""Image1.png"",
+                        ""name"": ""Full-Length Skirt"",
+                        ""description"": ""Delivery expected on 10 Aug 2026."",
+                        ""status"": ""Dispatched""
                     },
                     {
                         ""orderid"": ""83658319"",
