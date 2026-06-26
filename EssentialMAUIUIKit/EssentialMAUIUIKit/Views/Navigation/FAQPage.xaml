@@ -6,51 +6,59 @@
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              x:DataType="local:FAQViewModel">
+
     <ContentView.BindingContext>
         <local:FAQViewModel/>
     </ContentView.BindingContext>
-    <ContentView.Resources>
-        <Style TargetType="listView:ListViewItem">
-            <Setter Property="VisualStateManager.VisualStateGroups">
-                <VisualStateGroupList>
-                    <VisualStateGroup>
-                        <VisualState x:Name="Normal">
-                            <VisualState.Setters>
-                                <Setter Property="Background"
-                    Value="Transparent" />
-                            </VisualState.Setters>
-                        </VisualState>
-                        <VisualState x:Name="PointerOver">
-                            <VisualState.Setters>
-                                <Setter Property="Background"
-                    Value= "Transparent" />
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateGroupList>
-            </Setter>
-        </Style>
-    </ContentView.Resources>
-    <ContentView.Content>
-        <Grid RowDefinitions="Auto,Auto" WidthRequest="{OnPlatform WinUI=650, MacCatalyst=650}" Margin="10,0"
-      BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
 
-            <!--  Header label Top Questions  -->
-            <Label
-        Margin="0,24,0,24"
-        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-        FontSize="20"
-        HorizontalOptions="Fill"
-        LineHeight="{OnPlatform Default=-1,
-                            Android=1.25}"
-        Style="{DynamicResource TitleLabelStyle}"
-        Text="Top Questions"
-        VerticalOptions="Center"/>
+    <Grid RowDefinitions="Auto"
+          Margin="12,16,0,0">
 
-            <listView:SfListView Grid.Row="1"
-            HeightRequest="500"
+        <Grid.WidthRequest>
+            <OnPlatform x:TypeArguments="x:Double">
+                <On Platform="Android,iOS" Value="-1" />
+
+                <On Platform="WinUI,MacCatalyst" Value="776" />
+            </OnPlatform>
+        </Grid.WidthRequest>
+
+        <Border
+            Margin="0,0,0,0"
+            Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#3A3A3A}"
+            StrokeShape="RoundRectangle 8"
+            BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill">
+
+            <Border.StrokeThickness>
+                <OnPlatform x:TypeArguments="x:Double">
+                    <On Platform="Android,iOS" Value="0" />
+                    <On Platform="WinUI,MacCatalyst" Value="1" />
+                </OnPlatform>
+            </Border.StrokeThickness>
+
+
+            <VerticalStackLayout Spacing="0">
+
+                <Label
+                    Text="Top Questions"
+                    FontSize="16"
+                    FontFamily="Roboto-Medium"
+                    HorizontalOptions="Start"
+                    HorizontalTextAlignment="Start"
+                    Style="{DynamicResource TitleLabelStyle}">
+                    <Label.Padding>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="Android,iOS" Value="8,0,0,0" />
+
+                            <On Platform="WinUI,MacCatalyst" Value="40,24,0,12" />
+                        </OnPlatform>
+                    </Label.Padding>
+                </Label>
+
+                <listView:SfListView Grid.Row="1"
+                         HeightRequest="500"
                          x:Name="FAQList"
-                         Padding="0"
                          AutoFitMode="DynamicHeight"
                          ScrollBarVisibility="Never"
                          ItemSpacing="0"
@@ -58,24 +66,34 @@
                          SelectionMode="None"
                          VerticalOptions="Fill">
 
-                <!--  View of each card item  -->
-                <listView:SfListView.ItemTemplate>
-                    <DataTemplate x:DataType="local:QuestionItem">
-                        <ViewCell>
-                            <StackLayout BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                    <listView:SfListView.Padding>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="Android,iOS" Value="8,0,2,0" />
+
+                            <On Platform="WinUI,MacCatalyst" Value="40,0,40,0" />
+                        </OnPlatform>
+                    </listView:SfListView.Padding>
+
+
+
+                    <!--  View of each card item  -->
+                    <listView:SfListView.ItemTemplate>
+                        <DataTemplate x:DataType="local:QuestionItem">
+                            <ViewCell>
+                                <StackLayout BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                                  Spacing="0">
-                                <syncfusion:SfExpander
+                                    <syncfusion:SfExpander
                             x:Name="expander"
                             Margin="0,0"
                             HeaderIconPosition="End">
 
-                                    <!--  Header  -->
-                                    <syncfusion:SfExpander.Header>
-                                        <StackLayout Padding="0,12">
-                                            <!--  Label for Question  -->
-                                            <Label
+                                        <!--  Header  -->
+                                        <syncfusion:SfExpander.Header>
+                                            <StackLayout Padding="0,12">
+                                                <!--  Label for Question  -->
+                                                <Label
                                         FontFamily="Roboto-Regular"
-                                        FontSize="15"
+                                        FontSize="14"
                                         HorizontalOptions="Start"
                                         HorizontalTextAlignment="Start"
                                         LineBreakMode="NoWrap"
@@ -83,22 +101,22 @@
                                         Style="{DynamicResource TitleLabelStyle}"
                                         Text="{Binding Question}"
                                         VerticalOptions="Center"/>
-                                        </StackLayout>
+                                            </StackLayout>
 
-                                    </syncfusion:SfExpander.Header>
+                                        </syncfusion:SfExpander.Header>
 
-                                    <!--  Content  -->
-                                    <syncfusion:SfExpander.Content>
-                                        <StackLayout
+                                        <!--  Content  -->
+                                        <syncfusion:SfExpander.Content>
+                                            <StackLayout
                                     Padding="0,0,0,15"
                                     BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                                     BindableLayout.ItemsSource="{Binding Answer}"
                                     Spacing="8">
 
-                                            <BindableLayout.ItemTemplate>
-                                                <DataTemplate>
-                                                    <!--  Label for Answers  -->
-                                                    <Label x:DataType="x:String"
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <!--  Label for Answers  -->
+                                                        <Label x:DataType="x:String"
                                                 HorizontalOptions="Start"
                                                 HorizontalTextAlignment="Start"
                                                 LineHeight="{OnPlatform Default=-1,
@@ -107,19 +125,18 @@
                                                 Text="{Binding}"
                                                 TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                                                 VerticalOptions="Center"/>
-                                                </DataTemplate>
-                                            </BindableLayout.ItemTemplate>
-                                        </StackLayout>
-                                    </syncfusion:SfExpander.Content>
-                                </syncfusion:SfExpander>
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </StackLayout>
+                                        </syncfusion:SfExpander.Content>
+                                    </syncfusion:SfExpander>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </listView:SfListView.ItemTemplate>
+                    </listView:SfListView>
 
-                                <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
-
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </listView:SfListView.ItemTemplate>
-            </listView:SfListView>
-        </Grid>
-    </ContentView.Content>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
 </ContentView>
