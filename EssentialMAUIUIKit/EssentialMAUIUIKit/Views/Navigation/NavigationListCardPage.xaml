@@ -10,18 +10,17 @@
     <ContentView.BindingContext>
         <local:NavigationListViewModel/>
     </ContentView.BindingContext>
+
     <ContentView.Content>
 
         <Grid RowDefinitions="*"
               WidthRequest="{OnPlatform WinUI=650, MacCatalyst=650}">
 
-            <!--  Title View  -->
-
             <Grid Grid.Row="1">
 
                 <listView:SfListView
                     x:Name="navigationList"
-                    Padding="15,0,10,0"
+                    Padding="0,0,0,0"
                     AutoFitMode="Height"
                     ScrollBarVisibility="Never"
                     ItemsSource="{Binding NavigationList}"
@@ -31,31 +30,37 @@
                     <listView:SfListView.ItemTemplate>
                         <DataTemplate x:DataType="local:NavigationItem">
                             <ViewCell>
-                                <!--  View of each card item  -->
+
                                 <Border
-                                    Margin="10"
+                                    Margin="8"
                                     Padding="0"
                                     BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                    Stroke="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                    Stroke="{AppThemeBinding Light=#E5E7EB, Dark=#2A2A2A}"
                                     StrokeThickness="1"
-                                    StrokeShape="RoundRectangle 10"
+                                    StrokeShape="RoundRectangle 8"
                                     HorizontalOptions="Fill"
                                     VerticalOptions="Fill">
 
-                                    <Border HeightRequest="120"
-                                            Stroke="Transparent"
-                                            StrokeThickness="0"
-                                            StrokeShape="RoundRectangle 4,4,4,4">
-                                        <Grid
-                                            ColumnDefinitions="120, *"
-                                            ColumnSpacing="0"
-                                            RowSpacing="0">
+                                    <!-- ✅ Theme-based Shadow -->
+                                    <Border.Shadow>
+                                        <Shadow Offset="0,1"
+                                                Radius="2"
+                                                Opacity="0.08"
+                                                Brush="{AppThemeBinding Light=#000000, Dark={DynamicResource BackgroundColorDark}}" />
+                                    </Border.Shadow>
 
-                                            <!--  Image to display the Item  -->
+
+                                    <Border Stroke="Transparent"
+                                            StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 8">
+
+                                        <Grid ColumnDefinitions="120,*">
+
+                                            <!-- ✅ Image -->
                                             <Image
                                                 Aspect="AspectFill"
                                                 BackgroundColor="{DynamicResource Gray-200}"
-                                                HeightRequest="120"
+                                                HeightRequest="130"
                                                 WidthRequest="120">
                                                 <Image.Source>
                                                     <UriImageSource
@@ -64,66 +69,79 @@
                                                         Uri="{Binding ItemImage}"/>
                                                 </Image.Source>
                                             </Image>
+
+                                            <!-- ✅ Content -->
                                             <StackLayout
                                                 Grid.Column="1"
-                                                Padding="16"
-                                                HorizontalOptions="Fill"
-                                                Spacing="0"
+                                                Padding="16,14,12,14"
+                                                Spacing="4"
                                                 VerticalOptions="Fill">
 
-                                                <!--  Name of the item  -->
+                                                <!-- Title -->
                                                 <Label FontFamily="Roboto-Medium"
+                                                       FontSize="14"
                                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                                       HorizontalOptions="Start"
-                                                       HorizontalTextAlignment="Start"
                                                        Text="{Binding ItemName}"/>
 
-                                                <!--  Description about the item  -->
+                                                <!-- ✅ Description (center aligned feel) -->
                                                 <Label FontFamily="Roboto-Regular"
-                                                       TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
-                                                       Margin="0,4,0,8"
                                                        FontSize="12"
-                                                       HorizontalOptions="Start"
-                                                       HorizontalTextAlignment="Start"
+                                                       Margin="0,6,0,6"
+                                                       VerticalOptions="Center"
+                                                       TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
                                                        LineBreakMode="TailTruncation"
-                                                       LineHeight="{OnPlatform Android=1.25,
-                                     Default=-1}"
+                                                       LineHeight="{OnPlatform Android=1.25, Default=-1}"
                                                        MaxLines="2"
                                                        Text="{Binding ItemDescription}"/>
 
-                                                <!--  Average rating from the overall rating  -->
-                                                <Grid ColumnDefinitions="Auto,Auto,*"
-                                                      HorizontalOptions="Fill"
-                                                      VerticalOptions="End">
-                                                    <Label
-                                                        Margin="0,0,4,0"
+                                                <!-- ✅ Bottom Section -->
+                                                <Grid ColumnDefinitions="Auto,*"
+                                                      VerticalOptions="FillAndExpand">
+
+                                                    <Border Grid.Column="0"
+                                                            Padding="6,3"
+                                                            BackgroundColor="#7633DA"
+                                                            StrokeShape="RoundRectangle 16"
+                                                            StrokeThickness="0"
+                                                            HorizontalOptions="Fill"
+                                                            VerticalOptions="End">
+
+                                                        <HorizontalStackLayout Spacing="4"
+                                                                            VerticalOptions="Center"
+                                                                            HorizontalOptions="Center">
+                                                            
+                                                            <Label Text="★"
+                                                                FontSize="12"
+                                                                TextColor="White"
+                                                                VerticalOptions="Start"
+                                                                VerticalTextAlignment="Start"
+                                                                Padding="0"
+                                                                Margin="0,-3,0,0"/>
+
+                                                            <Label Text="{Binding ItemRating, StringFormat='{0:F1}'}"
+                                                                FontFamily="Roboto-Medium"
+                                                                FontSize="12"
+                                                                TextColor="White"
+                                                                VerticalOptions="Center"
+                                                                VerticalTextAlignment="Center"
+                                                                Padding="0,0,2,0"
+                                                                Margin="0,-1.8,0,0"/>
+                                                        </HorizontalStackLayout>
+                                                    </Border>
+
+                                                    <!-- ✅ Arrow (bottom-right fixed) -->
+                                                    <buttons:SfButton
+                                                        Grid.Column="1"
+                                                        Background="Transparent"
+                                                        Padding="0"
+                                                        CornerRadius="0"
                                                         FontFamily="FontIcons"
                                                         FontSize="16"
-                                                        Text="{DynamicResource Rating}"
-                                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                                        VerticalOptions="Center"
-                                                        WidthRequest="16"/>
-                                                    <Label Grid.Column="1"
-                                                           FontFamily="Roboto-Regular"
-                                                           FontSize="12"
-                                                           LineHeight="{OnPlatform Android=1.5,
-                                         Default=-1}"
-                                                           Text="{Binding ItemRating}"
-                                                           TextColor="{DynamicResource Gray-700}"
-                                                           VerticalOptions="Center">
-                                                    </Label>
-
-                                                    <!--  Navigation icon  -->
-                                                    <buttons:SfButton Grid.Column="2"
-                                                                      Background="Transparent"
-                                                                      CornerRadius="4"
-                                                                      FontFamily="FontIcons"
-                                                                      FontSize="14"
-                                                                      HorizontalOptions="End"
-                                                                      Text="{DynamicResource ArrowRight}"
-                                                                      TextColor="{DynamicResource Gray-600}"
-                                                                      VerticalOptions="Center">
-                                                    </buttons:SfButton>
+                                                        HorizontalOptions="End"
+                                                        VerticalOptions="End"
+                                                        Margin="0,0,-16,-8"
+                                                        Text="{DynamicResource ArrowRight}"
+                                                        TextColor ="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
 
                                                 </Grid>
                                             </StackLayout>
@@ -134,8 +152,8 @@
                         </DataTemplate>
                     </listView:SfListView.ItemTemplate>
                 </listView:SfListView>
-            </Grid>
 
+            </Grid>
         </Grid>
 
     </ContentView.Content>
