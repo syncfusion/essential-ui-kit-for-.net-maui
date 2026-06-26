@@ -32,19 +32,19 @@
                         <Grid
                             ColumnSpacing="0"
                             RowDefinitions="Auto, Auto"
-                            RowSpacing="0">
+                            RowSpacing="8">
 
                             <!--  Folder Icon  -->
                             <Image Source="file.png"
-                                   WidthRequest="50"
-                                   HeightRequest="40"/>
+                                   WidthRequest="48"
+                                   HeightRequest="48"/>
 
                             <!--  Folder Name  -->
                             <Label
                                 Grid.Row="1"
                                 Margin="0,0,0,8"
                                 FontFamily="Roboto-Regular"
-                                FontSize="14"
+                                FontSize="16"
                                 HorizontalOptions="Center"
                                 LineBreakMode="TailTruncation"
                                 LineHeight="{OnPlatform Android=1.5,
@@ -57,7 +57,7 @@
                 </listView:SfListView.ItemTemplate>
 
                 <listView:SfListView.ItemsLayout>
-                    <listView:GridLayout SpanCount="{OnPlatform Android=3, iOS=5, MacCatalyst=10, WinUI=10}"/>
+                    <listView:GridLayout SpanCount="{OnPlatform Android=3, iOS=3, MacCatalyst=8, WinUI=8}"/>
                 </listView:SfListView.ItemsLayout>
 
             </listView:SfListView>
