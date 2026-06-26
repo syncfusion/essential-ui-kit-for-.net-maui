@@ -17,7 +17,6 @@
               WidthRequest="{OnPlatform WinUI=650, MacCatalyst=650}">
 
             <Grid Grid.Row="1">
-
                 <listView:SfListView
                     x:Name="navigationList"
                     Padding="0,0,0,0"
@@ -41,7 +40,6 @@
                                     HorizontalOptions="Fill"
                                     VerticalOptions="Fill">
 
-                                    <!-- ✅ Theme-based Shadow -->
                                     <Border.Shadow>
                                         <Shadow Offset="0,1"
                                                 Radius="2"
@@ -56,7 +54,6 @@
 
                                         <Grid ColumnDefinitions="120,*">
 
-                                            <!-- ✅ Image -->
                                             <Image
                                                 Aspect="AspectFill"
                                                 BackgroundColor="{DynamicResource Gray-200}"
@@ -70,7 +67,6 @@
                                                 </Image.Source>
                                             </Image>
 
-                                            <!-- ✅ Content -->
                                             <StackLayout
                                                 Grid.Column="1"
                                                 Padding="16,14,12,14"
@@ -83,7 +79,6 @@
                                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                                                        Text="{Binding ItemName}"/>
 
-                                                <!-- ✅ Description (center aligned feel) -->
                                                 <Label FontFamily="Roboto-Regular"
                                                        FontSize="12"
                                                        Margin="0,6,0,6"
@@ -94,7 +89,6 @@
                                                        MaxLines="2"
                                                        Text="{Binding ItemDescription}"/>
 
-                                                <!-- ✅ Bottom Section -->
                                                 <Grid ColumnDefinitions="Auto,*"
                                                       VerticalOptions="FillAndExpand">
 
@@ -129,7 +123,6 @@
                                                         </HorizontalStackLayout>
                                                     </Border>
 
-                                                    <!-- ✅ Arrow (bottom-right fixed) -->
                                                     <buttons:SfButton
                                                         Grid.Column="1"
                                                         Background="Transparent"

@@ -74,8 +74,6 @@
                         </OnPlatform>
                     </listView:SfListView.Padding>
 
-
-
                     <!--  View of each card item  -->
                     <listView:SfListView.ItemTemplate>
                         <DataTemplate x:DataType="local:QuestionItem">

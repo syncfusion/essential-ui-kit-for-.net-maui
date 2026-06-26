@@ -3,27 +3,35 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Navigation.SongsPage"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:avatar="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              x:DataType="local:SongPageViewModel">
     <ContentView.BindingContext>
         <local:SongPageViewModel/>
     </ContentView.BindingContext>
-    <ContentView.Content>
 
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <local:PlayPauseConverter x:Key="PlayPauseConverter"/>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <ContentView.Content>
         <Grid RowDefinitions="Auto"
               ColumnSpacing="0"
               RowSpacing="0">
 
-            <Border StrokeShape="RoundRectangle 10"
+            <Border StrokeShape="RoundRectangle 8"
                     IsVisible="{OnPlatform Android=False, iOS=False}"
                     BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                    WidthRequest="{OnPlatform WinUI=550, MacCatalyst=550}"
+                    WidthRequest="{OnPlatform WinUI=767, MacCatalyst=550}"
                     Margin="10">
                 <StackLayout Spacing="0">
 
                     <listView:SfListView HeightRequest="{OnPlatform WinUI=540}"
                                          ScrollBarVisibility="Never"
-                                         ItemSize="75"
+                                         ItemSize="83"
+                                         
                                          ItemSpacing="0"
                                          ItemsSource="{Binding SongsPageList}"
                                          SelectionBackground="Transparent">
@@ -32,55 +40,107 @@
                             <DataTemplate x:DataType="local:Song">
                                 <ViewCell>
                                     <Grid RowDefinitions="Auto,Auto"
-                                          Margin="16,10,16,0"
-                                          ColumnDefinitions="Auto, *"
-                                          ColumnSpacing="0"
-                                          HeightRequest="60"
+                                          ColumnDefinitions="Auto, *, Auto"
+                                          ColumnSpacing="6"
                                           RowSpacing="0">
 
-                                        <Border
-                                            BackgroundColor="{DynamicResource Gray-200}"
-                                            Stroke="{DynamicResource Gray-Bg}"
-                                            StrokeShape="RoundRectangle 50"
-                                            Style="{DynamicResource ProfileBorderStyle}">
-                                            <Image HeightRequest="50"
-                                                   WidthRequest="50">
-                                                <Image.Source>
-                                                    <UriImageSource
-                                                        CacheValidity="14"
-                                                        CachingEnabled="true"
-                                                        Uri="{Binding SongImage}"/>
-                                                </Image.Source>
-                                            </Image>
-                                        </Border>
+                                            <!-- Avatar Image -->
+                                            <avatar:SfAvatarView
+                                                WidthRequest="48"
+                                                HeightRequest="48"
+                                                CornerRadius="28"
+                                                Margin="28,20,0,14"
+                                                ImageSource="{Binding SongImage}"
+                                                ContentType="Default"
+                                                StrokeThickness="0" />
 
+                                            <!-- Overlay with Play Icon -->
+                                        <Grid
+                                            Margin="28,14,0,0"
+                                            BackgroundColor="#95000000"
+                                                  Padding="0">
+                                                <Grid.Clip>
+                                                    <EllipseGeometry Center="24,30"
+                                                                     RadiusX="24"
+                                                                     RadiusY="24"/>
+                                                </Grid.Clip>
+
+                                                <!-- Play Symbol in Overlay -->
+                                                <Label
+                                                    Text="{Binding IsPlaying, Converter={StaticResource PlayPauseConverter}}"
+                                                    FontSize="12"
+                                                    Margin="0,2,0,12"
+                                                    TextColor="White"
+                                                    HorizontalOptions="Center"
+                                                    VerticalOptions="Center"
+                                                    FontAttributes="Bold"/>
+                                            </Grid>
+
+                                        <!-- Song Info (Title & Composer) -->
                                         <StackLayout
                                             Grid.Column="1"
-                                            Margin="16,0"
+                                            Margin="8,0"
                                             HorizontalOptions="Fill"
-                                            Spacing="0"
+                                            Spacing="4"
                                             VerticalOptions="Center">
 
-                                            <!--  Name of the Song  -->
+                                            <!-- Song Name -->
                                             <Label
-                                                FontFamily="Roboto-Medium"
+                                                FontFamily="Roboto-Regular"
+                                                FontSize="16"
                                                 HorizontalOptions="Start"
-                                                Style="{DynamicResource TitleLabelStyle}"
+                                                TextColor="{AppThemeBinding Light=#313032, Dark=#FFFFFF}"
                                                 Text="{Binding SongName}"/>
 
-                                            <!--  Composer of the song  -->
+                                            <!-- Composer -->
                                             <Label
                                                 HorizontalOptions="Start"
                                                 FontFamily="Roboto-Regular"
-                                                Style="{DynamicResource DescriptionLabelStyle}"
+                                                FontSize="14"
+                                                TextColor="{AppThemeBinding Light=#5F5E60, Dark=#929092}"
                                                 Text="{Binding Composer}"/>
                                         </StackLayout>
 
+                                        <!-- Duration & Play Button Container -->
+                                        <StackLayout Grid.Column="2"
+                                                     Margin="0,8,36,0"
+                                                     HorizontalOptions="End"
+                                                     VerticalOptions="Center">
+
+                                            <!-- Duration -->
+                                            <Label
+                                                FontFamily="Roboto-Medium"
+                                                FontSize="11"
+                                                Padding="0,0,0,3"
+                                                TextColor="{AppThemeBinding Light=#5F5E60, Dark=#9CA3AF}"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Duration}"/>
+
+                                            <!-- Play Button -->
+                                            <Border
+                                                WidthRequest="26"
+                                                HeightRequest="26"
+                                                StrokeShape="RoundRectangle 14"
+                                                BackgroundColor="#8D4CF5"
+                                                HorizontalOptions="End">
+
+                                            <Label
+                                                Text="{Binding IsPlaying, Converter={StaticResource PlayPauseConverter}}"
+                                                FontSize="8"
+                                                TextColor="White"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="Center"
+                                                FontAttributes="Bold"/>
+
+                                            </Border>
+                                        </StackLayout>
+
+                                        <!-- Separator -->
                                         <BoxView Grid.Row="1"
-                                                Grid.ColumnSpan="2"
+                                                Grid.ColumnSpan="3"
                                                 Style="{DynamicResource HorizontalSeparatorStyle}"
-                                                 VerticalOptions="End"
-                                                 Margin="0,10,0,0"/>
+                                                VerticalOptions="End"
+                                                Margin="0,0,0,0"/>
                                     </Grid>
                                 </ViewCell>
                             </DataTemplate>
@@ -89,73 +149,126 @@
                 </StackLayout>
             </Border>
 
-            <StackLayout Grid.Row="2"
-                         IsVisible="{OnPlatform WinUI=False, MacCatalyst=False}"
-                         Spacing="0">
+            <!-- MOBILE VIEW: Android & iOS -->
+            <StackLayout
+    Grid.Row="1"
+    IsVisible="{OnPlatform WinUI=False, MacCatalyst=False}"
+    Spacing="0">
 
-                <listView:SfListView HeightRequest="700"
-                                     ScrollBarVisibility="Never"
-                                     ItemSize="72"
-                                     ItemSpacing="0"
-                                     ItemsSource="{Binding SongsPageList}"
-                                     SelectionBackground="Transparent">
+                <listView:SfListView
+        HeightRequest="700"
+        ScrollBarVisibility="Never"
+        ItemSize="76"
+        ItemSpacing="0"
+        ItemsSource="{Binding SongsPageList}"
+        SelectionBackground="Transparent">
 
                     <listView:SfListView.ItemTemplate>
                         <DataTemplate x:DataType="local:Song">
-                            <ViewCell>
-                                <StackLayout>
-                                    <Grid
-                                        Margin="16,5,16,0"
-                                        ColumnDefinitions="Auto, *"
-                                        ColumnSpacing="0"
-                                        HeightRequest="56"
-                                        RowSpacing="0">
 
-                                        <Border
-                                            BackgroundColor="{DynamicResource Gray-200}"
-                                            Stroke="{DynamicResource Gray-Bg}"
-                                            StrokeShape="RoundRectangle 50"
-                                            Style="{DynamicResource ProfileBorderStyle}">
-                                            <Image HeightRequest="56"
-                                                   WidthRequest="56">
-                                                <Image.Source>
-                                                    <UriImageSource
-                                                        CacheValidity="14"
-                                                        CachingEnabled="true"
-                                                        Uri="{Binding SongImage}"/>
-                                                </Image.Source>
-                                            </Image>
-                                        </Border>
+                            <!-- ✅ Single Grid (No outer StackLayout) -->
+                            <Grid
+                    HeightRequest="75"
+                    RowDefinitions="*,Auto"
+                    ColumnDefinitions="Auto,*,Auto"
+                    ColumnSpacing="12">
 
-                                        <StackLayout
-                                            Grid.Column="1"
-                                            Margin="16,0"
-                                            HorizontalOptions="Fill"
-                                            Spacing="0"
-                                            VerticalOptions="Center">
+                                <!-- ✅ Avatar -->
+                                <avatar:SfAvatarView
+                        WidthRequest="48"
+                        HeightRequest="48"
+                        Margin="22,0,6,0"
+                        CornerRadius="24"
+                        VerticalOptions="Center"
+                        ImageSource="{Binding SongImage}"
+                        ContentType="Custom"
+                        StrokeThickness="0" />
 
-                                            <!--  Name of the Song  -->
-                                            <Label
-                                                FontFamily="Roboto-Regular"
-                                                HorizontalOptions="Start"
-                                                Style="{DynamicResource TitleLabelStyle}"
-                                                Text="{Binding SongName}"/>
+                                <!-- ✅ Overlay Play Icon -->
+                                <Grid
+                                    Margin="16,0,0,0"
+                        BackgroundColor="#95000000">
 
-                                            <!--  Composer of the song  -->
-                                            <Label
-                                                HorizontalOptions="Start"
-                                                Style="{DynamicResource DescriptionLabelStyle}"
-                                                Text="{Binding Composer}"/>
-                                        </StackLayout>
-                                    </Grid>
+                                    <Grid.Clip>
+                                        <EllipseGeometry
+                                Center="30,37"
+                                RadiusX="24"
+                                RadiusY="24" />
+                                    </Grid.Clip>
 
-                                    <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"
-                                             VerticalOptions="End"
-                                             Margin="0,10,0,0"/>
+                                    <Label
+                            Text="{Binding IsPlaying, Converter={StaticResource PlayPauseConverter}}"
+                            FontSize="14"
+                            TextColor="White"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            FontAttributes="Bold" />
+                                </Grid>
+
+                                <!-- ✅ Song Info -->
+                                <StackLayout
+                        Grid.Column="1"
+                        Margin="4,0"
+                        Spacing="4"
+                        VerticalOptions="Center">
+
+                                    <Label
+                            Text="{Binding SongName}"
+                            FontFamily="Roboto-Medium"
+                            FontSize="16"
+                            TextColor="{AppThemeBinding Light=#1F2937, Dark=#F3F4F6}" />
+
+                                    <Label
+                            Text="{Binding Composer}"
+                            FontFamily="Roboto-Regular"
+                            FontSize="13"
+                            TextColor="{AppThemeBinding Light=#6B7280, Dark=#D1D5DB}" />
                                 </StackLayout>
-                            </ViewCell>
+
+                                <!-- ✅ Right Side (Duration + Button) -->
+                                <StackLayout
+                        Grid.Column="2"
+                        Margin="0,0,24,0"
+                        Spacing="2"
+                        VerticalOptions="Center"
+                        HorizontalOptions="End">
+
+                                    <Label
+                            Text="{Binding Duration}"
+                            FontFamily="Roboto-Medium"
+                            FontSize="11"
+                                        Margin="0,0,3,2"
+                            HorizontalOptions="End"
+                            TextColor="{AppThemeBinding Light=#5F5E60, Dark=#9CA3AF}" />
+
+                                    <Border
+                            WidthRequest="26"
+                            HeightRequest="26"
+                            StrokeShape="RoundRectangle 13"
+                            BackgroundColor="#8D4CF5"
+                            HorizontalOptions="End">
+
+                                        <Label
+                                Text="{Binding IsPlaying, Converter={StaticResource PlayPauseConverter}}"
+                                FontSize="9"
+                                TextColor="White"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                FontAttributes="Bold"/>
+                                    </Border>
+                                </StackLayout>
+
+                                <BoxView
+                                    Grid.Row="1"
+                                    Grid.ColumnSpan="3"
+                                    Style="{DynamicResource HorizontalSeparatorStyle}"
+                                    HeightRequest="1" />
+
+                            </Grid>
+
                         </DataTemplate>
                     </listView:SfListView.ItemTemplate>
+
                 </listView:SfListView>
             </StackLayout>
 
