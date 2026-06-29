@@ -18,15 +18,15 @@ namespace EssentialMAUIUIKit
             string jsonData = @"
         {
             ""documentsPageList"": [
-                { ""documentName"": ""Sample Browser Notes.docx"", ""time"": ""8 mins ago"", ""documentSize"": ""100KB"", ""documentType"":""word.png"" },
-                { ""documentName"": ""Attendance Sheet.xlsx"", ""time"": ""20 mins ago"", ""documentSize"": ""86KB"", ""documentType"":""excel.png"" },
-                { ""documentName"": ""Button Requirement.docx"", ""time"": ""45 mins ago"", ""documentSize"": ""117KB"", ""documentType"":""word.png"" },
-                { ""documentName"": ""Invoice October.pdf"", ""time"": ""1 hr ago"", ""documentSize"": ""600KB"", ""documentType"":""pdf.png"" },
-                { ""documentName"": ""UG Documentation.docx"", ""time"": ""2 hrs ago"", ""documentSize"": ""98KB"", ""documentType"":""word.png"" },
-                { ""documentName"": ""Pay Slip October.pdf"", ""time"": ""2 hrs ago"", ""documentSize"": ""749KB"", ""documentType"":""pdf.png"" },
-                { ""documentName"": ""UI Template Requirement.docx"", ""time"": ""19 hrs ago"", ""documentSize"": ""48KB"", ""documentType"":""word.png"" },
-                { ""documentName"": ""Avatar UG Documentation.docx"", ""time"": ""1 day ago"", ""documentSize"": ""45KB"", ""documentType"":""word.png"" },
-                { ""documentName"": ""Button UX Document.docx"", ""time"": ""1 day ago"", ""documentSize"": ""38KB"", ""documentType"":""word.png"" }
+                { ""documentName"": ""Sample Browser Notes.docx"", ""time"": ""26 Aug"", ""documentSize"": ""100KB"", ""documentType"":""word.png"" },
+                { ""documentName"": ""Attendance Sheet.xlsx"", ""time"": ""22 Aug"", ""documentSize"": ""86KB"", ""documentType"":""excel.png"" },
+                { ""documentName"": ""Button Requirement.docx"", ""time"": ""20 Aug"", ""documentSize"": ""117KB"", ""documentType"":""word.png"" },
+                { ""documentName"": ""Invoice October.pdf"", ""time"": ""19 Aug"", ""documentSize"": ""600KB"", ""documentType"":""pdf.png"" },
+                { ""documentName"": ""UG Documentation.docx"", ""time"": ""01 Aug"", ""documentSize"": ""98KB"", ""documentType"":""word.png"" },
+                { ""documentName"": ""Pay Slip October.pdf"", ""time"": ""26 Jul"", ""documentSize"": ""749KB"", ""documentType"":""pdf.png"" },
+                { ""documentName"": ""UI Template Requirement.docx"", ""time"": ""12 Jul"", ""documentSize"": ""48KB"", ""documentType"":""word.png"" },
+                { ""documentName"": ""Avatar UG Documentation.docx"", ""time"": ""18 Jul"", ""documentSize"": ""45KB"", ""documentType"":""word.png"" },
+                { ""documentName"": ""Button UX Document.docx"", ""time"": ""09 Jul"", ""documentSize"": ""38KB"", ""documentType"":""word.png"" }
             ]
         }";
 

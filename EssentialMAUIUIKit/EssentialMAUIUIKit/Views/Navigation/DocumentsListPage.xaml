@@ -14,7 +14,7 @@
         <Grid RowDefinitions="{OnPlatform Default=*, MacCatalyst=Auto}"
               ColumnSpacing="0"
               RowSpacing="0">
-            <Border StrokeShape="RoundRectangle 10"
+            <Border StrokeShape="RoundRectangle 8"
                     WidthRequest="{OnPlatform WinUI=550, MacCatalyst=550}"
                     BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                     Margin="20"
@@ -47,7 +47,7 @@
                                             <!--  Document Icon  -->
                                             <Image
                                                 Grid.RowSpan="3"
-                                                Margin="17,0"
+                                                Margin="24,0,12,0"
                                                 Source="{Binding DocumentType}"
                                                 VerticalOptions="Center"/>
 
@@ -62,36 +62,50 @@
                                                 Text="{Binding DocumentName}"
                                                 TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
 
-                                            <!--  Time  -->
+                                            <!--  Document Size  -->
                                             <Label
                                                 Grid.Row="1"
                                                 Grid.Column="1"
+                                                
+                                                FontFamily="Roboto-Regular"
+                                                FontSize="14"
+                                                Margin="0,0,8,14"
+                                                HeightRequest="21"
+                                                Text="{Binding DocumentSize}"
+                                                TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                                            <Label
+                                                Grid.Row="1"
+                                                Grid.Column="2"
+                                                Margin="0,0,8,14"
+                                                FontFamily="Roboto-Regular"
+                                                FontSize="14"
+                                                HeightRequest="21"
+                                                Text="|"
+                                                TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                                            <Label
+                                                Grid.Row="1"
+                                                Grid.Column="3"
                                                 Margin="0,0,0,14"
                                                 FontFamily="Roboto-Regular"
                                                 FontSize="14"
                                                 HeightRequest="21"
                                                 Text="{Binding Time}"
                                                 TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
-                                            <!--  Document Size  -->
-                                            <Label
-                                                Grid.Row="1"
-                                                Grid.Column="2"
-                                                Margin="24,0,0,14"
-                                                FontFamily="Roboto-Regular"
-                                                FontSize="14"
-                                                HeightRequest="21"
-                                                Text="{Binding DocumentSize}"
-                                                TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
 
                                             <!--  More Button  -->
+
                                             <buttons:SfButton
-                                                Grid.RowSpan="3"
-                                                Grid.Column="3"
-                                                Margin="15,0,15,0"
-                                                CornerRadius="4"
-                                                HorizontalOptions="End"
-                                                Style="{DynamicResource IconButtonStyle}"
-                                                Text="{DynamicResource Menu}"/>
+                                                    Grid.RowSpan="3"
+                                                    Grid.Column="3"
+                                                    Margin="15,0,15,0"
+                                                    CornerRadius="4"
+                                                    HorizontalOptions="End"
+                                                    TextColor="{AppThemeBinding Light=#474648, Dark=#C9C6C8}"
+                                                    Text="{DynamicResource More}">
+                                            </buttons:SfButton>
+
 
                                             <!--  Seperator  -->
                                             <BoxView
