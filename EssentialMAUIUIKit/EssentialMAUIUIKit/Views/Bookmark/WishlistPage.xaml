@@ -12,132 +12,132 @@
     </ContentView.BindingContext>
     <ContentView.Content>
 
-        <Grid RowDefinitions="Auto"
+        <ScrollView Orientation="Vertical" VerticalScrollBarVisibility="Never">
+            <Grid RowDefinitions="Auto"
                 RowSpacing="0">
 
-            <Border Margin="10,10,10,10"
-                    StrokeShape="RoundRectangle 10"
-                    WidthRequest="{OnPlatform WinUI=660, MacCatalyst=660}">
+                <Border Margin="{OnIdiom Phone='0,16,0,16', Desktop='10', Tablet='10'}" StrokeThickness="{OnPlatform WinUI=1, MacCatalyst=1, Android=0, iOS=0}" WidthRequest="{OnPlatform WinUI=666, MacCatalyst=666}"
+                    StrokeShape="RoundRectangle 10" BackgroundColor="{OnPlatform WinUI={DynamicResource Gray-Bg}, MacCatalyst={DynamicResource Gray-Bg}, Android=Transparent, iOS=Transparent}">
 
-                <Grid RowDefinitions="Auto,Auto,Auto">
-                    <Label Grid.Row="0"
+                    <Grid RowDefinitions="Auto,Auto,Auto" Margin="{OnIdiom Phone='0,10,0,10', Desktop='10', Tablet='10'}">
+                        <Label Grid.Row="0"
                             Text="My Wishlist"
                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                            FontSize="22"
                            FontFamily="Roboto-Medium"
-                           Padding="20,20,0,0"/>
+                           Padding="20,20,0,0"
+                           IsVisible="{OnPlatform WinUI=True, MacCatalyst=True, Android=False, iOS=False}"/>
 
-                    <BoxView Grid.Row="1"
-                            HeightRequest="1"
+                        <BoxView Grid.Row="1" HeightRequest="1" Color="{AppThemeBinding Light=#E5E1E3, Dark=#474648}"
                              Style="{DynamicResource HorizontalSeparatorStyle}"
-                             Margin="10"/>
+                             Margin="{OnIdiom Phone='10',Desktop='16,20,16,25',Tablet='10'}"
+                             IsVisible="{OnPlatform WinUI=True, MacCatalyst=True, Android=False, iOS=False}"/>
 
-                    <listView:SfListView Grid.Row="2"
-                            HeightRequest="{OnPlatform WinUI=490, Default=600}"
+                        <listView:SfListView Grid.Row="2"
                                          x:Name="WishlistLayout"
-                                         BackgroundColor="{OnIdiom Default={DynamicResource Transparent},
-          Desktop={DynamicResource Gray-Bg}}"
-                                         ItemSize="130"
+                                         BackgroundColor="{OnIdiom Default={DynamicResource Transparent}, Desktop={DynamicResource Gray-Bg}}"
+                                         ItemSize="{OnIdiom Phone=160, Tablet=140, Desktop=140}" ScrollBarVisibility="Never" IsScrollingEnabled="False"
                                          ItemsSource="{Binding Products}"
                                          SelectionMode="None"
                                          VerticalOptions="Fill">
 
-                        <listView:SfListView.ItemTemplate>
-                            <DataTemplate x:DataType="model:Product">
-                                <Grid
-    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-    ColumnDefinitions="Auto, *"
-    ColumnSpacing="0"
-    RowSpacing="0">
+                            <listView:SfListView.ItemTemplate>
+                                <DataTemplate x:DataType="model:Product">
+                                    <Grid Grid.Row="0" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}" ColumnDefinitions="Auto, *" ColumnSpacing="0" RowSpacing="0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0"
+                                        StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 10"
+                                        Grid.RowSpan="4"
+                                        Grid.Column="0"
+                                        Margin="{OnIdiom Phone='16,10', Desktop='16,0', Tablet='16,0'}"
+                                        HeightRequest="112"
+                                        WidthRequest="112">
 
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="{OnIdiom Default=1}"/>
-                                    </Grid.RowDefinitions>
+                                            <!--Product image-->
+                                            <Image Aspect="Fill" BackgroundColor="{DynamicResource Gray-200}">
+                                                <Image.Source>
+                                                    <UriImageSource
+                                                    CacheValidity="14"
+                                                    CachingEnabled="true"
+                                                    Uri="{Binding PreviewImage}"/>
+                                                </Image.Source>
+                                            </Image>
+                                        </Border>
 
-                                    <Border Grid.Row="0"
-            StrokeThickness="0"
-            StrokeShape="RoundRectangle 10"
-            Grid.RowSpan="4"
-            Grid.Column="0"
-            Margin="16,0"
-            HeightRequest="120"
-            WidthRequest="120">
-                                        <!--Product image-->
-                                        <Image
-            Aspect="Fill"
-            BackgroundColor="{DynamicResource Gray-200}">
-                                            <Image.Source>
-                                                <UriImageSource
-                    CacheValidity="14"
-                    CachingEnabled="true"
-                    Uri="{Binding PreviewImage}"/>
-                                            </Image.Source>
-                                        </Image>
-                                    </Border>
-
-
-
-                                    <!--Product name-->
-                                    <Label
-        Grid.Row="0"
-        Grid.Column="1"
-        Margin="0,8,0,4"
-        FontSize="14"
-        HorizontalOptions="Start"
-        LineBreakMode="TailTruncation"
-        MaxLines="1"
-        Style="{DynamicResource TitleLabelStyle}"
-        Text="{Binding Name}"/>
-
-                                    <StackLayout
-        Grid.Row="1"
-        Grid.Column="1"
-        Margin="0,0,0,8"
-        Padding="0"
-        Orientation="Horizontal"
-        Spacing="4">
-
-                                        <!--Product price-->
+                                        <!--Product name-->
                                         <Label
-            FontSize="16"
-            HorizontalOptions="Start"
-            VerticalOptions="Center"
-            Style="{DynamicResource TitleLabelStyle}"
-            Text="{Binding DiscountPrice, StringFormat='${0:0 }'}"/>
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        Margin="{OnIdiom Phone='0,10,0,4', Desktop='0,0,0,8', Tablet='0,0,0,8'}"
+                                        FontSize="16"
+                                            FontFamily="Roboto-Regular"
+                                        HorizontalOptions="Start"
+                                        LineBreakMode="TailTruncation"
+                                        MaxLines="1"
+                                        Style="{DynamicResource TitleLabelStyle}"
+                                        Text="{Binding Name}"/>
 
-                                        <Label FontSize="12"
-               TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
-               VerticalOptions="Center"
-               Style="{DynamicResource SimpleLabelStyle}"
-               Text="{Binding ActualPrice, StringFormat='${0:0.00}'}"
-               TextDecorations="Strikethrough"/>
+                                        <StackLayout
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="0,0,0,8"
+                                        Padding="{OnIdiom Phone='0,0,0,4', Desktop='0,0,0,10', Tablet='0,0,0,10'}"
+                                        Orientation="Horizontal"
+                                        Spacing="4">
 
-                                        <Label VerticalOptions="Center"
-               Style="{DynamicResource SimpleLabelStyle}"
-               Text="{Binding DiscountPercent, StringFormat=' ({0}% OFF)'}"
-               TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+                                            <!--Product price-->
+                                            <Label
+                                            FontSize="16"
+                                            HorizontalOptions="Start"
+                                            VerticalOptions="Center" FontFamily="Roboto-Medium"
+                                            Style="{DynamicResource TitleLabelStyle}"
+                                            Text="{Binding DiscountPrice, StringFormat='${0:0 }'}"/>
 
-                                    </StackLayout>
+                                            <Label FontSize="12"
+                                           TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                           VerticalOptions="Center" FontFamily="Roboto-Regular"
+                                           Style="{DynamicResource SimpleLabelStyle}"
+                                           Text="{Binding ActualPrice, StringFormat='${0:0.00}'}"
+                                           TextDecorations="Strikethrough"/>
 
-                                    <buttons:SfButton Text="Add to cart" Grid.Row="2" Grid.Column="1" HorizontalOptions="Start"
-TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-Stroke="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-FontFamily="Roboto-Medium"
-StrokeThickness="2"
-Background="Transparent"
-VerticalOptions="Center">
-                                    </buttons:SfButton>
+                                            <Label VerticalOptions="Center" FontFamily="Roboto-Regular"
+                                            Style="{DynamicResource SimpleLabelStyle}"
+                                            Text="{Binding DiscountPercent, StringFormat=' ({0}% OFF)'}"
+                                            TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
 
-                                </Grid>
-                            </DataTemplate>
-                        </listView:SfListView.ItemTemplate>
-                    </listView:SfListView>
-                </Grid>
-            </Border>
-        </Grid>
+                                        </StackLayout>
+
+                                        <buttons:SfButton Text="Add to cart" Grid.Row="2" Grid.Column="1" HorizontalOptions="Start"
+                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                        Stroke="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                        FontFamily="Roboto-Medium"
+                                        StrokeThickness="2" HeightRequest="40"
+                                        Background="Transparent"
+                                        VerticalOptions="Center"
+                                        WidthRequest="{OnIdiom Desktop=484, Tablet=492, Phone=228}">
+                                        </buttons:SfButton>
+
+                                        <!--Separator line at bottom of item-->
+                                        <BoxView Grid.Row="4"
+                                             Grid.Column="0"
+                                             Grid.ColumnSpan="2"
+                                             HeightRequest="1"
+                                             Margin="{OnIdiom Phone='14,14,14,0', Desktop='18,14,18,0', Tablet='18,14,18,0'}"
+                                             Style="{DynamicResource HorizontalSeparatorStyle}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </listView:SfListView.ItemTemplate>
+                        </listView:SfListView>
+                    </Grid>
+                </Border>
+            </Grid>
+        </ScrollView>
     </ContentView.Content>
 </ContentView>

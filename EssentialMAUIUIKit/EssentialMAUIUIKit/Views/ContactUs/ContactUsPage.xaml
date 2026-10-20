@@ -1,342 +1,450 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="EssentialMAUIUIKit.Views.ContactUs.ContactUsPage"
-             xmlns:maps="clr-namespace:Syncfusion.Maui.Maps;assembly=Syncfusion.Maui.Maps"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
-             xmlns:dataform="clr-namespace:Syncfusion.Maui.DataForm;assembly=Syncfusion.Maui.DataForm"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit.ViewModel"
-             xmlns:behavior="clr-namespace:EssentialMAUIUIKit"
-             x:DataType="local:ContactUsViewModel">
-
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EssentialMAUIUIKit.Views.ContactUs.ContactUsPage"
+    xmlns:maps="clr-namespace:Syncfusion.Maui.Maps;assembly=Syncfusion.Maui.Maps"
+    xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
+    xmlns:input="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+    xmlns:dataform="clr-namespace:Syncfusion.Maui.DataForm;assembly=Syncfusion.Maui.DataForm"
+    xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+    xmlns:local="clr-namespace:EssentialMAUIUIKit.ViewModel" xmlns:behavior="clr-namespace:EssentialMAUIUIKit"
+    x:DataType="local:ContactUsViewModel">
     <ContentView.BindingContext>
-        <local:ContactUsViewModel/>
+        <local:ContactUsViewModel />
     </ContentView.BindingContext>
-
     <ContentView.Content>
-        <Grid Margin="10">
-            <ScrollView
-      IsVisible="{OnPlatform Android=False, iOS=False, Default=true}">
+        <Grid>
+            <ScrollView VerticalScrollBarVisibility="Never" IsVisible="{OnIdiom Phone=False,Tablet=True, Desktop=True}">
                 <Grid ColumnDefinitions=".5*, .5*">
-
                     <maps:SfMaps Grid.Column="0"
-                 BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                 HorizontalOptions="Fill"
-                 VerticalOptions="Fill">
-
+                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                        HorizontalOptions="Fill" VerticalOptions="Fill">
                         <maps:SfMaps.Layer>
                             <maps:MapTileLayer UrlTemplate="https://tile.openstreetmap.org/{z}/{x}/{y}.png">
                                 <maps:MapTileLayer.Center>
-                                    <maps:MapLatLng Latitude="40.133808"
-                                    Longitude="-75.516279"/>
+                                    <maps:MapLatLng Latitude="-37.81361" Longitude="144.96306" />
                                 </maps:MapTileLayer.Center>
-
                                 <maps:MapTileLayer.ZoomPanBehavior>
-                                    <maps:MapZoomPanBehavior ZoomLevel="16"
-                                             EnableZooming="False"/>
+                                    <maps:MapZoomPanBehavior ZoomLevel="12" EnableZooming="False" />
                                 </maps:MapTileLayer.ZoomPanBehavior>
-
                                 <maps:MapTileLayer.Markers>
                                     <maps:MapMarkerCollection>
-                                        <maps:MapMarker Latitude="40.133808"
-                                        Longitude="-75.516279"/>
+                                        <maps:MapMarker Latitude="{Binding MapMarkerLatitude}"
+                                            Longitude="{Binding MapMarkerLongitude}" />
+                                        <maps:MapMarker Latitude="{Binding MapMarkerLatitude2}"
+                                            Longitude="{Binding MapMarkerLongitude2}" />
                                     </maps:MapMarkerCollection>
                                 </maps:MapTileLayer.Markers>
-
                                 <!--Template for customizing the address popup-->
                                 <maps:MapTileLayer.MarkerTemplate>
                                     <DataTemplate>
                                         <StackLayout>
 
-                                            <Border
-                                Margin="0"
-                                Padding="16,0,9,0"
-                                BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                Stroke="Transparent"
-                                StrokeShape="RoundRectangle 5"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Start">
-
-                                                <StackLayout
-                                    HorizontalOptions="Center"
-                                    Spacing="0"
-                                    VerticalOptions="Start">
-
-
-                                                    <!--Pin location header-->
-                                                    <Label
-                                        Margin="0,16,0,4"
-                                        HorizontalOptions="Start"
-                                        Style="{DynamicResource TitleLabelStyle}"
-                                        Text="Sipes Inc"/>
-
-                                                    <!--Pin location address-->
-                                                    <Label
-                                        Margin="0,0,0,6"
-                                        FontFamily="Roboto-Regular"
-                                        Style="{DynamicResource SimpleLabelStyle}"
-                                        Text="7654 Cleveland street, Phoenixville, PA 19460"
-                                        VerticalOptions="Start"
-                                        VerticalTextAlignment="Start"/>
-
-                                                    <!--Pin location email id-->
-                                                    <Label
-                                        Margin="0,0,0,6"
-                                        FontFamily="Roboto-Regular"
-                                        Style="{DynamicResource SimpleLabelStyle}"
-                                        Text="dopuyi@hostguru.info"
-                                        VerticalOptions="Start"
-                                        VerticalTextAlignment="Start"/>
-
-                                                    <!--Pin location phone number-->
-                                                    <Label
-                                        Margin="0,0,0,14"
-                                        FontFamily="Roboto-Regular"
-                                        Style="{DynamicResource SimpleLabelStyle}"
-                                        Text="+1-202-555-0101"
-                                        VerticalOptions="Start"
-                                        VerticalTextAlignment="Start"/>
-                                                </StackLayout>
-                                            </Border>
-
-                                            <!--Set pin image-->
-                                            <Image
-                                Margin="15,5,15,15"
-                                HeightRequest="25"
-                                HorizontalOptions="Start"
-                                Source="pin.png"
-                                WidthRequest="25"/>
+                                            <Image Margin="15,5,15,15" HeightRequest="25" HorizontalOptions="Start"
+                                                Source="pointer.png" WidthRequest="25" />
                                         </StackLayout>
                                     </DataTemplate>
                                 </maps:MapTileLayer.MarkerTemplate>
                             </maps:MapTileLayer>
                         </maps:SfMaps.Layer>
                     </maps:SfMaps>
-
-                    <StackLayout VerticalOptions="Center" x:Name="MainStack"
-                 Spacing="0"
-                 Grid.Column="1">
+                    <ScrollView VerticalOptions="Center" x:Name="MainStack" Grid.Column="1">
                         <!--  For getting the contact information  -->
-                        <Border
-            x:Name="MainFrame"
-            Padding="0"
-            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-            Stroke="Transparent"
-            HorizontalOptions="Fill">
-
-                            <StackLayout
-                x:Name="MainFrameStack"
-                Padding="15"
-                HorizontalOptions="Fill"
-                Spacing="16">
-
+                        <Border x:Name="MainFrame"
+                            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                            Stroke="Transparent" VerticalOptions="Fill" HorizontalOptions="Fill">
+                            <StackLayout x:Name="MainFrameStack" HorizontalOptions="Fill">
                                 <!--  Label to display title  -->
-                                <Label
-                    Margin="{OnPlatform Android='0,16,0,16', iOS='0,16,0,16', Default='0,48,0,16'}"
-                    FontSize="20"
-                    HorizontalOptions="Fill"
-                    LineHeight="{OnPlatform Android=1.25,
-                                    Default=-1}"
-                    Style="{DynamicResource TitleLabelStyle}"
-                    Text="Contact Us"
-                    VerticalTextAlignment="Center"/>
+                                <Label Margin="{OnIdiom Tablet='0,32,0,24', Desktop='0,28,0,28'}"
+                                    HorizontalOptions="Fill" LineHeight="{OnPlatform Android=1.25,
+                                    Default=-1}" Style="{DynamicResource TitleLabelStyle}" FontSize="22"
+                                    Text="Contact Us" VerticalTextAlignment="Center" />
+                                <StackLayout Margin="{OnIdiom Tablet='56,0,56,32', Desktop='106,0,106,32'}"
+                                    HorizontalOptions="Fill" VerticalOptions="Fill">
+                                    <!-- Name -->
+                                    <StackLayout Margin="0,0,0,16" HorizontalOptions="Fill" VerticalOptions="Fill">
+                                        <Label Text="Name" FontFamily="Roboto-Regular" LineHeight="1.42"
+                                            CharacterSpacing="0.25" FontSize="14"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                            VerticalTextAlignment="Start" />
 
-                                <dataform:SfDataForm x:Name="dataFormDesktop"
-                                     DataObject="{Binding ContactUsInfo}"
-                                     VerticalOptions="Center"
-                                     LayoutType="TextInputLayout"
-                                     ValidationMode="PropertyChanged">
-                                    <dataform:SfDataForm.TextInputLayoutSettings>
-                                        <dataform:TextInputLayoutSettings ShowHelperText="True"
-                                                          OutlineCornerRadius="5">
-                                            <dataform:TextInputLayoutSettings.HelperTextStyle>
-                                                <dataform:DataFormTextStyle FontFamily="Roboto-Regular"/>
-                                            </dataform:TextInputLayoutSettings.HelperTextStyle>
-                                        </dataform:TextInputLayoutSettings>
-                                    </dataform:SfDataForm.TextInputLayoutSettings>
-                                    <dataform:SfDataForm.ErrorLabelTextStyle>
-                                        <dataform:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                                    FontFamily="Roboto-Regular"/>
-                                    </dataform:SfDataForm.ErrorLabelTextStyle>
-                                    <dataform:SfDataForm.LabelTextStyle>
-                                        <dataform:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}"
-                                                    FontFamily="Roboto-Regular"/>
-                                    </dataform:SfDataForm.LabelTextStyle>
-                                    <dataform:SfDataForm.ValidMessageLabelTextStyle>
-                                        <dataform:DataFormTextStyle FontFamily="Roboto-Regular"/>
-                                    </dataform:SfDataForm.ValidMessageLabelTextStyle>
-                                    <dataform:SfDataForm.EditorTextStyle>
-                                        <dataform:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                                    FontFamily="Roboto-Regular"/>
-                                    </dataform:SfDataForm.EditorTextStyle>
-                                </dataform:SfDataForm>
-                                <!--  Send Button  -->
-                                <buttons:SfButton x:Name="submitButtonDesktop"
-                                  Style="{DynamicResource FormsButtonStyle}"
-                                  Text="Submit"
-                                  WidthRequest="150"
-                                  VerticalOptions="Start"/>
+                                        <input:SfTextInputLayout Hint="Enter your name" ContainerType="Outlined"
+                                            OutlineCornerRadius="4" FocusedStrokeThickness="1"
+                                            UnfocusedStrokeThickness="1"
+                                            ReserveSpaceForAssistiveLabels="{Binding ContactUsInfo.ReserveNameError}"
+                                            InputViewPadding="16, 0, 16, 0" EnableFloating="False" Margin="0"
+                                            ShowHelperText="False" ShowHint="True"
+                                            ErrorText="{Binding ContactUsInfo.NameError}"
+                                            HasError="{Binding ContactUsInfo.HasNameError}"
+                                            Stroke="{AppThemeBinding Light={DynamicResource ContentTextColorDark}, Dark={DynamicResource SecondaryTextColorLight}}"
+                                            HorizontalOptions="Fill" VerticalOptions="Fill">
+
+                                            <input:SfTextInputLayout.HintLabelStyle>
+                                                <input:LabelStyle FontSize="16" FontFamily="Roboto-Regular"
+                                                    TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}" />
+                                            </input:SfTextInputLayout.HintLabelStyle>
+                                            <Entry x:Name="NameEntry" Text="{Binding ContactUsInfo.Name}" FontSize="16"
+                                                HorizontalOptions="Fill" />
+                                            <input:SfTextInputLayout.ErrorLabelStyle>
+                                                <input:LabelStyle TextColor="#D32F2F" />
+                                            </input:SfTextInputLayout.ErrorLabelStyle>
+                                        </input:SfTextInputLayout>
+
+
+                                    </StackLayout>
+                                    <!-- Company Group -->
+                                    <StackLayout Margin="0,0,0,16" HorizontalOptions="Fill" VerticalOptions="Fill">
+                                        <Label Text="Company" FontFamily="Roboto-Regular" LineHeight="1.42"
+                                            CharacterSpacing="0.25" FontSize="14"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                            VerticalTextAlignment="Start" />
+
+                                        <input:SfTextInputLayout Hint="Enter company name" ContainerType="Outlined"
+                                            OutlineCornerRadius="4" FocusedStrokeThickness="1"
+                                            UnfocusedStrokeThickness="1"
+                                            ReserveSpaceForAssistiveLabels="{Binding ContactUsInfo.ReserveCompanyNameError}"
+                                            InputViewPadding="16, 0, 16, 0" EnableFloating="False"
+                                            ShowHelperText="False" ShowHint="True"
+                                            ErrorText="{Binding ContactUsInfo.CompanyError}"
+                                            HasError="{Binding ContactUsInfo.HasCompanyError}"
+                                            Stroke="{AppThemeBinding Light={DynamicResource ContentTextColorDark}, Dark={DynamicResource SecondaryTextColorLight}}"
+                                            HorizontalOptions="Fill" VerticalOptions="Fill">
+
+                                            <input:SfTextInputLayout.HintLabelStyle>
+                                                <input:LabelStyle FontSize="16" FontFamily="Roboto-Regular"
+                                                    TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}" />
+                                            </input:SfTextInputLayout.HintLabelStyle>
+                                            <Entry Text="{Binding ContactUsInfo.Company}" FontSize="16" />
+                                            <input:SfTextInputLayout.ErrorLabelStyle>
+                                                <input:LabelStyle TextColor="#D32F2F" />
+                                            </input:SfTextInputLayout.ErrorLabelStyle>
+                                        </input:SfTextInputLayout>
+
+
+                                    </StackLayout>
+                                    <!-- Email Group -->
+                                    <StackLayout Margin="0,0,0,16" HorizontalOptions="Fill" VerticalOptions="Fill">
+                                        <Label Text="Email" FontFamily="Roboto-Regular" LineHeight="1.42"
+                                            CharacterSpacing="0.25" FontSize="14"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                            VerticalTextAlignment="Start" />
+
+                                        <input:SfTextInputLayout Hint="Enter email" ContainerType="Outlined"
+                                            OutlineCornerRadius="4" FocusedStrokeThickness="1"
+                                            UnfocusedStrokeThickness="1"
+                                            ReserveSpaceForAssistiveLabels="{Binding ContactUsInfo.ReserveEmailError}"
+                                            InputViewPadding="16, 0, 16, 0" EnableFloating="False"
+                                            ShowHelperText="False" ShowHint="True"
+                                            ErrorText="{Binding ContactUsInfo.EmailError}"
+                                            HasError="{Binding ContactUsInfo.HasEmailError}"
+                                            Stroke="{AppThemeBinding Light={DynamicResource ContentTextColorDark}, Dark={DynamicResource SecondaryTextColorLight}}"
+                                            HorizontalOptions="Fill" VerticalOptions="Fill">
+
+                                            <input:SfTextInputLayout.HintLabelStyle>
+                                                <input:LabelStyle FontSize="16" FontFamily="Roboto-Regular"
+                                                    TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}" />
+                                            </input:SfTextInputLayout.HintLabelStyle>
+                                            <Entry Text="{Binding ContactUsInfo.Email}" FontSize="16" Keyboard="Email"
+                                                HorizontalOptions="Fill" />
+                                            <input:SfTextInputLayout.ErrorLabelStyle>
+                                                <input:LabelStyle TextColor="#D32F2F" />
+                                            </input:SfTextInputLayout.ErrorLabelStyle>
+                                        </input:SfTextInputLayout>
+
+
+                                    </StackLayout>
+                                    <!-- Phone Group -->
+                                    <StackLayout Margin="0,0,0,16" HorizontalOptions="Fill" VerticalOptions="Fill">
+                                        <Label Text="Phone" FontFamily="Roboto-Regular" LineHeight="1.42"
+                                            CharacterSpacing="0.25" FontSize="14"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                            VerticalTextAlignment="Start" />
+
+                                        <input:SfTextInputLayout Hint="Enter phone number" ContainerType="Outlined"
+                                            OutlineCornerRadius="4" FocusedStrokeThickness="1"
+                                            UnfocusedStrokeThickness="1"
+                                            ReserveSpaceForAssistiveLabels="{Binding ContactUsInfo.ReservePhoneError}"
+                                            InputViewPadding="16, 0, 16, 0" EnableFloating="False"
+                                            ShowHelperText="False" ShowHint="True"
+                                            ErrorText="{Binding ContactUsInfo.PhoneError}"
+                                            HasError="{Binding ContactUsInfo.HasPhoneError}"
+                                            Stroke="{AppThemeBinding Light={DynamicResource ContentTextColorDark}, Dark={DynamicResource SecondaryTextColorLight}}"
+                                            HorizontalOptions="Fill" VerticalOptions="Fill">
+
+                                            <input:SfTextInputLayout.HintLabelStyle>
+                                                <input:LabelStyle FontSize="16" FontFamily="Roboto-Regular"
+                                                    TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}" />
+                                            </input:SfTextInputLayout.HintLabelStyle>
+                                            <Entry Text="{Binding ContactUsInfo.PhoneNumber}" FontSize="16"
+                                                Keyboard="Numeric" MaxLength="10" TextChanged="PhoneNumber_TextChanged"
+                                                HorizontalOptions="Fill" />
+                                            <input:SfTextInputLayout.ErrorLabelStyle>
+                                                <input:LabelStyle TextColor="#D32F2F" />
+                                            </input:SfTextInputLayout.ErrorLabelStyle>
+                                        </input:SfTextInputLayout>
+
+
+                                    </StackLayout>
+                                    <!-- Message Group (Larger Text Area) -->
+                                    <StackLayout Margin="0,0,0,32" HorizontalOptions="Fill" VerticalOptions="Fill">
+                                        <Label Text="Message" FontFamily="Roboto-Regular" LineHeight="1.42"
+                                            CharacterSpacing="0.25" FontSize="14"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                            VerticalTextAlignment="Center" />
+
+                                        <input:SfTextInputLayout Hint="Leave a message..." ContainerType="Outlined"
+                                            OutlineCornerRadius="4" FocusedStrokeThickness="1"
+                                            UnfocusedStrokeThickness="1" ReserveSpaceForAssistiveLabels="False"
+                                            InputViewPadding="16, 0, 16, 0" EnableFloating="False" Margin="0"
+                                            HeightRequest="116" ShowHelperText="False" ShowHint="True"
+                                            ErrorText="{Binding ContactUsInfo.MessageError}"
+                                            HasError="{Binding ContactUsInfo.HasMessageError}"
+                                            Stroke="{AppThemeBinding Light={DynamicResource ContentTextColorDark}, Dark={DynamicResource SecondaryTextColorLight}}"
+                                            HorizontalOptions="Fill" VerticalOptions="Fill">
+
+                                            <input:SfTextInputLayout.HintLabelStyle>
+                                                <input:LabelStyle FontSize="16" FontFamily="Roboto-Regular"
+                                                    TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}" />
+                                            </input:SfTextInputLayout.HintLabelStyle>
+                                            <Entry Text="{Binding ContactUsInfo.Message}" FontSize="16"
+                                                HorizontalOptions="Fill" />
+                                            <input:SfTextInputLayout.ErrorLabelStyle>
+                                                <input:LabelStyle TextColor="#D32F2F" />
+                                            </input:SfTextInputLayout.ErrorLabelStyle>
+                                        </input:SfTextInputLayout>
+
+
+                                    </StackLayout>
+
+                                    <!-- Submit Button (Full Width) -->
+                                    <buttons:SfButton Text="Submit" CornerRadius="24" HeightRequest="48"
+                                        Command="{Binding SubmitCommand}" HorizontalOptions="Fill" VerticalOptions="End"
+                                        TextColor="White" Style="{DynamicResource FormsButtonStyle}" FontSize="14" />
+                                </StackLayout>
+
 
                             </StackLayout>
                         </Border>
-                    </StackLayout>
+                    </ScrollView>
                 </Grid>
             </ScrollView>
-            
-            <ScrollView IsVisible="{OnPlatform Default=False, Android=True, iOS=True}">
-                <StackLayout
-                    Padding="15"
-                    HorizontalOptions="Fill"
-                    Spacing="16">
 
+
+            <ScrollView IsVisible="{OnIdiom Phone=True}">
+                <StackLayout HorizontalOptions="Fill">
                     <!--  Label to display title  -->
-                    <Label
-                        Margin="{OnPlatform Android='0,16,0,16', iOS='0,16,0,16', Default='0,48,0,16'}"
-                        FontSize="20"
-                        HorizontalOptions="Fill"
-                        LineHeight="{OnPlatform Android=1.25,
-                                                Default=-1}"
-                        Style="{DynamicResource TitleLabelStyle}"
-                        Text="Contact Us"
-                        VerticalTextAlignment="Center"/>
+                    <Label Margin="{OnIdiom Phone='16,24,0,16'}" FontSize="22" HorizontalTextAlignment="Start"
+                        HorizontalOptions="Fill" LineHeight="1.27" Style="{DynamicResource TitleLabelStyle}"
+                        Text="Contact Us" VerticalTextAlignment="Center" />
+                    <StackLayout Margin="0,0,0,0" HorizontalOptions="Fill" VerticalOptions="Fill">
+                        <!-- Name -->
+                        <StackLayout Margin="16,0,16,16" HorizontalOptions="Fill" VerticalOptions="Fill">
+                            <Label Text="Name" FontFamily="Roboto-Regular" LineHeight="1.42" CharacterSpacing="0.25"
+                                FontSize="14"
+                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                VerticalTextAlignment="Start" />
 
-                    <dataform:SfDataForm x:Name="dataForm"
-                                         DataObject="{Binding ContactUsInfo}"
-                                         VerticalOptions="Center"
-                                         HeightRequest="400"
-                                         LayoutType="TextInputLayout"
-                                         ValidationMode="PropertyChanged">
-                        <dataform:SfDataForm.TextInputLayoutSettings>
-                            <dataform:TextInputLayoutSettings ShowHelperText="True"
-                                                              OutlineCornerRadius="5">
-                                <dataform:TextInputLayoutSettings.HelperTextStyle>
-                                    <dataform:DataFormTextStyle FontFamily="Roboto-Regular"/>
-                                </dataform:TextInputLayoutSettings.HelperTextStyle>
-                            </dataform:TextInputLayoutSettings>
-                        </dataform:SfDataForm.TextInputLayoutSettings>
-                        <dataform:SfDataForm.ErrorLabelTextStyle>
-                            <dataform:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                                        FontFamily="Roboto-Regular"/>
-                        </dataform:SfDataForm.ErrorLabelTextStyle>
-                        <dataform:SfDataForm.LabelTextStyle>
-                            <dataform:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}"
-                                                        FontFamily="Roboto-Regular"/>
-                        </dataform:SfDataForm.LabelTextStyle>
-                        <dataform:SfDataForm.ValidMessageLabelTextStyle>
-                            <dataform:DataFormTextStyle FontFamily="Roboto-Regular"/>
-                        </dataform:SfDataForm.ValidMessageLabelTextStyle>
-                        <dataform:SfDataForm.EditorTextStyle>
-                            <dataform:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                                        FontFamily="Roboto-Regular"/>
-                        </dataform:SfDataForm.EditorTextStyle>
-                    </dataform:SfDataForm>
-                    <!--  Send Button  -->
-                    <buttons:SfButton x:Name="submitButton"
-                                      Style="{DynamicResource FormsButtonStyle}"
-                                      Text="Submit"
-                                      WidthRequest="150"
-                                      VerticalOptions="Start"/>
+                            <input:SfTextInputLayout Hint="Enter your name" ContainerType="Outlined"
+                                OutlineCornerRadius="4" FocusedStrokeThickness="1" UnfocusedStrokeThickness="1"
+                                ReserveSpaceForAssistiveLabels="{Binding ContactUsInfo.ReserveNameError}"
+                                InputViewPadding="16, 0, 16, 0" EnableFloating="False" ShowHelperText="False"
+                                ShowHint="True" ErrorText="{Binding ContactUsInfo.NameError}"
+                                HasError="{Binding ContactUsInfo.HasNameError}"
+                                Stroke="{AppThemeBinding Light={DynamicResource ContentTextColorDark}, Dark={DynamicResource SecondaryTextColorLight}}"
+                                HorizontalOptions="Fill" VerticalOptions="Fill">
 
-                    <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"
-                             HeightRequest="1"
-                             Margin="10"/>
-
-                    <StackLayout
-                        HorizontalOptions="Start"
-                        Spacing="0"
-                        VerticalOptions="Start">
-
-                        <Label Text="Contact Us"
-                               FontSize="22"
-                               FontFamily="Roboto-Medium"
-                               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+                                <input:SfTextInputLayout.HintLabelStyle>
+                                    <input:LabelStyle FontSize="16" FontFamily="Roboto-Regular"
+                                        TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}" />
+                                </input:SfTextInputLayout.HintLabelStyle>
+                                <Entry Text="{Binding ContactUsInfo.Name}" FontSize="16" HorizontalOptions="Fill" />
+                                <input:SfTextInputLayout.ErrorLabelStyle>
+                                    <input:LabelStyle TextColor="#D32F2F" />
+                                </input:SfTextInputLayout.ErrorLabelStyle>
+                            </input:SfTextInputLayout>
 
 
-                        <!--Pin location header-->
-                        <Label
-                            Margin="0,16,0,4"
-                            HorizontalOptions="Start"
-                            Style="{DynamicResource TitleLabelStyle}"
-                            Text="Sipes Inc"/>
+                        </StackLayout>
+                        <!-- Company Group -->
+                        <StackLayout Margin="16,0,16,16" HorizontalOptions="Fill" VerticalOptions="Fill">
+                            <Label Text="Company" FontFamily="Roboto-Regular" LineHeight="1.42" CharacterSpacing="0.25"
+                                FontSize="14"
+                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                VerticalTextAlignment="Start" />
 
-                        <!--Pin location address-->
-                        <Label
-                            Margin="0,0,0,6"
-                            FontFamily="Roboto-Regular"
-                            Style="{DynamicResource SimpleLabelStyle}"
-                            Text="7654 Cleveland street, Phoenixville, PA 19460"
-                            VerticalOptions="Start"
-                            VerticalTextAlignment="Start"/>
+                            <input:SfTextInputLayout Hint="Enter company name" ContainerType="Outlined"
+                                OutlineCornerRadius="4" FocusedStrokeThickness="1" UnfocusedStrokeThickness="1"
+                                ReserveSpaceForAssistiveLabels="{Binding ContactUsInfo.ReserveCompanyNameError}"
+                                InputViewPadding="16, 0, 16, 0" EnableFloating="False" ShowHelperText="False"
+                                ShowHint="True" ErrorText="{Binding ContactUsInfo.CompanyError}"
+                                HasError="{Binding ContactUsInfo.HasCompanyError}"
+                                Stroke="{AppThemeBinding Light={DynamicResource ContentTextColorDark}, Dark={DynamicResource SecondaryTextColorLight}}"
+                                HorizontalOptions="Fill" VerticalOptions="Fill">
 
-                        <!--Pin location email id-->
-                        <Label
-                            Margin="0,0,0,6"
-                            FontFamily="Roboto-Regular"
-                            Style="{DynamicResource SimpleLabelStyle}"
-                            Text="dopuyi@hostguru.info"
-                            VerticalOptions="Start"
-                            VerticalTextAlignment="Start"/>
+                                <input:SfTextInputLayout.HintLabelStyle>
+                                    <input:LabelStyle FontSize="16" FontFamily="Roboto-Regular"
+                                        TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}" />
+                                </input:SfTextInputLayout.HintLabelStyle>
+                                <Entry Text="{Binding ContactUsInfo.Company}" FontSize="16" />
+                                <input:SfTextInputLayout.ErrorLabelStyle>
+                                    <input:LabelStyle TextColor="#D32F2F" />
+                                </input:SfTextInputLayout.ErrorLabelStyle>
+                            </input:SfTextInputLayout>
 
-                        <!--Pin location phone number-->
-                        <Label
-                            Margin="0,0,0,14"
-                            FontFamily="Roboto-Regular"
-                            Style="{DynamicResource SimpleLabelStyle}"
-                            Text="+1-202-555-0101"
-                            VerticalOptions="Start"
-                            VerticalTextAlignment="Start"/>
+
+                        </StackLayout>
+                        <!-- Email Group -->
+                        <StackLayout Margin="16,0,16,16" HorizontalOptions="Fill" VerticalOptions="Fill">
+                            <Label Text="Email" FontFamily="Roboto-Regular" LineHeight="1.42" CharacterSpacing="0.25"
+                                FontSize="14"
+                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                VerticalTextAlignment="Start" />
+
+                            <input:SfTextInputLayout Hint="Enter email" ContainerType="Outlined" ShowHelperText="False"
+                                OutlineCornerRadius="4" FocusedStrokeThickness="1" UnfocusedStrokeThickness="1"
+                                ReserveSpaceForAssistiveLabels="{Binding ContactUsInfo.ReserveEmailError}"
+                                InputViewPadding="16, 0, 16, 0" EnableFloating="False" ShowHint="True"
+                                ErrorText="{Binding ContactUsInfo.EmailError}"
+                                HasError="{Binding ContactUsInfo.HasEmailError}"
+                                Stroke="{AppThemeBinding Light={DynamicResource ContentTextColorDark}, Dark={DynamicResource SecondaryTextColorLight}}"
+                                HorizontalOptions="Fill" VerticalOptions="Fill">
+
+                                <input:SfTextInputLayout.HintLabelStyle>
+                                    <input:LabelStyle FontSize="16" FontFamily="Roboto-Regular"
+                                        TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}" />
+                                </input:SfTextInputLayout.HintLabelStyle>
+                                <Entry Text="{Binding ContactUsInfo.Email}" FontSize="16" HorizontalOptions="Fill" />
+                                <input:SfTextInputLayout.ErrorLabelStyle>
+                                    <input:LabelStyle TextColor="#D32F2F" />
+                                </input:SfTextInputLayout.ErrorLabelStyle>
+                            </input:SfTextInputLayout>
+
+                        </StackLayout>
+                        <!-- Phone Group -->
+                        <StackLayout Margin="16,0,16,16" HorizontalOptions="Fill" VerticalOptions="Fill">
+                            <Label Text="Phone" FontFamily="Roboto-Regular" LineHeight="1.42" CharacterSpacing="0.25"
+                                FontSize="14"
+                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                VerticalTextAlignment="Start" />
+
+                            <input:SfTextInputLayout Hint="Enter phone number" ContainerType="Outlined"
+                                OutlineCornerRadius="4" FocusedStrokeThickness="1" UnfocusedStrokeThickness="1"
+                                ReserveSpaceForAssistiveLabels="{Binding ContactUsInfo.ReservePhoneError}"
+                                InputViewPadding="16, 0, 16, 0" EnableFloating="False" ShowHelperText="False"
+                                ShowHint="True" ErrorText="{Binding ContactUsInfo.PhoneError}"
+                                HasError="{Binding ContactUsInfo.HasPhoneError}"
+                                Stroke="{AppThemeBinding Light={DynamicResource ContentTextColorDark}, Dark={DynamicResource SecondaryTextColorLight}}"
+                                HorizontalOptions="Fill" VerticalOptions="Fill">
+
+                                <input:SfTextInputLayout.HintLabelStyle>
+                                    <input:LabelStyle FontSize="16" FontFamily="Roboto-Regular"
+                                        TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}" />
+                                </input:SfTextInputLayout.HintLabelStyle>
+                                <Entry Text="{Binding ContactUsInfo.PhoneNumber}" FontSize="16" Keyboard="Numeric"
+                                    MaxLength="10" TextChanged="PhoneNumber_TextChanged" HorizontalOptions="Fill" />
+                                <input:SfTextInputLayout.ErrorLabelStyle>
+                                    <input:LabelStyle TextColor="#D32F2F" />
+                                </input:SfTextInputLayout.ErrorLabelStyle>
+                            </input:SfTextInputLayout>
+
+
+                        </StackLayout>
+                        <!-- Message Group (Larger Text Area) -->
+                        <StackLayout Margin="16,0,16,32" HorizontalOptions="Fill" VerticalOptions="Fill">
+                            <Label Text="Message" FontFamily="Roboto-Regular" LineHeight="1.42" CharacterSpacing="0.25"
+                                FontSize="14"
+                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                VerticalTextAlignment="Center" />
+
+                            <input:SfTextInputLayout Hint="Leave a message..." ContainerType="Outlined"
+                                OutlineCornerRadius="4" FocusedStrokeThickness="1" UnfocusedStrokeThickness="1"
+                                ReserveSpaceForAssistiveLabels="False" InputViewPadding="16, 0, 16, 0"
+                                EnableFloating="False" Margin="0" HeightRequest="116" ShowHelperText="False"
+                                ShowHint="True" ErrorText="{Binding ContactUsInfo.MessageError}"
+                                HasError="{Binding ContactUsInfo.HasMessageError}"
+                                Stroke="{AppThemeBinding Light={DynamicResource ContentTextColorDark}, Dark={DynamicResource SecondaryTextColorLight}}"
+                                HorizontalOptions="Fill" VerticalOptions="Fill">
+
+                                <input:SfTextInputLayout.HintLabelStyle>
+                                    <input:LabelStyle FontSize="16" FontFamily="Roboto-Regular"
+                                        TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}" />
+                                </input:SfTextInputLayout.HintLabelStyle>
+                                <Entry Text="{Binding ContactUsInfo.Message}" FontSize="16" HorizontalOptions="Fill" />
+                                <input:SfTextInputLayout.ErrorLabelStyle>
+                                    <input:LabelStyle TextColor="#D32F2F" />
+                                </input:SfTextInputLayout.ErrorLabelStyle>
+                            </input:SfTextInputLayout>
+
+
+                        </StackLayout>
+
+                        <!-- Submit Button (Full Width) -->
+                        <buttons:SfButton Text="Submit" CornerRadius="24" Margin="16,0,16,0" HeightRequest="48"
+                            Command="{Binding SubmitCommand}" HorizontalOptions="Fill" VerticalOptions="End"
+                            TextColor="White" Style="{DynamicResource FormsButtonStyle}" FontSize="14" />
                     </StackLayout>
 
-                    <maps:SfMaps Grid.Column="0"
-                                 x:Name="Map"
-                                 BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                 HorizontalOptions="Fill"
-                                 VerticalOptions="Fill">
+                    <BoxView Style="{DynamicResource HorizontalSeparatorStyle}" HeightRequest="1"
+                        Margin="16,32,16,26" />
+                    <StackLayout HorizontalOptions="Start" Spacing="0" VerticalOptions="Start">
+                        <Label Text="Contact Us" FontSize="22" Margin="16,0,0,0" FontFamily="Roboto-Medium"
+                            LineHeight="1.27"
+                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
 
+                        <!--Pin location header-->
+                        <Label Margin="16,22,0,8" HorizontalOptions="Start" Style="{DynamicResource TitleLabelStyle}"
+                            LineHeight="1.5" CharacterSpacing="0.15" Text="Sipes Inc" />
+                        <!--Pin location address-->
+                        <Label Margin="16,0,0,8" FontFamily="Roboto-Regular" Style="{DynamicResource SimpleLabelStyle}"
+                            FontSize="14" LineHeight="1.42" CharacterSpacing="0.25"
+                            TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                            Text="7654 Cleveland street, Phoenixville, PA 19460" VerticalOptions="Start"
+                            VerticalTextAlignment="Start" />
+                        <!--Pin location email id-->
+                        <Label Margin="16,0,0,8" FontFamily="Roboto-Regular" Style="{DynamicResource SimpleLabelStyle}"
+                            FontSize="14" LineHeight="1.42" CharacterSpacing="0.25"
+                            TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                            Text="dopuyi@hostguru.info" VerticalOptions="Start" VerticalTextAlignment="Start" />
+                        <!--Pin location phone number-->
+                        <Label Margin="16,0,0,24" FontFamily="Roboto-Regular" Style="{DynamicResource SimpleLabelStyle}"
+                            Text="+1-202-555-0101" FontSize="14" LineHeight="1.42" CharacterSpacing="0.25"
+                            TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                            VerticalOptions="Start" VerticalTextAlignment="Start" />
+                    </StackLayout>
+                    <maps:SfMaps x:Name="Map"
+                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                        HorizontalOptions="Fill" VerticalOptions="Fill">
                         <maps:SfMaps.Layer>
                             <maps:MapTileLayer UrlTemplate="https://tile.openstreetmap.org/{z}/{x}/{y}.png">
                                 <maps:MapTileLayer.Center>
-                                    <maps:MapLatLng Latitude="40.133808"
-                                                    Longitude="-75.516279"/>
+                                    <maps:MapLatLng Latitude="-37.81361" Longitude="144.96306" />
                                 </maps:MapTileLayer.Center>
-
                                 <maps:MapTileLayer.ZoomPanBehavior>
-                                    <maps:MapZoomPanBehavior ZoomLevel="16"
-                                                             EnableZooming="False"/>
+                                    <maps:MapZoomPanBehavior ZoomLevel="10" EnableZooming="False" />
                                 </maps:MapTileLayer.ZoomPanBehavior>
-
                                 <maps:MapTileLayer.Markers>
                                     <maps:MapMarkerCollection>
-                                        <maps:MapMarker Latitude="40.133808"
-                                                        Longitude="-75.516279"/>
+                                        <maps:MapMarker Latitude="-37.81161" Longitude="144.96306" />
+                                        <maps:MapMarker Latitude="-37.90961" Longitude="144.758" />
                                     </maps:MapMarkerCollection>
                                 </maps:MapTileLayer.Markers>
-
                                 <!--Template for customizing the address popup-->
                                 <maps:MapTileLayer.MarkerTemplate>
                                     <DataTemplate>
                                         <StackLayout>
 
-                                            <!--Set pin image-->
-                                            <Image
-                                                Margin="10,5,0,0"
-                                                HeightRequest="25"
-                                                HorizontalOptions="Start"
-                                                Source="pin.png"
-                                                WidthRequest="25"/>
+                                            <Image Margin="15,5,15,15" HeightRequest="32" HorizontalOptions="Start"
+                                                Source="pointer.png" WidthRequest="25" />
                                         </StackLayout>
                                     </DataTemplate>
                                 </maps:MapTileLayer.MarkerTemplate>
                             </maps:MapTileLayer>
                         </maps:SfMaps.Layer>
                     </maps:SfMaps>
-
                 </StackLayout>
             </ScrollView>
         </Grid>
-
     </ContentView.Content>
     <ContentView.Behaviors>
-        <behavior:ContactUsBehavior/>
+        <behavior:ContactUsBehavior />
     </ContentView.Behaviors>
 </ContentView>

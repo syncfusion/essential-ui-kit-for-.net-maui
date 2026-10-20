@@ -60,5 +60,6 @@
     <Color x:Key="SelectionBackgroundLight">#e8e4ec</Color>
     <Color x:Key="ContentTextColorLight">#474648</Color>
     <Color x:Key="DataVisualizationLight">#E7E0EC</Color>
+    <Color x:Key="UnSelectedDotLight">#F3F0F2</Color>
 
 </ResourceDictionary>

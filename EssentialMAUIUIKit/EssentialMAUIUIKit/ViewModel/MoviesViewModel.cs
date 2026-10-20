@@ -18,42 +18,58 @@ namespace EssentialMAUIUIKit
             string jsonData = @"
         {
             ""moviesPageList"": [
-                { ""moviename"": ""The Shawshank Redemption"", ""movieyear"": ""1994"", ""movierating"": 9.2 },
-                { ""moviename"": ""The Godfather"", ""movieyear"": ""1972"", ""movierating"": 9.1 },
-                { ""moviename"": ""The Godfather: Part II"", ""movieyear"": ""1974"", ""movierating"": 9.1 },
-                { ""moviename"": ""The Dark Knight"", ""movieyear"": ""2008"", ""movierating"": 9.1 },
-                { ""moviename"": ""12 Angry Men"", ""movieyear"": ""1957"", ""movierating"": 8.9 },
-                { ""moviename"": ""Schindler's List"", ""movieyear"": ""1993"", ""movierating"": 8.9 },
-                { ""moviename"": ""The Lord Of The Rings: The Return of the King"", ""movieyear"": ""2003"", ""movierating"": 8.9 },
-                { ""moviename"": ""Pulp Fiction"", ""movieyear"": ""1994"", ""movierating"": 8.9 },
-                { ""moviename"": ""The Good the Bad and the Ugly"", ""movieyear"": ""1966"", ""movierating"": 8.8 },
-                { ""moviename"": ""Titanic"", ""movieyear"": ""1997"", ""movierating"": 7.8 },
-                { ""moviename"": ""Spider-Man: Far From Home"", ""movieyear"": ""2019"", ""movierating"": 7.6 },
-                { ""moviename"": ""Avatar"", ""movieyear"": ""2009"", ""movierating"": 7.8 },
-                { ""moviename"": ""Avengers: Infinity War"", ""movieyear"": ""2018"", ""movierating"": 8.5 }
+                { ""moviename"": ""The Godfather"", ""movieyear"": ""1994"", ""movierating"": 4.6 },
+                { ""moviename"": ""The Dark Knight"", ""movieyear"": ""1997"", ""movierating"": 4.3 },
+                { ""moviename"": ""12 Angry Men"", ""movieyear"": ""2002"", ""movierating"": 3.5 },
+                { ""moviename"": ""Pulp Fiction"", ""movieyear"": ""2004"", ""movierating"": 4.5 },
+                { ""moviename"": ""Titanic"", ""movieyear"": ""2005"", ""movierating"": 4.4 },
+                { ""moviename"": ""Avatar"", ""movieyear"": ""1998"", ""movierating"": 4.6 },
+                { ""moviename"": ""Avengers"", ""movieyear"": ""2001"", ""movierating"": 2.4 },
+                { ""moviename"": ""Superman"", ""movieyear"": ""2023"", ""movierating"": 5.0 }
             ]
         }";
 
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             var data = JsonSerializer.Deserialize<MoviesData>(jsonData, options);
 
+            var images = new List<string>
+            {
+                "movie_1.jpg",
+                "movie_2.jpg",
+                "movie_3.jpg",
+                "movie_4.jpg",
+                "movie_5.jpg",
+                "movie_6.jpg",
+                "movie_7.jpg",
+                "movie_8.jpg"
+            };
+
             if (data?.MoviesPageList == null)
             {
                 return;
             }
 
-            foreach (var movie in data.MoviesPageList)
+            for (int i = 0; i < data.MoviesPageList.Count; i++)
             {
-                MoviesList.Add(movie);
+                data.MoviesPageList[i].MovieImage = images[i];
+                MoviesList.Add(data.MoviesPageList[i]);
             }
         }
     }
 
     public class Movie
     {
+        private string? movieImage;
+
         public string? MovieName { get; set; }
         public string? MovieYear { get; set; }
         public double MovieRating { get; set; }
+
+        public string? MovieImage
+        {
+            get { return movieImage; }
+            set { movieImage = value; }
+        }
     }
 
     public class MoviesData

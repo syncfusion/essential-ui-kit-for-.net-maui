@@ -12,12 +12,54 @@ namespace EssentialMAUIUIKit
         private ObservableCollection<Order>? completedOrders;
         private ObservableCollection<Order>? cancelledOrders;
 
-        public OrdersViewModel()
+		private ObservableCollection<Order>? filteredOrders;
+		private ObservableCollection<string>? tabs;		
+
+		private string selectedTab = "All Orders";
+
+
+		public OrdersViewModel()
         {
             PopulateData();
-        }
 
-        public ObservableCollection<Order>? Orders
+			Tabs = new ObservableCollection<string>
+		    {
+			    "All Orders",
+			    "Ordered",
+			    "Cancelled",
+			    "Completed"
+		    };
+
+            SelectedTab = "All Orders";
+			FilteredOrders = Orders;
+
+		}
+
+
+		public ObservableCollection<string>? Tabs
+		{
+			get => tabs;
+			set
+			{
+				tabs = value;
+				OnPropertyChanged();
+			}
+		}
+
+
+		public string SelectedTab
+		{
+			get => selectedTab;
+			set
+			{
+				selectedTab = value;
+				UpdateFilter();
+				OnPropertyChanged();
+			}
+		}
+
+
+		public ObservableCollection<Order>? Orders
         {
             get => orders;
             set
@@ -57,7 +99,62 @@ namespace EssentialMAUIUIKit
             }
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+
+		public ObservableCollection<Order>? FilteredOrders
+		{
+			get => filteredOrders;
+			set
+			{
+				filteredOrders = value;
+				OnPropertyChanged();
+			}
+		}
+
+		// Filtering Logic
+		private void UpdateFilter()
+		{
+
+        ApplyStatusVisibility(Orders, SelectedTab == "All Orders");
+        ApplyStatusVisibility(RequestedOrders, false);
+        ApplyStatusVisibility(CancelledOrders, false);
+        ApplyStatusVisibility(CompletedOrders, false);
+
+			switch (SelectedTab)
+			{
+
+				case "Completed":
+					FilteredOrders = CompletedOrders;
+					break;
+
+				case "Cancelled":
+					FilteredOrders = CancelledOrders;
+					break;
+
+				case "Ordered":
+					FilteredOrders = RequestedOrders;
+					break;
+
+				default:
+					FilteredOrders = Orders;
+					break;
+			}
+		}
+
+        private static void ApplyStatusVisibility(ObservableCollection<Order>? source, bool isVisible)
+        {
+            if (source == null)
+            {
+                return;
+            }
+
+            foreach (var item in source)
+            {
+                item.ShowStatus = isVisible;
+            }
+        }
+
+
+		public event PropertyChangedEventHandler? PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
@@ -70,13 +167,6 @@ namespace EssentialMAUIUIKit
             {
                 ""orders"": [
                     {
-                        ""orderid"": ""83533963"",
-                        ""productimage"": ""Image1.png"",
-                        ""name"": ""Full-Length Skirt"",
-                        ""description"": ""Delivery expected on 10 Aug 2019."",
-                        ""status"": ""Dispatched""
-                    },
-                    {
                         ""orderid"": ""63428737"",
                         ""productimage"": ""Image2.png"",
                         ""name"": ""Peasant Blouse"",
@@ -84,11 +174,32 @@ namespace EssentialMAUIUIKit
                         ""status"": ""Cancelled""
                     },
                     {
+                        ""orderid"": ""83533963"",
+                        ""productimage"": ""Image1.png"",
+                        ""name"": ""Full-Length Skirt"",
+                        ""description"": ""Delivery expected on 10 Aug 2026."",
+                        ""status"": ""Dispatched""
+                    },
+                    {
                         ""orderid"": ""83658319"",
                         ""productimage"": ""Image3.png"",
-                        ""name"": ""High-Waisted Skirt"",
-                        ""description"": ""Delivered on 04 Aug 2019."",
+                        ""name"": ""Long Skirt with Ethnic Top"",
+                        ""description"": ""Delivered on 04 Aug 2026."",
                         ""status"": ""Completed""
+                    },
+                    {
+                        ""orderid"": ""83658319"",
+                        ""productimage"": ""Image4.png"",
+                        ""name"": ""Winter Casual Outfit"",
+                        ""description"": ""Delivery expected on 10 Aug 2026."",
+                        ""status"": ""Dispatched""
+                    },
+                    {
+                        ""orderid"": ""83658319"",
+                        ""productimage"": ""Image5.png"",
+                        ""name"": ""Midi Dress"",
+                        ""description"": ""Order was cancelled."",
+                        ""status"": ""Cancelled""
                     }
                 ]
             }";
@@ -98,40 +209,85 @@ namespace EssentialMAUIUIKit
             };
 
             var ordersList = JsonSerializer.Deserialize<OrdersList>(jsonData, options);
-            var images = new List<string>() { "Image1.png", "Image2.png", "Image3.png" };
+            var images = new List<string>() { "Image1.png", "Image2.png", "Image3.png", "Image4.png", "Image5.png" };
             Orders = new ObservableCollection<Order>();
             CancelledOrders = new ObservableCollection<Order>();
             CompletedOrders = new ObservableCollection<Order>();
             RequestedOrders = new ObservableCollection<Order>();
             if (ordersList != null && ordersList.Orders != null)
             {
-                for (int i = 0; i < ordersList.Orders.Count; i++)
+                for (int i = 0; i < ordersList.Orders.Count && i < images.Count; i++)
                 {
-                    ordersList.Orders[i].ProductImage = images[i];
-                    Orders.Add(ordersList.Orders[i]);
-
-                    if (ordersList.Orders[i].Status == "Cancelled")
+                    var sourceOrder = ordersList.Orders[i];
+                    var order = new Order
                     {
-                        CancelledOrders.Add(ordersList.Orders[i]);
+                        OrderId = sourceOrder.OrderId,
+                        ProductImage = images[i],
+                        Name = sourceOrder.Name,
+                        Description = sourceOrder.Description,
+                        Status = sourceOrder.Status
+                    };
+
+                    Orders.Add(order);
+
+                    if (order.Status == "Cancelled")
+                    {
+                        CancelledOrders.Add(new Order
+                        {
+                            OrderId = order.OrderId,
+                            ProductImage = images[i],
+                            Name = order.Name,
+                            Description = order.Description,
+                            Status = order.Status
+                        });
                     }
 
-                    if (ordersList.Orders[i].Status == "Dispatched")
+                    if (order.Status == "Dispatched")
                     {
-                        RequestedOrders.Add(ordersList.Orders[i]);
+                        RequestedOrders.Add(new Order
+                        {
+                            OrderId = order.OrderId,
+                            ProductImage = images[i],
+                            Name = order.Name,
+                            Description = order.Description,
+                            Status = order.Status
+                        });
                     }
 
-                    if (ordersList.Orders[i].Status == "Completed")
+                    if (order.Status == "Completed")
                     {
-                        CompletedOrders.Add(ordersList.Orders[i]);
+                        CompletedOrders.Add(new Order
+                        {
+                            OrderId = order.OrderId,
+                            ProductImage = images[i],
+                            Name = order.Name,
+                            Description = order.Description,
+                            Status = order.Status
+                        });
                     }
                 }
             }
+
+            ApplyStatusVisibility(Orders, true);
+            ApplyStatusVisibility(RequestedOrders, false);
+            ApplyStatusVisibility(CancelledOrders, false);
+            ApplyStatusVisibility(CompletedOrders, false);
+            FilteredOrders = Orders;
         }
     }
 
-    public class Order
+    public class Order : INotifyPropertyChanged
     {
         private string? productImage;
+        private bool showStatus;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public string? OrderId { get; set; }
         public string ProductImage
         {
@@ -139,7 +295,22 @@ namespace EssentialMAUIUIKit
             set { this.productImage = value; }
         }
 
-        public string? Name { get; set; }
+		public bool ShowStatus
+        {
+            get => showStatus;
+            set
+            {
+                if (showStatus == value)
+                {
+                    return;
+                }
+
+                showStatus = value;
+                OnPropertyChanged();
+            }
+        }
+
+		public string? Name { get; set; }
         public string? Description { get; set; }
         public string? Status { get; set; }
     }

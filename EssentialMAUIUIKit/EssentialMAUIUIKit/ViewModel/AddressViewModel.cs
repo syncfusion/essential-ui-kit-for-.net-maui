@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Text.Json;
+using System.Windows.Input;
 
 namespace EssentialMAUIUIKit
 {
@@ -7,9 +8,38 @@ namespace EssentialMAUIUIKit
     {
         public ObservableCollection<Address>? AddressDetails { get; set; }
 
+        public ICommand EditAddressCommand { get; }
+
+        public ICommand DeleteAddressCommand { get; }
+
+        public ICommand AddAddressCommand { get; }
+
         public AddressViewModel()
         {
+            EditAddressCommand = new Command<Address>(OnEditAddress);
+            DeleteAddressCommand = new Command<Address>(OnDeleteAddress);
+            AddAddressCommand = new Command(OnAddAddress);
             LoadData();
+        }
+
+        private void OnEditAddress(Address? address)
+        {
+            // Hook for the host application to launch the edit-address flow.
+            // Intentionally left empty in the UI Kit sample.
+        }
+
+        private void OnDeleteAddress(Address? address)
+        {
+            if (address != null && AddressDetails != null)
+            {
+                AddressDetails.Remove(address);
+            }
+        }
+
+        private void OnAddAddress()
+        {
+            // Hook for the host application to launch the add-address flow.
+            // Intentionally left empty in the UI Kit sample.
         }
 
         private void LoadData()

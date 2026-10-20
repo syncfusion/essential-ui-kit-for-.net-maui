@@ -1,14 +1,83 @@
-﻿using System.Text.Json;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
 
 namespace EssentialMAUIUIKit
 {
-    public class ProductDetailsViewModel
+    public class ProductDetailsViewModel : INotifyPropertyChanged
     {
         public Product? Product { get; set; }
+
+        public ProductImage? ProductImage { get; set; }
 
         public ProductDetailsViewModel()
         {
             LoadData();
+
+            Product!.PreviewImages = new ObservableCollection<ProductImage>()
+            {
+                new ProductImage { ImagePath = App.ImageServerPath + "Image1.png", IsSelected = true },
+                new ProductImage { ImagePath = App.ImageServerPath + "Image1.png" },
+                new ProductImage { ImagePath = App.ImageServerPath + "Image1.png" },
+                new ProductImage { ImagePath = App.ImageServerPath + "Image1.png" },
+                new ProductImage { ImagePath = App.ImageServerPath + "Image1.png" },
+            };
+
+            AvailableSizes = new ObservableCollection<SizeItem>
+            {
+                new() { Name = "XS", IsSelected = false },
+                new() { Name = "S", IsSelected = false },
+                new() { Name = "M", IsSelected = true },
+                new() { Name = "L", IsSelected = false },
+                new() { Name = "XL", IsSelected = false }
+            };
+
+            // The SfChipGroup owns selection state via its
+            // SelectedItem property (bound below). When SelectedSize
+            // changes, the setter flips IsSelected on the affected
+            // SizeItem instances so the DataTrigger in SizeChipStyle
+            // can re-paint the stroke (the one thing the group does
+            // not expose a SelectedChip* property for).
+            SelectedSize = AvailableSizes[2]; // Pre-select "M"
+        }
+
+        public ObservableCollection<SizeItem> AvailableSizes { get; }
+
+        private SizeItem? selectedSize;
+        public SizeItem? SelectedSize
+        {
+            get => selectedSize;
+            set
+            {
+                if (selectedSize != value)
+                {
+                    // Clear the previous selection so the trigger
+                    // on the previously selected chip reverts the
+                    // stroke back to the unselected colour.
+                    if (selectedSize != null)
+                    {
+                        selectedSize.IsSelected = false;
+                    }
+
+                    selectedSize = value;
+
+                    // Mark the newly selected item so the trigger
+                    // applies the selected stroke.
+                    if (selectedSize != null)
+                    {
+                        selectedSize.IsSelected = true;
+                    }
+
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void LoadData()
@@ -20,14 +89,7 @@ namespace EssentialMAUIUIKit
             ""actualPrice"": 245,
             ""discountPercent"": 30,
             ""description"": ""Ankle-length skirt with high waistband. Lightweight, comfortable cotton construction with side zipper."",
-            ""previewImages"": [
-                ""Image1.png"",
-                ""Image1.png"",
-                ""Image1.png"",
-                ""Image1.png"",
-                ""Image1.png""
-            ],
-            ""sizevariants"": [ ""XS"", ""S"", ""M"", ""L"", ""XL"" ],
+            
             ""detailPageReviews"": [
                 {
                     ""profileimage"": ""ProfileImage10.png"",
@@ -59,13 +121,12 @@ namespace EssentialMAUIUIKit
 
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             Product = JsonSerializer.Deserialize<Product>(jsonData, options);
-            var previewImages = new List<string> { "Image1.png", "Image1.png", "Image1.png", "Image1.png", "Image1.png" };
+            var previewImages = new List<string> { "Image1.png", "Image1.png", "Image1.png", "Image1.png", "Image1.png", "Image1.png" };
             if (Product?.DetailPageReviews == null)
             {
                 return;
             }
 
-            Product.PreviewImages = previewImages;
             Product.DetailPageReviews[0].CustomerReviewImages = previewImages;
             Product.DetailPageReviews[1].CustomerReviewImages = previewImages;
             Product.DetailPageReviews[0].CustomerImage = "ProfileImage10.png";
@@ -73,37 +134,109 @@ namespace EssentialMAUIUIKit
         }
     }
 
-    public class Product
+    public class ProductImage : INotifyPropertyChanged
     {
-        private List<string>? previewImages;
+        public string? ImagePath { get; set; }
+
+        private bool isSelected; 
+        
+        private bool isFavourite;
+
+        public bool IsSelected
+        {
+            get => isSelected;
+            set
+            {
+                if (isSelected != value)
+                {
+                    isSelected = value;
+                    OnPropertyChanged(nameof(IsSelected));
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the product is marked as favourite.
+        /// Used by the Favourite icon button on the product detail page to swap the
+        /// outline glyph for a filled glyph (and primary colour) when tapped.
+        /// </summary>
+        public bool IsFavourite
+        {
+            get => isFavourite;
+            set
+            {
+                if (isFavourite != value)
+                {
+                    isFavourite = value;
+                    OnPropertyChanged(nameof(IsFavourite));
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        private void OnPropertyChanged(string propertyName) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    public class Product : INotifyPropertyChanged
+    {
         public string? Name { get; set; }
         public string? Summary { get; set; }
         public decimal ActualPrice { get; set; }
         public int DiscountPercent { get; set; }
         public string? Description { get; set; }
-        public List<string>? PreviewImages
+        public ObservableCollection<ProductImage>? PreviewImages { get; set; }
+
+        public List<ProductDetailsModel>? DetailPageReviews { get; set; }
+
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private void OnPropertyChanged(string propertyName) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    public class SizeItem : INotifyPropertyChanged
+    {
+        private string? name;
+        public string? Name
         {
-            get
-            {
-                if (this.previewImages != null)
-                {
-                    for (var i = 0; i < this.previewImages.Count; i++)
-                    {
-                        this.previewImages[i] = this.previewImages[i].Contains(App.ImageServerPath) ? this.previewImages[i] : App.ImageServerPath + this.previewImages[i];
-                    }
-                }
-
-                return this.previewImages;
-            }
-
+            get => name;
             set
             {
-                this.previewImages = value;
+                if (name != value)
+                {
+                    name = value;
+                    OnPropertyChanged(nameof(Name));
+                    OnPropertyChanged(nameof(Text));
+                }
             }
         }
 
-        public List<string>? SizeVariants { get; set; }
-        public List<ProductDetailsModel>? DetailPageReviews { get; set; }
+        public string? Text
+        {
+            get => Name;
+            set => Name = value;
+        }
+
+        private bool isSelected;
+        public bool IsSelected
+        {
+            get => isSelected;
+            set
+            {
+                if (isSelected != value)
+                {
+                    isSelected = value;
+                    OnPropertyChanged(nameof(IsSelected));
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private void OnPropertyChanged(string propertyName) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
     public class ProductDetailsModel

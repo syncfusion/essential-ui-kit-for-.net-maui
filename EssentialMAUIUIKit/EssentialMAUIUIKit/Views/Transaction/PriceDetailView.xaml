@@ -3,144 +3,139 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Transaction.PriceDetailView"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit">
-    <Border Margin="10,0,10,0"
-            StrokeShape="RoundRectangle 10"
-            HeightRequest="{OnPlatform Default=220, Android=240, iOS=240}">
+
+    <Border Margin="10,0,10,0" StrokeShape="RoundRectangle 10" StrokeThickness="0" BackgroundColor="#FFFFFF" HeightRequest="{OnPlatform Default=656, Android=688, iOS=688}">
+        <Border.Shadow>
+            <Shadow Brush="#CFDAF2"
+                    Offset="0,20"
+                    Radius="25"
+                    Opacity="0.5"/>
+        </Border.Shadow>
         <!--  Price Details  -->
-        <StackLayout
-            Margin="{OnIdiom Default='0,16,0,0',
-                         Desktop=0}"
-            HorizontalOptions="Fill">
-            <StackLayout>
-                <Grid
-                    ColumnDefinitions="*, Auto"
-                    RowDefinitions="Auto, 1, Auto, Auto, Auto, Auto, 1, Auto"
-                    RowSpacing="4"
-                    VerticalOptions="Start">
+        <StackLayout Margin="54">
+            <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, 1, Auto, Auto, Auto, Auto, 1, Auto, Auto" RowSpacing="12" VerticalOptions="Start">
 
-                    <!--  Header  -->
-                    <Label
-                        Grid.Row="0"
-                        Grid.ColumnSpan="2"
-                        Margin="16,16,16,12"
-                        HorizontalOptions="Start"
-                        LineHeight="{OnPlatform Android=1.25,
-                            Default=-1}"
-                        Style="{DynamicResource TitleLabelStyle}"
-                        Text="Price Details"/>
-                    <!--  Separator  -->
-                    <BoxView
-                        Grid.Row="1"
-                        Grid.ColumnSpan="2"
-                        HeightRequest="1"
-                        Style="{DynamicResource HorizontalSeparatorStyle}"/>
-                    <!--  Total MRP  -->
-                    <Label
-                        Grid.Row="2"
-                        Margin="16,5,16,0"
-                        HorizontalOptions="Start"
-                        Style="{DynamicResource SimpleLabelStyle}"
-                        Text="Total MRP"/>
-                    <Label
-                        Grid.Row="2"
-                        Grid.Column="1"
-                        Margin="16,5,16,0"
-                        HorizontalOptions="End"
-                        HorizontalTextAlignment="End"
-                        Style="{DynamicResource SimpleLabelStyle}"
-                        Text="$1230"/>
-                    <!--  Discount Percent  -->
-                    <Label
-                        Grid.Row="3"
-                        Margin="16,5,16,0"
-                        HorizontalOptions="Start"
-                        Style="{DynamicResource SimpleLabelStyle}"
-                        Text="Discount"/>
-                    <Label
-                        Grid.Row="3"
-                        Grid.Column="1"
-                        Margin="16,5,16,0"
-                        HorizontalOptions="End"
-                        HorizontalTextAlignment="End"
-                        Style="{DynamicResource SimpleLabelStyle}"
-                        Text="21%"/>
-                    <!--  Coupon Discount  -->
-                    <Label
-                        Grid.Row="4"
-                        Margin="16,5,16,0"
-                        HorizontalOptions="Start"
-                        Style="{DynamicResource SimpleLabelStyle}"
-                        Text="Coupon Discount"/>
-                    <buttons:SfButton Margin="16,5,10,0"
-                                      Text="Apply coupon"
-                                      TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                      FontFamily="Roboto-Regular"
-                                      FontSize="12"
-                                      HeightRequest="20"
-                                      Grid.Row="4"
-                                      Grid.Column="1"
-                                      HorizontalOptions="End"
-                                      Background="Transparent"
-                                      WidthRequest="90">
-                    </buttons:SfButton>
-                    <!--  Delivery Charges  -->
-                    <Label
-                        Grid.Row="5"
-                        Margin="16,5,16,4"
-                        HorizontalOptions="Start"
-                        Style="{DynamicResource SimpleLabelStyle}"
-                        Text="Delivery Charges"/>
-                    <Label
-                        Grid.Row="5"
-                        Grid.Column="1"
-                        Margin="16,5,16,4"
-                        HorizontalOptions="End"
-                        HorizontalTextAlignment="End"
-                        Style="{DynamicResource SimpleLabelStyle}"
-                        Text="Free"
-                        TextColor="{DynamicResource Green}"/>
-                    <!--  Separator  -->
-                    <BoxView
-                        Grid.Row="6"
-                        Grid.ColumnSpan="2"
-                        HeightRequest="1"
-                        Style="{DynamicResource HorizontalSeparatorStyle}"/>
-                    <!--  Total price  -->
-                    <Label
-                        Grid.Row="7"
-                        Margin="16,12,16,16"
-                        HorizontalOptions="Start"
-                        LineHeight="{OnPlatform Android=1.25,
-                            Default=-1}"
-                        Style="{DynamicResource TitleLabelStyle}"
-                        Text="Total"/>
-                    <Label
-                        Grid.Row="7"
-                        Grid.Column="1"
-                        Margin="16,12,16,16"
-                        HorizontalOptions="End"
-                        HorizontalTextAlignment="End"
-                        LineHeight="{OnPlatform Android=1.25,
-                            Default=-1}"
-                        Style="{DynamicResource TitleLabelStyle}"
-                        Text="$960"/>
+                <!--  Header  -->
+                <Label Grid.Row="0"
+                       Grid.ColumnSpan="2"
+                       Margin="16,16,16,12" FontFamily="Roboto-Regular"
+                       HorizontalOptions="Start" FontSize="24"
+                       LineHeight="{OnPlatform Android=1.25, Default=-1}"
+                       Style="{DynamicResource TitleLabelStyle}"
+                       Text="Price Details"/>
+                <!--  Total MRP  -->
+                <Label Grid.Row="2"
+                       Margin="16,5,16,0" FontFamily="Roboto-Regular"
+                       HorizontalOptions="Start" FontSize="16"
+                       Style="{DynamicResource SimpleLabelStyle}"
+                       Text="Price (1 Item)"/>
+                <Label Grid.Row="2"
+                       Grid.Column="1" FontFamily="Roboto-Regular"
+                       Margin="16,5,16,0" FontSize="16"
+                       HorizontalOptions="End"
+                       HorizontalTextAlignment="End"
+                       Style="{DynamicResource SimpleLabelStyle}"
+                       Text="$450.00"/>
+                <!--  Discount Percent  -->
+                <Label Grid.Row="3" FontFamily="Roboto-Regular"
+                       Margin="16,5,16,0" FontSize="16"
+                       HorizontalOptions="Start" TextColor="#1C7E39"
+                       Style="{DynamicResource SimpleLabelStyle}"
+                       Text="Discount"/>
+                <Label Grid.Row="3"
+                       Grid.Column="1"
+                       Margin="16,5,16,0" FontSize="16"
+                       HorizontalOptions="End" FontFamily="Roboto-Regular"
+                       HorizontalTextAlignment="End" TextColor="#1C7E39"
+                       Style="{DynamicResource SimpleLabelStyle}"
+                       Text="-$43.00"/>
+                <!--  Coupon Applied  -->
 
-                </Grid>
+                <HorizontalStackLayout Grid.Row="5" Margin="0,0,0,30">
+                    <Label FontSize="16" Padding="16,10,0,10"
+                       VerticalTextAlignment="Center" FontFamily="UIKitIcons"
+                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                       Text="&#xe713;"/>
+                    <Label FontSize="16" Padding="0,10,0,14"
+                       VerticalTextAlignment="Start" FontFamily="UIKitIcons"
+                       Style="{DynamicResource SimpleLabelStyle}"
+                       Text=" Coupon Applied"/>
+                </HorizontalStackLayout>
 
-                <!--  Place order button  -->
-                <buttons:SfButton
-                    Margin="{OnIdiom Default=24,
-                 Tablet='24,24,16,24'}"
-                    HorizontalOptions="{OnIdiom Default=Fill,
-                            Phone=Center,
-                            Tablet=End}"
-                    Style="{DynamicResource GradientButtonStyle}"
-                    Text="PLACE ORDER"
-                    WidthRequest="{OnIdiom Tablet=240,
-                       Phone=240,
-                       Default=-1}"/>
+                <buttons:SfButton Margin="16,0,6,30"
+                                  Text="BOUTIQUE20"
+                                  TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                  FontFamily="Roboto-Regular"
+                                  FontSize="16"
+                                  HeightRequest="30"
+                                  Grid.Row="5"
+                                  Grid.Column="1"
+                                  HorizontalOptions="End"
+                                  Background="Transparent"
+                                  WidthRequest="120">
+                </buttons:SfButton>
+                <!--  Delivery Charges  -->
+                <Label Grid.Row="4"
+                       Margin="16,5,16,4" FontSize="16"
+                       HorizontalOptions="Start" FontFamily="Roboto-Regular"
+                       Style="{DynamicResource SimpleLabelStyle}"
+                       Text="Delivery Charges"/>
+                <Label Grid.Row="4"
+                       Grid.Column="1" FontSize="16"
+                       Margin="16,5,16,4"
+                       HorizontalOptions="End" FontFamily="Roboto-Regular"
+                       HorizontalTextAlignment="End"
+                       Style="{DynamicResource SimpleLabelStyle}"
+                       Text=" Free"
+                       TextColor="#1C7E39">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="$4.00" FontFamily="UIKitIcons" FontSize="16"/>
+                            <Span Text="  Free" FontFamily="Roboto-Regular" TextColor="#1C7E39" FontSize="16"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <!--  Separator  -->
+                <BoxView Grid.Row="6"
+                         Grid.ColumnSpan="2"
+                         HeightRequest="1" 
+                         Style="{DynamicResource HorizontalSeparatorStyle}"/>
+                <!--  Total price  -->
+                <Label Grid.Row="7"
+                       Margin="16,12,16,10" FontSize="16"
+                       HorizontalOptions="Start" FontFamily="Roboto-Regular"
+                       LineHeight="{OnPlatform Android=1.25, Default=-1}"
+                       Style="{DynamicResource TitleLabelStyle}"
+                       Text="Total Amount"/>
+                <HorizontalStackLayout Grid.Row="8">
+                    <Label FontSize="45" HorizontalOptions="Start"
+                       Margin="16,1,16,16" FontFamily="Roboto-Regular"
+                       LineHeight="{OnPlatform Android=1.25, Default=-1}"
+                       Style="{DynamicResource TitleLabelStyle}"
+                       Text="$407.00"/>
+                    <Border Grid.Column="0" Grid.Row="1" WidthRequest="136" BackgroundColor="#F7FFF2" Margin="0,10,0,0" StrokeThickness="0" HeightRequest="32" VerticalOptions="Start" StrokeShape="RoundRectangle 16">
+                        <Label Text="You Saved $47.00"
+                                       FontFamily="Roboto-Regular"
+                                       FontSize="14"
+                                       TextColor="#1C7E39"
+                                       LineBreakMode="WordWrap" VerticalOptions="Center"
+                                       HorizontalOptions="Center"/>
+                    </Border>
+                </HorizontalStackLayout>
+            </Grid>
 
-            </StackLayout>
+            <!--  Place order button  -->
+            <buttons:SfButton Margin="{OnIdiom Default=24, Tablet='24,24,16,24'}" CornerRadius="30"
+                              HorizontalOptions="{OnIdiom Default=Fill, Phone=Center, Tablet=End}" BackgroundColor="#7633DA"
+                              Text="Pay Now" HeightRequest="60" TextColor="White"/>
+
+            <Label Grid.Row="1" Padding="6,0,0,10"
+                   Text="By completing your purchase you agree to our Terms of Service and Privacy Policy."
+                   LineBreakMode="WordWrap"
+                   HorizontalTextAlignment="Center"
+                   FontSize="11" LineHeight="1.5"
+                   TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                   FontFamily="Roboto-Medium"/>
         </StackLayout>
     </Border>
 </ContentView>

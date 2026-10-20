@@ -3,232 +3,404 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Settings.HelpPage"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
-             xmlns:controls="clr-namespace:EssentialMAUIUIKit.Controls">
-  <ContentView.Content>
-    <StackLayout Spacing="0">
-      <Grid Padding="10"
-          ColumnDefinitions="Auto,Auto,*"
-            HorizontalOptions="Fill"
-            IsVisible="True"
-            VerticalOptions="Fill">
+             xmlns:cards="clr-namespace:Syncfusion.Maui.Cards;assembly=Syncfusion.Maui.Cards"
+             xmlns:controls="clr-namespace:EssentialMAUIUIKit.Controls"
+             xmlns:expander="clr-namespace:Syncfusion.Maui.Expander;assembly=Syncfusion.Maui.Expander">
+    <ContentView.Content>
+        <Grid  WidthRequest="{OnIdiom Desktop='680', Phone = '420'}" HorizontalOptions="{OnIdiom Desktop='Start', Phone='Center', Tablet='Start',Default='Center'}">
+            <ScrollView Grid.Row="2" VerticalOptions="Fill" HorizontalOptions="Fill" VerticalScrollBarVisibility="Never">
+                <VerticalStackLayout Spacing="16" Padding="20,20,20,32">
+                    <Grid RowSpacing="16" ColumnSpacing="16" ColumnDefinitions="{OnIdiom Phone='Auto', Default='*,*'}" RowDefinitions="{OnIdiom Phone='Auto,Auto,Auto,Auto', Default='*,*'}" HorizontalOptions="Start">
+                        <!-- Recent Orders card -->
+                        <cards:SfCardView CornerRadius="16"
+                                          BorderWidth="2" WidthRequest="{OnIdiom Phone=380}" VerticalOptions="Center"
+                                          Grid.Column="{OnIdiom Phone='0', Default='0'}" HorizontalOptions="Center"
+                                          Grid.Row="{OnIdiom Phone='0',Default='0'}" HeightRequest="{OnIdiom Phone=180, Desktop=248, Tablet=248}"
+                                          BorderColor="{AppThemeBinding Light=#E5E1E3, Dark=#474648}"
+                                          BackgroundColor="Transparent">
+                            <VerticalStackLayout Spacing="14"
+                                    Padding="20,20,20,24">
+                                <!-- Icon -->
+                                <Border StrokeShape="RoundRectangle 24"
+                                        StrokeThickness="0"
+                                        BackgroundColor="#EBDCFF"
+                                        WidthRequest="44"
+                                        HeightRequest="44"
+                                        HorizontalOptions="Start">
+                                    <Label Text="&#xe728;"
+                                           FontFamily="UIKitIcons"
+                                           FontSize="20"
+                                           TextColor="#7633DA"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                                </Border>
+                                <!-- Title -->
+                                <Label Text="Recent Orders"
+                                       FontFamily="Roboto-Medium"
+                                       FontSize="16"
+                                       TextColor="{AppThemeBinding Light=#1C1B1F, Dark=#FFFFFF}"/>
+                                <!-- Description -->
+                                <Label Text="Track shipping status, modify delivery addresses, or cancel an active order."
+                                       FontFamily="Roboto-Regular"
+                                       FontSize="14"
+                                       LineBreakMode="WordWrap"
+                                       TextColor="{AppThemeBinding Light=#5F5E60, Dark=#C9C6C8}" />
+                                <Grid VerticalOptions="Fill" />
+                                <!-- Divider -->
+                                <BoxView HeightRequest="1" IsVisible="{OnIdiom Phone=False, Desktop=True, Tablet=True}" BackgroundColor="{AppThemeBinding Light=#E5E1E3, Dark=#474648}" />
+                                <!-- View Articles -->
+                                <Grid ColumnDefinitions="*,Auto" IsVisible="{OnIdiom Phone=False, Desktop=True, Tablet=True}" Margin="0,6,0,0">
+                                    <Label Grid.Column="0"
+                                           Text="View Articles"
+                                           FontFamily="Roboto-Medium"
+                                           FontSize="14"
+                                           TextColor="#7633DA"
+                                           VerticalOptions="Center" />
+                                    <buttons:SfButton Grid.Column="1"
+                                                      Text="&#xe706;"
+                                                      FontFamily="MaterialAssets"
+                                                      FontSize="18"
+                                                      Style="{DynamicResource IconButtonStyle}"                    
+                                                      TextColor="{AppThemeBinding Light=#5F5E60, Dark=#C9C6C8}"
+                                                      VerticalOptions="Center" />
+                                </Grid>
+                            </VerticalStackLayout>
+                        </cards:SfCardView>
+                        <!-- Payment &amp; Billing card -->
+                        <cards:SfCardView CornerRadius="16"
+                                          BorderWidth="2"
+                                          Grid.Column="{OnIdiom Phone='0', Default='1'}"
+                                          Grid.Row="{OnIdiom Phone='1',Default='0'}" 
+                                          HeightRequest="{OnIdiom Phone=180, Desktop=248, Tablet=248}"
+                                          BorderColor="{AppThemeBinding Light=#E5E1E3, Dark=#474648}"
+                                          BackgroundColor="Transparent">
+                            <VerticalStackLayout Spacing="14"
+                                    Padding="20,20,20,24">
+                                <!-- Icon -->
+                                <Border StrokeShape="RoundRectangle 24"
+                                        StrokeThickness="0"
+                                        BackgroundColor="#EBDCFF"
+                                        WidthRequest="44"
+                                        HeightRequest="44"
+                                        HorizontalOptions="Start">
+                                    <Label Text="&#xe720;"
+                                           FontFamily="UIKitIcons"
+                                           FontSize="20"
+                                           TextColor="#7633DA"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                                </Border>
 
-        <buttons:SfButton
-          Text="{DynamicResource Back}"
-          Style="{DynamicResource IconButtonStyle}"/>
-        <Label Grid.Column="1"
-               Margin="16,0"
-               FontFamily="Roboto-Medium"
-               HorizontalOptions="Fill"
-               Text="Help centre"
-               VerticalOptions="Center"
-               VerticalTextAlignment="Center"/>
-        <buttons:SfButton Grid.Column="2"
-            HorizontalOptions="End"
-                          IsVisible="True"
-                          Text="{DynamicResource Search}"
-                          FontFamily="FontIcons"
-                          Style="{DynamicResource IconButtonStyle}">
-        </buttons:SfButton>
+                                <!-- Title -->
+                                <Label Text="Payment &amp; Billing"
+                                       FontFamily="Roboto-Medium"
+                                       FontSize="16"
+                                       TextColor="{AppThemeBinding Light=#1C1B1F, Dark=#FFFFFF}"/>
+                                <!-- Description -->
+                                <Label Text="Track shipping status, modify delivery addresses, or cancel an active order."
+                                       FontFamily="Roboto-Regular"
+                                       FontSize="14"
+                                       LineBreakMode="WordWrap"
+                                       TextColor="{AppThemeBinding Light=#5F5E60, Dark=#C9C6C8}" />
+                                <!-- Push footer to bottom -->
+                                <Grid VerticalOptions="Fill" />
+                                <!-- Divider -->
+                                <BoxView HeightRequest="1" IsVisible="{OnIdiom Phone=False, Desktop=True, Tablet=True}" BackgroundColor="{AppThemeBinding Light=#E5E1E3, Dark=#474648}" />
+                                <!-- View Articles -->
+                                <Grid ColumnDefinitions="*,Auto" IsVisible="{OnIdiom Phone=False, Desktop=True, Tablet=True}" Margin="0,6,0,0">
+                                    <Label Grid.Column="0"
+                                           Text="View Articles" 
+                                           FontFamily="Roboto-Medium"
+                                           FontSize="14"
+                                           TextColor="#7633DA"
+                                           VerticalOptions="Center" />
+                                    <buttons:SfButton Grid.Column="1"
+                                                    Text="&#xe706;"
+                                                    FontFamily="MaterialAssets"
+                                                    FontSize="18"
+                                                    Style="{DynamicResource IconButtonStyle}"                    
+                                                    TextColor="{AppThemeBinding Light=#5F5E60, Dark=#C9C6C8}"
+                                                    VerticalOptions="Center" />
+                                </Grid>
 
-      </Grid>
-      <BoxView/>
+                            </VerticalStackLayout>
+                        </cards:SfCardView>
 
-      <ScrollView>
+                        <!-- Returns &amp; Refunds card -->
+                        <cards:SfCardView CornerRadius="16"
+                                          BorderWidth="2"
+                                          Grid.Column="{OnIdiom Phone='0', Default='0'}"
+                                          Grid.Row="{OnIdiom Phone='2',Default='1'}"
+                                          HeightRequest="{OnIdiom Phone=180, Desktop=248, Tablet=248}"
+                                          BorderColor="{AppThemeBinding Light=#E5E1E3, Dark=#474648}"
+                                          BackgroundColor="Transparent">
+                            <VerticalStackLayout Spacing="14"
+                                    Padding="20,20,20,24">
+                                <!-- Icon -->
+                                <Border StrokeShape="RoundRectangle 24"
+                                        StrokeThickness="0"
+                                        BackgroundColor="#EBDCFF"
+                                        WidthRequest="44"
+                                        HeightRequest="44"
+                                        HorizontalOptions="Start">
+                                    <Label Text="&#xe71a;"
+                                           FontFamily="MaterialAssets"
+                                           FontSize="20"
+                                           TextColor="#7633DA"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                                </Border>
 
-        <StackLayout BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                     Spacing="0">
+                                <!-- Title -->
+                                <Label Text="Returns &amp; Refunds"
+                                       FontFamily="Roboto-Medium"
+                                       FontSize="16"
+                                       TextColor="{AppThemeBinding Light=#1C1B1F, Dark=#FFFFFF}"/>
 
-          <!--Header label for help with recent orders-->
-          <Label
-            Margin="16,24,0,16"
-            FontFamily="Roboto-Medium"
-            FontSize="16"
-            HorizontalOptions="Fill"
-            LineHeight="{OnPlatform Default=-1,
-                                        Android=1.25}"
-            Text="Help with recent orders"
-            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-            VerticalOptions="Center"
-            VerticalTextAlignment="Center"/>
+                                <!-- Description -->
+                                <Label Text="Track shipping status, modify delivery addresses, or cancel an active order."
+                                       FontFamily="Roboto-Regular"
+                                       FontSize="14"
+                                       LineBreakMode="WordWrap"
+                                       TextColor="{AppThemeBinding Light=#5F5E60, Dark=#C9C6C8}" />
+                                <!-- Push footer to bottom -->
+                                <Grid VerticalOptions="Fill" />
+                                <!-- Divider -->
+                                <BoxView HeightRequest="1" IsVisible="{OnIdiom Phone=False, Desktop=True, Tablet=True}" BackgroundColor="{AppThemeBinding Light=#E5E1E3, Dark=#474648}" />
+                                <!-- View Articles -->
+                                <Grid ColumnDefinitions="*,Auto" IsVisible="{OnIdiom Phone=False, Desktop=True, Tablet=True}" Margin="0,6,0,0">
+                                    <Label Grid.Column="0"
+                                           Text="View Articles"
+                                           FontFamily="Roboto-Medium"
+                                           FontSize="14"
+                                           TextColor="#7633DA"
+                                           VerticalOptions="Center" />
+                                    <buttons:SfButton Grid.Column="1"
+                                             Text="&#xe706;"
+                                             FontFamily="MaterialAssets" Style="{DynamicResource IconButtonStyle}"                    
+                                             TextColor="{AppThemeBinding Light=#5F5E60, Dark=#C9C6C8}"
+                                             FontSize="18" 
+                                             VerticalOptions="Center" />
+                                </Grid>
+                            </VerticalStackLayout>
+                        </cards:SfCardView>
 
-          <!--Previous order label and navigation bar icon-->
-          <controls:TapAnimationGrid
-            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-            ColumnDefinitions="*, Auto"
-            ColumnSpacing="0"
-            HeightRequest="48"
-            RowSpacing="0"
-            Tapped="False">
-            <!--Previous order label-->
-            <Label
-              Grid.Column="0"
-              Margin="16,12"
-              FontFamily="Roboto-Regular"
-              FontSize="16"
-              TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-              HorizontalOptions="Start"
-              Text="Issues with Previous Order"
-              VerticalOptions="Center"/>
-            <!--Navigation icon-->
-            <Label
-              Grid.Column="1"
-              Margin="16,8"
-              Text="{DynamicResource Next}"
-              FontFamily="FontIcons"/>
-          </controls:TapAnimationGrid>
-          <BoxView/>
+                        <!-- Product Care card -->
+                        <cards:SfCardView CornerRadius="16"
+                                          BorderWidth="2"
+                                          Grid.Column="{OnIdiom Phone='0', Default='1'}"
+                                          Grid.Row="{OnIdiom Phone='3',Default='1'}"
+                                          HeightRequest="{OnIdiom Phone=180, Desktop=248, Tablet=248}"
+                                          BorderColor="{AppThemeBinding Light=#E5E1E3, Dark=#474648}"
+                                          BackgroundColor="Transparent">
+                            <VerticalStackLayout Spacing="14"
+                                    Padding="20,20,20,24">
+                                <!-- Icon -->
+                                <Border StrokeShape="RoundRectangle 24"
+                                        StrokeThickness="0"
+                                        BackgroundColor="#EBDCFF"
+                                        WidthRequest="44"
+                                        HeightRequest="44"
+                                        HorizontalOptions="Start">
+                                    <Label Text="&#xe72c;"
+                                           FontFamily="MaterialAssets"
+                                           FontSize="20"
+                                           TextColor="#7633DA"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                                </Border>
 
-          <!--Return & refund label and navigation bar icon-->
-          <controls:TapAnimationGrid
-            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-            ColumnDefinitions="*, Auto"
-            ColumnSpacing="0"
-            HeightRequest="48"
-            RowSpacing="0"
-            Tapped="False">
+                                <!-- Title -->
+                                <Label Text="Product Care"
+                                       FontFamily="Roboto-Medium"
+                                       FontSize="16"
+                                       TextColor="{AppThemeBinding Light=#1C1B1F, Dark=#FFFFFF}"/>
 
-            <!--Return and Refunds label-->
-            <Label
-              Grid.Column="0"
-              Margin="16,12"
-              FontFamily="Roboto-Regular"
-              FontSize="16"
-              TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-              HorizontalOptions="Start"
-              Text="Returns and Refunds"
-              VerticalOptions="Center"/>
-            <!--Navigation icon-->
-            <Label
-              Grid.Column="1"
-              Margin="16,8"
-              Text="{DynamicResource Next}"
-              FontFamily="FontIcons"/>
-          </controls:TapAnimationGrid>
-          <BoxView/>
+                                <!-- Description -->
+                                <Label Text="Track shipping status, modify delivery addresses, or cancel an active order."
+                                       FontFamily="Roboto-Regular"
+                                       FontSize="14"
+                                       LineBreakMode="WordWrap"
+                                       TextColor="{AppThemeBinding Light=#5F5E60, Dark=#C9C6C8}" />
+                                <!-- Push footer to bottom -->
+                                <Grid VerticalOptions="Fill" />
+                                <!-- Divider -->
+                                <BoxView HeightRequest="1" IsVisible="{OnIdiom Phone=False, Desktop=True, Tablet=True}" BackgroundColor="{AppThemeBinding Light=#E5E1E3, Dark=#474648}" />
+                                <!-- View Articles -->
+                                <Grid ColumnDefinitions="*,Auto" IsVisible="{OnIdiom Phone=False, Desktop=True, Tablet=True}" Margin="0,6,0,0">
+                                    <Label Grid.Column="0"
+                                           Text="View Articles"
+                                           FontFamily="Roboto-Medium"
+                                           FontSize="14"
+                                           TextColor="#7633DA"
+                                           VerticalOptions="Center" />
+                                    <buttons:SfButton Grid.Column="1"
+                                                      Text="&#xe706;"
+                                                      FontFamily="MaterialAssets"
+                                                      FontSize="18" Style="{DynamicResource IconButtonStyle}"                    
+                                                      TextColor="{AppThemeBinding Light=#5F5E60, Dark=#C9C6C8}"
+                                                      VerticalOptions="Center" />
+                                </Grid>
+                            </VerticalStackLayout>
+                        </cards:SfCardView>
+                    </Grid>
 
-          <!--Header label for help with other queries-->
-          <Label
-            Margin="16,24,0,16"
-            FontFamily="Roboto-Medium"
-            FontSize="16"
-            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-            HorizontalOptions="Fill"
-            LineHeight="{OnPlatform Default=-1,
-                                        Android=1.25}"
-            Text="Help with other queries"
-            VerticalOptions="Center"
-            VerticalTextAlignment="Center"/>
+                    <!-- Frequently Asked Questions header -->
+                    <Label Text="Frequently Asked Questions"
+                           FontFamily="Roboto-Medium"
+                           FontSize="16"
+                           Margin="0,8,0,0"
+                           TextColor="{AppThemeBinding Light=#1C1B1F, Dark=#FFFFFF}"/>
 
-          <!--Payment related queries and navigation bar icon-->
-          <controls:TapAnimationGrid
-            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-            ColumnDefinitions="*, Auto"
-            ColumnSpacing="0"
-            HeightRequest="48"
-            RowSpacing="0"
-            Tapped="False">
-            <!--Payment related queries label-->
-            <Label
-              Grid.Column="0"
-              Margin="16,12"
-              FontFamily="Roboto-Regular"
-              FontSize="16"
-              TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-              HorizontalOptions="Start"
-              Text="Payment-Related Queries"
-              VerticalOptions="Center"/>
-            <!--Navigation icon-->
-            <Label
-              Grid.Column="1"
-              Margin="16,8"
-              Text="{DynamicResource Next}"
-              FontFamily="FontIcons"/>
-          </controls:TapAnimationGrid>
-          <BoxView/>
+                    <BoxView HeightRequest="1"
+                             BackgroundColor="{AppThemeBinding Light=#E5E1E3, Dark=#474648}"/>
 
-          <!--Offers related queries and navigation bar icon-->
-          <controls:TapAnimationGrid
-            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-            ColumnDefinitions="*, Auto"
-            ColumnSpacing="0"
-            HeightRequest="48"
-            RowSpacing="0"
-            Tapped="False">
-            <!--Offers related queries label-->
-            <Label
-              Grid.Column="0"
-              Margin="16,12"
-              FontFamily="Roboto-Regular"
-              FontSize="16"
-              TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-              HorizontalOptions="Start"
-              Text="Offer-Related Queries"
-              VerticalOptions="Center"/>
-            <!--Navigation icon-->
-            <Label
-              Grid.Column="1"
-              Margin="16,8"
-              Text="{DynamicResource Next}"
-              FontFamily="FontIcons"/>
-          </controls:TapAnimationGrid>
-          <BoxView/>
+                    <!-- FAQ item 1 -->
+                    <expander:SfExpander HeaderIconPosition="None"
+                                         Margin="0">
+                        <expander:SfExpander.Header>
+                            <Grid Padding="0,12"
+                                  ColumnDefinitions="*,Auto"
+                                  ColumnSpacing="12">
+                                <Label Grid.Column="0"
+                                       Text="How long does international shipping take?"
+                                       FontFamily="Roboto-Regular"
+                                       FontSize="15"
+                                       VerticalOptions="Center"
+                                       TextColor="{AppThemeBinding Light=#1C1B1F, Dark=#FFFFFF}"/>
+                                <Label x:Name="faqPlus1"
+                                       Grid.Column="1"
+                                       Text="&#xe70d;"
+                                       FontFamily="MaterialAssets"
+                                       FontSize="18"
+                                       VerticalOptions="Center"
+                                       TextColor="{AppThemeBinding Light=#1C1B1F, Dark=#FFFFFF}"/>
+                            </Grid>
+                        </expander:SfExpander.Header>
+                        <expander:SfExpander.Content>
+                            <Label Text="International orders typically arrive within 7–14 business days, depending on the destination country and customs processing."
+                                   FontFamily="Roboto-Regular"
+                                   FontSize="14"
+                                   LineBreakMode="WordWrap"
+                                   Padding="0,0,0,12"
+                                   TextColor="{AppThemeBinding Light=#5F5E60, Dark=#C9C6C8}"/>
+                        </expander:SfExpander.Content>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Expanded">
+                                    <VisualState.Setters>
+                                        <Setter TargetName="faqPlus1" Property="Label.Text" Value="&#xe70d;"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Collapsed">
+                                    <VisualState.Setters>
+                                        <Setter TargetName="faqPlus1" Property="Label.Text" Value="&#xe70d;"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </expander:SfExpander>
 
-          <!--Account related queries and navigation bar icon-->
-          <controls:TapAnimationGrid
-            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-            ColumnDefinitions="*, Auto"
-            ColumnSpacing="0"
-            HeightRequest="48"
-            RowSpacing="0"
-            Tapped="False">
-            <!--Account related queries label-->
-            <Label
-              Grid.Column="0"
-              Margin="16,12"
-              FontFamily="Roboto-Regular"
-              FontSize="16"
-              TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-              HorizontalOptions="Start"
-              Text="Account-Related Queries"
-              VerticalOptions="Center"/>
-            <!--Navigation icon-->
-            <Label
-              Grid.Column="1"
-              Margin="16,8"
-              Text="{DynamicResource Next}"
-              FontFamily="FontIcons"/>
-          </controls:TapAnimationGrid>
-          <BoxView/>
+                    <BoxView HeightRequest="1"
+                             BackgroundColor="{AppThemeBinding Light=#E5E1E3, Dark=#474648}"/>
 
-          <!--Other queries and navigation bar icon-->
-          <controls:TapAnimationGrid
-            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-            ColumnDefinitions="*, Auto"
-            ColumnSpacing="0"
-            HeightRequest="48"
-            RowSpacing="0"
-            Tapped="False">
-            <!--Other queries label-->
-            <Label
-              Grid.Column="0"
-              Margin="16,12"
-              FontFamily="Roboto-Regular"
-              FontSize="16"
-              TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-              HorizontalOptions="Start"
-              Text="Other Queries"
-              VerticalOptions="Center"/>
-            <!--Navigation icon-->
-            <Label
-              Grid.Column="1"
-              Margin="16,8"
-              Text="{DynamicResource Next}"
-              FontFamily="FontIcons"/>
-          </controls:TapAnimationGrid>
-          <BoxView/>
+                    <!-- FAQ item 2 -->
+                    <expander:SfExpander HeaderIconPosition="None"
+                                         Margin="0">
+                        <expander:SfExpander.Header>
+                            <Grid Padding="0,12"
+                                  ColumnDefinitions="*,Auto"
+                                  ColumnSpacing="12">
+                                <Label Grid.Column="0"
+                                       Text="What is your holiday return policy?"
+                                       FontFamily="Roboto-Regular"
+                                       FontSize="15"
+                                       VerticalOptions="Center"
+                                       TextColor="{AppThemeBinding Light=#1C1B1F, Dark=#FFFFFF}"/>
+                                <Label x:Name="faqPlus2"
+                                       Grid.Column="1"
+                                       Text="&#xe70d;"
+                                       FontFamily="MaterialAssets"
+                                       FontSize="18"
+                                       VerticalOptions="Center"
+                                       TextColor="{AppThemeBinding Light=#1C1B1F, Dark=#FFFFFF}"/>
+                            </Grid>
+                        </expander:SfExpander.Header>
+                        <expander:SfExpander.Content>
+                            <Label Text="Items purchased between November 1 and December 31 can be returned through January 31 of the following year, no questions asked."
+                                   FontFamily="Roboto-Regular"
+                                   FontSize="14"
+                                   LineBreakMode="WordWrap"
+                                   Padding="0,0,0,12"
+                                   TextColor="{AppThemeBinding Light=#5F5E60, Dark=#C9C6C8}"/>
+                        </expander:SfExpander.Content>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Expanded">
+                                    <VisualState.Setters>
+                                        <Setter TargetName="faqPlus2" Property="Label.Text" Value="&#xe70d;"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Collapsed">
+                                    <VisualState.Setters>
+                                        <Setter TargetName="faqPlus2" Property="Label.Text" Value="&#xe70d;"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </expander:SfExpander>
 
-        </StackLayout>
-      </ScrollView>
-    </StackLayout>
-  </ContentView.Content>
+                    <BoxView HeightRequest="1"
+                             BackgroundColor="{AppThemeBinding Light=#E5E1E3, Dark=#474648}"/>
+
+                    <!-- FAQ item 3 -->
+                    <expander:SfExpander HeaderIconPosition="None" HeaderBackground="Transparent"
+                                         Margin="0">
+                        <expander:SfExpander.Header>
+                            <Grid Padding="0,12"
+                                  ColumnDefinitions="*,Auto"
+                                  ColumnSpacing="12">
+                                <Label Grid.Column="0"
+                                       Text="Can I purchase a digital gift card?"
+                                       FontFamily="Roboto-Regular"
+                                       FontSize="15"
+                                       VerticalOptions="Center"
+                                       TextColor="{AppThemeBinding Light=#1C1B1F, Dark=#FFFFFF}"/>
+                                <Label x:Name="faqPlus3"
+                                       Grid.Column="1"
+                                       Text="&#xe70d;"
+                                       FontFamily="MaterialAssets"
+                                       FontSize="18"
+                                       VerticalOptions="Center"
+                                       TextColor="{AppThemeBinding Light=#1C1B1F, Dark=#FFFFFF}"/>
+                            </Grid>
+                        </expander:SfExpander.Header>
+                        <expander:SfExpander.Content>
+                            <Label Text="Yes — digital gift cards are available in any amount and are delivered to the recipient's email within a few minutes of purchase."
+                                   FontFamily="Roboto-Regular"
+                                   FontSize="14"
+                                   LineBreakMode="WordWrap"
+                                   Padding="0,0,0,12"
+                                   TextColor="{AppThemeBinding Light=#5F5E60, Dark=#C9C6C8}"/>
+                        </expander:SfExpander.Content>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Expanded">
+                                    <VisualState.Setters>
+                                        <Setter TargetName="faqPlus3" Property="Label.Text" Value="&#xe70d;"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Collapsed">
+                                    <VisualState.Setters>
+                                        <Setter TargetName="faqPlus3" Property="Label.Text" Value="&#xe70d;"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </expander:SfExpander>
+
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+    </ContentView.Content>
 </ContentView>

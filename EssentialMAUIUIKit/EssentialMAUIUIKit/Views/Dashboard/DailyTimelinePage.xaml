@@ -2,13 +2,14 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Dashboard.DailyTimelinePage"
+             xmlns:picker="clr-namespace:Syncfusion.Maui.Picker;assembly=Syncfusion.Maui.Picker"
              xmlns:local="clr-namespace:EssentialMAUIUIKit">
     <ContentView.BindingContext>
         <local:DailyTimelineViewModel/>
     </ContentView.BindingContext>
     <StackLayout >
 
-        <Border StrokeThickness="1" Stroke="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" VerticalOptions="{OnPlatform Default=FillAndExpand}"  WidthRequest="{OnPlatform WinUI=647, MacCatalyst=647}" HorizontalOptions="Center" Margin="{OnPlatform WinUI='0,32,0,32'}">
+        <Border StrokeThickness="{OnIdiom Phone=0, Desktop=1, Tablet=1}" Stroke="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" VerticalOptions="{OnPlatform iOS=Fill, Default=FillAndExpand}"  WidthRequest="{OnIdiom Desktop=647, Tablet=500, Phone=400}" HorizontalOptions="Center" Margin="{OnPlatform WinUI='0,32,0,32'}">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="8"/>
             </Border.StrokeShape>
@@ -21,32 +22,52 @@
                         <Border.Shadow>
                             <Shadow Brush="#000000" Offset="0,2" Opacity="0.15" Radius="20" />
                         </Border.Shadow>
-                        <Grid Margin="{OnPlatform Android='20,0,0,0', iOS='20,0,0,0'}">                            
-                             <!--DatePicker control--> 
-                            <DatePicker x:DataType="local:DailyTimelineViewModel" Date="{Binding SelectedDate, Mode=TwoWay}" HeightRequest="60" WidthRequest="145" FontSize="14" Format="dd MMM, yyyy" MinimumDate="2000-01-01" MaximumDate="2030-12-31" BackgroundColor="Transparent" VerticalOptions="Center" HorizontalOptions="{OnPlatform WinUI=End, MacCatalyst=End, Android=Center, iOS=Center}" FontFamily="Roboto-Medium" Margin="{OnPlatform Default='10,0,0,0', MacCatalyst='10,40,0,0'}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
-                            <!--Datepicker Icon-->
-                            <Label FontFamily="DashboardFontIcons" Text="&#xe711;" Grid.Row="0" VerticalOptions="Center" HorizontalOptions="End" Margin="{OnPlatform Android='0,0,25,0', iOS='0,0,25,0', WinUI='0,0,10,0', MacCatalyst='0,0,10,0'}" IsVisible="{OnPlatform WinUI=True}" HeightRequest="14" WidthRequest="12" Background = "{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource GrayBorderBackgroundColor}}" />
+                        <Grid x:Name="pickerGrid" Padding="16,10" ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <!--DatePicker control: kept transparent over the date label; tapping the label opens it via DatePicker_Tapped -->
+                            <picker:SfDatePicker x:Name="datePicker"
+                         RelativeView="{x:Reference pickerGrid}"
+                         Mode="RelativeDialog"
+                         RelativePosition="AlignBottom"
+                         SelectedDate="{Binding SelectedDate, Mode=TwoWay}"
+                         MinimumDate="2000/01/01"
+                         MaximumDate="2050/12/31"
+                         SelectionChanged="OnDatePickerSelectionChanged"
+                         Opacity="0" />
+                            <Label x:Name="dateLabel"
+           Text="{Binding SelectedDate, StringFormat='{0:dd MMM, yyyy}'}"
+           FontFamily="Roboto-Medium"
+           TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="DatePicker_Tapped" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <!--Datepicker Icon: tapping the icon also opens the SfDatePicker -->
+                            <Label Grid.Column="1" x:Name="datePickerIcon" FontFamily="DashboardFontIcons" Text="&#xe711;" HorizontalOptions="End" VerticalOptions="Center" IsVisible="{OnPlatform WinUI=True, MacCatalyst=True}">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="DatePicker_Tapped" />
+                                </Label.GestureRecognizers>
+                            </Label>
                         </Grid>
                     </Border>
                 </Grid>
                 <BoxView Grid.Row="1" HeightRequest="1" HorizontalOptions="Fill" Margin="16,0,16,0" Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" />
-                <Grid Grid.Row="2" VerticalOptions="Fill" HorizontalOptions="Fill" Margin="16,16,0,16">
+                <Grid Grid.Row="2" VerticalOptions="Fill" HorizontalOptions="Fill" Margin="32,32,0,16">
                     <CollectionView HorizontalOptions="Fill" x:DataType="local:DailyTimelineViewModel" ItemsSource="{Binding DailyActivities}" SelectionMode="None">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <VerticalStackLayout>
                                     <Grid ColumnDefinitions="Auto,Auto,Auto" >
-                                        <Border Stroke="Transparent" WidthRequest="42" HeightRequest="32" VerticalOptions="Start">
-                                            <Label x:DataType="local:DailyActivity" Text="{Binding Time}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"  Grid.Column="0" FontSize="14" FontFamily="{OnPlatform WinUI=Roboto-Thin,MacCatalyst=Roboto-Thin, Android=Roboto-Medium, iOS=Roboto-Medium}" VerticalOptions="Center"/>
+                                        <Border Stroke="Transparent" WidthRequest="52" HeightRequest="32" VerticalOptions="Start">
+                                            <Label x:DataType="local:DailyActivity" Text="{Binding Time}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"  Grid.Column="0" FontSize="14" FontFamily="{OnPlatform WinUI=Roboto-Thin,MacCatalyst=Roboto-Thin, Android=Roboto-Regular, iOS=Roboto-Medium}" VerticalOptions="Center"/>
                                         </Border>
                                         <Grid Grid.Column="1" RowDefinitions="Auto,Auto">
                                             <Border Grid.Row="0" VerticalOptions="Start"   WidthRequest="32" HeightRequest="32" Stroke="Transparent" BackgroundColor="#7633DA" HorizontalOptions="Center">
                                                 <Border.StrokeShape>
                                                     <RoundRectangle CornerRadius="100" />
                                                 </Border.StrokeShape>
-                                                <Label FontFamily="DashboardFontIcons" x:DataType="local:DailyActivity" Text="{Binding Icon}"  WidthRequest="16" HeightRequest="16" HorizontalOptions="Center" TextColor="{DynamicResource White}"/>                                               
+                                                <Label FontFamily="DashboardFontIcons" x:DataType="local:DailyActivity" Text="{Binding Icon}"  WidthRequest="16" HeightRequest="16" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" HorizontalOptions="Center" TextColor="{DynamicResource White}"/>
                                             </Border>
-                                            <Border Grid.Row="1" HeightRequest="52" WidthRequest="2" BackgroundColor="#7633DA" Stroke="#7633DA" Margin="0,2,0,2">
+                                            <Border Grid.Row="1" HeightRequest="52" WidthRequest="{OnIdiom Phone=3,Desktop=2,Tablet=3}" BackgroundColor="#7633DA" Stroke="#7633DA" Margin="0,2,0,2">
                                                 <Border.Triggers>
                                                     <DataTrigger TargetType="Border" x:DataType="local:DailyActivity" Binding="{Binding IsLastItem}" Value="True">
                                                         <Setter Property="IsVisible" Value="False" />
@@ -56,7 +77,7 @@
                                         </Grid>
                                         <Grid RowDefinitions="Auto,Auto" Grid.Column="2" WidthRequest="210" HeightRequest="80" Margin="10,0,0,0">
                                             <Label x:DataType="local:DailyActivity" Text="{Binding ActivityTitle}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" HeightRequest="20"  Grid.Row="0" FontFamily="Roboto-Medium" FontAttributes="{OnPlatform Android='Bold', iOS='Bold'}" FontSize="14" VerticalOptions="Start" />
-                                            <Label x:DataType="local:DailyActivity" Text="{Binding ActivityDescription}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" HeightRequest="60" Grid.Row="1" FontFamily="{OnPlatform WinUI=Roboto-Thin, MacCatalyst=Roboto-Thin, Android=Roboto-Medium, iOS=Roboto-Medium}" FontSize="14" VerticalOptions="Fill" />
+                                            <Label x:DataType="local:DailyActivity" Text="{Binding ActivityDescription}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" HeightRequest="60" Grid.Row="1" FontFamily="{OnPlatform WinUI=Roboto-Thin, MacCatalyst=Roboto-Thin, Android=Roboto-Regular, iOS=Roboto-Medium}" FontSize="14" VerticalOptions="Fill" />
                                         </Grid>
                                     </Grid>
                                 </VerticalStackLayout>

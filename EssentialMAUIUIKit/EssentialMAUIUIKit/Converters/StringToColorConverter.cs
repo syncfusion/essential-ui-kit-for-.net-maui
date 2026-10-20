@@ -31,26 +31,17 @@ namespace EssentialMAUIUIKit.Converters
                         switch ((string)value)
                         {
                             case "Dispatched":
-                                if (Application.Current?.Resources.TryGetValue("Blue", out var retBlueObj) == true && retBlueObj is Color retBlue)
-                                {
-                                    color = retBlue;
-                                }
+								color = Color.FromArgb("#0D5CDD");
 
-                                break;
+								break;
                             case "Cancelled":
-                                if (Application.Current?.Resources.TryGetValue("Red", out var retRedObj) == true && retRedObj is Color retRed)
-                                {
-                                    color = retRed;
-                                }
+								color = Color.FromArgb("#C20D32");
 
-                                break;
+								break;
                             default:
-                                if (Application.Current?.Resources.TryGetValue("Green", out var retGreenObj) == true && retGreenObj is Color retGreen)
-                                {
-                                    color = retGreen;
-                                }
+								color = Color.FromArgb("#1C7E39");
 
-                                break;
+								break;
                         }
                         break;
                     }

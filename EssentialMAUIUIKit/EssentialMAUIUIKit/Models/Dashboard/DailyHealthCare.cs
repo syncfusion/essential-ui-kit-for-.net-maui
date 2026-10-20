@@ -515,7 +515,7 @@ namespace EssentialMAUIUIKit.Models.Dashboard
             set
             {
                 this.selectedMealDetails = value;
-                OnPropertyChanged("SelectedMealDetails");
+                //OnPropertyChanged("SelectedMealDetails");
             }
         }
 

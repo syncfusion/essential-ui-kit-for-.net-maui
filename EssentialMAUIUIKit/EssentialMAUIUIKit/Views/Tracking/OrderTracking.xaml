@@ -11,285 +11,351 @@
         <local:OrderTrackingViewModel/>
     </ContentView.BindingContext>
 
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <!-- Shared shipment step settings (light/dark aware) -->
+            <progressBar:StepSettings x:Key="OrderTrackingNotStartedStep"
+                                      ShapeType="Circle"
+                                      Background="{AppThemeBinding Light=#F7EDFF, Dark=#35303C}" />
+            <progressBar:StepSettings x:Key="OrderTrackingInProgressStep"
+                                      ShapeType="Circle"
+                                      Background="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                      Stroke="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                      ProgressColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}" />
+            <progressBar:StepSettings x:Key="OrderTrackingCompletedStep"
+                                      ShapeType="Circle"
+                                      ContentType="Tick"
+                                      ContentFillColor="{DynamicResource Gray-White}"
+                                      Background="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                      Stroke="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                      ProgressColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}" />
+
+            <Style x:Key="OrderTrackingSectionTitle"
+                   TargetType="Label">
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontFamily" Value="Roboto-Medium" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
+            </Style>
+
+            <Style x:Key="OrderTrackingSubtleLabel"
+                   TargetType="Label">
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="FontFamily" Value="Roboto-Regular" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}" />
+            </Style>
+
+            <Style x:Key="OrderTrackingCardBorder"
+                   TargetType="Border">
+                <Setter Property="StrokeShape" Value="RoundRectangle 3" />
+                <Setter Property="Stroke" Value="{AppThemeBinding Light=#E5E1E3, Dark=#474648}" />
+            </Style>
+
+            <Style x:Key="OrderTrackingLinkButton"
+                   TargetType="buttons:SfButton">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="FontFamily" Value="Roboto-Medium" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=#0D5CDD, Dark=#6991FF}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
 
     <ContentView.Content>
-        <ScrollView>
-            <Grid RowDefinitions="Auto">
-                <Border WidthRequest="{OnPlatform WinUI=800, MacCatalyst=800}"
-                        StrokeShape="RoundRectangle 10"
-                        Margin="10">
-                    <ScrollView>
-                        <StackLayout>
-                            <Label Margin="10"
-                                   Text="Delivery details"
-                                   FontSize="16"
+        <ScrollView VerticalScrollBarVisibility="Never">
+            <Border WidthRequest="{OnIdiom Desktop=800, Tablet=800, Phone=390}"
+                Stroke="{OnIdiom Phone=Transparent, Default={AppThemeBinding Light=#E5E1E3, Dark=#474648}}"
+                StrokeShape="RoundRectangle 10"
+                BackgroundColor="Transparent"
+                Margin="10"
+                VerticalOptions="Fill"
+                HorizontalOptions="Fill">
+
+                <VerticalStackLayout>
+                    <!-- Section title (tablet / desktop only) -->
+                    <Label Margin="24"
+                           Text="Delivery Details"
+                           IsVisible="{OnIdiom Phone=False, Tablet=True, Desktop=True}"
+                           Style="{StaticResource OrderTrackingSectionTitle}" />
+
+                    <!-- Desktop / tablet step progress bar -->
+                    <Grid HeightRequest="120"
+                          IsVisible="{OnIdiom Phone=False, Tablet=True, Desktop=True}">
+                        <progressBar:SfStepProgressBar Margin="0,20,0,0"
+                                                       BackgroundColor="Transparent"
+                                                       ItemsSource="{Binding ShipmentInfoCollection, Mode=OneWay}"
+                                                       HorizontalOptions="Center"
+                                                       VerticalOptions="Center"
+                                                       Orientation="Horizontal"
+                                                       LabelPosition="Bottom"
+                                                       LabelSpacing="12"
+                                                       ActiveStepIndex="{Binding ActiveStepIndex, Mode=OneWay}"
+                                                       ActiveStepProgressValue="{Binding ActiveStepProgressValue, Mode=OneWay}"
+                                                       NotStartedStepSettings="{StaticResource OrderTrackingNotStartedStep}"
+                                                       InProgressStepSettings="{StaticResource OrderTrackingInProgressStep}"
+                                                       CompletedStepSettings="{StaticResource OrderTrackingCompletedStep}" />
+                    </Grid>
+
+                    <!-- Mobile: compact product card -->
+                    <Border Margin="8"
+                            MinimumHeightRequest="100"
+                            HorizontalOptions="Fill"
+                            IsVisible="{OnIdiom Phone=True, Desktop=False, Tablet=False}"
+                            Style="{StaticResource OrderTrackingCardBorder}">
+                        <Grid RowDefinitions="*"
+                              ColumnDefinitions="Auto, *"
+                              ColumnSpacing="10"
+                              Padding="0">
+                            <Image Grid.Column="0"
+                                   Source="{Binding ProductImage}"
+                                   WidthRequest="100"
+                                   HeightRequest="110"
+                                   Aspect="AspectFill"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Fill"
+                                   SemanticProperties.Description="Product image" />
+                            <VerticalStackLayout Grid.Column="1"
+                                                 Spacing="4"
+                                                 VerticalOptions="Center"
+                                                 HorizontalOptions="Start">
+                                <Label Text="{Binding ProductName}"
+                                       LineBreakMode="TailTruncation"
+                                       MaxLines="2"
+                                       FontSize="14"
+                                       TextColor="{AppThemeBinding Light=#313032, Dark=#FFFFFF}"
+                                       FontFamily="Roboto-Medium" />
+                                <Label Text="{Binding DeliveryDateText}"
+                                       LineBreakMode="TailTruncation"
+                                       FontSize="12"
+                                       TextColor="{AppThemeBinding Light=#5F5E60, Dark=#929092}"
+                                       FontFamily="Roboto-Regular" />
+                                <Label Text="{Binding OrderId, StringFormat='Order ID: {0}'}"
+                                       LineBreakMode="TailTruncation"
+                                       FontSize="12"
+                                       TextColor="{AppThemeBinding Light=#5F5E60, Dark=#929092}"
+                                       FontFamily="Roboto-Regular" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+
+                    <!-- Mobile: short "arriving on" headline -->
+                    <Label Margin="8"
+                           Text="{Binding ArrivingOnText}"
+                           IsVisible="{OnIdiom Phone=True, Desktop=False, Tablet=False}"
+                           Style="{StaticResource OrderTrackingSectionTitle}" />
+
+                    <!-- Mobile step progress bar -->
+                    <Grid HeightRequest="120"
+                          IsVisible="{OnIdiom Phone=True, Desktop=False}">
+                        <progressBar:SfStepProgressBar Margin="10,10,10,0"
+                                                       BackgroundColor="Transparent"
+                                                       ItemsSource="{Binding ShipmentInfoCollection, Mode=OneWay}"
+                                                       HorizontalOptions="Center"
+                                                       VerticalOptions="Center"
+                                                       Orientation="Horizontal"
+                                                       LabelPosition="Bottom"
+                                                       LabelSpacing="5"
+                                                       StepSize="28"
+                                                       ActiveStepIndex="{Binding ActiveStepIndex, Mode=OneWay}"
+                                                       ActiveStepProgressValue="{Binding ActiveStepProgressValue, Mode=OneWay}"
+                                                       NotStartedStepSettings="{StaticResource OrderTrackingNotStartedStep}"
+                                                       InProgressStepSettings="{StaticResource OrderTrackingInProgressStep}"
+                                                       CompletedStepSettings="{StaticResource OrderTrackingCompletedStep}" />
+                    </Grid>
+
+                    <!-- Desktop / tablet: product card -->
+                    <Border Margin="24"
+                            HeightRequest="114"
+                            IsVisible="{OnIdiom Phone=False, Tablet=True, Desktop=True}"
+                            Style="{StaticResource OrderTrackingCardBorder}">
+                        <Grid RowDefinitions="Auto, Auto, Auto"
+                              ColumnDefinitions="Auto, *">
+                            <Image Grid.Column="0"
+                                   Grid.RowSpan="3"
+                                   Source="{Binding ProductImage}"
+                                   WidthRequest="115"
+                                   HeightRequest="114"
+                                   Aspect="AspectFill"
+                                   SemanticProperties.Description="Product image" />
+                            <Label Grid.Column="1"
+                                   Grid.Row="0"
+                                   Margin="10"
+                                   Text="{Binding ProductName}"
+                                   WidthRequest="200"
+                                   HorizontalTextAlignment="Start"
+                                   HorizontalOptions="Start"
+                                   FontSize="14"
                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                   FontFamily="Roboto-Medium"/>
-                            <Border Margin="10"
-                                    HeightRequest="110"
-                                    StrokeShape="RoundRectangle 10">
-                                <Grid RowDefinitions="Auto, Auto,Auto"
-                                      ColumnDefinitions="Auto, Auto">
-                                    <Image Grid.Column="0"
-                                           Grid.RowSpan="3"
-                                           x:Name="ProductImage"
-                                           WidthRequest="115"
-                                           HeightRequest="105"
-                                           Aspect="AspectFill"/>
-                                    <Label Grid.Column="1"
-                                           Grid.Row="0"
-                                           Margin="10"
-                                           Text="Women's plain skirt in cotton"
-                                           LineBreakMode="TailTruncation"
-                                           FontSize="14"
-                                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                           FontFamily="Roboto-Medium"/>
-                                    <Label Grid.Column="1"
-                                           Grid.Row="1"
-                                           Margin="10"
-                                           Text="Delivery expected on Mar 23, 2024"
-                                           LineBreakMode="TailTruncation"
-                                           FontSize="12"
-                                           TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
-                                           FontFamily="Roboto-Regular"/>
-                                    <Label Grid.Column="1"
-                                           Grid.Row="2"
-                                           Margin="10"
-                                           Text="Order ID: 890976578"
-                                           LineBreakMode="TailTruncation"
-                                           FontSize="12"
-                                           TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
-                                           FontFamily="Roboto-Regular"/>
-                                </Grid>
-                            </Border>
+                                   FontFamily="Roboto-Medium" />
+                            <Label Grid.Column="1"
+                                   Grid.Row="1"
+                                   Margin="10,-10,0,0"
+                                   Text="{Binding DeliveryDateText}"
+                                   LineBreakMode="TailTruncation"
+                                   FontSize="12"
+                                   Style="{StaticResource OrderTrackingSubtleLabel}" />
+                            <Label Grid.Column="1"
+                                   Grid.Row="2"
+                                   Margin="10,10,0,0"
+                                   Text="{Binding OrderId, StringFormat='Order ID: {0}'}"
+                                   LineBreakMode="TailTruncation"
+                                   FontSize="12"
+                                   Style="{StaticResource OrderTrackingSubtleLabel}" />
+                        </Grid>
+                    </Border>
 
-                            <Label Margin="10"
-                                   Text="Arriving on March 23, 2024"
-                                   FontSize="16"
+                    <!-- Delivery address -->
+                    <Label Margin="{OnIdiom Phone=8, Desktop=24, Tablet=24}"
+                           Text="Delivery Address"
+                           Style="{StaticResource OrderTrackingSectionTitle}" />
+                    <Border Margin="{OnIdiom Desktop='24,0,24,0',Phone=8,Tablet='24,0,24,0'}"
+                            HorizontalOptions="Fill"
+                            MinimumHeightRequest="80"
+                            Style="{StaticResource OrderTrackingCardBorder}">
+                        <VerticalStackLayout Padding="5">
+                            <Label Margin="10,10,0,0"
+                                   Text="{Binding CustomerName}"
+                                   LineBreakMode="TailTruncation"
+                                   FontSize="14"
                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                   FontFamily="Roboto-Medium"/>
-
-                            <Grid HeightRequest="120">
-                                <progressBar:SfStepProgressBar
-                                    x:Name="stepProgress"
-                                    Margin="0,20,0,0"
-                                    BackgroundColor="Transparent"
-                                    ItemsSource="{Binding ShipmentInfoCollection}"
-                                    HorizontalOptions="Center"
-                                    Orientation="Horizontal"
-                                    LabelPosition="Bottom"
-                                    LabelSpacing="12"
-                                    ActiveStepIndex="1"
-                                    ActiveStepProgressValue="90"
-                                    VerticalOptions="Fill">
-
-                                    <!--  Style for step progress not started  -->
-                                    <progressBar:SfStepProgressBar.NotStartedStepSettings>
-                                        <progressBar:StepSettings
-                                            ContentType="Cross"
-                                            ShapeType="Circle"
-                                            Background="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"/>
-                                    </progressBar:SfStepProgressBar.NotStartedStepSettings>
-
-                                    <!--  Style for step progress inprogress  -->
-                                    <progressBar:SfStepProgressBar.InProgressStepSettings>
-                                        <progressBar:StepSettings
-                                            Background="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                            ShapeType="Circle"
-                                            Stroke="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                            ProgressColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                            ContentType="Dot"/>
-                                    </progressBar:SfStepProgressBar.InProgressStepSettings>
-
-                                    <!--  Style for step progress completed  -->
-                                    <progressBar:SfStepProgressBar.CompletedStepSettings>
-                                        <progressBar:StepSettings
-                                            ContentFillColor="{DynamicResource Gray-White}"
-                                            ContentType="Tick"
-                                            Background="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                            ShapeType="Circle"
-                                            Stroke="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                            ProgressColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"/>
-                                    </progressBar:SfStepProgressBar.CompletedStepSettings>
-                                </progressBar:SfStepProgressBar>
-                            </Grid>
-
+                                   FontFamily="Roboto-Medium" />
                             <Label Margin="10"
-                                   Text="Delivery Address"
-                                   FontSize="16"
-                                   TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                   FontFamily="Roboto-Medium"/>
-                            <Border Margin="10"
-                                    HeightRequest="70"
-                                    StrokeShape="RoundRectangle 10">
-                                <StackLayout>
-                                    <Label Margin="10,10,0,0"
-                                           Text="John Chris"
-                                           LineBreakMode="TailTruncation"
-                                           FontSize="14"
-                                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                           FontFamily="Roboto-Medium"/>
-                                    <Label Margin="10"
-                                           Text="10, Britto street, California"
-                                           LineBreakMode="TailTruncation"
-                                           FontSize="12"
-                                           TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
-                                           FontFamily="Roboto-Regular"/>
-                                </StackLayout>
-                            </Border>
+                                   WidthRequest="{OnIdiom Phone=260, Desktop=270, Tablet=270}"
+                                   HeightRequest="40"
+                                   HorizontalOptions="Start"
+                                   HorizontalTextAlignment="Start"
+                                   Text="{Binding AddressText}"
+                                   CharacterSpacing="{OnIdiom Default=0.5,Desktop=0.8,Phone=0.5,Tablet=0.8}"
+                                   LineBreakMode="CharacterWrap"
+                                   FontSize="12" LineHeight="1.3"
+                                   Style="{StaticResource OrderTrackingSubtleLabel}" />
+                        </VerticalStackLayout>
+                    </Border>
 
-                            <Border Margin="10,0,10,10"
-                                    StrokeShape="RoundRectangle 10"
-                                    HeightRequest="{OnPlatform Default=220, Android=240, iOS=240}">
-                                <!--  Price Details  -->
-                                <StackLayout
-                                    Margin="{OnIdiom Default='0,16,0,0',
-                         Desktop=0}"
-                                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                    HorizontalOptions="Fill">
-                                    <StackLayout>
-                                        <Grid
-                                            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                            ColumnDefinitions="*, Auto"
-                                            RowDefinitions="Auto, 1, Auto, Auto, Auto, Auto, 1, Auto"
-                                            RowSpacing="4"
-                                            VerticalOptions="Start">
+                    <!-- Price details -->
+                    <Border Margin="{OnIdiom Phone=8, Desktop='24,16,24,24', Tablet=24}"
+                            MinimumHeightRequest="329"
+                            Style="{StaticResource OrderTrackingCardBorder}">
+                        <Grid Margin="{OnIdiom Default='0,16,0,0', Desktop='0,20'}"
+                              BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource OffBlack}}"
+                              ColumnDefinitions="*, Auto"
+                              RowDefinitions="Auto, 1, Auto, Auto, Auto, Auto, 1, Auto"
+                              RowSpacing="4"
+                              HorizontalOptions="Fill"
+                              VerticalOptions="Start">
+                            <Label Grid.Row="0"
+                                   Grid.ColumnSpan="2"
+                                   Margin="16,5,16,12"
+                                   HorizontalOptions="Start"
+                                   LineHeight="{OnPlatform Android=1.25, Default=-1}"
+                                   Style="{DynamicResource TitleLabelStyle}"
+                                   Text="Price Details" />
+                            <BoxView Grid.Row="1"
+                                     Grid.ColumnSpan="2"
+                                     HorizontalOptions="Fill"
+                                     HeightRequest="1"
+                                     WidthRequest="{OnIdiom Desktop=720, Phone=310, Tablet=900}"
+                                     Style="{DynamicResource HorizontalSeparatorStyle}" />
 
-                                            <!--  Header  -->
-                                            <Label
-                                                Grid.Row="0"
-                                                Grid.ColumnSpan="2"
-                                                Margin="16,16,16,12"
-                                                HorizontalOptions="Start"
-                                                LineHeight="{OnPlatform Android=1.25,
-                            Default=-1}"
-                                                Style="{DynamicResource TitleLabelStyle}"
-                                                Text="Price Details"/>
-                                            <!--  Separator  -->
-                                            <BoxView
-                                                Grid.Row="1"
-                                                Grid.ColumnSpan="2"
-                                                HeightRequest="1"
-                                                Style="{DynamicResource HorizontalSeparatorStyle}"/>
-                                            <!--  Total MRP  -->
-                                            <Label
-                                                Grid.Row="2"
-                                                Margin="16,5,16,0"
-                                                HorizontalOptions="Start"
-                                                Style="{DynamicResource SimpleLabelStyle}"
-                                                Text="Total MRP"/>
-                                            <Label
-                                                Grid.Row="2"
-                                                Grid.Column="1"
-                                                Margin="16,5,16,0"
-                                                HorizontalOptions="End"
-                                                HorizontalTextAlignment="End"
-                                                Style="{DynamicResource SimpleLabelStyle}"
-                                                Text="$1230"/>
-                                            <!--  Discount Percent  -->
-                                            <Label
-                                                Grid.Row="3"
-                                                Margin="16,5,16,0"
-                                                HorizontalOptions="Start"
-                                                Style="{DynamicResource SimpleLabelStyle}"
-                                                Text="Discount"/>
-                                            <Label
-                                                Grid.Row="3"
-                                                Grid.Column="1"
-                                                Margin="16,5,16,0"
-                                                HorizontalOptions="End"
-                                                HorizontalTextAlignment="End"
-                                                Style="{DynamicResource SimpleLabelStyle}"
-                                                Text="21%"/>
-                                            <!--  Coupon Discount  -->
-                                            <Label
-                                                Grid.Row="4"
-                                                Margin="16,5,16,0"
-                                                HorizontalOptions="Start"
-                                                Style="{DynamicResource SimpleLabelStyle}"
-                                                Text="Coupon Discount"/>
-                                            <buttons:SfButton Margin="16,5,10,0"
-                                                              Text="Apply coupon"
-                                                              TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                                              FontFamily="Roboto-Regular"
-                                                              FontSize="12"
-                                                              HeightRequest="20"
-                                                              Grid.Row="4"
-                                                              Grid.Column="1"
-                                                              HorizontalOptions="End"
-                                                              Background="Transparent"
-                                                              WidthRequest="90">
-                                            </buttons:SfButton>
-                                            <!--  Delivery Charges  -->
-                                            <Label
-                                                Grid.Row="5"
-                                                Margin="16,5,16,4"
-                                                HorizontalOptions="Start"
-                                                Style="{DynamicResource SimpleLabelStyle}"
-                                                Text="Delivery Charges"/>
-                                            <Label
-                                                Grid.Row="5"
-                                                Grid.Column="1"
-                                                Margin="16,5,16,4"
-                                                HorizontalOptions="End"
-                                                HorizontalTextAlignment="End"
-                                                Style="{DynamicResource SimpleLabelStyle}"
-                                                Text="Free"
-                                                TextColor="{DynamicResource Green}"/>
-                                            <!--  Separator  -->
-                                            <BoxView
-                                                Grid.Row="6"
-                                                Grid.ColumnSpan="2"
-                                                HeightRequest="1"
-                                                Style="{DynamicResource HorizontalSeparatorStyle}"/>
-                                            <!--  Total price  -->
-                                            <Label
-                                                Grid.Row="7"
-                                                Margin="16,12,16,16"
-                                                HorizontalOptions="Start"
-                                                LineHeight="{OnPlatform Android=1.25,
-                            Default=-1}"
-                                                Style="{DynamicResource TitleLabelStyle}"
-                                                Text="Total"/>
-                                            <Label
-                                                Grid.Row="7"
-                                                Grid.Column="1"
-                                                Margin="16,12,16,16"
-                                                HorizontalOptions="End"
-                                                HorizontalTextAlignment="End"
-                                                LineHeight="{OnPlatform Android=1.25,
-                            Default=-1}"
-                                                Style="{DynamicResource TitleLabelStyle}"
-                                                Text="$960"/>
+                            <Label Grid.Row="2"
+                                   Margin="16,20,16,0"
+                                   FontSize="14"
+                                   HorizontalOptions="Start"
+                                   Style="{DynamicResource SimpleLabelStyle}"
+                                   Text="Price (3 items)" />
+                            <Label Grid.Row="2"
+                                   Grid.Column="1"
+                                   Margin="16,20,16,0"
+                                   FontSize="14"
+                                   HorizontalOptions="End"
+                                   HorizontalTextAlignment="End"
+                                   Style="{DynamicResource SimpleLabelStyle}"
+                                   Text="{Binding TotalPrice}" />
 
-                                        </Grid>
+                            <Label Grid.Row="3"
+                                   Margin="16,20,16,0"
+                                   FontSize="14"
+                                   HorizontalOptions="Start"
+                                   Style="{DynamicResource SimpleLabelStyle}"
+                                   Text="Discount" />
+                            <Label Grid.Row="3"
+                                   Grid.Column="1"
+                                   Margin="16,20,16,0"
+                                   HorizontalOptions="End"
+                                   TextColor="{AppThemeBinding Light=#1C7E39, Dark=#3CB053}"
+                                   HorizontalTextAlignment="End"
+                                   FontSize="14"
+                                   Style="{DynamicResource SimpleLabelStyle}"
+                                   Text="{Binding DiscountText}" />
 
-                                        <!--  Place order button  -->
-                                        <buttons:SfButton
-                                            Margin="{OnIdiom Default=24,
-                 Tablet='24,24,16,24'}"
-                                            HorizontalOptions="{OnIdiom Default=Fill,
-                            Phone=Center,
-                            Tablet=End}"
-                                            Style="{DynamicResource GradientButtonStyle}"
-                                            Text="PLACE ORDER"
-                                            WidthRequest="{OnIdiom Tablet=240,
-                       Phone=240,
-                       Default=-1}"/>
+                            <Label Grid.Row="4"
+                                   Margin="16,20,16,0"
+                                   FontSize="14"
+                                   HorizontalOptions="Start"
+                                   Style="{DynamicResource SimpleLabelStyle}"
+                                   Text="Delivery Charges" />
+                            <HorizontalStackLayout Grid.Row="4"
+                                                   Grid.Column="1"
+                                                   Spacing="6"
+                                                   HorizontalOptions="End"
+                                                   VerticalOptions="Center">
+                                <Label Text="{Binding DeliveryChargeText}"
+                                       Margin="0,20,0,0"
+                                       FontSize="14" />
+                                <Border BackgroundColor="{AppThemeBinding Light=#1C7E39, Dark=#3CB053}"
+                                        StrokeShape="RoundRectangle 20"
+                                        Margin="0,20,16,0"
+                                        Stroke="{AppThemeBinding Light=#1C7E39, Dark=#3CB053}"
+                                        Padding="8,2">
+                                    <Label Text="Free"
+                                           FontSize="11"
+                                           TextColor="#FFFFFF" />
+                                </Border>
+                            </HorizontalStackLayout>
 
-                                    </StackLayout>
-                                </StackLayout>
-                            </Border>
+                            <Label Grid.Row="5"
+                                   Margin="16,20,16,24"
+                                   FontSize="14"
+                                   HorizontalOptions="Start"
+                                   Style="{DynamicResource SimpleLabelStyle}"
+                                   Text="Coupon" />
+                            <buttons:SfButton Grid.Row="5"
+                                              Grid.Column="1"
+                                              Margin="16,20,10,24"
+                                              Text="Coupons Applied"
+                                              Style="{StaticResource OrderTrackingLinkButton}"
+                                              HeightRequest="25"
+                                              WidthRequest="120"
+                                              HorizontalOptions="End"
+                                              Command="{Binding ViewCouponsCommand}"
+                                              SemanticProperties.Description="View applied coupons" />
 
-                        </StackLayout>
+                            <BoxView Grid.Row="6"
+                                     Grid.ColumnSpan="2"
+                                     HorizontalOptions="Fill"
+                                     WidthRequest="{OnIdiom Desktop=720, Phone=310, Tablet=900}"
+                                     HeightRequest="1"
+                                     Style="{DynamicResource HorizontalSeparatorStyle}" />
 
+                            <Label Grid.Row="7"
+                                   Margin="16,17,16,16"
+                                   FontSize="14"
+                                   LineHeight="{OnPlatform Android=1.25, Default=-1}"
+                                   HorizontalOptions="Start"
+                                   Style="{DynamicResource TitleLabelStyle}"
+                                   Text="Total Amount" />
+                            <Label Grid.Row="7"
+                                   Grid.Column="1"
+                                   Margin="16,17,16,16"
+                                   HorizontalOptions="End"
+                                   HorizontalTextAlignment="End"
+                                   LineHeight="{OnPlatform Android=1.25, Default=-1}"
+                                   Style="{DynamicResource TitleLabelStyle}"
+                                   Text="{Binding TotalAmount}" />
+                        </Grid>
+                    </Border>
 
-                    </ScrollView>
-                </Border>
-
-            </Grid>
+                </VerticalStackLayout>
+            </Border>
         </ScrollView>
-
-
     </ContentView.Content>
 </ContentView>

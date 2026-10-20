@@ -5,7 +5,6 @@ namespace EssentialMAUIUIKit.Views.Catalog
         public ProductHomePage()
         {
             InitializeComponent();
-            this.bannerImage.Source = App.ImageServerPath + "Banner.png";
         }
     }
 }

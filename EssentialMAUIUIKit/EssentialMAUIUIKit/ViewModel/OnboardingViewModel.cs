@@ -5,7 +5,7 @@ namespace EssentialMAUIUIKit
     public class OnboardingViewModel : BindableObject
     {
         public List<OnBoardingModel> OnboardingItems { get; }
-        
+
         private int _selectedIndex;
         public int SelectedIndex
         {
@@ -35,7 +35,7 @@ namespace EssentialMAUIUIKit
     {
         public OnBoardingModel(string image, string title, string description)
         {
-            Image =image;
+            Image = image;
             Title = title;
             Description = description;
         }

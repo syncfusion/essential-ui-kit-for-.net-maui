@@ -11,12 +11,12 @@
              xmlns:model="clr-namespace:EssentialMAUIUIKit.Models.Catalog"
              x:DataType="local:TravelPlannerViewModel">
     <ContentView.BindingContext>
-        <local:TravelPlannerViewModel/>
+        <local:TravelPlannerViewModel />
     </ContentView.BindingContext>
     <ContentView.Resources>
         <ResourceDictionary>
-            <converter:BooleanToColorConverter x:Key="boolToColorConverter"/>
-            <converter:BooleanToStringConverter x:Key="boolToStringConverter"/>
+            <converter:BooleanToColorConverter x:Key="boolToColorConverter" />
+            <converter:BooleanToStringConverter x:Key="boolToStringConverter" />
         </ResourceDictionary>
         <Style TargetType="listView:ListViewItem">
             <Setter Property="VisualStateManager.VisualStateGroups">
@@ -25,13 +25,13 @@
                         <VisualState x:Name="Normal">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                                Value="Transparent" />
+                                        Value="Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                         <VisualState x:Name="PointerOver">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                                Value= "Transparent" />
+                                        Value="Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -41,299 +41,320 @@
     </ContentView.Resources>
 
     <ContentView.Content>
-        <ScrollView>
-            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto"
-                    WidthRequest="{OnPlatform WinUI=800, MacCatalyst=1000}">
+        <Grid>
+            <ScrollView>
+                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+                      MaximumWidthRequest="{OnIdiom Phone=400, Desktop=950, Tablet=950}" 
+                      HorizontalOptions="Center">
 
-                <!--  Rotator for travel places  -->
-                <rotator:SfRotator Grid.Row="0"
-                                   x:Name="sfRotator"
-                                   Margin="8,0"
-                                   BackgroundColor="Transparent"
-                                   DotPlacement="None"
-                                   HeightRequest="{OnPlatform WinUI=525, MacCatalyst=525, Default=320}"
-                                   DotsStroke="Transparent"
-                                   ItemsSource="{Binding TravelPlacesList}"
-                                   NavigationStripMode="Dots"
-                                   NavigationStripPosition="Bottom"
-                                   SelectedDotColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                   UnselectedDotColor="{DynamicResource Gray-200}">
-                    <rotator:SfRotator.SelectedIndex>
-                        <Binding x:DataType="rotator:SfRotator" Path="SelectedIndex" Mode="TwoWay"/>
-                    </rotator:SfRotator.SelectedIndex>
-                    <rotator:SfRotator.ItemTemplate>
-                        <DataTemplate x:DataType="model:Travel">
-                            <Border WidthRequest="650"
-                                    Stroke="Transparent"
-                                    StrokeThickness="0"
-                                    StrokeShape="RoundRectangle 10">
-                                <Grid
-                                    x:Name="grid"
-                                    RowDefinitions="Auto, Auto, Auto"
-                                    RowSpacing="0">
+                    <!--  Rotator for travel places  -->
+                    <rotator:SfRotator Grid.Row="0"
+                                       x:Name="sfRotator"
+                                       BackgroundColor="Transparent"
+                                       DotPlacement="OutSide"
+                                       Margin="{OnPlatform Default='10,10,10,0', MacCatalyst='100,0,100,0'}"
+                                       HeightRequest="{OnIdiom Phone=315, Desktop=330, Tablet=335}"
+                                       DotsStroke="Transparent"
+                                       HorizontalOptions="Center"
+                                       ItemsSource="{Binding TravelPlacesList}"
+                                       NavigationStripMode="Dots"
+                                       NavigationStripPosition="Bottom"
+                                       SelectedDotColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                       UnselectedDotColor="{DynamicResource Gray-200}">
+                        <rotator:SfRotator.ItemTemplate>
+                            <DataTemplate x:DataType="model:Travel">
+                                <Border WidthRequest="{OnIdiom Phone=393, Desktop=650, Tablet=450}"
+                                        Stroke="{AppThemeBinding Light={DynamicResource Gray200}, Dark=Transparent}"
+                                        StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 10">
+                                    <Grid x:Name="grid"
+                                          RowDefinitions="Auto, Auto, Auto"
+                                          RowSpacing="0">
 
-                                    <!--  Image of the place  -->
-                                    <Image
-                                        Aspect="AspectFill"
-                                        BackgroundColor="{DynamicResource Gray-White}"
-                                        HeightRequest="{OnPlatform WinUI=395, MacCatalyst=395, Default=240}">
-                                        <Image.Source>
-                                            <UriImageSource
-                                                CacheValidity="14"
-                                                CachingEnabled="true"
-                                                Uri="{Binding ImagePath}"/>
-                                        </Image.Source>
-                                    </Image>
+                                        <!--  Image of the place  -->
+                                        <Image Aspect="AspectFill"
+                                               BackgroundColor="{DynamicResource Gray-White}"
+                                               HeightRequest="{OnIdiom Phone=200, Desktop=216, Tablet=210}">
+                                            <Image.Source>
+                                                <UriImageSource CacheValidity="14"
+                                                                CachingEnabled="true"
+                                                                Uri="{Binding ImagePath}" />
+                                            </Image.Source>
+                                        </Image>
 
-                                    <!--  Travel place  -->
-                                    <Label
-                                        Grid.Row="1"
-                                        Margin="16,16,16,4"
-                                        HorizontalOptions="Start"
-                                        Style="{DynamicResource TitleLabelStyle}"
-                                        Text="{Binding Place}"/>
+                                        <!--  Travel place  -->
+                                        <Label Grid.Row="1"
+                                               Margin="16,8,16,4"
+                                               HorizontalOptions="Start"
+                                               Style="{DynamicResource TitleLabelStyle}"
+                                               Text="{Binding Place}" />
 
-                                    <!--  Details of travel place  -->
-                                    <Label WidthRequest="{OnPlatform Android=300, iOS=300}"
-                                           Grid.Row="2"
-                                           Margin="16,0,16,16"
-                                            MaxLines="2"
-                                            LineBreakMode="TailTruncation"
-                                            HorizontalOptions="Start"
-                                           FontSize="12"
-                                            HorizontalTextAlignment="Start"
-                                           Text="{Binding Details}"/>
+                                        <!--  Details of travel place  -->
+                                        <Label WidthRequest="{OnIdiom Phone=300, Desktop=600, Tablet=600}"
+                                               Grid.Row="2"
+                                               Margin="16,0,16,16"
+                                               MaxLines="2"
+                                               HorizontalOptions="Start"
+                                               LineBreakMode="TailTruncation"
+                                               FontSize="12"
+                                               HorizontalTextAlignment="Start"
+                                               Text="{Binding Details}" />
 
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </rotator:SfRotator.ItemTemplate>
-                </rotator:SfRotator>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </rotator:SfRotator.ItemTemplate>
+                    </rotator:SfRotator>
 
-                <Grid Grid.Row="1"
-                      Margin="16,23,8,10"
-                      ColumnSpacing="0"
-                      RowSpacing="0">
-                    <Label
-                        FontSize="22"
-                        HorizontalOptions="Start"
-                        Style="{DynamicResource TitleLabelStyle}"
-                        Text="Top Destinations"
-                        VerticalOptions="Center"/>
-                    <buttons:SfButton FontSize="12"
-                                      HorizontalOptions="End"
-                                      Style="{DynamicResource TransparentButtonStyle}"
-                                      Text="VIEW ALL"
-                                      FontFamily="Roboto-Regular"/>
-                </Grid>
+                    <Grid Grid.Row="1"
+                          Margin="{OnIdiom Phone='10,20,10,0', Desktop='20,20,10,0', Tablet='20,20,10,0'}">
+                        <Label FontSize="22"
+                               HorizontalOptions="Start"
+                               FontFamily="Roboto-Medium"
+                               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                               Text="Top Destinations"
+                               VerticalOptions="Center" />
+                    </Grid>
 
-                <listView:SfListView Grid.Row="2"
-                                     Margin="8,0,0,0"
-                                     Padding="0"
-                                     AutoFitMode="Height"
-                                     HeightRequest="318"
-                                     HorizontalOptions="Center"
-                                     ScrollBarVisibility="Never"
-                                     IsStickyHeader="True"
-                                     ItemsSource="{Binding TopDestinationsList}"
-                                     Orientation="Horizontal"
-                                     SelectionBackground="Transparent">
+                    <listView:SfListView Grid.Row="2"
+                                         Margin="0"
+                                         Padding="0"
+                                         AutoFitMode="Height"
+                                         Orientation="Horizontal"
+                                         IsScrollingEnabled="{OnPlatform WinUI=False, Default=True}"
+                                         HeightRequest="260"
+                                         ItemSpacing="{OnPlatform MacCatalyst=3, Default=0}"
+                                         HorizontalOptions="Center"
+                                         IsStickyHeader="True"
+                                         ItemsSource="{Binding TopDestinationsList}"
+                                         SelectionBackground="Transparent">
 
-                    <listView:SfListView.ItemTemplate>
-                        <DataTemplate x:DataType="model:Travel">
-                            <Border
-                                Margin="8,0,8,35"
-                                Padding="0"
-                                BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                Stroke="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                StrokeThickness="1"
-                                StrokeShape="RoundRectangle 4"
-                                HeightRequest="276"
-                                WidthRequest="230">
+                        <listView:SfListView.ItemTemplate>
+                            <DataTemplate x:DataType="model:Travel">
 
-                                <syncEffectsView:SfEffectsView
-                                    RippleBackground="{DynamicResource Gray-300}"
-                                    TouchDownEffects="Ripple">
-                                    <Border
-                                        Stroke="Transparent"
-                                        StrokeThickness="0"
-                                        StrokeShape="RoundRectangle 4,4,4,4">
-                                        <Grid RowDefinitions="Auto, Auto, Auto, Auto"
-                                              RowSpacing="0">
+                                <Border Padding="10"
+                                        Margin="{OnIdiom Phone='8,0,8,0', Desktop='10,0,10,0', Tablet='5,0,15,0'}"
+                                        BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                                        StrokeShape="RoundRectangle 12"
+                                        StrokeThickness="0.3"
+                                        HeightRequest="248"
+                                        WidthRequest="213">
 
-                                            <!--  Place image  -->
-                                            <Image
-                                                Margin="0,0,0,16"
-                                                Aspect="AspectFill"
-                                                HeightRequest="150"
-                                                HorizontalOptions="Fill"
-                                                Source="{Binding ImagePath}"
-                                                VerticalOptions="Start"/>
+                                    <!-- Shadow -->
+                                    <Border.Shadow>
+                                        <Shadow Brush="#80000000"
+                                                Offset="0,3"
+                                                Radius="3"
+                                                Opacity="0.4" />
+                                    </Border.Shadow>
 
-                                            <!--  OverLay Effect  -->
-                                            <Border
-                                                Margin="0,0,0,16"
-                                                BackgroundColor="{DynamicResource Gray-Black}"
-                                                Opacity="0.15"/>
+                                    <syncEffectsView:SfEffectsView RippleBackground="{DynamicResource Gray-300}"
+                                                                   TouchDownEffects="Ripple">
 
-                                            <!--  Favourite Icon  -->
-                                            <buttons:SfButton
-                                                Margin="0,2,2,0"
-                                                HeightRequest="-1"
-                                                HorizontalOptions="End"
-                                                Style="{DynamicResource IconButtonStyle}"
-                                                Text="{Binding IsFavourite, Converter={StaticResource boolToStringConverter}, ConverterParameter=1}"
-                                                TextColor="{Binding IsFavourite, Converter={x:StaticResource boolToColorConverter}, ConverterParameter=2}"
-                                                Clicked="FavouriteButton_Clicked"
-                                                VerticalOptions="Start"
-                                                WidthRequest="-1"/>
+                                        <Grid HorizontalOptions="Start"
+                                              RowDefinitions="Auto,Auto,Auto,Auto">
 
-                                            <!--  Place name  -->
-                                            <Label
-                                                Grid.Row="1"
-                                                Margin="16,0,16,4"
-                                                HorizontalOptions="Start"
-                                                Style="{DynamicResource TitleLabelStyle}"
-                                                Text="{Binding Place}"/>
+                                            <!-- Image Container -->
+                                            <Grid>
+                                                <Image Margin="0,0,0,5"
+                                                       Aspect="AspectFill"
+                                                       HeightRequest="124"
+                                                       HorizontalOptions="Fill"
+                                                       Source="{Binding ImagePath}"
+                                                       VerticalOptions="Start" />
+                                            </Grid>
 
-                                            <!--  Place Details  -->
-                                            <Label
-                                                Grid.Row="2"
-                                                Margin="16,0,16,8"
-                                                FontSize="12"
-                                                HorizontalOptions="Start"
-                                                HorizontalTextAlignment="Start"
-                                                LineBreakMode="TailTruncation"
-                                                MaxLines="2"
-                                                Style="{DynamicResource DescriptionLabelStyle}"
-                                                Text="{Binding Details}"/>
+                                            <Grid Grid.Row="1"
+                                                  Margin="0,8,0,2">
+                                                <!-- Title -->
+                                                <Label Text="{Binding Place}"
+                                                       FontSize="14"
+                                                       FontFamily="Roboto-Medium"
+                                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
+                                                <Border BackgroundColor="#7C3AED"
+                                                        Padding="6,1,6,1"
+                                                        HorizontalOptions="End"
+                                                        VerticalOptions="Start"
+                                                        StrokeShape="RoundRectangle 12">
 
-                                            <!--  Price Details  -->
-                                            <Label
-                                                Grid.Row="3"
-                                                Margin="16,0,0,5"
-                                                HorizontalOptions="Start"
-                                                Style="{DynamicResource TitleLabelStyle}"
-                                                Text="{Binding Price}"
-                                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"/>
+                                                    <Label Text="★ 3.0"
+                                                           FontFamily="Roboto-Medium"
+                                                           TextColor="#FFFFFF"
+                                                           FontSize="11" />
+                                                </Border>
+                                            </Grid>
 
-                                            <!--  Right arrow icon  -->
-                                            <buttons:SfButton
-                                                Grid.Row="3"
-                                                Margin="0,0,5,5"
-                                                CornerRadius="4"
-                                                FontSize="20"
-                                                HeightRequest="-1"
-                                                HorizontalOptions="End"
-                                                Style="{DynamicResource IconButtonStyle}"
-                                                Text="{DynamicResource ArrowRight}"
-                                                WidthRequest="-1"/>
+                                            <!-- Description -->
+                                            <Label Grid.Row="2"
+                                                   Margin="0,5,0,0"
+                                                   Text="{Binding Details}"
+                                                   FontSize="12"
+                                                   FontFamily="Roboto-Regular"
+                                                   LineBreakMode="TailTruncation"
+                                                   MaxLines="2"
+                                                   TextColor="{AppThemeBinding Light={DynamicResource ContentTextColorLight}, Dark={DynamicResource ContentTextColorDark}}" />
 
+                                            <!-- Bottom row -->
+                                            <Grid Grid.Row="3"
+                                                  ColumnDefinitions="*,Auto"
+                                                  Margin="0,12,0,0">
+
+                                                <Label Text="{Binding Price}"
+                                                       FontSize="16"
+                                                       FontFamily="Roboto-Medium"
+                                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                                       VerticalOptions="Center" />
+
+                                                <Label Grid.Column="1"
+                                                       FontFamily="FontIcons"
+                                                       Text="{DynamicResource ArrowRight}"
+                                                       Style="{DynamicResource IconLabelStyle}"
+                                                       FontSize="16"
+                                                       FontAttributes="Bold"
+                                                       VerticalOptions="Center"
+                                                       TextColor="{AppThemeBinding Light={DynamicResource ContentTextColorLight}, Dark={DynamicResource ContentTextColorDark}}" />
+                                            </Grid>
                                         </Grid>
-                                    </Border>
+                                    </syncEffectsView:SfEffectsView>
+                                </Border>
+                            </DataTemplate>
+                        </listView:SfListView.ItemTemplate>
+                    </listView:SfListView>
+                    
+                    <Grid Grid.Row="3"
+                          Margin="10,10,8,10"
+                          RowDefinitions="Auto,*"
+                          ColumnSpacing="0"
+                          RowSpacing="0">
+                        <buttons:SfButton Background="Transparent"
+                                          CornerRadius="4"
+                                          Margin="{OnIdiom Desktop='0,8,0,12',Phone='0,10,0,12', Tablet='0,15,0,17'}"
+                                          HeightRequest="32"
+                                          WidthRequest="90"
+                                          TextColor="{DynamicResource Gray-700}">
+                            <buttons:SfButton.Content>
+                                <DataTemplate>
+                                    <StackLayout Padding="8,0,8,0"
+                                                 Orientation="Horizontal"
+                                                 Spacing="8"
+                                                 VerticalOptions="Center">
+                                        <Label FontFamily="Roboto-Medium"
+                                               FontSize="14"
+                                               Text="View All"
+                                               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                               VerticalOptions="Center"
+                                               VerticalTextAlignment="Center" />
+                                        <Label FontFamily="FontIcons"
+                                               Rotation="90"
+                                               FontSize="14"
+                                               FontAttributes="Bold"
+                                               Text="{DynamicResource Next}"
+                                               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                               VerticalOptions="Center"
+                                               VerticalTextAlignment="Center" />
+                                    </StackLayout>
+                                </DataTemplate>
+                            </buttons:SfButton.Content>
+                        </buttons:SfButton>
+                        <Label FontSize="22"
+                               Grid.Row="1"
+                               Margin="{OnPlatform Android='0,20,0,0', iOS='4,20,0,0', Default='18,20,0,0'}"
+                               HorizontalOptions="Start"
+                               FontFamily="Roboto-Medium"
+                               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                               Text="Best Places"
+                               VerticalOptions="Center" />
+                    </Grid>
 
-                                </syncEffectsView:SfEffectsView>
+                    <listView:SfListView Grid.Row="4"
+                                         Padding="0"
+                                         AutoFitMode="Height"
+                                         ItemSpacing="{OnPlatform MacCatalyst=2, Default=0}"
+                                         Orientation="Horizontal"
+                                         HorizontalOptions="Center"
+                                         HeightRequest="270"
+                                         IsStickyHeader="True"
+                                         ItemsSource="{Binding BestPlacesList}"
+                                         SelectionBackground="Transparent">
+                        <listView:SfListView.ItemTemplate>
+                            <DataTemplate x:DataType="model:Travel">
+                                <Border Margin="{OnIdiom Phone='8,0,8,24', Desktop='8,0,8,0', Tablet='2,0,14,0'}"
+                                        Padding="0"
+                                        BackgroundColor="Transparent"
+                                        Stroke="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                        StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 8"
+                                        HeightRequest="250"
+                                        WidthRequest="212">
+                                    <syncEffectsView:SfEffectsView RippleBackground="{DynamicResource Gray-300}"
+                                                                   TouchDownEffects="Ripple">
+                                        <Border HorizontalOptions="Start"
+                                                Stroke="Transparent"
+                                                StrokeThickness="0"
+                                                StrokeShape="RoundRectangle 4,4,4,4">
+                                            <Grid ColumnSpacing="0"
+                                                  RowSpacing="0">
 
-                            </Border>
-                        </DataTemplate>
-                    </listView:SfListView.ItemTemplate>
-                </listView:SfListView>
+                                                <!--  Place image  -->
+                                                <Image Aspect="AspectFill"
+                                                       Source="{Binding ImagePath}"
+                                                       VerticalOptions="Fill" />
 
-                <Grid Grid.Row="3"
-                      Margin="16,0,8,10"
-                      ColumnSpacing="0"
-                      RowSpacing="0">
-                    <Label
-                        FontSize="22"
-                        HorizontalOptions="Start"
-                        Style="{DynamicResource TitleLabelStyle}"
-                        Text="Best Places"
-                        VerticalOptions="Center"/>
-                    <buttons:SfButton
-                        FontSize="12"
-                        HorizontalOptions="End"
-                        Style="{DynamicResource TransparentButtonStyle}"
-                        Text="VIEW ALL"
-                        FontFamily="Roboto-Regular"/>
+                                                <!--  OverLay Effect  -->
+                                                <Border BackgroundColor="{DynamicResource Gray-Black}"
+                                                        Opacity="0.15" />
+
+                                                <!--  Place name  -->
+                                                <Label Margin="15,0,0,12"
+                                                       HorizontalOptions="Start"
+                                                       FontSize="14"
+                                                       FontFamily="Roboto-Medium"
+                                                       Text="{Binding Place}"
+                                                       TextColor="{DynamicResource Gray-White}"
+                                                       VerticalOptions="End" />
+
+                                                <!--  Favourite Icon  -->
+                                                <buttons:SfButton Margin="0,2,10,0"
+                                                                  HeightRequest="30"
+                                                                  HorizontalOptions="End"
+                                                                  Style="{DynamicResource IconButtonStyle}"
+                                                                  Text="{Binding IsFavourite, Converter={StaticResource boolToStringConverter}, ConverterParameter=1}"
+                                                                  TextColor="{Binding IsFavourite, Converter={StaticResource boolToColorConverter}, ConverterParameter=2}"
+                                                                  Clicked="FavouriteButton_Clicked"
+                                                                  VerticalOptions="Start"
+                                                                  WidthRequest="30" />
+
+                                            </Grid>
+                                        </Border>
+                                    </syncEffectsView:SfEffectsView>
+                                </Border>
+                            </DataTemplate>
+                        </listView:SfListView.ItemTemplate>
+                    </listView:SfListView>
                 </Grid>
-
-                <listView:SfListView Grid.Row="4"
-                                     Margin="8,0,0,0"
-                                     Padding="0"
-                                     AutoFitMode="Height"
-                                     HeightRequest="292"
-                                     HorizontalOptions="Center"
-                                     ScrollBarVisibility="Never"
-                                     IsStickyHeader="True"
-                                     ItemsSource="{Binding BestPlacesList}"
-                                     Orientation="Horizontal"
-                                     SelectionBackground="Transparent">
-                    <listView:SfListView.ItemTemplate>
-                        <DataTemplate x:DataType="model:Travel">
-                            <Border
-                                Margin="8,0,8,24"
-                                Padding="0"
-                                BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                Stroke="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                StrokeThickness="1"
-                                StrokeShape="RoundRectangle 4"
-                                HeightRequest="250"
-                                WidthRequest="230">
-                                <syncEffectsView:SfEffectsView
-                                    RippleBackground="{DynamicResource Gray-300}"
-                                    TouchDownEffects="Ripple">
-                                    <Border
-                                        Stroke="Transparent"
-                                        StrokeThickness="0"
-                                        StrokeShape="RoundRectangle 4,4,4,4">
-                                        <Grid
-                                            ColumnSpacing="0"
-                                            HeightRequest="250"
-                                            RowSpacing="0"
-                                            WidthRequest="230">
-
-                                            <!--  Place image  -->
-                                            <Image
-                                                Aspect="AspectFill"
-                                                WidthRequest="230"
-                                                HorizontalOptions="Fill"
-                                                Source="{Binding ImagePath}"
-                                                VerticalOptions="Fill"/>
-
-                                            <!--  OverLay Effect  -->
-                                            <Border BackgroundColor="{DynamicResource Gray-Black}"
-                                                    Opacity="0.15"/>
-
-                                            <!--  Place name  -->
-                                            <Label
-                                                Margin="8,0,0,12"
-                                                HorizontalOptions="Start"
-                                                Style="{DynamicResource TitleLabelStyle}"
-                                                Text="{Binding Place}"
-                                                TextColor="{DynamicResource Gray-White}"
-                                                VerticalOptions="End"/>
-
-                                            <!--  Favourite Icon  -->
-                                            <buttons:SfButton
-                                                Margin="0,2,2,0"
-                                                HeightRequest="-1"
-                                                HorizontalOptions="End"
-                                                Style="{DynamicResource IconButtonStyle}"
-                                                Text="{Binding IsFavourite, Converter={StaticResource boolToStringConverter}, ConverterParameter=1}"
-                                                TextColor="{Binding IsFavourite, Converter={x:StaticResource boolToColorConverter}, ConverterParameter=2}"
-                                                Clicked="FavouriteButton_Clicked"
-                                                VerticalOptions="Start"
-                                                WidthRequest="-1"/>
-
-                                        </Grid>
-                                    </Border>
-                                </syncEffectsView:SfEffectsView>
-                            </Border>
-                        </DataTemplate>
-                    </listView:SfListView.ItemTemplate>
-                </listView:SfListView>
-
-            </Grid>
-        </ScrollView>
+            </ScrollView>
+            <!-- Floating chat button (overlay) -->
+            <buttons:SfButton CornerRadius="28"
+                              Grid.Row="4"
+                              Grid.Column="2"
+                              Margin="0,0,30,30"
+                              WidthRequest="48"
+                              HeightRequest="48"
+                              Background="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                              TextColor="White"
+                              HorizontalOptions="End"
+                              VerticalOptions="End">
+                <buttons:SfButton.Content>
+                    <DataTemplate>
+                        <Label FontFamily="UIKitIcons"
+                               FontSize="22"
+                               TextColor="#FFFFFF"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               Text="&#xe71b;" />
+                    </DataTemplate>
+                </buttons:SfButton.Content>
+            </buttons:SfButton>
+        </Grid>
     </ContentView.Content>
 </ContentView>

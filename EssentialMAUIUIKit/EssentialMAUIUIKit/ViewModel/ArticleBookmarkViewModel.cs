@@ -1,6 +1,6 @@
-﻿using EssentialMAUIUIKit.Models;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Text.Json;
+using EssentialMAUIUIKit.Models;
 
 namespace EssentialMAUIUIKit
 {
@@ -25,7 +25,7 @@ namespace EssentialMAUIUIKit
                     ""author"": ""John Doe"",
                     ""date"": ""Apr 16"",
                     ""averageReadingTime"": ""5 mins read"",
-                    ""isBookmarked"": true
+                    ""isBookmarked"": false
                 },
                 {
                     ""itemImage"": ""ArticleImage3.png"",
@@ -33,7 +33,7 @@ namespace EssentialMAUIUIKit
                     ""author"": ""John Doe"",
                     ""date"": ""Apr 18"",
                     ""averageReadingTime"": ""5 mins read"",
-                    ""isBookmarked"": true
+                    ""isBookmarked"": false
                 },
                 {
                     ""itemImage"": ""ArticleImage4.png"",
@@ -41,7 +41,7 @@ namespace EssentialMAUIUIKit
                     ""author"": ""John Doe"",
                     ""date"": ""May 10"",
                     ""averageReadingTime"": ""5 mins read"",
-                    ""isBookmarked"": true
+                    ""isBookmarked"": false
                 },
                 {
                     ""itemImage"": ""ArticleImage5.png"",
@@ -49,7 +49,7 @@ namespace EssentialMAUIUIKit
                     ""author"": ""John Doe"",
                     ""date"": ""Apr 16"",
                     ""averageReadingTime"": ""5 mins read"",
-                    ""isBookmarked"": true
+                    ""isBookmarked"": false
                 },
                 {
                     ""itemImage"": ""ArticleImage6.png"",
@@ -57,7 +57,7 @@ namespace EssentialMAUIUIKit
                     ""author"": ""John Doe"",
                     ""date"": ""Apr 10"",
                     ""averageReadingTime"": ""5 mins read"",
-                    ""isBookmarked"": true
+                    ""isBookmarked"": false
                 },
                 {
                     ""itemImage"": ""ArticleImage7.jpg"",
@@ -65,7 +65,7 @@ namespace EssentialMAUIUIKit
                     ""author"": ""John Doe"",
                     ""date"": ""Apr 16"",
                     ""averageReadingTime"": ""5 mins read"",
-                    ""isBookmarked"": true
+                    ""isBookmarked"": false
                 },
                 {
                     ""itemImage"": ""ArticleImage8.jpg"",
@@ -73,24 +73,27 @@ namespace EssentialMAUIUIKit
                     ""author"": ""John Doe"",
                     ""date"": ""May 05"",
                     ""averageReadingTime"": ""5 mins read"",
-                    ""isBookmarked"": true
+                    ""isBookmarked"": false
                 }
             ]
         }";
 
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             var data = JsonSerializer.Deserialize<Dictionary<string, ObservableCollection<Story>>>(jsonData, options);
-            if (data == null)
+            if (data == null || !data.TryGetValue("latestStories", out var stories) || stories == null)
             {
                 return;
             }
 
-            var stories = data["latestStories"];
             var images = new List<string> { "ArticleImage2.png", "ArticleImage3.png", "ArticleImage4.png", "ArticleImage5.png", "ArticleImage6.png", "ArticleImage7.jpg", "ArticleImage8.jpg" };
             for (int i = 0; i < stories.Count; i++)
             {
                 var story = stories[i];
-                story.ImagePath = images[i];
+                if (i < images.Count)
+                {
+                    story.ImagePath = images[i];
+                }
+
                 LatestStories.Add(story);
             }
         }

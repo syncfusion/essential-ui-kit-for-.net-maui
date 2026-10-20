@@ -61,7 +61,7 @@ namespace EssentialMAUIUIKit
 
             if (e.Index == itemCount - 1)
             {
-                this.nextButton.Text = "Done";
+                this.nextButton.Text = "Get Started";
                 this.skipButton.IsVisible = false;
             }
             else
@@ -73,7 +73,7 @@ namespace EssentialMAUIUIKit
 
         private void NextButton_Clicked(object? sender, EventArgs e)
         {
-            if (this.rotator == null || this.skipButton == null || this.nextButton == null || this.nextButton.Text == "Done")
+            if (this.rotator == null || this.skipButton == null || this.nextButton == null || this.nextButton.Text == "Get Started")
                 return;
 
             this.rotator.SelectedIndex++;
@@ -87,8 +87,8 @@ namespace EssentialMAUIUIKit
             }
             else
             {
-                // If it's the last item, change to 'Done'
-                this.nextButton.Text = "Done";
+                // If it's the last item, change to 'Get Started'
+                this.nextButton.Text = "Get Started";
                 this.skipButton.IsVisible = false;
                 // You can navigate away or complete the onboarding here
             }

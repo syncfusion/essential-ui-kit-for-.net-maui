@@ -15,120 +15,106 @@
     <StackLayout Spacing="0">
 
         <!--  Header  -->
-        <Grid
-            Padding="0,0,0,0"
-            ColumnDefinitions="*, *"
-            RowDefinitions="Auto, 1, *">
+        <Grid Padding="0,0,0,0" ColumnDefinitions="*, *" RowDefinitions="*, Auto, Auto, Auto">
 
-            <Label Padding="10,0,0,0"
+            <Label Padding="10,0,0,30"
                    Grid.Column="0"
-                   HorizontalOptions="Start"
-                   LineHeight="{OnPlatform Android=1.25,
-                                    Default=-1}"
+                   HorizontalOptions="Start" FontFamily="Roboto-Regular"
+                   LineHeight="{OnPlatform Android=1.25, Default=-1}"
                    Style="{DynamicResource TitleLabelStyle}"
-                   Text="Deliver To"
-                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+                   Text="Shipping Details" FontSize="28"
+                   TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
 
+            <Border Grid.Row="1" Grid.Column="0" Margin="10,0,8,0" HeightRequest="172" WidthRequest="324" BackgroundColor="#F7EDFF" Stroke="#7633DA" StrokeShape="RoundRectangle 10">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnAddressTapped" />
+                </Border.GestureRecognizers>
+                <Grid RowDefinitions="Auto,Auto" RowSpacing="0">
+                    <Grid Grid.Row="0" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="8" Padding="32">
+                        <HorizontalStackLayout Grid.Row="0" Spacing="8">
+                            <Label Text="Jessica Reed"
+                                   FontFamily="Roboto-Medium"
+                                   FontSize="16"
+                                   TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorLight}}"
+                                   LineBreakMode="WordWrap"
+                                   HorizontalOptions="Start"/>
+                            <Border Grid.Column="0" Grid.Row="1" WidthRequest="56" BackgroundColor="#7633DA" StrokeThickness="1" HeightRequest="20" StrokeShape="RoundRectangle 10">
+                                <Label Text="Default"
+                                       FontFamily="Roboto-Medium"
+                                       FontSize="10"
+                                       TextColor="White"
+                                       LineBreakMode="WordWrap" VerticalOptions="Center"
+                                       HorizontalOptions="Center"/>
+                            </Border>
+                        </HorizontalStackLayout>
+                        <Label Grid.Row="1"
+                               Text="110 Echo Valley Road, Los Altos"
+                               FontFamily="Roboto-Regular"
+                               FontSize="14"
+                               TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorLight}}"
+                               HorizontalOptions="Start"/>
+                        <Label Grid.Row="2"
+                               Text="California, United States"
+                               FontFamily="Roboto-Regular"
+                               FontSize="14"
+                               TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorLight}}"
+                               HorizontalOptions="Start"/>
+                        <Label Grid.Row="3"
+                               Text="States"
+                               FontFamily="Roboto-Regular"
+                               FontSize="14"
+                               TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorLight}}"
+                               HorizontalOptions="Start"/>
+                    </Grid>
+                </Grid>
+            </Border>
 
+            <Border Grid.Row="1" Grid.Column="1" HeightRequest="172" Margin="8,0,10,0" BackgroundColor="#FFFFFF" StrokeShape="RoundRectangle 10">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnAddressTapped" />
+                </Border.GestureRecognizers>
+                <Grid RowDefinitions="Auto,Auto" RowSpacing="0">
+                    <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="8" Padding="32">
+                        <Label Grid.Row="0"
+                               Text="Workspace"
+                               FontFamily="Roboto-Medium"
+                               FontSize="16"
+                               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorLight}}"
+                               LineBreakMode="WordWrap"
+                               HorizontalOptions="Start"/>
+                        <Label Grid.Row="1"
+                               Text="500 Terry Francois Street"
+                               FontFamily="Roboto-Regular"
+                               FontSize="14"
+                               TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorLight}}"
+                               HorizontalOptions="Start"/>
+                        <Label Grid.Row="2"
+                               Text="San Francisco, CA 94158,"
+                               FontFamily="Roboto-Regular"
+                               FontSize="14"
+                               TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorLight}}"
+                               HorizontalOptions="Start"/>
+                        <Label Grid.Row="3"
+                               Text="United States"
+                               FontFamily="Roboto-Regular"
+                               FontSize="14"
+                               TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorLight}}"
+                               HorizontalOptions="Start"/>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <buttons:SfButton Grid.Row="2" Margin="8"
+                              CornerRadius="24"
+                              FontSize="14" HorizontalOptions="Start"
+                              Stroke="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                              StrokeThickness="0"
+                              FontFamily="Roboto-Medium"
+                              Background="Transparent"
+                              Text="+ Add New Address"
+                              TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                              WidthRequest="181">
+            </buttons:SfButton>
         </Grid>
-
-        <Border Margin="10"
-                StrokeShape="RoundRectangle 10">
-            <radioButtons:SfRadioGroup
-                x:Name="RadioGroup"
-                BindableLayout.ItemsSource="{Binding DeliveryAddress}"
-                Spacing="0">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate x:DataType="local:DeliveryAddress">
-                        <Grid
-                            RowDefinitions="Auto,Auto,Auto,Auto"
-                            RowSpacing="0">
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="{OnIdiom Default=*, Phone=0}"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-
-                            <radioButtons:SfRadioButton
-                                Grid.Row="0"
-                                BackgroundColor="Transparent"
-                                CheckedColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                GroupKey="{DynamicResource DeliveryAddressGroup}"
-                                HorizontalOptions="Center"
-                                UncheckedColor="{DynamicResource Gray-300}"
-                                VerticalOptions="Start"/>
-
-                            <!--  Customer Name  -->
-                            <Label Padding="0,10,0,0"
-                                   Grid.Row="0"
-                                   Grid.Column="1"
-                                   HorizontalOptions="Start"
-                                   Style="{DynamicResource DescriptionLabelStyle}"
-                                   VerticalOptions="Start">
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="{Binding CustomerName}"
-                                              TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                              FontFamily="Roboto-Regular"/>
-                                        <Span
-                                            FontSize="12"
-                                            FontFamily="Roboto-Regular"
-                                            Text="{Binding AddressType, StringFormat={OnIdiom Default=' ', Tablet='  {0}'}}"
-                                            TextColor="{DynamicResource Gray-700}"/>
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
-
-                            <!--  Edit/Change button  -->
-                            <buttons:SfButton HeightRequest="30"
-                                              Grid.Row="0"
-                                              Grid.Column="3"
-                                              Margin="{OnIdiom Default='16,16,16,0',
-                                 Phone='16,2,16,2'}"
-                                              HorizontalOptions="End"
-                                              Style="{DynamicResource TransparentButtonStyle}"
-                                              FontFamily="Roboto-Medium"
-                                              Text="Edit"/>
-
-                            <!--  Address Label  -->
-                            <Label VerticalOptions="Start"
-                                   Grid.Row="1"
-                                   Grid.Column="1"
-                                   FontFamily="Roboto-Regular"
-                                   Text="{Binding Address}"/>
-
-                            <!--  Mobile Number  -->
-                            <Label VerticalOptions="Start"
-                                   Grid.Row="2"
-                                   Grid.Column="1"
-                                   FontFamily="Roboto-Regular"
-                                   HorizontalOptions="Start">
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="Mobile: "
-                                              FontFamily="Roboto-Regular"/>
-                                        <Span Text="{Binding MobileNumber}"
-                                              TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                              FontFamily="Roboto-Regular"/>
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
-
-                            <!--  Separator  -->
-                            <BoxView Margin="0,10,0,0"
-                                     Grid.Row="3"
-                                     Grid.ColumnSpan="4"
-                                     Style="{DynamicResource HorizontalSeparatorStyle}"
-                                     VerticalOptions="End"/>
-
-                        </Grid>
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
-            </radioButtons:SfRadioGroup>
-
-        </Border>
-
     </StackLayout>
 </ContentView>

@@ -32,120 +32,127 @@
         </Style>
     </ContentView.Resources>
     <ContentView.Content>
-        <Grid
-            ColumnSpacing="0"
-            RowDefinitions="*, Auto"
-            RowSpacing="0">
+        <Grid RowDefinitions="Auto,*,Auto">
 
+            <Grid BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                   HeightRequest="55"
+                   RowDefinitions="Auto,Auto"
+                   ColumnDefinitions="Auto,*">
 
+                <Label  Grid.Column="0"
+                      FontFamily="FontIcons"
+                      Margin="16"
+                      Text="&#xe728;"
+                      TextColor="{AppThemeBinding Light={DynamicResource ContentTextColorLight}, Dark={DynamicResource ContentTextColorDark}}"
+                      Rotation="180"
+                      FontSize="18"
+                      FontAttributes="Bold"
+                      VerticalOptions="Center" />
+
+                <Label Grid.Column="1"
+                     Text="My Address"
+                     FontSize="16"
+                     FontFamily="Roboto-Medium"
+                     TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                     VerticalOptions="Center"
+                     HorizontalOptions="Start" />
+
+                <BoxView  HeightRequest="1"
+                           Grid.Row="1"
+                           Grid.ColumnSpan="2"
+                           Style="{DynamicResource HorizontalSeparatorStyle}"/>
+            </Grid>
+            
             <!--  ListView displaying address  -->
             <ListView:SfListView
-                x:Name="myAddress"
-                Padding="8"
-                AllowSwiping="True"
-                AutoFitMode="Height"
-                BackgroundColor="Transparent"
-                ScrollBarVisibility="Never"
-                ItemsSource="{Binding AddressDetails}"
-                SelectionBackground="Transparent"
-                SelectionGesture="Tap"
-                SelectionMode="Single">
+                            x:Name="myAddressListView"
+                            Grid.Row="1"
+                            AllowSwiping="True"
+                            AutoFitMode="DynamicHeight"
+                            WidthRequest="-1"
+                            HorizontalOptions="Fill"
+                            Margin="{OnIdiom Default='16', Phone='24,0,0,0'}"
+                            BackgroundColor="Transparent"
+                            ScrollBarVisibility="Never"
+                            ItemsSource="{Binding AddressDetails}"
+                            SelectionBackground="Transparent"
+                            SelectionGesture="Tap">
 
                 <ListView:SfListView.ItemTemplate>
                     <DataTemplate x:DataType="local:Address">
                         <Border
-                            Margin="8"
-                            Padding="8"
-                                HeightRequest="120"
+                            Margin="0,24,24,0"
                             BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                             StrokeThickness="1"
-                            StrokeShape="RoundRectangle 4"
-                            HorizontalOptions="Center"
-                            WidthRequest="330">
+                            Stroke="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}"
+                            StrokeShape="RoundRectangle 8"
+                            HorizontalOptions="Fill">
                             <Grid
                                 ColumnDefinitions="Auto, *, Auto, Auto"
-                                ColumnSpacing="8"
-                                RowDefinitions="Auto, Auto, Auto"
-                                RowSpacing="8">
+                                RowDefinitions="Auto, Auto, Auto">
 
                                 <!--  Name and Type of the address  -->
-                                <Label
-                                    Grid.ColumnSpan="2"
-                                    HorizontalOptions="Start"
-                                    LineBreakMode="NoWrap"
-                                    LineHeight="{OnPlatform Default=-1,
-                                                        Android=1.5}"
-                                    VerticalOptions="Center">
-                                    <Label.FormattedText>
-                                        <FormattedString>
-                                            <Span
-                                                FontFamily="Roboto-Medium"
-                                                FontSize="16"
-                                                Text="{Binding Name}"
-                                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
-                                            <Span Text="  "/>
-                                            <Span
-                                                FontFamily="Roboto-Medium"
-                                                FontSize="12"
-                                                Text="{Binding AddressType}"
-                                                TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
-                                        </FormattedString>
-                                    </Label.FormattedText>
-                                </Label>
+                                <HorizontalStackLayout Grid.ColumnSpan="2"
+                                                       HorizontalOptions="Start"
+                                                       Margin="16,0,0,0"
+                                                       Spacing="8"
+                                                       VerticalOptions="Center">
+                                    <Label  FontFamily="Roboto-Medium"
+                                             FontSize="16"
+                                             CharacterSpacing="0.15"
+                                             Text="{Binding Name}"
+                                             TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+                                    <Label FontFamily="Roboto-Medium"
+                                            CharacterSpacing="0.5"
+                                           IsVisible="{OnIdiom Default='true',Phone='false'}"
+                                            FontSize="11"
+                                            Margin="0,4,0,0"
+                                            Text="{Binding AddressType}"
+                                            TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+                                    <Label FontFamily="Roboto-Medium"
+                                            CharacterSpacing="0.5"
+                                            IsVisible="{OnIdiom Default='false',Phone='true'}"
+                                            FontSize="11"
+                                            Text="{Binding AddressType}"
+                                           Margin="0,4,0,0"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"/>
+                                </HorizontalStackLayout>
 
                                 <!--  Edit button command  -->
                                 <buttons:SfButton
                                     x:Name="editButton"
                                     Grid.Column="2"
                                     CornerRadius="16"
-                                    HeightRequest="32"
+                                    FontSize="18"
+                                    Margin="0,16,0,16"
                                     HorizontalOptions="End"
                                     Style="{DynamicResource IconButtonStyle}"
                                     TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                    VerticalOptions="Start"
-                                    WidthRequest="32">
-                                    <buttons:SfButton.Content>
-                                        <DataTemplate>
-                                            <Label
-     FontFamily="FontIcons"
-     FontSize="18"
-     HorizontalOptions="Center"
-     Text="{DynamicResource Edit}"
-     TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-     VerticalOptions="Center"/>
-                                        </DataTemplate>
-                                    </buttons:SfButton.Content>
-                                </buttons:SfButton>
+                                    FontFamily="UIKitIcons"
+                                    Text="&#xE70B;"
+                                    VerticalOptions="Start" />
 
                                 <!--  Delete button command  -->
                                 <buttons:SfButton
                                     x:Name="DeleteButton"
                                     Grid.Column="3"
                                     CornerRadius="16"
-                                    HeightRequest="32"
+                                    FontSize="18"
+                                    Margin="0,16,16,16"
                                     HorizontalOptions="End"
                                     Style="{DynamicResource IconButtonStyle}"
                                     TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                    VerticalOptions="Start"
-                                    WidthRequest="32">
-                                    <buttons:SfButton.Content>
-                                        <DataTemplate>
-                                            <Label
-    FontFamily="FontIcons"
-    FontSize="18"
-    HorizontalOptions="Center"
-    Text="{DynamicResource Delete}"
-    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-    VerticalOptions="Center"/>
-                                        </DataTemplate>
-                                    </buttons:SfButton.Content>
-                                </buttons:SfButton>
+                                    FontFamily="UIKitIcons"
+                                    Text="&#xE70A;"
+                                    VerticalOptions="Start" />
 
                                 <!--  Map Pin Icon  -->
                                 <Label
                                     Grid.Row="1"
+                                    Margin="16,0,16,16"
                                     Grid.Column="0"
                                     FontFamily="FontIcons"
+                                    FontAttributes="Bold"
                                     FontSize="18"
                                     LineHeight="{OnPlatform Default=-1,
                                                         Android=1.5}"
@@ -158,22 +165,27 @@
                                     Grid.Row="1"
                                     Grid.Column="1"
                                     Grid.ColumnSpan="2"
+                                    FontSize="14"
+                                    FontFamily="Roboto-Regular"
+                                    CharacterSpacing="0.25"
                                     HorizontalOptions="Start"
                                     HorizontalTextAlignment="Start"
                                     LineBreakMode="WordWrap"
                                     Style="{DynamicResource DescriptionLabelStyle}"
                                     Text="{Binding Location}"
+                                    TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
                                     VerticalOptions="Start"/>
 
                                 <!--  Phone Icon  -->
                                 <Label
                                     Grid.Row="2"
                                     Grid.Column="0"
-                                    FontFamily="FontIcons"
+                                    Margin="16,0,16,16"
+                                    FontFamily="UIKitIcons"
                                     FontSize="18"
                                     LineHeight="{OnPlatform Default=-1,
                                                         Android=1.5}"
-                                    Text="{DynamicResource Phone}"
+                                    Text="&#xE70C;"
                                     TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
 
                                 <!--  Contact Number  -->
@@ -181,29 +193,41 @@
                                     Grid.Row="2"
                                     Grid.Column="1"
                                     Grid.ColumnSpan="2"
+                                    FontSize="14"
+                                    CharacterSpacing="0.25"
                                     HorizontalOptions="Start"
                                     Style="{DynamicResource DescriptionLabelStyle}"
-                                    VerticalOptions="Start">
-                                    <Label.FormattedText>
-                                        <FormattedString>
-                                            <Span Text="Mobile: "
-                                                  FontFamily="Roboto-Regular"
-                                                  TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
-                                            <Span Text="{Binding ContactNumber}"
-                                                  TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
-                                                  FontFamily="Roboto-Regular"/>
-                                        </FormattedString>
-                                    </Label.FormattedText>
+                                    VerticalOptions="Start"
+                                    Text="{Binding ContactNumber}"
+                                    TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                    FontFamily="Roboto-Regular">
                                 </Label>
                             </Grid>
                         </Border>
                     </DataTemplate>
                 </ListView:SfListView.ItemTemplate>
                 <ListView:SfListView.ItemsLayout>
-                    <ListView:GridLayout SpanCount="{OnPlatform WinUI=3, Android=1, MacCatalyst=3, iOS=1}"/>
+                    <ListView:GridLayout x:Name="gridLayout" SpanCount="{OnIdiom Default=3, Phone=1, Tablet=2}"/>
                 </ListView:SfListView.ItemsLayout>
+                <ListView:SfListView.FooterTemplate>
+                    <DataTemplate>
+                        <buttons:SfButton
+                            Grid.Row="2"
+                            Text="&#xE730;"
+                            Margin="32"
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            HorizontalOptions="End"
+                            TextColor="White"
+                            Background="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                            HeightRequest="40"
+                            WidthRequest="40"
+                            Padding="9"
+                            CornerRadius="20"
+                            FontFamily="FontIcons" />
+                    </DataTemplate>
+                </ListView:SfListView.FooterTemplate>
             </ListView:SfListView>
-
         </Grid>
     </ContentView.Content>
 </ContentView>

@@ -1,120 +1,334 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="EssentialMAUIUIKit.Views.Navigation.ContactsPage"
-             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
-             xmlns:sfavatar="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit"
-             x:DataType="local:ContactsPageViewModel">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EssentialMAUIUIKit.Views.Navigation.ContactsPage"
+    xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+    xmlns:sfavatar="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+    xmlns:local="clr-namespace:EssentialMAUIUIKit">
     <ContentView.BindingContext>
-        <local:ContactsPageViewModel/>
+        <local:ContactsPageViewModel x:Name="viewmodel" />
     </ContentView.BindingContext>
+    <ContentView.Resources>
+        <Style TargetType="listView:ListViewItem">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Background" Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background" Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="{AppThemeBinding Light=#1A000000, Dark=#1AFFFFFF}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="Background" Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+            <Style.Triggers>
+                <DataTrigger TargetType="listView:ListViewItem"
+                    Binding="{Binding IsHeader}" Value="True">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="IsEnabled" Value="False" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </ContentView.Resources>
     <ContentView.Content>
 
-        <Grid Padding="10"
-              ColumnSpacing="0"
-              RowSpacing="0"
-                RowDefinitions="{OnPlatform Default=*, MacCatalyst=Auto}">
-            <Border StrokeShape="RoundRectangle 10" HeightRequest="{OnPlatform MacCatalyst=600}"
-                    WidthRequest="{OnPlatform WinUI=550, MacCatalyst=550}"
-                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                    IsVisible="{OnPlatform Android=False, iOS=False}">
+        <Grid ColumnSpacing="0" RowSpacing="0" RowDefinitions="{OnPlatform Default=*, MacCatalyst=*}"
+            Padding="{OnIdiom Desktop='0,24,0,24'}">
+            <Border StrokeShape="RoundRectangle 8" VerticalOptions="Fill"
+                WidthRequest="{OnPlatform WinUI=566, MacCatalyst=566}" Padding="24,18,0,0" Margin="0"
+                Stroke="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}"
+                IsVisible="{OnPlatform Android=False, iOS=False}">
                 <Grid>
-
-                    <listView:SfListView
-                        AllowSwiping="True"
-                        AutoFitMode="Height"
-                        ScrollBarVisibility="Never"
-                        ItemSpacing="0"
-                        ItemsSource="{Binding ContactsList}"
-                        SelectionBackground="{AppThemeBinding Light={DynamicResource SelectionBackgroundLight}, Dark={DynamicResource SelectionBackgroundDark}}"
-                        SelectionGesture="Tap"
-                        SelectionMode="Single"
-                        VerticalOptions="Fill">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.885*" />
+                        <ColumnDefinition Width="0.115*" />
+                    </Grid.ColumnDefinitions>
+                    <listView:SfListView  Grid.Row="0" Grid.Column="0" AutoFitMode="Height"
+                        ScrollBarVisibility="Never" ItemSpacing="0" ItemsSource="{Binding NamesListData}"
+                        SelectionBackground="Transparent"
+                        SelectionGesture="Tap" SelectionMode="None" VerticalOptions="Fill">
 
                         <listView:SfListView.ItemTemplate>
                             <DataTemplate x:DataType="local:Contact">
-                                <ViewCell>
-                                    <ViewCell.View>
-                                        <Grid
-                                            ColumnDefinitions="Auto, *"
-                                            ColumnSpacing="0"
-                                            HeightRequest="62"
-                                            RowSpacing="0">
+                                <Grid>
+                                    <StackLayout Padding="16,12,0,8">
 
-                                            <!--  Contact name avatar  -->
-                                            <sfavatar:SfAvatarView
-                                                Margin="16,8"
-                                                AvatarName="{Binding Name}"
-                                                BackgroundColor="{Binding BackgroundColor}"
-                                                FontFamily="Roboto-Regular"
-                                                Style="{DynamicResource AvatarViewStyle}"/>
+                                        <Label FontFamily="Roboto-Medium" LineHeight="1.5"
+                                                    IsVisible="{Binding IsHeader}" FontSize="16" Text="{Binding Name}"
+                                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                    VerticalOptions="Center" />
+                                    </StackLayout>
 
-                                            <!--  Contact name  -->
-                                            <Label
-                                                Grid.Column="1"
-                                                Margin="0,16"
-                                                FontFamily="Roboto-Regular"
-                                                HorizontalOptions="Start"
-                                                Style="{DynamicResource TitleLabelStyle}"
-                                                Text="{Binding Name}"
-                                                VerticalOptions="Center"/>
-                                        </Grid>
-                                    </ViewCell.View>
-                                </ViewCell>
+                                    <Grid IsVisible="{Binding IsNonHeader}" HorizontalOptions="Start">
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <!--  Contact name avatar  -->
+                                        <StackLayout Padding="16,12,0,12">
+                                            <Border BackgroundColor="{Binding BackgroundColor}"
+                                                        HeightRequest="40" WidthRequest="40"
+                                                        Stroke="{Binding BackgroundColor}"
+                                                        StrokeShape="RoundRectangle 100" HorizontalOptions="Center">
+                                                <Label WidthRequest="{OnPlatform WinUI=25, MacCatalyst=26}"
+                                                            HeightRequest="24" Text="{Binding Heading}"
+                                                            TextColor="white" HorizontalTextAlignment="Center"
+                                                            FontFamily="Roboto-Regular" CharacterSpacing="0.5" Padding="0,2,0,0"
+                                                            Style="{DynamicResource AvatarViewStyle}" FontSize="16" />
+
+                                            </Border>
+                                        </StackLayout>
+
+
+                                        <!--  Contact name  -->
+                                        <StackLayout Grid.Column="1" Padding="12,12,0,12">
+                                            <Label FontFamily="Roboto-Regular" HorizontalOptions="Start"
+                                                        Padding="0,10,0,10" Style="{DynamicResource TitleLabelStyle}"
+                                                        Text="{Binding Name}" CharacterSpacing="0.25" LineHeight="1.428"
+                                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                        FontSize="14" VerticalOptions="Center" />
+
+                                        </StackLayout>
+
+                                    </Grid>
+
+                                </Grid>
                             </DataTemplate>
                         </listView:SfListView.ItemTemplate>
                     </listView:SfListView>
+
+                    <Grid Grid.Column="0" Grid.Row="0" ZIndex="3" HorizontalOptions="End" Padding="0,6,0,0"
+                        VerticalOptions="Start">
+                        <Border Stroke="Transparent" HorizontalOptions="Center"
+                            Background="{AppThemeBinding Light={DynamicResource ReceivedMessageColorLight}, Dark={DynamicResource ReceivedMessageColorDark}}"
+                            StrokeShape="RoundRectangle 100" HeightRequest="32" WidthRequest="32"
+                            VerticalOptions="Center">
+                            <Label Text="{Binding CurrentLetter}" Padding="10.5,4" x:Name="label"
+                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                FontFamily="Roboto-Regular" FontSize="16" />
+                        </Border>
+                    </Grid>
+
+                    <!-- Alphabet sidebar: TWO list views (A–C active, D–Z inactive) -->
+                    <StackLayout Padding="0,12,0,0" Margin="0" Grid.Column="1" Grid.Row="0" HorizontalOptions="Fill">
+
+                        <!-- First list: A to C (active, working) -->
+                        <listView:SfListView ItemsSource="{Binding AlphabetFirst}" 
+                            AutoFitMode="Height" ScrollBarVisibility="Never" ItemSpacing="0"
+                            SelectionBackground="{AppThemeBinding Light={DynamicResource SelectionBackgroundLight}, Dark={DynamicResource SelectionBackgroundDark}}"
+                            SelectionGesture="Tap" SelectionMode="Single" VerticalOptions="Start"
+                            SelectionChanging="SfListView_SelectionChanging">
+
+                            <listView:SfListView.ItemTemplate>
+                                <DataTemplate x:DataType="local:Contact">
+                                    <Grid>
+                                        <StackLayout Padding="24,0,25,0">
+                                            <Label Padding="0" Margin="0" FontSize="14"
+                                                        HorizontalTextAlignment="Center" Text="{Binding Name}">
+
+                                                <Label.Triggers>
+                                                    <DataTrigger TargetType="Label"
+                                                                Binding="{Binding IsSelected}" Value="True">
+
+                                                        <Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource PrimaryColorLight},
+                                            Dark={DynamicResource PrimaryColorDark}}" />
+
+                                                        <Setter Property="FontFamily" Value="Roboto-Medium" />
+                                                    </DataTrigger>
+
+                                                    <DataTrigger TargetType="Label"
+                                                                Binding="{Binding IsSelected}" Value="False">
+
+                                                        <Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight},
+                                            Dark={DynamicResource SecondaryTextColorDark}}" />
+
+                                                        <Setter Property="FontFamily" Value="Roboto-Regular" />
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                            </Label>
+                                        </StackLayout>
+                                    </Grid>
+                                </DataTemplate>
+                            </listView:SfListView.ItemTemplate>
+                        </listView:SfListView>
+
+                        <!-- Second list: D to Z (inactive, dimmed) -->
+                        <listView:SfListView ItemsSource="{Binding AlphabetSecond}" AllowSwiping="False"
+                            AutoFitMode="Height" ScrollBarVisibility="Never" ItemSpacing="0" IsEnabled="False"
+                            Opacity="0.4" SelectionBackground="Transparent" SelectionGesture="Tap" SelectionMode="None"
+                            VerticalOptions="Fill">
+                            <listView:SfListView.ItemTemplate>
+                                <DataTemplate x:DataType="local:Contact">
+                                    <Grid>
+                                        <StackLayout Padding="24,0,25,0" Margin="0">
+                                            <Label Padding="0" Margin="0" FontSize="14"
+                                                        HorizontalTextAlignment="Center" FontFamily="Roboto-Regular"
+                                                        LineHeight="1.428"
+                                                        TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                                        Text="{Binding Name}" />
+                                        </StackLayout>
+                                    </Grid>
+                                </DataTemplate>
+                            </listView:SfListView.ItemTemplate>
+                        </listView:SfListView>
+                    </StackLayout>
                 </Grid>
             </Border>
 
-            <Grid Grid.Row="2"
-                  IsVisible="{OnPlatform WinUI=False, MacCatalyst=False}">
-
-                <listView:SfListView
-                    AllowSwiping="True"
-                    AutoFitMode="Height"
-                    ScrollBarVisibility="Never"
-                    ItemSpacing="0"
-                    ItemsSource="{Binding ContactsList}"
-                    SelectionBackground="{AppThemeBinding Light={DynamicResource SelectionBackgroundLight}, Dark={DynamicResource SelectionBackgroundDark}}"
-                    SelectionGesture="Tap"
-                    SelectionMode="Single"
-                    VerticalOptions="Fill">
+            <Grid IsVisible="{OnPlatform WinUI=False, MacCatalyst=False}"
+                Padding="{OnIdiom Phone='0,4,0,0', Tablet='0'}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{OnIdiom Phone=0.881*, Tablet=0.945*}" />
+                    <ColumnDefinition Width="{OnIdiom Phone=0.119*, Tablet=0.055*}" />
+                </Grid.ColumnDefinitions>
+                <listView:SfListView  Grid.Row="0" Grid.Column="0" AutoFitMode="Height"
+                    ScrollBarVisibility="Never" ItemSpacing="0" ItemsSource="{Binding NamesListData}"
+                    SelectionBackground="Transparent"
+                    SelectionGesture="Tap" SelectionMode="None" VerticalOptions="Fill">
 
                     <listView:SfListView.ItemTemplate>
                         <DataTemplate x:DataType="local:Contact">
-                            <ViewCell>
-                                <ViewCell.View>
-                                    <Grid
-                                        ColumnDefinitions="Auto, *"
-                                        ColumnSpacing="0"
-                                        HeightRequest="62"
-                                        RowSpacing="0">
+                            <Grid>
+                                <StackLayout Padding="{OnIdiom Phone='16,12,0,8', Tablet='16,6,0,8'}">
 
-                                        <!--  Contact name avatar  -->
-                                        <sfavatar:SfAvatarView
-                                            Margin="16,8"
-                                            AvatarName="{Binding Name}"
-                                            BackgroundColor="{Binding BackgroundColor}"
-                                            FontFamily="Roboto-Regular"
-                                            Style="{DynamicResource AvatarViewStyle}"/>
+                                    <Label FontFamily="Roboto-Medium" LineHeight="1.5"
+                                                IsVisible="{Binding IsHeader}" FontSize="16" Text="{Binding Name}"
+                                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                VerticalOptions="Center" />
+                                </StackLayout>
 
-                                        <!--  Contact name  -->
-                                        <Label
-                                            Grid.Column="1"
-                                            Margin="0,16"
-                                            FontFamily="Roboto-Regular"
-                                            HorizontalOptions="Start"
-                                            Style="{DynamicResource TitleLabelStyle}"
-                                            Text="{Binding Name}"
-                                            VerticalOptions="Center"/>
-                                    </Grid>
-                                </ViewCell.View>
-                            </ViewCell>
+                                <Grid IsVisible="{Binding IsNonHeader}" HorizontalOptions="Start">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <!--  Contact name avatar  -->
+                                    <StackLayout Padding="16,12,0,12">
+                                        <Border BackgroundColor="{Binding BackgroundColor}" HeightRequest="40"
+                                                    WidthRequest="40" Stroke="{Binding BackgroundColor}"
+                                                    StrokeShape="RoundRectangle 100" HorizontalOptions="Center">
+                                            <Label WidthRequest="26" HeightRequest="24" Text="{Binding Heading}"
+                                                        TextColor="white" HorizontalTextAlignment="Center"
+                                                        FontFamily="Roboto-Regular" CharacterSpacing="0.5"
+                                                        Style="{DynamicResource AvatarViewStyle}" FontSize="16" />
+
+                                        </Border>
+                                    </StackLayout>
+
+
+                                    <!--  Contact name  -->
+                                    <StackLayout Grid.Column="1" Padding="12,12,0,12">
+                                        <Label FontFamily="Roboto-Regular" HorizontalOptions="Start"
+                                                    Padding="0,10,0,10" Style="{DynamicResource TitleLabelStyle}"
+                                                    Text="{Binding Name}" CharacterSpacing="0.25" LineHeight="1.428"
+                                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                    FontSize="14" VerticalOptions="Center" />
+
+                                    </StackLayout>
+
+                                </Grid>
+
+                            </Grid>
                         </DataTemplate>
                     </listView:SfListView.ItemTemplate>
                 </listView:SfListView>
+
+                <Grid Grid.Column="0" Grid.Row="0" ZIndex="3" HorizontalOptions="End"
+                    Padding="{OnIdiom Phone='0,6,0,0', Tablet='0'}" VerticalOptions="Start">
+                    <Border Stroke="Transparent" HorizontalOptions="Center"
+                        Background="{AppThemeBinding Light={DynamicResource ReceivedMessageColorLight}, Dark={DynamicResource ReceivedMessageColorDark}}"
+                        StrokeShape="RoundRectangle 100" HeightRequest="32" WidthRequest="32" VerticalOptions="Center">
+                        <Label Text="{Binding CurrentLetter}" Padding="10,4" x:Name="labelMobile"
+                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                            FontFamily="Roboto-Regular" FontSize="16" />
+                    </Border>
+                </Grid>
+
+                <!-- Alphabet sidebar (mobile): TWO list views -->
+                <StackLayout Padding="{OnIdiom Phone='0,12,0,0', Tablet='0'}" Margin="0" Grid.Column="1" Grid.Row="0"
+                    HorizontalOptions="Fill">
+
+                    <!-- First list: A to C (active) -->
+                    <listView:SfListView ItemsSource="{Binding AlphabetFirst}"  AutoFitMode="Height"
+                        ScrollBarVisibility="Never" ItemSpacing="0"
+                        SelectionBackground="{AppThemeBinding Light={DynamicResource SelectionBackgroundLight}, Dark={DynamicResource SelectionBackgroundDark}}"
+                        SelectionGesture="Tap" SelectionMode="Single" VerticalOptions="Start"
+                        SelectionChanging="SfListView_SelectionChanging">
+                        <listView:SfListView.ItemTemplate>
+                            <DataTemplate x:DataType="local:Contact">
+                                <Grid>
+                                    <StackLayout Padding="{OnIdiom Phone='24,0,13,0',Tablet='24,0,33,0'}"
+                                                Margin="0" >
+                                        <Label Text="{Binding Name}" FontSize="14" Margin="0" Padding="0"
+                                                    HorizontalTextAlignment="Center" LineHeight="1.428">
+
+                                            <Label.Triggers>
+
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsSelected}"
+                                                            Value="True">
+
+                                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource PrimaryColorLight},
+                                            Dark={DynamicResource PrimaryColorDark}}" />
+
+                                                    <Setter Property="FontFamily" Value="Roboto-Medium" />
+
+                                                </DataTrigger>
+
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsSelected}"
+                                                            Value="False">
+
+                                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight},
+                                            Dark={DynamicResource SecondaryTextColorDark}}" />
+
+                                                    <Setter Property="FontFamily" Value="Roboto-Regular" />
+
+                                                </DataTrigger>
+
+                                            </Label.Triggers>
+
+                                        </Label>
+                                    </StackLayout>
+                                </Grid>
+                            </DataTemplate>
+                        </listView:SfListView.ItemTemplate>
+                    </listView:SfListView>
+
+                    <!-- Second list: D to Z (inactive, dimmed) -->
+                    <listView:SfListView ItemsSource="{Binding AlphabetSecond}" AllowSwiping="False"
+                        AutoFitMode="Height" ScrollBarVisibility="Never" ItemSpacing="0" IsEnabled="False" Opacity="0.4"
+                        SelectionGesture="Tap" SelectionMode="None" VerticalOptions="Fill">
+                        <listView:SfListView.ItemTemplate>
+                            <DataTemplate x:DataType="local:Contact">
+                                <Grid>
+                                    <StackLayout Padding="{OnIdiom Phone='24,0,13,0',Tablet='24,0,33,0'}"
+                                                Margin="0">
+                                        <Label Padding="0" Margin="0" HorizontalTextAlignment="Center"
+                                                    FontSize="14" FontFamily="Roboto-Regular" LineHeight="1.428"
+                                                    TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                                    Text="{Binding Name}" />
+                                    </StackLayout>
+                                </Grid>
+                            </DataTemplate>
+                        </listView:SfListView.ItemTemplate>
+                    </listView:SfListView>
+                </StackLayout>
             </Grid>
 
 

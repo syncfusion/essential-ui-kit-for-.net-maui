@@ -23,9 +23,9 @@ namespace EssentialMAUIUIKit
             this.Email = string.Empty;
         }
 
-        [Display(Name = "Enter mail id")]
+        [Display(Name = "Email")]
         [DataFormDisplayOptions(ColumnSpan = 3)]
-        [EmailAddress(ErrorMessage = "Enter your email")]
+        [Required(ErrorMessage = "Enter your Password")]
         public string Email { get; set; }
     }
 }

@@ -1,26 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="EssentialMAUIUIKit.Views.Navigation.FileExplorerPage"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
-             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit"
-             x:DataType="local:FileExplorerViewModel">
+<ContentView
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
+    xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+    xmlns:local="clr-namespace:EssentialMAUIUIKit"
+    x:Class="EssentialMAUIUIKit.Views.Navigation.FileExplorerPage"
+    x:DataType="local:FileExplorerViewModel">
+
+    <!-- Binding Context -->
     <ContentView.BindingContext>
-        <local:FileExplorerViewModel/>
+        <local:FileExplorerViewModel />
     </ContentView.BindingContext>
+
     <ContentView.Content>
+        <Grid 
+            RowDefinitions="*"
+            ColumnSpacing="0"
+            RowSpacing="0">
 
-        <Grid RowDefinitions="{OnPlatform Default=*, MacCatalyst=Auto}"
-              ColumnSpacing="0"
-              RowSpacing="0">
+            <!-- Desktop Card Layout -->
+            <Border
+                Margin="0,24,0,24"
+                StrokeThickness="1"
+                Stroke="{AppThemeBinding Light= #E5E1E3, Dark=#474648}"
+                StrokeShape="RoundRectangle 8"
+                MaximumWidthRequest="{OnPlatform WinUI=550, MacCatalyst=550}"
+                BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                IsVisible="{OnPlatform Android=False, iOS=False}">
 
-            <Border StrokeShape="RoundRectangle 10"
-                    WidthRequest="{OnPlatform WinUI=550, MacCatalyst=550}"
-                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                    Padding="10"
-                    Margin="10"
-                    IsVisible="{OnPlatform Android=False, iOS=False}">
                 <listView:SfListView
                     AllowSwiping="True"
                     AutoFitMode="Height"
@@ -34,165 +42,183 @@
 
                     <listView:SfListView.ItemTemplate>
                         <DataTemplate x:DataType="local:FileExplorerFolder">
-
                             <Grid
-                                ColumnDefinitions="Auto, *"
+                                ColumnDefinitions="Auto,*"
+                                RowDefinitions="Auto,Auto,Auto"
                                 ColumnSpacing="0"
-                                RowDefinitions="Auto, Auto, Auto"
                                 RowSpacing="0">
 
-                                <!--  Folder Icon  -->
-                                <Image Source="file.png"
-                                       WidthRequest="50"
-                                       HeightRequest="40"
-                                       VerticalOptions="Center"
-                                       Grid.RowSpan="3"/>
+                                <!-- Folder Icon -->
+                                <Image
+                                    Source="file.png"
+                                    WidthRequest="48"
+                                    HeightRequest="48"
+                                    Margin="24,0,0,0"
+                                    VerticalOptions="Center"
+                                    Grid.RowSpan="3" />
 
-                                <!--  Folder Name  -->
+                                <!-- Folder Name -->
                                 <Label
                                     Grid.Column="1"
                                     Margin="0,13,0,0"
-                                    FontFamily="Roboto-Medium"
+                                    Padding="12,0,0,0"
+                                    FontFamily="Roboto-Regular"
                                     FontSize="16"
-                                    LineHeight="{OnPlatform Android=1.5,
-                                        Default=-1}"
                                     Text="{Binding FolderName}"
-                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+                                    LineHeight="{OnPlatform Android=1.5, Default=-1}"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
 
-                                <!--  Number of items, date and time  -->
+                                <!-- Details -->
                                 <Label
                                     Grid.Row="1"
                                     Grid.Column="1"
                                     Margin="0,0,0,14"
+                                    Padding="12,0,0,0"
+                                    FontFamily="Roboto-Regular"
+                                    FontSize="14"
                                     HorizontalOptions="Start"
                                     Style="{DynamicResource DescriptionLabelStyle}">
+
                                     <Label.FormattedText>
                                         <FormattedString>
-                                            <Span FontFamily="Roboto-Regular"
-                                                  Text="{Binding Items}"
-                                                  TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
-                                            <Span Text=" "/>
-                                            <Span Text=" | "
-                                                  TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
-                                            <Span Text=" "/>
-                                            <Span FontFamily="Roboto-Regular"
-                                                  Text="{Binding DateTime}"
-                                                  TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+                                            <Span
+                                                Text="{Binding Items}"
+                                                FontFamily="Roboto-Regular"
+                                                TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}" />
+                                            <Span Text=" " />
+                                            <Span
+                                                Text=" | "
+                                                TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}" />
+                                            <Span Text=" " />
+                                            <Span
+                                                Text="{Binding DateTime}"
+                                                FontFamily="Roboto-Regular"
+                                                TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}" />
                                         </FormattedString>
                                     </Label.FormattedText>
                                 </Label>
 
-                                <!--  Next Button  -->
+                                <!-- Navigation Button -->
                                 <buttons:SfButton
-                                    Grid.RowSpan="3"
                                     Grid.Column="1"
+                                    Grid.RowSpan="3"
                                     Margin="15,0"
-                                    CornerRadius="4"
-                                    FontSize="20"
+                                    CornerRadius="50"
+                                    FontSize="12"
                                     HorizontalOptions="End"
+                                    TextColor="{AppThemeBinding Light=#474648,Dark=#C9C6C8}"
                                     Style="{DynamicResource IconButtonStyle}"
-                                    Text="{DynamicResource Next}"/>
+                                    Text="{DynamicResource Next}" />
 
-                                <!--  Seperator  -->
+                                <!-- Separator -->
                                 <BoxView
                                     Grid.Row="2"
                                     Grid.ColumnSpan="2"
-                                    Style="{DynamicResource HorizontalSeparatorStyle}"/>
+                                    Style="{DynamicResource HorizontalSeparatorStyle}" />
 
                             </Grid>
-
                         </DataTemplate>
                     </listView:SfListView.ItemTemplate>
+
                 </listView:SfListView>
             </Border>
 
-            <listView:SfListView IsVisible="{OnPlatform WinUI=False, MacCatalyst=False}"
-                                 Margin="10"
-                                 HeightRequest="600"
-                                 AllowSwiping="True"
-                                 AutoFitMode="Height"
-                                 ScrollBarVisibility="Never"
-                                 ItemSpacing="0"
-                                 ItemsSource="{Binding FileExploreList}"
-                                 SelectionBackground="{AppThemeBinding Light={DynamicResource SelectionBackgroundLight}, Dark={DynamicResource SelectionBackgroundDark}}"
-                                 SelectionGesture="Tap"
-                                 SelectionMode="Single"
-                                 VerticalOptions="Start">
+            <!-- Mobile Layout -->
+            <listView:SfListView
+                IsVisible="{OnPlatform WinUI=False, MacCatalyst=False}"
+                Margin="0"
+                HeightRequest="600"
+                AllowSwiping="True"
+                AutoFitMode="Height"
+                ScrollBarVisibility="Never"
+                ItemSpacing="0"
+                ItemsSource="{Binding FileExploreList}"
+                SelectionBackground="{AppThemeBinding Light={DynamicResource SelectionBackgroundLight}, Dark={DynamicResource SelectionBackgroundDark}}"
+                SelectionGesture="Tap"
+                SelectionMode="Single"
+                VerticalOptions="Start">
 
                 <listView:SfListView.ItemTemplate>
                     <DataTemplate x:DataType="local:FileExplorerFolder">
-
                         <Grid
-                            ColumnDefinitions="Auto, *"
+                            ColumnDefinitions="Auto,*"
+                            RowDefinitions="Auto,Auto,Auto"
                             ColumnSpacing="0"
-                            RowDefinitions="Auto, Auto, Auto"
                             RowSpacing="0">
 
-                            <!--  Folder Icon  -->
-                            <Image Source="file.png"
-                                   WidthRequest="50"
-                                   HeightRequest="40"
-                                   VerticalOptions="Center"
-                                   Grid.RowSpan="3"/>
+                            <!-- Folder Icon -->
+                            <Image
+                                Source="file.png"
+                                Margin="10,0,10,0"
+                                WidthRequest="50"
+                                HeightRequest="40"
+                                VerticalOptions="Center"
+                                Grid.RowSpan="3" />
 
-                            <!--  Folder Name  -->
+                            <!-- Folder Name -->
                             <Label
                                 Grid.Column="1"
                                 Margin="0,13,0,0"
                                 FontFamily="Roboto-Medium"
                                 FontSize="16"
-                                LineHeight="{OnPlatform Android=1.5,
-                                        Default=-1}"
                                 Text="{Binding FolderName}"
-                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+                                LineHeight="{OnPlatform Android=1.5, Default=-1}"
+                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
 
-                            <!--  Number of items, date and time  -->
+                            <!-- Details -->
                             <Label
                                 Grid.Row="1"
                                 Grid.Column="1"
                                 Margin="0,0,0,14"
+                                FontFamily="Roboto-Regular"
+                                FontSize="14"
                                 HorizontalOptions="Start"
                                 Style="{DynamicResource DescriptionLabelStyle}">
+
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span FontFamily="Roboto-Regular"
-                                              Text="{Binding Items}"
-                                              TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
-                                        <Span Text=" "/>
-                                        <Span Text=" | "
-                                              TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
-                                        <Span Text=" "/>
-                                        <Span FontFamily="Roboto-Regular"
-                                              Text="{Binding DateTime}"
-                                              TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+                                        <Span
+                                            Text="{Binding Items}"
+                                            FontFamily="Roboto-Regular"
+                                            TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}" />
+                                        <Span Text=" " />
+                                        <Span
+                                            Text=" | "
+                                            TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}" />
+                                        <Span Text=" " />
+                                        <Span
+                                            Text="{Binding DateTime}"
+                                            FontFamily="Roboto-Regular"
+                                            TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}" />
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
 
-                            <!--  Next Button  -->
+                            <!-- Navigation Button -->
                             <buttons:SfButton
-                                Grid.RowSpan="3"
                                 Grid.Column="1"
+                                Grid.RowSpan="3"
                                 Margin="15,0"
-                                CornerRadius="4"
-                                FontSize="20"
+                                CornerRadius="50"
+                                FontSize="14"
                                 HorizontalOptions="End"
                                 Style="{DynamicResource IconButtonStyle}"
-                                Text="{DynamicResource Next}"/>
+                                TextColor="{AppThemeBinding Light=#474648,Dark=#C9C6C8}"
+                                Text="{DynamicResource Next}" />
 
-                            <!--  Seperator  -->
+                            <!-- Separator -->
                             <BoxView
                                 Grid.Row="2"
                                 Grid.ColumnSpan="2"
-                                Style="{DynamicResource HorizontalSeparatorStyle}"/>
+                                Style="{DynamicResource HorizontalSeparatorStyle}" />
 
                         </Grid>
-
                     </DataTemplate>
                 </listView:SfListView.ItemTemplate>
-            </listView:SfListView>
 
+            </listView:SfListView>
 
         </Grid>
     </ContentView.Content>
+
 </ContentView>

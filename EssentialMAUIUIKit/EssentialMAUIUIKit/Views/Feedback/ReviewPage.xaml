@@ -4,150 +4,325 @@
              x:Class="EssentialMAUIUIKit.Views.Feedback.ReviewPage"
              xmlns:rating="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
-             xmlns:dataForm="clr-namespace:Syncfusion.Maui.DataForm;assembly=Syncfusion.Maui.DataForm"
+             xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Toolkit.TextInputLayout;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Toolkit.EffectsView;assembly=Syncfusion.Maui.Toolkit"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              x:DataType="local:ReviewViewModel">
     <ContentView.BindingContext>
         <local:ReviewViewModel/>
     </ContentView.BindingContext>
     <ContentView.Content>
-        <ScrollView x:Name="reviewPage"
-                    Padding="10">
 
-            <StackLayout Spacing="16">
+        <ScrollView VerticalScrollBarVisibility="Never">
 
-                <Border StrokeShape="RoundRectangle 10"
-                        Padding="10"
-                        WidthRequest="{OnPlatform WinUI=650, MacCatalyst=650}"
+            <StackLayout
+                    BackgroundColor="{AppThemeBinding
+                            Light={DynamicResource BackgroundColorLight},
+                            Dark={DynamicResource BackgroundColorDark}}">
+
+                <Grid BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                      HeightRequest="55"
+                      ColumnDefinitions="{OnIdiom Default='Auto,*,Auto', Desktop='*,Auto'}">
+
+                    <buttons:SfButton  Grid.Column="0"
+                                    FontFamily="MaterialAssets"
+                                    IsVisible="{OnIdiom Desktop='false', Default='true'}"
+                                    Background="Transparent"
+                                    WidthRequest="40"
+                                    HeightRequest="30"
+                                    Rotation="180"
+                                    Text="&#xe72d;"
+                                    TextColor="{AppThemeBinding Light={DynamicResource ContentTextColorLight}, Dark={DynamicResource ContentTextColorDark}}"
+                                    FontSize="18"
+                                    FontAttributes="Bold"
+                                    VerticalOptions="Center" />
+
+                    <Label Grid.Column="{OnIdiom Desktop='0', Default='1'}"
+                           Text="Ratings and Reviews"
+                           FontSize="16"
+                           FontFamily="Roboto-Medium"
+                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Start" />
+
+                    <HorizontalStackLayout  Grid.Column="2"
+                                            Spacing="16"
+                                            VerticalOptions="Center">
+
+                        <buttons:SfButton Background="Transparent"
+                                          CornerRadius="4"
+                                          HeightRequest="30"
+                                          WidthRequest="30"
+                                          Padding="8,0"
+                                          TextColor="{DynamicResource Gray-700}">
+                            <buttons:SfButton.Content>
+                                <DataTemplate>
+                                <Label  Grid.Column="0"
+                                        FontFamily="FontIcons"
+                                        WidthRequest="22"
+                                        HeightRequest="22"
+                                        Text="&#xe705;"
+                                        TextColor="{AppThemeBinding Light={DynamicResource ContentTextColorLight}, Dark={DynamicResource ContentTextColorDark}}"
+                                        FontSize="18"
+                                        FontAttributes="Bold"
+                                        VerticalOptions="Center" />
+                                </DataTemplate>
+                            </buttons:SfButton.Content>
+                        </buttons:SfButton>
+
+                        <buttons:SfButton Background="Transparent"
+                                          HeightRequest="30"
+                                        WidthRequest="30"
+                                        CornerRadius="4"
+                                        Padding="8,0"
+                                        TextColor="{DynamicResource Gray-700}">
+                            <buttons:SfButton.Content>
+                                <DataTemplate>
+                                    <Label
+                                        FontFamily="FontIcons"
+                                        WidthRequest="22"
+                                        HeightRequest="22"
+                                        Text="&#xe708;"
+                                        TextColor="{AppThemeBinding Light={DynamicResource ContentTextColorLight}, Dark={DynamicResource ContentTextColorDark}}"
+                                        FontSize="18"
+                                        FontAttributes="Bold"
+                                        VerticalOptions="Center" />
+                                </DataTemplate>
+                            </buttons:SfButton.Content>
+                        </buttons:SfButton>
+
+                    </HorizontalStackLayout>
+
+                </Grid>
+
+                <BoxView  HeightRequest="1"
+                          Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+
+                <Border StrokeShape="{OnIdiom Desktop='RoundRectangle 8', Tablet='RoundRectangle 8'}"
+                        WidthRequest="{OnIdiom Default=900,Tablet=800, Phone=-1}"
+                        Stroke="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}"
                         BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                        Margin="10,0">
+                        Margin="{OnIdiom Default='24,32,24,0',Phone='0,24,0,8'}">
                     <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto">
                         <Label Text="Write a Review"
+                               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                               FontSize="16"
+                               CharacterSpacing="0.15"
+                               Margin="{OnIdiom Default='24,16', Phone='16,0,16,16'}"
                                FontFamily="Roboto-Medium"/>
 
                         <StackLayout Grid.Row="1"
                                      Orientation="Horizontal">
+
                             <!--  Product image  -->
 
-                            <Image Margin="0,10,0,10"
+                            <Border Margin="{OnIdiom Default='24,0,0,0', Phone='16,0,0,0'}" StrokeShape="RoundRectangle 8" Stroke="Transparent" HeightRequest="{OnIdiom Default='100', Phone='60'}" WidthRequest="{OnIdiom Default='100', Phone='60'}">
+                                <Image
                                    x:Name="ProductImage"
                                    Aspect="AspectFill"
-                                   BackgroundColor="{DynamicResource Gray-200}"
-                                   HeightRequest="100"
-                                   WidthRequest="100"/>
-
+                                   Source="{Binding ProductImageUrl}"
+                                   BackgroundColor="{DynamicResource Gray-200}"/>
+                            </Border>
 
                             <!--  Product name label  -->
 
+                            <VerticalStackLayout 
+                                Margin="16,0"
+                                Spacing="16">
                             <Label
-                                Margin="10"
                                 HorizontalOptions="Start"
-                                Style="{DynamicResource TitleLabelStyle}"
-                                Text="Full-Length Skirt"/>
+                                FontFamily="{OnIdiom Default='Roboto-Regular', Phone='Roboto-Medium'}"
+                                FontSize="16"
+                                CharacterSpacing="0.5"
+                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                Text="{Binding ProductName}"/>
+
+                            <StackLayout Orientation="Horizontal"
+                                         Spacing="{OnIdiom Phone=4, Tablet=5, Desktop=6}"
+                                         HorizontalOptions="Center"
+                                         VerticalOptions="Center">
+
+                                <Label Text="$76.50"
+                                        FontSize="{OnIdiom Phone=14, Tablet=16, Desktop=16}"
+                                        FontFamily="Roboto-Medium"
+                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
+
+                                <Label Text="$90.00"
+                                       FontSize="12"
+                                       FontFamily="Roboto-Regular"
+                                       VerticalOptions="Center"
+                                       TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                       TextDecorations="Strikethrough" />
+
+                                <Border BackgroundColor="{AppThemeBinding Light=#CEFFC9,Dark=Transparent}"
+                                        StrokeThickness="0"
+                                        Margin="{OnIdiom Phone='25,0,0,0', Tablet='5,0,0,0', Desktop='4,0,0,0'}"
+                                        StrokeShape="RoundRectangle 12"
+                                        HorizontalOptions="End"
+                                        Padding="6,2"
+                                        VerticalOptions="Center">
+
+                                    <Label Text="30% OFF"
+                                            FontSize="11"
+                                            FontFamily="Roboto-Medium"
+                                            TextColor="{AppThemeBinding Light=#1C7E39, Dark=#3CB053}" />
+                                </Border>
+                            </StackLayout>
+                            </VerticalStackLayout>
                         </StackLayout>
 
                         <BoxView Grid.Row="2"
+                                 Margin="24,24,24,0"
                                  HeightRequest="1"
                                  Style="{DynamicResource HorizontalSeparatorStyle}"/>
 
 
                         <Label Text="How would you like to rate?"
-                               Margin="0,20,0,0"
+                               Margin="{OnIdiom Default='24, 16, 0, 0', Phone='16'}"
+                               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                                Grid.Row="3"
+                               FontSize="16"
+                               CharacterSpacing="0.15"
                                FontFamily="Roboto-Medium"/>
 
-                        <rating:SfRating Margin="20"
-                                BackgroundColor="Transparent"
+                        <rating:SfRating Margin="{OnIdiom Default='32', Phone='24'}"
+                                         BackgroundColor="Transparent"
                                          Grid.Row="4"
                                          HorizontalOptions="Center"
-                                         ItemSize="27"
-                                         ItemSpacing="5"
-                                         RatingSettings="{DynamicResource CommonRatingSettings}"
+                                         ItemSize="30"
+                                         ItemSpacing="10"
                                          IsReadOnly="False"
                                          Style="{DynamicResource RatingStyle}"
-                                         VerticalOptions="Start"/>
+                                         VerticalOptions="Start">
+                            <rating:SfRating.RatingSettings>
+                                <rating:RatingSettings  RatedFill="#FFBE52"
+                                                        RatedStroke="#FFBE52"
+                                                        UnratedStroke="#787678"
+                                                        UnratedStrokeThickness="1"/>
+                            </rating:SfRating.RatingSettings>
+                        </rating:SfRating>
                     </Grid>
                 </Border>
 
-                <Border StrokeShape="RoundRectangle 10"
-                        Padding="10"
-                        WidthRequest="{OnPlatform WinUI=650, MacCatalyst=650}"
+                <BoxView  HeightRequest="8"
+                          IsVisible="{OnIdiom Phone='true', Default='false'}"
+                          BackgroundColor="{AppThemeBinding Light={DynamicResource SentMessageColorLight}, Dark={DynamicResource SentMessageColorDark}}"/>
+
+                <Border StrokeShape="{OnIdiom Desktop='RoundRectangle 8', Tablet='RoundRectangle 8'}"
+                        WidthRequest="{OnIdiom Default=900, Tablet=800, Phone=-1}"
+                        Stroke="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}"
                         BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                        Margin="10,0">
+                        Margin="{OnIdiom Default='24',Phone='0,24,0,8'}">
                     <StackLayout>
                         <Label Text="Upload photos and videos"
+                               Margin="{OnIdiom Default='24,24,0,0', Phone='16,0,0,0'}"
+                               FontSize="16"
+                               CharacterSpacing="0.15"
+                               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                                FontFamily="Roboto-Medium"/>
                         <Border StrokeDashOffset="1"
-                                Margin="0,10,0,0">
-                            <StackLayout HorizontalOptions="Center"
-                                         Margin="30">
-                                <Button Text="Select to upload file"
-                                        Background="Transparent"
-                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                        BorderColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                        HorizontalOptions="Center"/>
-                                <Label Text="upload image or video"
-                                       FontSize="12"
-                                       TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
-                                       HorizontalOptions="Center"/>
-                            </StackLayout>
+                                            StrokeDashArray="5,5"
+                                            Stroke="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}"
+                                            Margin="{OnIdiom Phone='16', Default='24'}">
+                            <syncEffectsView:SfEffectsView TouchDownEffects="Ripple"
+                               RippleBackground="{DynamicResource Gray-300}">
+                                <StackLayout HorizontalOptions="Center"
+                                         VerticalOptions="Center"
+                                         Margin="46">
+                                    <Image
+                                                Source="export.png"
+                                                HeightRequest="24"
+                                                WidthRequest="24"
+                                                VerticalOptions="Center"
+                                                HorizontalOptions="Center"/>
+                                    <Label Text="Click to upload or drag and drop"
+                                                   Margin="12"
+                                                   FontSize="12"
+                                                   FontFamily="Roboto-Regular"
+                                                   TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                                   HorizontalOptions="Center"/>
+                                </StackLayout>
+                            </syncEffectsView:SfEffectsView>
                         </Border>
                     </StackLayout>
                 </Border>
 
-                <Border Padding="10"
-                        StrokeShape="RoundRectangle 10"
-                        WidthRequest="{OnPlatform WinUI=650, MacCatalyst=650}"
+                <BoxView  HeightRequest="8"
+                          IsVisible="{OnIdiom Phone='true', Default='false'}"
+                          BackgroundColor="{AppThemeBinding Light={DynamicResource SentMessageColorLight}, Dark={DynamicResource SentMessageColorDark}}"/>
+
+                <Border StrokeShape="{OnIdiom Desktop='RoundRectangle 8', Tablet='RoundRectangle 8'}"
+                        WidthRequest="{OnIdiom Default=900, Tablet=800, Phone=-1}"
+                        Stroke="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}"
                         BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                        Margin="10,0,10,10">
-                    <StackLayout Orientation="Vertical">
-                        <Label Text="Describe your review"
+                        Margin="{OnIdiom Default='24,0,24,24',Phone='0'}">
+                    <StackLayout>
+                        <StackLayout Orientation="Vertical" Spacing="16" Margin="{OnIdiom Default='24,24,16,16', Phone='16'}">
+                            <Label Text="Title"
+                               FontSize="16"
+                               CharacterSpacing="0.15"
+                               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                                FontFamily="Roboto-Medium"/>
-                        <dataForm:SfDataForm x:Name="reviewForm"
-                                             DataObject="{Binding ReviewInfo}"
-                                             MinimumHeightRequest="130"
-                                             LayoutType="TextInputLayout"
-                                             ValidationMode="PropertyChanged">
-                            <dataForm:SfDataForm.TextInputLayoutSettings>
-                                <dataForm:TextInputLayoutSettings ShowHelperText="True"
-                                                                  OutlineCornerRadius="5">
-                                    <dataForm:TextInputLayoutSettings.HelperTextStyle>
-                                        <dataForm:DataFormTextStyle FontFamily="Roboto-Regular"/>
-                                    </dataForm:TextInputLayoutSettings.HelperTextStyle>
-                                </dataForm:TextInputLayoutSettings>
-                            </dataForm:SfDataForm.TextInputLayoutSettings>
-                            <dataForm:SfDataForm.ErrorLabelTextStyle>
-                                <dataForm:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                                            FontFamily="Roboto-Regular"/>
-                            </dataForm:SfDataForm.ErrorLabelTextStyle>
-                            <dataForm:SfDataForm.LabelTextStyle>
-                                <dataForm:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}"
-                                                            FontFamily="Roboto-Regular"/>
-                            </dataForm:SfDataForm.LabelTextStyle>
-                            <dataForm:SfDataForm.ValidMessageLabelTextStyle>
-                                <dataForm:DataFormTextStyle FontFamily="Roboto-Regular"/>
-                            </dataForm:SfDataForm.ValidMessageLabelTextStyle>
-                            <dataForm:SfDataForm.EditorTextStyle>
-                                <dataForm:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                                            FontFamily="Roboto-Regular"/>
-                            </dataForm:SfDataForm.EditorTextStyle>
-                        </dataForm:SfDataForm>
+
+                        <inputLayout:SfTextInputLayout Stroke="{AppThemeBinding Light={DynamicResource ContentTextColorDark}, Dark={DynamicResource SecondaryTextColorLight}}"
+                                                       HeightRequest="76"
+                                                       IsHintAlwaysFloated="True"
+                                                       ShowHint="False"
+                                                       InputViewPadding="{OnIdiom Default='15,5,5,15', Phone='15,5,5,5'}"
+                                                       ContainerType="Outlined"
+                                                       BackgroundColor="Transparent" >
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}"/>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <Entry Text="{Binding ReviewInfo.Title}" Placeholder="Title (optional)" />
+                        </inputLayout:SfTextInputLayout>
+
+                        <Label Text="Describe your Review"
+                               FontSize="16"
+                               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                               CharacterSpacing="0.15"
+                               FontFamily="Roboto-Medium"/>
+
+                        <Border Stroke="{AppThemeBinding Light={DynamicResource ContentTextColorDark}, Dark={DynamicResource SecondaryTextColorLight}}"
+                                StrokeThickness="1"
+                                HeightRequest="116">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="4"/>
+                            </Border.StrokeShape>
+                            <inputLayout:SfTextInputLayout  VerticalOptions="Fill"
+                                                            IsHintAlwaysFloated="True"
+                                                            ShowHint="False"
+                                                            ContainerBackground="Transparent"
+                                                            UnfocusedStrokeThickness="0"
+                                                            FocusedStrokeThickness="0"
+                                                            ContainerType="Outlined" >
+                                <Editor Text="{Binding ReviewInfo.Review}"
+                                        Placeholder="Leave us a message..."
+                                        FontSize="16"
+                                        PlaceholderColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}"
+                                        AutoSize="TextChanges"/>
+                            </inputLayout:SfTextInputLayout>
+                        </Border>
+                        </StackLayout>
+
+                        <BoxView  HeightRequest="1"
+                              Margin="{OnIdiom Phone='0,16,0,0'}"
+                              IsVisible="{OnIdiom Phone='true', Default='false'}"
+                              Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
                         <buttons:SfButton Text="Submit"
-                                x:Name="submitButton"
-                                          HorizontalOptions="Center"
-                                Style="{DynamicResource FormsButtonStyle}"
-                                          Margin="0,10,0,0"
-                                          CornerRadius="20"/>
-
+                                      x:Name="submitButton"
+                                      HorizontalOptions="Center"
+                                      Style="{DynamicResource FormsButtonStyle}"
+                                      Margin="{OnIdiom Phone='0,16', Default='24'}"
+                                      CornerRadius="20"
+                                      Clicked="OnSubmitClicked"/>
                     </StackLayout>
-
                 </Border>
             </StackLayout>
 
         </ScrollView>
 
     </ContentView.Content>
-    <ContentView.Behaviors>
-        <local:ReviewBehavior/>
-    </ContentView.Behaviors>
 </ContentView>

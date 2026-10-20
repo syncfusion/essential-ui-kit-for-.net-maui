@@ -6,56 +6,116 @@
     <ContentView.Content>
 
         <Grid>
-            <button:SfButton
-                Margin="8"
-                FontSize="20"
-                HorizontalOptions="End"
-                Text="{DynamicResource Close}"
-                Style="{DynamicResource IconButtonStyle}"
-                VerticalOptions="Start"/>
+            <ScrollView Padding="0,10,0,10" HorizontalOptions="Fill" VerticalOptions="Fill">
+                <StackLayout HorizontalOptions="Fill"
+                             Spacing="0" VerticalOptions="Fill"
+                             MaximumWidthRequest="{OnIdiom Phone=360, Tablet=672, Desktop=672}"
+                             HeightRequest="{OnIdiom Phone=640, Default=-1}">
 
-            <StackLayout
-                HorizontalOptions="Center"
-                Spacing="0"
-                VerticalOptions="Center">
+                    <!--  Payment status image  -->
+                    <Border Stroke="#E5E1E3"
+                            StrokeThickness="1"
+                            StrokeShape="Ellipse"
+                            BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1C1B1D}"
+                            WidthRequest="96"
+                            HeightRequest="96">
+                        <Border.Shadow>
+                            <Shadow Brush="#f7cdcd"
+                                    Opacity="0.3"
+                                    Radius="10"
+                                    Offset="1,2"/>
+                        </Border.Shadow>
+                        <Image Source="alert_icon.png"
+                               WidthRequest="40"
+                               HeightRequest="40"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                    </Border>
 
-                <!--  Payment status image  -->
-                <Image
-                    Margin="0,10,0,0"
-                    HeightRequest="80"
-                    Source="paymentfailure.png"
-                    WidthRequest="80"/>
+                    <!--  Payment status label  -->
+                    <Label Margin="0,30,0,0"
+                           FontFamily="Roboto-Medium"
+                           FontSize="{OnIdiom Phone=16, Desktop=24, Tablet=24}"
+                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                           LineHeight="{OnPlatform Android=1.25, Default=-1}"
+                           Style="{DynamicResource TitleLabelStyle}"
+                           Text="Transaction unsuccessful"/>
 
-                <!--  Payment status label  -->
-                <Label
-                    Margin="0,40,0,0"
-                    FontSize="22"
-                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                    LineHeight="{OnPlatform Android=1.25,
-                            Default=-1}"
-                    Style="{DynamicResource TitleLabelStyle}"
-                    Text="Payment failure"/>
+                    <!--  Payment description label  -->
+                    <Label Margin="17,14,17,32"
+                           FontFamily="Roboto-Regular"
+                           FontSize="{OnIdiom Phone=14, Desktop=16, Tablet=16}"
+                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                           LineHeight="{OnPlatform Android=1.25, Default=-1}"
+                           Style="{DynamicResource TitleLabelStyle}"
+                           LineBreakMode="WordWrap"
+                           Text="Please check your payment details or try another method to complete your order."/>
 
-                <!--  Payment description label  -->
-                <Label
-                    Margin="17,8"
-                    FontFamily="Roboto-Regular"
-                    FontSize="16"
-                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                    LineHeight="{OnPlatform Android=1.25,
-                            Default=-1}"
-                    Style="{DynamicResource TitleLabelStyle}"
-                    Text="Please check your internet connection."/>
+                    <VerticalStackLayout Spacing="14" HorizontalOptions="Fill">
+                        <button:SfButton Margin="0"
+                                         Style="{DynamicResource FormsButtonStyle}"
+                                         Text="Try Again"
+                                         VerticalOptions="Start"
+                                         WidthRequest="{OnIdiom Phone=278, Desktop=448, Tablet=448}"/>
 
-                <button:SfButton
-                    Margin="0,24"
-                    Style="{DynamicResource FormsButtonStyle}"
-                    Text="Try Again"
-                    VerticalOptions="Start"
-                    WidthRequest="245"/>
+                        <button:SfButton Margin="0"
+                                         CornerRadius="24"
+                                         FontSize="14"
+                                         Stroke="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                         StrokeThickness="2"
+                                         FontFamily="Roboto-Medium"
+                                         Background="Transparent"
+                                         Text="Continue Shopping"
+                                         TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                         WidthRequest="{OnIdiom Phone=278, Desktop=448, Tablet=448}">
+                        </button:SfButton>
+                    </VerticalStackLayout>
 
-            </StackLayout>
-
+                    <Border Margin="{OnIdiom Phone='0,16,0,0', Desktop='0,32,0,0', Tablet='0,32,0,0'}" HeightRequest="{OnIdiom Phone=131, Desktop=168, Tablet=168}" WidthRequest="{OnIdiom Phone=278, Desktop=448, Tablet=448}" StrokeShape="RoundRectangle 10">
+                        <Grid RowDefinitions="Auto,Auto" Padding="{OnIdiom Phone='12,12,8,16', Desktop='20,16,10,16', Tablet='20,16,10,16'}" ColumnDefinitions="Auto,*">
+                            <Label Grid.Column="0" Grid.Row="0"
+                                   Margin="{OnIdiom Phone='6', Desktop='10', Tablet='10'}"
+                                   Text="ORDER SUMMARY"
+                                   LineBreakMode="TailTruncation"
+                                   FontSize="12"
+                                   TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                   FontFamily="Roboto-Regular"/>
+                            <Label Grid.Column="1" Grid.Row="0"
+                                   Margin="{OnIdiom Phone='-60,6,0,8', Desktop='10', Tablet='10'}"
+                                   Text="#LB-983021"
+                                   LineBreakMode="TailTruncation"
+                                   FontSize="12" HorizontalOptions="{OnIdiom Phone=Center, Desktop=End, Tablet=End}"
+                                   TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                   FontFamily="Roboto-Regular"/>
+                            <Grid Grid.Column="0" Grid.Row="1" ColumnDefinitions="Auto,*" HorizontalOptions="Start" ColumnSpacing="12" Margin="{OnIdiom Phone='6,6,0,0', Desktop='10,0,0,0', Tablet='10,0,0,0'}" Grid.ColumnSpan="2">
+                                <Image Grid.Column="0"
+                                       HorizontalOptions="Start"
+                                       Source="order_summary_image.png"
+                                       WidthRequest="{OnIdiom Phone=52, Desktop=64, Tablet=64}"
+                                       HeightRequest="{OnIdiom Phone=65, Desktop=80, Tablet=80}"
+                                       Aspect="AspectFill"/>
+                                <Grid Grid.Column="1" RowSpacing="0" ColumnSpacing="0" Margin="8,8,0,0" RowDefinitions="*,*">
+                                    <Label Grid.Row="0"  HorizontalOptions="Start"
+                                           FontFamily="Roboto-Regular"
+                                           FontSize="{OnIdiom Phone=14, Desktop=16, Tablet=16}" Padding="0"
+                                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                           LineHeight="{OnPlatform Android=1.25, Default=-1}"
+                                           Style="{DynamicResource TitleLabelStyle}"
+                                           LineBreakMode="WordWrap"
+                                           Text="Silk Blend Evening Dress"/>
+                                    <Label Grid.Row="1"  HorizontalOptions="Start"
+                                           FontFamily="Roboto-Medium"
+                                           FontSize="{OnIdiom Phone=16, Desktop=24, Tablet=24}" Padding="0"
+                                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                           LineHeight="{OnPlatform Android=1.25, Default=-1}"
+                                           Style="{DynamicResource TitleLabelStyle}"
+                                           Text="$450.00"/>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </StackLayout>
+            </ScrollView>
         </Grid>
     </ContentView.Content>
 </ContentView>

@@ -1,4 +1,6 @@
 ﻿using System.Globalization;
+using System.Text.RegularExpressions;
+using EssentialMAUIUIKit.Models.Chat;
 
 namespace EssentialMAUIUIKit.Converters
 {
@@ -44,22 +46,6 @@ namespace EssentialMAUIUIKit.Converters
                     break;
             }
 
-            if (!string.IsNullOrEmpty((string)messageType) && bindingContext?.NotificationType == "New")
-            {
-                if (Application.Current?.Resources.TryGetValue("SecondaryTextColorLight", out var returnColorObj) == true && returnColorObj is Color returnColor)
-                {
-                    label.FontFamily = "Roboto-Medium";
-                    label.TextColor = returnColor;
-                }
-            }
-            else
-            {
-                if (Application.Current?.Resources.TryGetValue("SecondaryTextColorLight", out var returnColorObj) == true && returnColorObj is Color returnColor)
-                {
-                    label.FontFamily = "Roboto-Regular";
-                    label.TextColor = returnColor;
-                }
-            }
 
             return messageType;
         }
@@ -75,6 +61,39 @@ namespace EssentialMAUIUIKit.Converters
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             return null;
+        }
+    }
+
+    public class TimeBreakConverter : IValueConverter
+    {
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return string.Empty;
+
+            DateTime date;
+
+            if (value is DateTime dt)
+            {
+                date = dt.Date;
+            }
+            else if (!DateTime.TryParse(value.ToString(), out date))
+            {
+                return value.ToString();
+            }
+
+            if (date == DateTime.Today)
+                return "Today";
+
+            if (date == DateTime.Today.AddDays(-1))
+                return "Yesterday";
+
+            return date.ToString("dd MMM yyyy");
+        }
+
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }

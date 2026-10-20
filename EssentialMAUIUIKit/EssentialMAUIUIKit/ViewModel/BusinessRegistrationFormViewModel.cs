@@ -1,80 +1,358 @@
 ﻿using Syncfusion.Maui.DataForm;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace EssentialMAUIUIKit
 {
     class BusinessRegistrationFormViewModel
     {
         public BusinessRegistrationFormInfo ContactsInfo { get; set; }
+        public ICommand SubmitCommand { get; set; }
 
         #region Constructor
         public BusinessRegistrationFormViewModel()
         {
             this.ContactsInfo = new BusinessRegistrationFormInfo();
-        }
 
+            this.SubmitCommand = new Command(this.Submit);
+        }
+        private void Submit()
+        {
+            if (this.ContactsInfo == null)
+            {
+                return;
+            }
+
+            this.ContactsInfo.ShowValidation = true;
+        }
         #endregion
     }
 
-    public class BusinessRegistrationFormInfo
+    public class BusinessRegistrationFormInfo : INotifyPropertyChanged
     {
-        public BusinessRegistrationFormInfo()
+        private string businessOwnerName = string.Empty;
+        private string businessName = string.Empty;
+        private string businessType = string.Empty;
+        private string businessEmail = string.Empty;
+        private string businessAddress = string.Empty;
+        private string businessCountry = string.Empty;
+        private string businessState = string.Empty;
+        private string businessCity = string.Empty;
+        private string businessPhoneNumber = string.Empty;
+        private bool showValidation;
+
+        public string BusinessOwnerName
         {
-            this.BusinessOwnerName = string.Empty;
-            this.BusinessName = string.Empty;
-            this.BusinessType = string.Empty;
-            this.BusinessEmail = string.Empty;
-            this.BusinessAddress = string.Empty;
-            this.BusinessCountry = string.Empty;
-            this.BusinessState = string.Empty;
-            this.BusinessCity = string.Empty;
-            this.BusinessPhoneNumber = string.Empty;
+            get => businessOwnerName;
+            set
+            {
+                if (businessOwnerName == value)
+                    return;
+
+                businessOwnerName = value;
+
+                OnPropertyChanged();
+                RefreshValidationProperties();
+            }
         }
 
-        [Display(Name = "Full Name")]
-        [DataFormDisplayOptions(ColumnSpan = 2)]
-        [Required(ErrorMessage = "Enter your full name")]
-        public string BusinessOwnerName { get; set; }
+        public string BusinessName
+        {
+            get => businessName;
+            set
+            {
+                if (businessName == value)
+                    return;
 
-        [Display(Name = "Business Name")]
-        [DataFormDisplayOptions(ColumnSpan = 2)]
-        [Required(ErrorMessage = "Enter your business name")]
-        public string BusinessName { get; set; }
+                businessName = value;
 
-        [Display(Name = "Type of Business")]
-        [DataFormDisplayOptions(ColumnSpan = 2)]
-        [Required(ErrorMessage = "Enter your business type")]
-        public string BusinessType { get; set; }
+                OnPropertyChanged();
+                RefreshValidationProperties();
+            }
+        }
 
-        [Display(Name = "Email")]
-        [DataFormDisplayOptions(ColumnSpan = 2)]
-        [Required(ErrorMessage = "Enter your email")]
-        public string BusinessEmail { get; set; }
+        public string BusinessType
+        {
+            get => businessType;
+            set
+            {
+                if (businessType == value)
+                    return;
 
-        [Display(Name = "Address")]
-        [DataFormDisplayOptions(ColumnSpan = 2)]
-        [Required(ErrorMessage = "Enter your address")]
-        public string BusinessAddress { get; set; }
+                businessType = value;
 
-        [Display(Name = "Country")]
-        [DataFormDisplayOptions(ColumnSpan = 2)]
-        [Required(ErrorMessage = "Enter your country")]
-        public string BusinessCountry { get; set; }
+                OnPropertyChanged();
+                RefreshValidationProperties();
+            }
+        }
 
-        [Display(Name = "State")]
-        [DataFormDisplayOptions(ColumnSpan = 1)]
-        [Required(ErrorMessage = "Enter your state")]
-        public string BusinessState { get; set; }
+        public string BusinessEmail
+        {
+            get => businessEmail;
+            set
+            {
+                if (businessEmail == value)
+                    return;
 
-        [Display(Name = "City")]
-        [DataFormDisplayOptions(ColumnSpan = 1)]
-        [Required(ErrorMessage = "Enter your city")]
-        public string BusinessCity { get; set; }
+                businessEmail = value;
 
-        [Display(Name = "Phone Number")]
-        [DataFormDisplayOptions(ColumnSpan = 2)]
-        [DataType(DataType.PhoneNumber)]
-        [Required(ErrorMessage = "Enter your phone number")]
-        public string BusinessPhoneNumber { get; set; }
+                OnPropertyChanged();
+                RefreshValidationProperties();
+            }
+        }
+
+        public string BusinessAddress
+        {
+            get => businessAddress;
+            set
+            {
+                if (businessAddress == value)
+                    return;
+
+                businessAddress = value;
+
+                OnPropertyChanged();
+                RefreshValidationProperties();
+            }
+        }
+
+        public string BusinessCountry
+        {
+            get => businessCountry;
+            set
+            {
+                if (businessCountry == value)
+                    return;
+
+                businessCountry = value;
+
+                OnPropertyChanged();
+                RefreshValidationProperties();
+            }
+        }
+
+        public string BusinessState
+        {
+            get => businessState;
+            set
+            {
+                if (businessState == value)
+                    return;
+
+                businessState = value;
+
+                OnPropertyChanged();
+                RefreshValidationProperties();
+            }
+        }
+
+        public string BusinessCity
+        {
+            get => businessCity;
+            set
+            {
+                if (businessCity == value)
+                    return;
+
+                businessCity = value;
+
+                OnPropertyChanged();
+                RefreshValidationProperties();
+            }
+        }
+
+        public string BusinessPhoneNumber
+        {
+            get => businessPhoneNumber;
+            set
+            {
+                if (businessPhoneNumber == value)
+                    return;
+
+                businessPhoneNumber = value;
+
+                OnPropertyChanged();
+                RefreshValidationProperties();
+            }
+        }
+
+        public bool ShowValidation
+        {
+            get => showValidation;
+            set
+            {
+                if (showValidation == value)
+                    return;
+
+                showValidation = value;
+
+                OnPropertyChanged();
+                RefreshValidationProperties();
+            }
+        }
+
+        #region Error Messages
+
+        public string BusinessOwnerNameError =>
+            ShowValidation && string.IsNullOrWhiteSpace(BusinessOwnerName)
+                ? "Enter your full name"
+                : string.Empty;
+
+        public string BusinessNameError =>
+            ShowValidation && string.IsNullOrWhiteSpace(BusinessName)
+                ? "Enter your business name"
+                : string.Empty;
+
+        public string BusinessTypeError =>
+            ShowValidation && string.IsNullOrWhiteSpace(BusinessType)
+                ? "Enter your business type"
+                : string.Empty;
+
+        public string BusinessAddressError =>
+            ShowValidation && string.IsNullOrWhiteSpace(BusinessAddress)
+                ? "Enter your address"
+                : string.Empty;
+
+        public string BusinessCountryError =>
+            ShowValidation && string.IsNullOrWhiteSpace(BusinessCountry)
+                ? "Enter your country"
+                : string.Empty;
+
+        public string BusinessStateError =>
+            ShowValidation && string.IsNullOrWhiteSpace(BusinessState)
+                ? "Enter your state"
+                : string.Empty;
+
+        public string BusinessCityError =>
+            ShowValidation && string.IsNullOrWhiteSpace(BusinessCity)
+                ? "Enter your city"
+                : string.Empty;
+
+        public string BusinessPhoneNumberError =>
+            ShowValidation && string.IsNullOrWhiteSpace(BusinessPhoneNumber)
+                ? "Enter your phone number"
+                : string.Empty;
+
+        public string BusinessEmailError
+        {
+            get
+            {
+                if (!ShowValidation)
+                    return string.Empty;
+
+                if (string.IsNullOrWhiteSpace(BusinessEmail))
+                    return "Enter your email";
+
+                var emailValidator = new EmailAddressAttribute();
+
+                if (!emailValidator.IsValid(BusinessEmail))
+                    return "Enter valid email";
+
+                return string.Empty;
+            }
+        }
+
+        #endregion
+
+        #region HasError
+
+        public bool HasBusinessOwnerNameError =>
+            !string.IsNullOrEmpty(BusinessOwnerNameError);
+
+        public bool HasBusinessNameError =>
+            !string.IsNullOrEmpty(BusinessNameError);
+
+        public bool HasBusinessTypeError =>
+            !string.IsNullOrEmpty(BusinessTypeError);
+
+        public bool HasBusinessEmailError =>
+            !string.IsNullOrEmpty(BusinessEmailError);
+
+        public bool HasBusinessAddressError =>
+            !string.IsNullOrEmpty(BusinessAddressError);
+
+        public bool HasBusinessCountryError =>
+            !string.IsNullOrEmpty(BusinessCountryError);
+
+        public bool HasBusinessStateError =>
+            !string.IsNullOrEmpty(BusinessStateError);
+
+        public bool HasBusinessCityError =>
+            !string.IsNullOrEmpty(BusinessCityError);
+
+        public bool HasBusinessPhoneNumberError =>
+            !string.IsNullOrEmpty(BusinessPhoneNumberError);
+
+        public bool ReserveBusinessOwnerNameError =>
+            HasBusinessOwnerNameError;
+
+        public bool ReserveBusinessNameError =>
+            HasBusinessNameError;
+
+        public bool ReserveBusinessTypeError =>
+            HasBusinessTypeError;
+
+        public bool ReserveBusinessEmailError =>
+            HasBusinessEmailError;
+
+        public bool ReserveBusinessAddressError =>
+            HasBusinessAddressError;
+
+        public bool ReserveBusinessCountryError =>
+            HasBusinessCountryError;
+
+        public bool ReserveBusinessStateError =>
+            HasBusinessStateError;
+
+        public bool ReserveBusinessCityError =>
+            HasBusinessCityError;
+
+        public bool ReserveBusinessPhoneError =>
+            HasBusinessPhoneNumberError; 
+
+        #endregion
+
+        private void RefreshValidationProperties()
+        {
+            OnPropertyChanged(nameof(BusinessOwnerNameError));
+            OnPropertyChanged(nameof(BusinessNameError));
+            OnPropertyChanged(nameof(BusinessTypeError));
+            OnPropertyChanged(nameof(BusinessEmailError));
+            OnPropertyChanged(nameof(BusinessAddressError));
+            OnPropertyChanged(nameof(BusinessCountryError));
+            OnPropertyChanged(nameof(BusinessStateError));
+            OnPropertyChanged(nameof(BusinessCityError));
+            OnPropertyChanged(nameof(BusinessPhoneNumberError));
+
+            OnPropertyChanged(nameof(HasBusinessOwnerNameError));
+            OnPropertyChanged(nameof(HasBusinessNameError));
+            OnPropertyChanged(nameof(HasBusinessTypeError));
+            OnPropertyChanged(nameof(HasBusinessEmailError));
+            OnPropertyChanged(nameof(HasBusinessAddressError));
+            OnPropertyChanged(nameof(HasBusinessCountryError));
+            OnPropertyChanged(nameof(HasBusinessStateError));
+            OnPropertyChanged(nameof(HasBusinessCityError));
+            OnPropertyChanged(nameof(HasBusinessPhoneNumberError));
+
+            OnPropertyChanged(nameof(ReserveBusinessOwnerNameError));
+            OnPropertyChanged(nameof(ReserveBusinessNameError));
+            OnPropertyChanged(nameof(ReserveBusinessTypeError));
+            OnPropertyChanged(nameof(ReserveBusinessEmailError));
+            OnPropertyChanged(nameof(ReserveBusinessAddressError));
+            OnPropertyChanged(nameof(ReserveBusinessCountryError));
+            OnPropertyChanged(nameof(ReserveBusinessStateError));
+            OnPropertyChanged(nameof(ReserveBusinessCityError));
+            OnPropertyChanged(nameof(ReserveBusinessPhoneError));
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected void OnPropertyChanged(
+            [CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

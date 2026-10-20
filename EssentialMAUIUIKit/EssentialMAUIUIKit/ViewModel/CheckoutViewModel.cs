@@ -1,7 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text.Json;
+using System.Windows.Input;
+using EssentialMAUIUIKit.ViewModel;
 
 namespace EssentialMAUIUIKit
 {
@@ -9,6 +11,14 @@ namespace EssentialMAUIUIKit
     {
         private ObservableCollection<DeliveryAddress>? deliveryAddress;
         private ObservableCollection<PaymentMode>? paymentModes;
+        private ObservableCollection<QuickPaymentMethod>? quickPaymentMethods;
+        private ObservableCollection<OrderItem>? orderItems;
+        private ObservableCollection<PriceLine>? priceLines;
+        private DeliveryAddress? selectedAddress;
+        private PaymentMode? selectedPaymentMode;
+        private decimal totalAmount;
+        private decimal savings;
+        private string orderId = string.Empty;
 
         public CheckoutViewModel()
         {
@@ -37,54 +47,120 @@ namespace EssentialMAUIUIKit
             }
         }
 
-        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        public ObservableCollection<QuickPaymentMethod>? QuickPaymentMethods
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            get => quickPaymentMethods;
+            set
+            {
+                quickPaymentMethods = value;
+                OnPropertyChanged();
+            }
         }
+
+        public ObservableCollection<OrderItem>? OrderItems
+        {
+            get => orderItems;
+            set
+            {
+                orderItems = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<PriceLine>? PriceLines
+        {
+            get => priceLines;
+            set
+            {
+                priceLines = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public DeliveryAddress? SelectedAddress
+        {
+            get => selectedAddress;
+            set
+            {
+                selectedAddress = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public PaymentMode? SelectedPaymentMode
+        {
+            get => selectedPaymentMode;
+            set
+            {
+                selectedPaymentMode = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public decimal TotalAmount
+        {
+            get => totalAmount;
+            set
+            {
+                totalAmount = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public decimal Savings
+        {
+            get => savings;
+            set
+            {
+                savings = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string OrderId
+        {
+            get => orderId;
+            set
+            {
+                orderId = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ICommand PlaceOrderCommand => new Command(() =>
+        {
+            // Sample command hook; real flows would navigate to a success/failure page.
+        });
 
         public void PopulateData()
         {
-            string jsonData = @"
+            var addresses = TransactionMockDataService.GetDeliveryAddresses();
+            DeliveryAddress = new ObservableCollection<DeliveryAddress>(addresses);
+            SelectedAddress = addresses.Count > 0 ? addresses[0] : null;
+
+            var payments = TransactionMockDataService.GetPaymentModes();
+            PaymentModes = new ObservableCollection<PaymentMode>(payments);
+            SelectedPaymentMode = payments.Count > 0 ? payments[0] : null;
+
+            QuickPaymentMethods = new ObservableCollection<QuickPaymentMethod>(
+                TransactionMockDataService.GetQuickPaymentMethods());
+
+            OrderItems = new ObservableCollection<OrderItem>(
+                TransactionMockDataService.GetOrderItems());
+
+            PriceLines = new ObservableCollection<PriceLine>(
+                TransactionMockDataService.GetPriceLines());
+
+            // Aggregate totals from the seeded data so they can be bound
+            // instead of being repeated as literal strings in XAML.
+            TotalAmount = 407.00m;
+            Savings = 47.00m;
+            OrderId = "#89027532";
+        }
+
+        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
-            ""deliveryAddress"": [
-                {
-                    ""customerId"": 1,
-                    ""customerName"": ""John Doe"",
-                    ""addressType"": ""Home"",
-                    ""address"": ""410 Terry Ave N, USA"",
-                    ""mobileNumber"": ""+1-202-555-0101""
-                },
-                {
-                    ""customerId"": 1,
-                    ""customerName"": ""John Doe"",
-                    ""addressType"": ""Office"",
-                    ""address"": ""388 Fort Worth, Texas, United States"",
-                    ""mobileNumber"": ""+1-356-636-8572""
-                }
-            ],
-            ""paymentModes"": [
-                {
-                    ""paymentModeName"": ""Goldman Sachs Bank Credit Card"",
-                    ""cardNumber"": ""48** **** **** 9876""
-                },
-                {
-                    ""paymentModeName"": ""Wells Fargo Bank Credit Card"",
-                    ""cardNumber"": ""52** **** **** 4021""
-                }                
-            ]
-        }";
-            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            var data = JsonSerializer.Deserialize<Data>(jsonData, options);
-
-            if (data?.DeliveryAddress != null)
-            {
-                DeliveryAddress = new ObservableCollection<DeliveryAddress>(data.DeliveryAddress);
-            }
-
-            if (data?.PaymentModes != null)
-            {
-                PaymentModes = new ObservableCollection<PaymentMode>(data.PaymentModes);
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 
@@ -93,6 +169,8 @@ namespace EssentialMAUIUIKit
         public string? PaymentModeName { get; set; }
         public string? CardNumber { get; set; }
         public string? CardTypeIcon { get; set; }
+        public string? Expiry { get; set; }
+        public string? CardType { get; set; }
     }
 
     public class DeliveryAddress
@@ -102,11 +180,5 @@ namespace EssentialMAUIUIKit
         public string? AddressType { get; set; }
         public string? Address { get; set; }
         public string? MobileNumber { get; set; }
-    }
-
-    public class Data
-    {
-        public List<DeliveryAddress>? DeliveryAddress { get; set; }
-        public List<PaymentMode>? PaymentModes { get; set; }
     }
 }

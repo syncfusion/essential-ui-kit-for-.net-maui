@@ -19,6 +19,11 @@
         public string? Name { get; set; }
 
         /// <summary>
+        /// Gets or sets the role.
+        /// </summary>
+        public string? Role { get; set; }
+
+        /// <summary>
         /// Gets or sets the image path.
         /// </summary>
         public string ImagePath

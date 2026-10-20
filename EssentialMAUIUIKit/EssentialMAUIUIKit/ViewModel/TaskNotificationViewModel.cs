@@ -1,108 +1,120 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text.Json;
+using System.Windows.Input;
+using EssentialMAUIUIKit.ViewModel;
+using Microsoft.Maui.Controls;
 
 namespace EssentialMAUIUIKit
 {
+    /// <summary>
+    /// View model bind surface for the task notifications page.
+    /// All seed data lives in <see cref="NotificationMockDataService"/>.
+    /// </summary>
     public class TaskNotificationViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<TaskNotificationItem>? taskNotifications;
+        private ObservableCollection<TaskNotificationItem>? todayTaskNotifications;
+        private ObservableCollection<TaskNotificationItem>? yesterdayTaskNotifications;
+        private string? statusMessage;
+        private ICommand? markAllAsReadCommand;
 
         public TaskNotificationViewModel()
         {
-            this.PopulateData();
+            PopulateData();
         }
 
-        public ObservableCollection<TaskNotificationItem>? TaskNotifications
+        public ObservableCollection<TaskNotificationItem>? TodayTaskNotifications
         {
-            get => taskNotifications;
+            get => todayTaskNotifications;
             set
             {
-                taskNotifications = value;
+                todayTaskNotifications = value;
                 OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<TaskNotificationItem>? YesterdayTaskNotifications
+        {
+            get => yesterdayTaskNotifications;
+            set
+            {
+                yesterdayTaskNotifications = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Optional status message shown when the data load fails.
+        /// </summary>
+        public string? StatusMessage
+        {
+            get => statusMessage;
+            set
+            {
+                statusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Command-driven "mark all as read" action. Drives the existing
+        /// button via <c>Command="{Binding MarkAllAsReadCommand}"</c> instead
+        /// of leaving it as a static UI affordance.
+        /// </summary>
+        public ICommand? MarkAllAsReadCommand
+        {
+            get
+            {
+                return markAllAsReadCommand ??= new Command(() =>
+                {
+                    if (TodayTaskNotifications is null && YesterdayTaskNotifications is null)
+                    {
+                        return;
+                    }
+
+                    MarkAllRead(TodayTaskNotifications);
+                    MarkAllRead(YesterdayTaskNotifications);
+                    OnPropertyChanged(nameof(TodayTaskNotifications));
+                    OnPropertyChanged(nameof(YesterdayTaskNotifications));
+                });
             }
         }
 
         public void PopulateData()
         {
-            string jsonData = @"
-        {
-            ""taskNotificationPageList"": [
-                {
-                    ""userName"": ""AB"",
-                    ""backgroundColor"": ""#837bff"",
-                    ""description"": ""Provide banner image for new control"",
-                    ""detail"": ""Please review this image and send me your feedback."",
-                    ""taskID"": ""GRAP-13578"",
-                    ""time"": ""2 mins ago"",
-                    ""isRead"": false
-                },
-                {
-                    ""userName"": ""BR"",
-                    ""backgroundColor"": ""#678cc8"",
-                    ""description"": ""Provide banner image for new control"",
-                    ""detail"": ""Sarah Pyke attached new image"",
-                    ""taskID"": ""GRAP-13578"",
-                    ""time"": ""2 mins ago"",
-                    ""isRead"": false
-                },
-                {
-                    ""userName"": ""DM"",
-                    ""backgroundColor"": ""#29aaa0"",
-                    ""description"": ""Need .gif image for attached document"",
-                    ""detail"": ""Larry Burton updated images in task"",
-                    ""taskID"": ""GRAP-13934"",
-                    ""time"": ""2 mins ago"",
-                    ""isRead"": true
-                },
-                {
-                    ""userName"": ""ER"",
-                    ""backgroundColor"": ""#db7faa"",
-                    ""description"": ""Provide banner image for new control"",
-                    ""detail"": ""Please review this image and send me your feedback."",
-                    ""taskID"": ""GRAP-13578"",
-                    ""time"": ""2 mins ago"",
-                    ""isRead"": false
-                },
-                {
-                    ""userName"": ""EN"",
-                    ""backgroundColor"": ""#dc9737"",
-                    ""description"": ""Provide banner image for new control"",
-                    ""detail"": ""Larry Burton updated images in task"",
-                    ""taskID"": ""GRAP-13578"",
-                    ""time"": ""2 mins ago"",
-                    ""isRead"": true
-                },
-                {
-                    ""userName"": ""DM"",
-                    ""backgroundColor"": ""#a8d35f"",
-                    ""description"": ""Need .gif image for attached document"",
-                    ""detail"": ""Larry Burton updated images in task"",
-                    ""taskID"": ""GRAP-13934"",
-                    ""time"": ""2 mins ago"",
-                    ""isRead"": true
-                }
-            ]
-        }";
+            var notifications = NotificationMockDataService.GetTaskNotifications();
 
-            try
+            if (notifications is null || notifications.Count == 0)
             {
-                var options = new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                };
-
-                var notificationsList = JsonSerializer.Deserialize<TaskNotificationsList>(jsonData, options);
-                if (notificationsList != null && notificationsList.TaskNotificationPageList != null)
-                {
-                    TaskNotifications = new ObservableCollection<TaskNotificationItem>(notificationsList.TaskNotificationPageList);
-                }
+                StatusMessage = "No task notifications.";
+                TodayTaskNotifications = new ObservableCollection<TaskNotificationItem>();
+                YesterdayTaskNotifications = new ObservableCollection<TaskNotificationItem>();
+                return;
             }
-            catch (Exception ex)
+
+            // Split the seed content between today/yesterday buckets. The
+            // split mirrors the visual layout so the page bindings stay
+            // distinct and easy to reason about.
+            int todayCount = Math.Min(4, notifications.Count);
+            var today = notifications.Take(todayCount).ToList();
+            var yesterday = notifications.Skip(todayCount).ToList();
+
+            TodayTaskNotifications = new ObservableCollection<TaskNotificationItem>(today);
+            YesterdayTaskNotifications = new ObservableCollection<TaskNotificationItem>(yesterday);
+            StatusMessage = string.Empty;
+        }
+
+        private static void MarkAllRead(ObservableCollection<TaskNotificationItem>? items)
+        {
+            if (items is null)
             {
-                // Handle JSON parsing exceptions
-                Console.WriteLine($"Error parsing JSON: {ex.Message}");
+                return;
+            }
+
+            foreach (var item in items)
+            {
+                item.IsRead = true;
             }
         }
 
@@ -114,20 +126,61 @@ namespace EssentialMAUIUIKit
         }
     }
 
-    public class TaskNotificationItem
+    /// <summary>
+    /// Single task notification payload bound to the task list item template.
+    /// Implements <see cref="INotifyPropertyChanged"/> so the
+    /// <see cref="IsRead"/> state propagates to the UI when the
+    /// "Mark all as read" command runs.
+    /// </summary>
+    public class TaskNotificationItem : INotifyPropertyChanged
     {
+        private bool isRead;
+        private string? semanticDescription;
+
         public string? UserName { get; set; }
         public string? BackgroundColor { get; set; }
         public string? Description { get; set; }
         public string? Detail { get; set; }
         public string? TaskID { get; set; }
         public string? Time { get; set; }
-        public bool IsRead { get; set; }
-    }
 
-    public class TaskNotificationsList
-    {
-        public List<TaskNotificationItem>? TaskNotificationPageList { get; set; }
-    }
+        public bool IsRead
+        {
+            get => isRead;
+            set
+            {
+                if (isRead == value)
+                {
+                    return;
+                }
 
+                isRead = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(SemanticDescription));
+            }
+        }
+
+        /// <summary>
+        /// Screen reader friendly description combining the description,
+        /// detail, ticket id, and read state.
+        /// </summary>
+        public string SemanticDescription
+        {
+            get => semanticDescription ??= string.IsNullOrWhiteSpace(TaskID)
+                ? $"{Description}. {Detail}, {(isRead ? "read" : "unread")}"
+                : $"{Description}. {Detail} {TaskID}, {(isRead ? "read" : "unread")}";
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (propertyName is nameof(Description) or nameof(Detail) or nameof(TaskID) or nameof(IsRead))
+            {
+                semanticDescription = null;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SemanticDescription)));
+            }
+        }
+    }
 }

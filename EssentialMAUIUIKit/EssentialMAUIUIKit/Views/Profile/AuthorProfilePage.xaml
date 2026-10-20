@@ -2,165 +2,363 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Profile.AuthorProfilePage"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
-             xmlns:switch="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:avatar="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Toolkit.EffectsView;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              x:DataType="local:AuthorProfileViewModel">
     <ContentView.BindingContext>
         <local:AuthorProfileViewModel/>
     </ContentView.BindingContext>
 
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style x:Key="AuthorProfileReadOnlyField" TargetType="Entry">
+                <Setter Property="IsReadOnly" Value="True" />
+            </Style>
+
+            <Style x:Key="AuthorProfileInfoRow" TargetType="Grid">
+                <Setter Property="ColumnDefinitions" Value="*,Auto" />
+                <Setter Property="ColumnSpacing" Value="12" />
+                <Setter Property="Padding" Value="16" />
+            </Style>
+
+            <Style x:Key="AuthorProfileInfoRowLabel" TargetType="Label">
+                <Setter Property="FontFamily" Value="Roboto-Regular" />
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+
+            <Style x:Key="AuthorProfileInfoRowValue" TargetType="Label">
+                <Setter Property="FontFamily" Value="Roboto-Regular" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="HorizontalTextAlignment" Value="End" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=#474648, Dark=#FFFFFF}" />
+            </Style>
+
+            <Style x:Key="AuthorProfileInfoRowChevron" TargetType="Label">
+                <Setter Property="FontFamily" Value="FontIcons" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=#474648, Dark=#FFFFFF}" />
+            </Style>
+
+            <Style x:Key="AuthorProfileInfoRowAccess" TargetType="Grid">
+                <Setter Property="SemanticProperties.Hint" Value="Tap to view details" />
+                <Setter Property="AutomationProperties.IsInAccessibleTree" Value="True" />
+            </Style>
+
+            <!-- Card surface used for the personal-info and regional-settings cards -->
+            <Style x:Key="AuthorProfileCardBorder" TargetType="Border">
+                <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+                <Setter Property="Stroke" Value="{AppThemeBinding Light=#C9C6C8, Dark=#474648}" />
+                <Setter Property="StrokeThickness" Value="1" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+            </Style>
+
+            <!-- Outlined input layout used for Name / Bio / Phone -->
+            <Style x:Key="AuthorProfileInputLayout" TargetType="inputLayout:SfTextInputLayout">
+                <Setter Property="ContainerType" Value="Outlined" />
+                <Setter Property="InputViewPadding" Value="15,0,0,5" />
+                <Setter Property="HeightRequest" Value="70" />
+                <Setter Property="Stroke" Value="{AppThemeBinding Light=#C9C6C8, Dark=#474648}" />
+            </Style>
+
+            <!-- Field caption shown above each input -->
+            <Style x:Key="AuthorProfileFieldLabel" TargetType="Label">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="FontFamily" Value="Roboto-Regular" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=#313032, Dark=#FFFFFF}" />
+                <Setter Property="Margin" Value="3,0" />
+            </Style>
+
+            <!-- Section title (e.g. "Personal info", "Regional Settings") -->
+            <Style x:Key="AuthorProfileSectionTitle" TargetType="Label">
+                <Setter Property="FontFamily" Value="Roboto-Medium" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=#313032, Dark=#FFFFFF}" />
+            </Style>
+
+            <!-- Settings panel item (icon + label + chevron) -->
+            <Style x:Key="AuthorProfilePanelItem" TargetType="Grid">
+                <Setter Property="Padding" Value="16,12" />
+                <Setter Property="ColumnSpacing" Value="12" />
+                <Setter Property="ColumnDefinitions" Value="Auto,*,Auto" />
+            </Style>
+
+            <!-- Settings panel item label -->
+            <Style x:Key="AuthorProfilePanelItemLabel" TargetType="Label">
+                <Setter Property="FontFamily" Value="Roboto-Regular" />
+                <Setter Property="Grid.Column" Value="1" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+            </Style>
+
+            <Style x:Key="AuthorProfileInteractiveGrid"
+       TargetType="Grid">
+                <Setter Property="BackgroundColor"
+            Value="Transparent" />
+
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Opacity"
+                                Value="1" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="Opacity"
+                                Value="0.7" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
     <ContentView.Content>
         <ScrollView>
+            <Grid BackgroundColor="{AppThemeBinding Light=#F5F5F5, Dark=#1C1B1D}">
+                <Grid.ColumnDefinitions>
+                    <!-- Settings Panel -->
+                    <ColumnDefinition Width="{OnIdiom Phone=0, Default=260}" />
+                    <!-- Content -->
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <StackLayout BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                         Spacing="0">
+                <!-- LEFT SETTINGS PANEL -->
+                <Border Grid.Column="0"
+                        IsVisible="{OnIdiom Phone=False, Default=True}"
+                        BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1C1B1D}"
+                        Stroke="{AppThemeBinding Light=#E5E1E3, Dark=#474648}"
+                        StrokeThickness="1">
+                    <VerticalStackLayout Spacing="5">
+                        <!-- Header -->
+                        <Grid Padding="16,12">
+                            <Label Text="&#xe708;"
+                                   FontSize="16"
+                                   FontFamily="UIKitIcons"
+                                   TextColor="{AppThemeBinding Light=#313032, Dark=#FFFFFF}"
+                                   VerticalOptions="Center"
+                                   AutomationProperties.IsInAccessibleTree="False" />
+                            <Label Margin="28,0,0,0"
+                                   Text="Settings"
+                                   FontFamily="Roboto-Medium"
+                                   FontSize="14"
+                                   TextColor="{AppThemeBinding Light=#313032, Dark=#FFFFFF}" />
+                        </Grid>
+                        <BoxView HeightRequest="1"
+                                 BackgroundColor="{AppThemeBinding Light=#E5E1E3, Dark=#474648}" />
 
-                <Grid
-                    Margin="0,16,0,0"
-                    Padding="16,8"
-                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                    ColumnDefinitions="Auto, *, Auto"
-                    ColumnSpacing="8"
-                    HeightRequest="65"
-                    RowDefinitions="*, *"
-                    RowSpacing="2">
+                        <!-- Profile (selected) -->
+                        <Border StrokeThickness="0" Margin="0,8">
+                            <Grid Padding="16,12" BackgroundColor="{AppThemeBinding Light=#F3F0F2, Dark=#313032}" ColumnDefinitions="Auto,*" ColumnSpacing="12" Style="{StaticResource AuthorProfileInteractiveGrid}">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SettingsItemCommand}" CommandParameter="Profile" />
+                                </Grid.GestureRecognizers>
+                                <Label Text="&#xe71b;" FontFamily="MaterialAssets" VerticalTextAlignment="Center" TextColor="{AppThemeBinding Light=#474648, Dark=#FFFFFF}" />
+                                <Label Grid.Column="1" Text="Profile" FontFamily="Roboto-Regular" TextColor="{AppThemeBinding Light=#474648, Dark=#FFFFFF}" />
+                            </Grid>
+                        </Border>
 
-                    <!--  Rounded Profile Image  -->
-                    <Border
-                        Grid.RowSpan="2"
-                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                        StrokeThickness="0"
-                        StrokeShape="RoundRectangle 24,24,24,24"
-                        Style="{DynamicResource ProfileBorderStyle}">
-                        <Image HeightRequest="48"
-                               WidthRequest="48">
-                            <Image.Source>
-                                <UriImageSource
-                                    CacheValidity="14"
-                                    CachingEnabled="true"
-                                    Uri="{Binding ProfileImage}"/>
-                            </Image.Source>
-                        </Image>
+                        <!-- Appearance -->
+                        <syncEffectsView:SfEffectsView RippleBackground="{DynamicResource Gray-300}" TouchDownEffects="Ripple">
+                            <Grid Style="{StaticResource AuthorProfilePanelItem}" x:Name="AppearanceGrid">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SettingsItemCommand}" CommandParameter="Appearance" />
+                                </Grid.GestureRecognizers>
+                                <Label Text="&#xe71a;" FontFamily="UIKitIcons" VerticalTextAlignment="Center" />
+                                <Label Style="{StaticResource AuthorProfilePanelItemLabel}" Text="Appearance" />
+                            </Grid>
+                        </syncEffectsView:SfEffectsView>
+
+                        <!-- Calls & meetings -->
+                        <syncEffectsView:SfEffectsView RippleBackground="{DynamicResource Gray-300}" TouchDownEffects="Ripple">
+                            <Grid Style="{StaticResource AuthorProfilePanelItem}">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SettingsItemCommand}" CommandParameter="CallsAndMeetings" />
+                                </Grid.GestureRecognizers>
+                                <Label Text="&#xe718;" FontFamily="MaterialAssets" VerticalTextAlignment="Center" />
+                                <Label Style="{StaticResource AuthorProfilePanelItemLabel}" Text="Calls &amp; meetings" />
+                            </Grid>
+                        </syncEffectsView:SfEffectsView>
+
+                        <!-- Security & Privacy -->
+                        <syncEffectsView:SfEffectsView RippleBackground="{DynamicResource Gray-300}"  TouchDownEffects="Ripple">
+                            <Grid Style="{StaticResource AuthorProfilePanelItem}">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SettingsItemCommand}" CommandParameter="SecurityAndPrivacy" />
+                                </Grid.GestureRecognizers>
+                                <Label Text="&#xe733;" FontFamily="FontIcons"  VerticalTextAlignment="Center" />
+                                <Label Style="{StaticResource AuthorProfilePanelItemLabel}"  Text="Security &amp; privacy" />
+                            </Grid>
+                        </syncEffectsView:SfEffectsView>
+
+                        <!-- Sign Out -->
+                        <syncEffectsView:SfEffectsView RippleBackground="{DynamicResource Gray-300}" TouchDownEffects="Ripple">
+                            <Grid Style="{StaticResource AuthorProfilePanelItem}">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SettingsItemCommand}" CommandParameter="SignOut" />
+                                </Grid.GestureRecognizers>
+                                <Label Text="&#xe70a;" FontFamily="FontIcons" VerticalTextAlignment="Center" />
+                                <Label Style="{StaticResource AuthorProfilePanelItemLabel}" Text="Sign Out" />
+                            </Grid>
+                        </syncEffectsView:SfEffectsView>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- RIGHT CONTENT -->
+                <Grid Grid.Column="1"
+                      Padding="{OnIdiom Phone=0, Default=20}">
+                    <Border HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            Margin="10"
+                            Padding="20"
+                            BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1C1B1D}"
+                            Stroke="{OnIdiom Phone=Transparent, Default={AppThemeBinding Light=#E5E1E3, Dark=#474648}}"
+                            StrokeThickness="1" 
+                            StrokeShape="RoundRectangle 12"
+                            HeightRequest="900"
+                            MaximumWidthRequest="960">
+                        <ScrollView>
+                            <VerticalStackLayout Spacing="10">
+                                <Label Text="Personal info"
+                                       Style="{StaticResource AuthorProfileSectionTitle}" />
+                                <!-- Avatar with edit badge -->
+                                <Grid WidthRequest="96"
+                                      HeightRequest="96"
+                                      Margin="20"
+                                      HorizontalOptions="Center">
+                                    <Image Source="{Binding ProfileImage}"
+                                           WidthRequest="88"
+                                           HeightRequest="88"
+                                           Aspect="AspectFill"
+                                           AutomationId="AuthorProfileAvatar"
+                                           SemanticProperties.Description="Profile picture of the signed-in author">
+                                        <Image.Clip>
+                                            <EllipseGeometry Center="44,44"
+                                                             RadiusX="44"
+                                                             RadiusY="44" />
+                                        </Image.Clip>
+                                    </Image>
+
+                                    <Border WidthRequest="26"
+                                            HeightRequest="26"
+                                            HorizontalOptions="End"
+                                            VerticalOptions="End"
+                                            BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1C1B1D}"
+                                            Stroke="{AppThemeBinding Light=#E5E1E3, Dark=#5F5E60}"
+                                            StrokeThickness="1"
+                                            StrokeShape="RoundRectangle 13">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding ChangeAvatarCommand}" />
+                                        </Border.GestureRecognizers>
+                                        <Label FontFamily="FontIcons"
+                                               Text="{StaticResource Edit}"
+                                               FontSize="14"
+                                               TextColor="{AppThemeBinding Light=#474648, Dark=#FFFFFF}"
+                                               HorizontalTextAlignment="Center"
+                                               VerticalTextAlignment="Center"
+                                               AutomationProperties.IsInAccessibleTree="False" />
+                                    </Border>
+                                </Grid>
+
+                                <!-- Name (read-only display) -->
+                                <VerticalStackLayout Spacing="4">
+                                    <Label Text="Name"
+                                           Style="{StaticResource AuthorProfileFieldLabel}" />
+                                    <inputLayout:SfTextInputLayout Style="{StaticResource AuthorProfileInputLayout}">
+                                        <Entry Text="{Binding ProfileName, Mode=TwoWay}"
+                                               Placeholder="Tell us about yourself"
+                                               FontFamily="Roboto-Regular"
+                                               HeightRequest="44" />
+                                    </inputLayout:SfTextInputLayout>
+                                </VerticalStackLayout>
+
+                                <!-- Email -->
+                                <VerticalStackLayout Spacing="4">
+                                    <Label Text="Email"
+                                           Style="{StaticResource AuthorProfileFieldLabel}" />
+                                    <inputLayout:SfTextInputLayout Style="{StaticResource AuthorProfileInputLayout}">
+                                        <Entry Text="{Binding Email, Mode=TwoWay}"
+                                               Placeholder="Enter your email address"
+                                               FontFamily="Roboto-Regular"
+                                               HeightRequest="44"
+                                               Keyboard="Email"
+                                               IsReadOnly="False" />
+                                    </inputLayout:SfTextInputLayout>
+                                </VerticalStackLayout>
+
+                                <!-- Bio (editable) -->
+                                <VerticalStackLayout Spacing="4">
+                                    <Label Text="Bio"
+                                           Style="{StaticResource AuthorProfileFieldLabel}" />
+                                    <inputLayout:SfTextInputLayout Style="{StaticResource AuthorProfileInputLayout}">
+                                        <Entry Text="{Binding Bio, Mode=TwoWay}"
+                                               Placeholder="Tell us about yourself"
+                                               FontFamily="Roboto-Regular"
+                                               HeightRequest="44" />
+                                    </inputLayout:SfTextInputLayout>
+                                </VerticalStackLayout>
+
+                                <!-- Phone number (editable) -->
+                                <VerticalStackLayout Spacing="4">
+                                    <Label Text="Phone Number"
+                                           Style="{StaticResource AuthorProfileFieldLabel}" />
+
+                                    <inputLayout:SfTextInputLayout Style="{StaticResource AuthorProfileInputLayout}">
+                                        <editors:SfNumericEntry x:Name="PhoneEntry"
+                                                                FontFamily="Roboto-Regular" 
+                                                                Placeholder="Enter phone number"
+                                                                HeightRequest="40" 
+                                                                HorizontalTextAlignment="Start"
+                                                                VerticalTextAlignment="Center"
+                                                                MaximumNumberDecimalDigits="0"
+                                                                CustomFormat="#"
+                                                                Value="8934738943"/>
+                                    </inputLayout:SfTextInputLayout>
+                                </VerticalStackLayout>
+                                <Label Text="Regional Settings"
+                                       Style="{StaticResource AuthorProfileSectionTitle}"
+                                       Margin="3,10" />
+                                <Border Style="{StaticResource AuthorProfileCardBorder}">
+                                    <VerticalStackLayout Spacing="0">
+                                        <!-- Timezone -->
+                                        <syncEffectsView:SfEffectsView RippleBackground="{DynamicResource Gray-300}" TouchDownEffects="Ripple">
+                                            <Grid Style="{StaticResource AuthorProfileInfoRow}">
+                                                <Label Text="Timezone" Style="{StaticResource AuthorProfileInfoRowLabel}" />
+                                                <Label Grid.Column="1" Text="{StaticResource Next}" Style="{StaticResource AuthorProfileInfoRowChevron}" />
+                                            </Grid>
+                                        </syncEffectsView:SfEffectsView>
+                                        <BoxView HeightRequest="1"
+                 BackgroundColor="{AppThemeBinding Light=#E5E1E3, Dark=#474648}" />
+
+                                        <!-- Language -->
+                                        <syncEffectsView:SfEffectsView RippleBackground="{DynamicResource Gray-300}" TouchDownEffects="Ripple">
+                                            <Grid Style="{StaticResource AuthorProfileInfoRow}">
+                                                <Label Text="Language" Style="{StaticResource AuthorProfileInfoRowLabel}" />
+                                                <Label Grid.Column="1" Text="{StaticResource Next}"  Style="{StaticResource AuthorProfileInfoRowChevron}" />
+                                            </Grid>
+                                        </syncEffectsView:SfEffectsView>
+                                        <BoxView HeightRequest="1" BackgroundColor="{AppThemeBinding Light=#E5E1E3, Dark=#474648}" />
+
+                                        <!-- Country -->
+                                        <syncEffectsView:SfEffectsView RippleBackground="{DynamicResource Gray-300}" TouchDownEffects="Ripple">
+                                            <Grid Style="{StaticResource AuthorProfileInfoRow}">
+                                                <Label Text="Country" Style="{StaticResource AuthorProfileInfoRowLabel}" />
+                                                <Label Grid.Column="1" Text="{StaticResource Next}" Style="{StaticResource AuthorProfileInfoRowChevron}" />
+                                            </Grid>
+                                        </syncEffectsView:SfEffectsView>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </VerticalStackLayout>
+                        </ScrollView>
                     </Border>
-
-                    <!--  Profile Name  -->
-                    <Label
-                        Grid.Column="1"
-                        FontFamily="Roboto-Medium"
-                        FontSize="14"
-                        HorizontalOptions="Start"
-                        LineBreakMode="TailTruncation"
-                        LineHeight="{OnPlatform Default=-1,
-                                            Android=1.25}"
-                        MaxLines="2"
-                        Text="{Binding ProfileName}"
-                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                        VerticalTextAlignment="End"/>
-
-                    <!--  Email  -->
-                    <Label
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        FontFamily="Roboto-Regular"
-                        FontSize="12"
-                        HorizontalOptions="Start"
-                        LineBreakMode="TailTruncation"
-                        LineHeight="{OnPlatform Default=-1,
-                                            Android=1.25}"
-                        MaxLines="2"
-                        Text="{Binding Email}"
-                        TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
-
-                    <!--  Edit button  -->
-                    <buttons:SfButton
-                        Grid.RowSpan="2"
-                        Grid.Column="2"
-                        Margin="8,0"
-                        Padding="0"
-                        FontSize="20"
-                        HeightRequest="-1"
-                        Style="{DynamicResource IconButtonStyle}"
-                        Text="{DynamicResource Edit}"
-                        WidthRequest="-1"/>
                 </Grid>
-
-                <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
-
-                <BoxView BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                         HeightRequest="16"/>
-
-                <!--  Grid for Night mode label and switch  -->
-                <Grid BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                      ColumnDefinitions="*, Auto">
-
-                    <!--  Night mode label  -->
-                    <Label
-                        Margin="16,12"
-                        FontFamily="Roboto-Regular"
-                        HorizontalOptions="Start"
-                        Style="{DynamicResource TitleLabelStyle}"
-                        Text="Night Mode"/>
-
-                    <!--  Night mode switch  -->
-                    <switch:SfSwitch
-                        Grid.Column="1"
-                        Margin="8,0"
-                        AllowIndeterminateState="False">
-                    </switch:SfSwitch>
-                </Grid>
-
-                <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
-
-                <!--  Grid for Text size label and navigation bar icon  -->
-                <Grid
-                    x:Name="TextSizeGrid"
-                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                    ColumnDefinitions="*, Auto">
-                    <!--  Text size label  -->
-                    <Label
-                        Margin="16,12"
-                        FontFamily="Roboto-Regular"
-                        HorizontalOptions="Start"
-                        Style="{DynamicResource TitleLabelStyle}"
-                        Text="Text Size"/>
-
-                    <!--  Text size navigation icon  -->
-                    <Label
-                        Grid.Column="1"
-                        Margin="16,8"
-                        Style="{DynamicResource IconLabelStyle}"
-                        Text="{DynamicResource Next}"/>
-                </Grid>
-
-                <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
-
-                <!--  Grid for Settings label and navigation bar icon  -->
-                <Grid
-                    x:Name="SettingsGrid"
-                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                    ColumnDefinitions="*, Auto">
-
-                    <!--  Settings Label  -->
-                    <Label
-                        Margin="16,12"
-                        FontFamily="Roboto-Regular"
-                        HorizontalOptions="Start"
-                        Style="{DynamicResource TitleLabelStyle}"
-                        Text="Settings"/>
-
-                    <!--  Settings navigation icon  -->
-                    <Label
-                        Grid.Column="1"
-                        Margin="16,8"
-                        Style="{DynamicResource IconLabelStyle}"
-                        Text="{DynamicResource Next}"/>
-                </Grid>
-
-                <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
-
-            </StackLayout>
-
+            </Grid>
         </ScrollView>
     </ContentView.Content>
 </ContentView>

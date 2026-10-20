@@ -1,3 +1,5 @@
+using Syncfusion.Maui.DataForm;
+
 namespace EssentialMAUIUIKit.Views.Forms
 {
     public partial class ForgotPasswordPage : ContentView
@@ -6,5 +8,6 @@ namespace EssentialMAUIUIKit.Views.Forms
         {
             InitializeComponent();
         }
+        
     }
 }

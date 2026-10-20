@@ -1,42 +1,31 @@
-﻿namespace EssentialMAUIUIKit.Views.Transaction
+using Microsoft.Maui.Controls;
+
+namespace EssentialMAUIUIKit.Views.Transaction
 {
+    /// <summary>
+    /// Selects a DataTemplate for items in the checkout payment list.
+    /// Saved cards (those that expose a <see cref="PaymentMode.CardNumber"/>)
+    /// are rendered with the rich card template; all other payment modes
+    /// use a simpler common template.
+    /// </summary>
     public class PaymentTemplateSelector : DataTemplateSelector
     {
-        #region Public Properties
-
         /// <summary>
-        /// Gets or sets the property that has been bound with ItemTemplate.
+        /// Gets or sets the template used for saved card payment modes.
         /// </summary>
         public DataTemplate? CardTemplate { get; set; }
 
         /// <summary>
-        /// Gets or sets the property that has been bound with ItemTemplate.
+        /// Gets or sets the template used for the remaining payment modes
+        /// (Net Banking, UPI, Cash on Delivery, etc.).
         /// </summary>
         public DataTemplate? CommonTemplate { get; set; }
 
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// This methoid returns the DataTemplate based on selection.
-        /// </summary>
-        /// <param name="item">The Model</param>
-        /// <param name="container">The bindable object</param>
         protected override DataTemplate? OnSelectTemplate(object item, BindableObject container)
         {
-            var payment = item as PaymentMode;
-
-            if (payment != null && payment.CardNumber != null)
-            {
-                return this.CardTemplate;
-            }
-            else
-            {
-                return this.CommonTemplate;
-            }
+            return item is PaymentMode payment && !string.IsNullOrEmpty(payment.CardNumber)
+                ? this.CardTemplate
+                : this.CommonTemplate;
         }
-
-        #endregion
     }
 }

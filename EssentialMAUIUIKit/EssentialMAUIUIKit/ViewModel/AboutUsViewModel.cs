@@ -7,6 +7,7 @@ namespace EssentialMAUIUIKit
     public class AboutUsViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<AboutUsModel>? employeeDetails;
+        private ObservableCollection<AboutUsModel>? employeeDetailsScrollPage;
 
         public AboutUsViewModel()
         {
@@ -23,7 +24,15 @@ namespace EssentialMAUIUIKit
             }
         }
 
-
+        public ObservableCollection<AboutUsModel>? EmployeeDetailsScrollPage
+        {
+            get => employeeDetailsScrollPage;
+            set
+            {
+                employeeDetailsScrollPage = value;
+                OnPropertyChanged();
+            }
+        }
         public event PropertyChangedEventHandler? PropertyChanged;
 
         protected void OnPropertyChanged(string? propertyName = null)
@@ -45,6 +54,16 @@ namespace EssentialMAUIUIKit
                 new AboutUsModel{ Image = "ProfileImage6.png", Designation = "Project Manager", EmployeeName = "Kyle Greene"},
                 new AboutUsModel{ Image = "ProfileImage13.png", Designation = "Project Manager", EmployeeName = "Navya"},
                 new AboutUsModel{ Image = "ProfileImage14.png", Designation = "Project Manager", EmployeeName = "Roseline"},
+            };
+            EmployeeDetailsScrollPage = new ObservableCollection<AboutUsModel>
+            {
+                new AboutUsModel{ Image = "ProfileImage15.png", Designation = "Project Manager", EmployeeName = "Alice"},
+                 new AboutUsModel{ Image = "ProfileImage1.png", Designation = "Project Manager", EmployeeName = "Antony"},
+                new AboutUsModel{ Image = "ProfileImage11.png", Designation = "Project Manager", EmployeeName = "Lisa"},
+                new AboutUsModel{ Image = "ProfileImage6.png", Designation = "Project Manager", EmployeeName = "Kyle Greene"},
+                new AboutUsModel{ Image = "ProfileImage13.png", Designation = "Project Manager", EmployeeName = "Navya"},
+                new AboutUsModel{ Image = "ProfileImage14.png", Designation = "Project Manager", EmployeeName = "Roseline"},
+
             };
         }
     }

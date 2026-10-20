@@ -40,12 +40,14 @@ namespace EssentialMAUIUIKit
             if (this.logInForm != null)
             {
                 logInForm.ItemsSourceProvider = new ItemsSourceProvider();
+                logInForm.GenerateDataFormItem += OnLoginFormGenerateDataFormItem;
             }
 
             this.signupForm = (SfDataForm)tabbedLogin.Content.FindByName("signupForm");
             if (this.signupForm != null)
             {
                 signupForm.ItemsSourceProvider = new ItemsSourceProvider();
+                signupForm.GenerateDataFormItem += OnSignUpFormGenerateDataFormItem;
             }
 
             this.loginButton = (SfButton)tabbedLogin.Content.FindByName("loginButton");
@@ -58,6 +60,24 @@ namespace EssentialMAUIUIKit
             if (this.signupButton != null)
             {
                 this.signupButton.Clicked += OnSignUpButtonClicked;
+            }
+        }
+
+        private void OnLoginFormGenerateDataFormItem(object? sender, GenerateDataFormItemEventArgs e)
+        {
+            if (e.DataFormItem != null)
+            {
+                e.DataFormItem.ShowErrorLabel = false;
+                e.DataFormItem.ShowValidMessageLabel = false;
+            }
+        }
+
+        private void OnSignUpFormGenerateDataFormItem(object? sender, GenerateDataFormItemEventArgs e)
+        {
+            if (e.DataFormItem != null)
+            {
+                e.DataFormItem.ShowErrorLabel = false;
+                e.DataFormItem.ShowValidMessageLabel = false;
             }
         }
 
@@ -83,13 +103,13 @@ namespace EssentialMAUIUIKit
             this.logInForm = (SfDataForm)tabbedLogin.Content.FindByName("logInForm");
             if (this.logInForm != null)
             {
-                logInForm.ItemsSourceProvider = new ItemsSourceProvider();
+                logInForm.GenerateDataFormItem -= OnLoginFormGenerateDataFormItem;
             }
 
             this.signupForm = (SfDataForm)tabbedLogin.Content.FindByName("signupForm");
             if (this.signupForm != null)
             {
-                signupForm.ItemsSourceProvider = new ItemsSourceProvider();
+                signupForm.GenerateDataFormItem -= OnSignUpFormGenerateDataFormItem;
             }
 
             this.loginButton = (SfButton)tabbedLogin.Content.FindByName("loginButton");

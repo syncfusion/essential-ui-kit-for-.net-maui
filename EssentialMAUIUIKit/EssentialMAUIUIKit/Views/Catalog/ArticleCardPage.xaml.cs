@@ -11,22 +11,32 @@ namespace EssentialMAUIUIKit.Views.Catalog
 
         private void BookmarkButton_Clicked(object sender, EventArgs e)
         {
-            SfButton? button = sender as SfButton;
-            var story = button?.BindingContext as EssentialMAUIUIKit.Models.Story;
-            if (story != null)
+            if (sender is not SfButton button)
             {
-                story.IsBookmarked = !story.IsBookmarked;
+                return;
             }
+            if (button.BindingContext is not EssentialMAUIUIKit.Models.Story story)
+            {
+                return;
+            }
+            story.IsBookmarked = !story.IsBookmarked;
+            story.NotifyPropertyChanged(nameof(story.IsBookmarked));
         }
 
         private void FavouriteButton_Clicked_1(object sender, EventArgs e)
         {
-            SfButton? button = sender as SfButton;
-            var story = button?.BindingContext as EssentialMAUIUIKit.Models.Story;
-            if (story != null)
+            if (sender is not SfButton button)
             {
-                story.IsFavourite = !story.IsFavourite;
+                return;
             }
+
+            if (button.BindingContext is not EssentialMAUIUIKit.Models.Story @event)
+            {
+                return;
+            }
+
+            @event.IsFavourite = !@event.IsFavourite;
+            @event.NotifyPropertyChanged(nameof(@event.IsFavourite));
         }
     }
 }

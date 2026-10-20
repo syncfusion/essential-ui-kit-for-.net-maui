@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Windows.Input;
 
 namespace EssentialMAUIUIKit.Models
 {
@@ -36,6 +37,16 @@ namespace EssentialMAUIUIKit.Models
         /// Gets or sets the article name.
         /// </summary>
         public string? Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the article related title.
+        /// </summary>
+        public string? Title { get; set; }
+
+        /// <summary>
+        /// Gets or sets the article trending or not.
+        /// </summary>
+        public bool? IsTrending { get; set; }
 
         /// <summary>
         /// Gets or sets the article author name.
@@ -86,9 +97,14 @@ namespace EssentialMAUIUIKit.Models
 
             set
             {
+                if (this.isFavourite == value)
+                {
+                    return;
+                }
+
                 this.isFavourite = value;
-                this.NotifyPropertyChanged(nameof(this.IsFavourite));
-            }
+				this.NotifyPropertyChanged(nameof(this.IsFavourite));
+			}
         }
 
         /// <summary>
@@ -109,6 +125,18 @@ namespace EssentialMAUIUIKit.Models
         #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        #region Commands
+
+        /// <summary>
+        /// Gets the command that toggles the bookmark state.
+        /// </summary>
+        public ICommand ToggleBookmarkCommand => new Command(() =>
+        {
+            this.IsBookmarked = !this.IsBookmarked;
+        });
+
+        #endregion
 
         #region Methods
 

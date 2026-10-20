@@ -6,7 +6,7 @@
 
     <Style x:Key="SegmentedControlStyle" TargetType="buttons:SfSegmentedControl">
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="StrokeThickness" Value="1" />
         <Setter Property="SegmentBackground" Value="{AppThemeBinding Light=#ffffff, Dark=#2F343C}" />
         <Setter Property="SegmentCornerRadius" Value="20" />
         <Setter Property="SegmentHeight" Value="40" />
@@ -15,7 +15,7 @@
         <Setter Property="SelectionIndicatorSettings">
             <Setter.Value>
                 <buttons:SelectionIndicatorSettings
-                StrokeThickness="0" />
+                StrokeThickness="1" />
             </Setter.Value>
         </Setter>
     </Style>

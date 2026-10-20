@@ -14,12 +14,6 @@
             <Setter Property="VisualStateManager.VisualStateGroups">
                 <VisualStateGroupList>
                     <VisualStateGroup>
-                        <VisualState x:Name="Normal">
-                            <VisualState.Setters>
-                                <Setter Property="Background"
-                        Value="Transparent" />
-                            </VisualState.Setters>
-                        </VisualState>
                         <VisualState x:Name="PointerOver">
                             <VisualState.Setters>
                                 <Setter Property="Background"
@@ -32,48 +26,115 @@
         </Style>
     </ContentView.Resources>
     <ContentView.Content>
-        <Grid>
-            <listView:SfListView BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+		<Grid RowDefinitions="56,Auto,*"
+              ColumnDefinitions="Auto,*">
+			<Label Margin="16"
+				   Text="My Books"
+                   Grid.Row="0"
+                   Grid.Column="0"
+				   VerticalOptions="Center" 
+				   FontSize="16"
+				   FontFamily="Roboto-Medium" />
+
+			<Border Grid.Column="1"
+					Margin="0,0,10,0"
+					WidthRequest="32"
+					HeightRequest="32"
+					BackgroundColor="Transparent"
+					HorizontalOptions="End"
+					StrokeThickness="0"
+					StrokeShape="RoundRectangle 16">
+				<Border.GestureRecognizers>
+					<TapGestureRecognizer Tapped="IconTapped" />
+				</Border.GestureRecognizers>
+				<Label FontFamily="FontIcons"
+					   VerticalOptions="Center"
+					   HorizontalOptions="Center"
+					   FontSize="18"
+					   Text="&#xe705;"
+					   TextColor="{AppThemeBinding Light=#474648, Dark=#C9C6C8}" />
+			</Border>
+
+			<BoxView HeightRequest="1"
+					 Grid.Row="1"
+                     Grid.ColumnSpan="2"
+					 BackgroundColor="{AppThemeBinding Light=#E5E1E3, Dark=#474648}"
+					 Style="{DynamicResource HorizontalSeparatorStyle}" />
+
+			<listView:SfListView BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                                  x:Name="CategoryTile"
-                                 AutoFitMode="Height"
-                                 HorizontalOptions="Fill"
+                                 AutoFitMode="DynamicHeight"								 
+								 Grid.Row="2"
+								 Grid.ColumnSpan="2"
                                  ItemSpacing="8"
-                                 ItemsSource="{Binding Articles.ArticleList}"
-                                 Style="{DynamicResource TransparentSelectionListView}">
+								 SelectionBackground="Transparent"
+                                 ScrollBarVisibility="Never"
+                                 VerticalOptions="Start"
+                                 HorizontalOptions="Start"
+								 Margin="{OnIdiom Phone='16,22,16,0', Default='42,28'}"
+                                 ItemsSource="{Binding Articles.ArticleList}">
 
                 <listView:SfListView.ItemTemplate>
-                    <DataTemplate x:DataType="model:Story">
-                        <Grid RowDefinitions="Auto, Auto"
-                              HeightRequest="{OnPlatform Default=340, Android=300, iOS=300}"
-                              WidthRequest="{OnPlatform WinUI=210,MacCatalyst= 210}">
-                            <Border StrokeThickness="0" Grid.Row="0"
-                                    StrokeShape="RoundRectangle 10">
-                                <Image HeightRequest="{OnPlatform MacCatalyst=300, iOS=260, Android=260}"
-                                    Aspect="AspectFit"
-                                    BackgroundColor="{DynamicResource Gray-Bg}"
-                                    Source="{Binding ImagePath}"/>
+					<DataTemplate x:DataType="model:Books">
+						<Grid RowDefinitions="Auto, Auto">
+							<Grid.GestureRecognizers>
+								<TapGestureRecognizer Tapped="OnItemTapped" />
+							</Grid.GestureRecognizers>
 
-                            </Border>
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroupList>
+									<VisualStateGroup x:Name="CommonStates">
+										<VisualState x:Name="Normal">
+											<VisualState.Setters>
+												<Setter Property="Opacity"
+														Value="1" />
+											</VisualState.Setters>
+										</VisualState>
+										<VisualState x:Name="Pressed">
+											<VisualState.Setters>
+												<Setter Property="Opacity"
+														Value="0.6" />
+											</VisualState.Setters>
+										</VisualState>
+									</VisualStateGroup>
+								</VisualStateGroupList>
+							</VisualStateManager.VisualStateGroups>
+							<Border StrokeThickness="0"
+									Grid.Row="0"
+									StrokeShape="RoundRectangle 12">
+								<Image HeightRequest="{OnIdiom Phone=221, Default=294}"
+									   Aspect="Fill"
+									   BackgroundColor="{DynamicResource Gray-200}"
+									   Source="{Binding ImagePath}">
+									<!--<Image.Source>
+										<UriImageSource CacheValidity="14"
+														CachingEnabled="true"
+														Uri="{Binding ImagePath}" />
+									</Image.Source>-->
+								</Image>
 
-                            <StackLayout Grid.Row="1"
-                                         Orientation="Vertical">
-                                <Label Text="{Binding Author}"
-                                       FontSize="16"
-                                       FontFamily="Roboto-Medium"
-                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
-                                <Label Text="{Binding Date}"
-                                       FontSize="14"
-                                       FontFamily="Roboto-Regular"
-                                       TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
-                            </StackLayout>
-                        </Grid>
+							</Border>
 
-                    </DataTemplate>
+							<StackLayout Grid.Row="1"
+										 Orientation="Vertical">
+								<Label Text="{Binding Author}"
+									   FontSize="16"
+									   Margin="{OnIdiom Default='0,14,0,4', Phone='4,14,0,2'}"
+									   FontFamily="Roboto-Medium"
+									   TextColor="{AppThemeBinding Light=#313032, Dark=#FFFFFF}" />
+								<Label Text="{Binding Date}"
+									   FontSize="14"
+									   Margin="{OnIdiom Default='0,0,0,8', Phone='4,0,0,8'}"
+									   FontFamily="Roboto-Regular"
+									   TextColor="{AppThemeBinding Light=#5F5E60, Dark=#929092}" />
+							</StackLayout>
+						</Grid>
+					</DataTemplate>
                 </listView:SfListView.ItemTemplate>
 
                 <!--  Layout to customize no. of columns in SfListView  -->
                 <listView:SfListView.ItemsLayout>
-                    <listView:GridLayout SpanCount="{OnPlatform WinUI=5, Android=2, iOS=2, MacCatalyst=5}"/>
+                    <listView:GridLayout SpanCount="{OnIdiom Phone=2, Tablet=4, Desktop=5}"/>
                 </listView:SfListView.ItemsLayout>
 
             </listView:SfListView>

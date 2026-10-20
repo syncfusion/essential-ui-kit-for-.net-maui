@@ -1,5 +1,5 @@
+using Syncfusion.Maui.Toolkit.Buttons;
 using Syncfusion.Maui.Toolkit.Calendar;
-using System.Globalization;
 
 namespace EssentialMAUIUIKit.Views.Detail
 {
@@ -10,28 +10,58 @@ namespace EssentialMAUIUIKit.Views.Detail
             InitializeComponent();
         }
 
+        private void SfComboBox_Opened(object sender, EventArgs e)
+        {
+            if (sender is Syncfusion.Maui.Inputs.SfComboBox comboBox)
+            {
+                comboBox.IsDropDownOpen = true;
+            }
+        }
+
+        private void SfComboBox_Closed(object sender, EventArgs e)
+        {
+            if (BindingContext is not RoomBookingPageViewModel vm)
+            {
+                return;
+            }
+
+            vm.IsDropDownOpen = false;
+
+            // Close the calendar dropdown in both code paths so a phone/desktop
+            // instance that wasn't the original sender still hides cleanly.
+            sfComboBox.IsDropDownOpen = false;
+            sfComboBoxMobile.IsDropDownOpen = false;
+        }
+
         private void SfCalendar_ActionButtonClicked(object sender, Syncfusion.Maui.Toolkit.Calendar.CalendarSubmittedEventArgs e)
         {
-            CalendarDateRange? dateRange = e.Value as CalendarDateRange;
-            if (dateRange != null)
+            if (BindingContext is not RoomBookingPageViewModel vm || vm.RoomDetail == null)
             {
-                if (dateRange.EndDate == null)
-                {
-                    this.viewModel.RoomDetail!.SelectedRanges = $"{dateRange.StartDate:dd MMM yyyy}";
-                }
-                else
-                {
-                    this.viewModel.RoomDetail!.SelectedRanges = $"{dateRange.StartDate:dd MMM yyyy} - {dateRange.EndDate:dd MMM yyyy}";
-                }
+                return;
+            }
+
+            if (e.Value is CalendarDateRange dateRange)
+            {
+                vm.RoomDetail.SelectedRanges = dateRange.EndDate == null
+                    ? $"{dateRange.StartDate:dd MMM yyyy}"
+                    : $"{dateRange.StartDate:dd MMM yyyy} - {dateRange.EndDate:dd MMM yyyy}";
+
 #if WINDOWS || MACCATALYST
-                sfComboBox.Text = this.viewModel.RoomDetail!.SelectedRanges;
+                sfComboBox.Text = vm.RoomDetail.SelectedRanges;
                 sfComboBox.IsDropDownOpen = false;
 #else
-                sfComboBoxMobile.Text = this.viewModel.RoomDetail!.SelectedRanges;
+                sfComboBoxMobile.Text = vm.RoomDetail.SelectedRanges;
                 sfComboBoxMobile.IsDropDownOpen = false;
 #endif
             }
+        }
 
+        private void SfButton_Clicked(object sender, EventArgs e)
+        {
+            if (BindingContext is RoomBookingPageViewModel vm)
+            {
+                vm.IsFavourite = !vm.IsFavourite;
+            }
         }
     }
 }

@@ -3,158 +3,271 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Notification.TaskNotificationPage"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Toolkit.EffectsView;assembly=Syncfusion.Maui.Toolkit"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:sfavatar="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              x:DataType="local:TaskNotificationViewModel">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Styles/FontIcons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!--  Single, shared row template reused by Today and Yesterday lists  -->
+            <DataTemplate x:Key="TaskNotificationRowTemplate" x:DataType="local:TaskNotificationItem">
+                <syncEffectsView:SfEffectsView Margin="0,0,0,0" TouchDownEffects="Ripple">
+                    <Grid ColumnDefinitions="Auto, *"
+                      ColumnSpacing="0"
+                      RowDefinitions="Auto, Auto, Auto, Auto"
+                      RowSpacing="0">
+
+                        <!--  User initials avatar  -->
+                        <sfavatar:SfAvatarView Grid.RowSpan="4"
+                                           Margin="{OnIdiom Phone='12,12,2,51', Desktop='16,12,8,51', Tablet='16,12,8,51'}"
+                                           AvatarName="{Binding UserName}"
+                                           AvatarShape="Circle"
+                                           AvatarSize="Medium"
+                                           BackgroundColor="{Binding BackgroundColor}"
+                                           StrokeThickness="0"
+                                           FontFamily="Roboto-Regular"
+                                           HeightRequest="38"
+                                           InitialsColor="{DynamicResource Gray-White}"
+                                           InitialsType="DoubleCharacter"
+                                           VerticalOptions="Start"
+                                           WidthRequest="38" />
+
+                        <!--  Description  -->
+                        <Label Grid.Column="1"
+                           Margin="8,14,16,0"
+                           FontFamily="Roboto-Medium"
+                           FontSize="14"
+                           LineBreakMode="WordWrap"
+                           LineHeight="{OnPlatform Android=1, Default=-1}"
+                           Text="{Binding Description}"
+                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
+
+                        <!--  Detailed description  -->
+                        <Label Grid.Row="1"
+                           Grid.Column="1"
+                           Margin="8,0,16,4"
+                           FontFamily="Roboto-Regular"
+                           FontSize="14"
+                           LineBreakMode="WordWrap"
+                           LineHeight="{OnPlatform Android=1.5, Default=-1}"
+                           Text="{Binding Detail}"
+                           TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}" />
+
+                        <!--  Ticket id pill  -->
+                        <Border Grid.Row="2"
+                            Grid.Column="1"
+                            Margin="8,0,0,10"
+                            Background="#F7EDFF"
+                            HorizontalOptions="Start"
+                            StrokeShape="RoundRectangle 20"
+                            StrokeThickness="0">
+                            <Label Margin="10,2,10,2"
+                               FontFamily="Roboto-Medium"
+                               FontSize="12"
+                               HorizontalTextAlignment="Center"
+                               Text="{Binding TaskID}"
+                               TextColor="{AppThemeBinding Light=#7633DA, Dark=#8D4CF5}"
+                               VerticalTextAlignment="Center" />
+                        </Border>
+
+                        <!--  Time  -->
+                        <Label Grid.Column="1"
+                           Margin="{OnIdiom Desktop='0,12,16,0', Phone='3,15,5,0', Tablet='0,10,16,0'}"
+                           FontFamily="Roboto-Regular"
+                           FontSize="12"
+                           HorizontalOptions="End"
+                           LineHeight="{OnPlatform Android=1.5, Default=-1}"
+                           Text="{Binding Time}"
+                           TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}" />
+
+                        <!--  Separator  -->
+                        <BoxView Grid.Row="3"
+                             Grid.ColumnSpan="2"
+                             Style="{DynamicResource HorizontalSeparatorStyle}" />
+                    </Grid>
+                </syncEffectsView:SfEffectsView>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
     <ContentView.BindingContext>
-        <local:TaskNotificationViewModel x:Name="viewModel"/>
+        <local:TaskNotificationViewModel />
     </ContentView.BindingContext>
-    <ContentView.Content>
-        <Grid
-            ColumnSpacing="0"
-            RowDefinitions="Auto,Auto,Auto, *"
-            RowSpacing="0">
 
-            <BoxView Margin="0,0,0,0"
-                     Grid.Row="0"
-                     Grid.ColumnSpan="2"
-                     Style="{DynamicResource HorizontalSeparatorStyle}"/>
+    <Grid RowDefinitions="Auto,Auto,*">
 
-            <Grid Grid.Row="1" ColumnDefinitions="*,*">
+        <!--  Header toolbar  -->
+        <Grid Grid.Row="0"
+              ColumnDefinitions="*,Auto,Auto,Auto"
+              Padding="16,8,16,8"
+              BackgroundColor="{DynamicResource Transparent}"
+              HorizontalOptions="Fill">
 
-                <Label
-                    Margin="20,20,20,20"
-                    FontFamily="Roboto-Medium"
-                    FontSize="14"
-                    VerticalOptions="Start"
-                    HorizontalOptions="Start"
-                    Text="Recent"
-                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
-
-                <buttons:SfButton Grid.Column="1"
-                    HorizontalOptions="End"
-                    VerticalOptions="Center"
-                    Style="{DynamicResource TransparentButtonStyle}"
-                                  FontSize="14"
-                                  Text="Mark all as read"
-                                  WidthRequest="134">
-                </buttons:SfButton>
+            <Grid ColumnDefinitions="Auto,Auto"
+                  HorizontalOptions="Start"
+                  VerticalOptions="Fill">
+                <HorizontalStackLayout Grid.Column="0"
+                                   Spacing="6"
+                                   HorizontalOptions="Start"
+                                   VerticalOptions="Center">
+                    <Label Margin="0,6,0,4"
+                       FontSize="16"
+                       FontFamily="{OnIdiom Phone='MaterialAssets', Desktop='UIKitIcons', Tablet='UIKitIcons'}"
+                       HorizontalOptions="Start"
+                       Style="{DynamicResource TitleLabelStyle}"
+                       Text="{OnIdiom Phone='&#xe719;', Desktop='&#xe708;', Tablet='&#xe708;'}"
+                       VerticalTextAlignment="Center" />
+                    <Label Margin="0,4,10,4"
+                       FontSize="16"
+                       FontFamily="Roboto-Medium"
+                       HorizontalOptions="Start"
+                       Style="{DynamicResource TitleLabelStyle}"
+                       Text=" Notifications"
+                       VerticalTextAlignment="End" />
+                </HorizontalStackLayout>
+                <Border Grid.Column="1"
+                        BackgroundColor="#F7EDFF"
+                        Stroke="#7633DA"
+                        StrokeThickness="1"
+                        HeightRequest="22"
+                        StrokeShape="RoundRectangle 10"
+                        IsVisible="{OnPlatform WinUI=True, MacCatalyst=True, Android=False, iOS=False}">
+                    <Label Text="3 NEW"
+                           FontFamily="Roboto-Medium"
+                           FontSize="10"
+                           TextColor="#7633DA"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           Margin="8,2,8,2" />
+                </Border>
             </Grid>
 
-            <BoxView Margin="0,0,0,10"
-                     Grid.Row="2"
-                     Grid.ColumnSpan="2"
-                     Style="{DynamicResource HorizontalSeparatorStyle}"/>
+            <buttons:SfButton Grid.Column="1"
+                              HorizontalOptions="End"
+                              VerticalOptions="Center"
+                              Style="{DynamicResource TransparentButtonStyle}"
+                              WidthRequest="140"
+                              HeightRequest="40"
+                              Command="{Binding MarkAllAsReadCommand}"
+                              TextColor="{AppThemeBinding Light=#7633DA, Dark=#8D4CF5}" >
+                <buttons:SfButton.Content>
+                    <DataTemplate>
+                        <HorizontalStackLayout HorizontalOptions="End">
+                            <Label Text="&#xe711;"
+                                           FontSize="14"
+                                           FontFamily="UIKitIcons"
+                                           TextColor="{AppThemeBinding Light=#7633DA, Dark=#8D4CF5}"
+                                           VerticalOptions="Center"/>
+                            <Label Text=" Mark all as read"
+                                           FontSize="14" Padding="6,0,6,0"
+                                           FontFamily="Roboto-Medium"
+                                           TextColor="{AppThemeBinding Light=#7633DA, Dark=#8D4CF5}"
+                                           VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </buttons:SfButton.Content>
+            </buttons:SfButton>
 
-            <Grid Grid.Row="3">
-                <listView:SfListView
-                    x:Name="TaskNotifications"
-                    AllowSwiping="True"
-                    AutoFitMode="Height"
-                    ScrollBarVisibility="Never"
-                    ItemSpacing="0"
-                    ItemsSource="{Binding TaskNotifications}"
-                    SelectionBackground="Transparent"
-                    SelectionGesture="Tap"
-                    SelectionMode="Single"
-                    VerticalOptions="Fill">
+            <buttons:SfButton Grid.Column="2"
+                              Margin="0,0,4,0"
+                              HorizontalOptions="Center" WidthRequest="30"
+                              HeightRequest="30" CornerRadius="25"
+                              IsVisible="{OnPlatform MacCatalyst=True, WinUI=True, Android=False, iOS=False}"
+                              Style="{DynamicResource IconButtonStyle}"
+                              Text="{DynamicResource Settings}"
+                              TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
 
-
-                    <listView:SfListView.ItemTemplate>
-                        <DataTemplate x:DataType="local:TaskNotificationItem">
-                            <ViewCell>
-                                <Grid
-                                    ColumnDefinitions="Auto, *"
-                                    ColumnSpacing="0"
-                                    RowDefinitions="Auto, Auto, Auto, Auto"
-                                    RowSpacing="0">
-
-                                    <!--User Name Avatar-->
-                                    <sfavatar:SfAvatarView
-                                        Grid.RowSpan="4"
-                                        Margin="16,12,8,41"
-                                        AvatarName="{Binding UserName}"
-                                        AvatarShape="Circle"
-                                        AvatarSize="Medium"
-                                        BackgroundColor="{Binding BackgroundColor}"
-                                        StrokeThickness="0"
-                                        FontFamily="Roboto-Regular"
-                                        HeightRequest="48"
-                                        InitialsColor="{DynamicResource Gray-White}"
-                                        InitialsType="DoubleCharacter"
-                                        VerticalOptions="Start"
-                                        WidthRequest="48"/>
-
-                                    <!--Description-->
-                                    <Label
-                                        Grid.Column="1"
-                                        Margin="8,12,16,0"
-                                        FontFamily="Roboto-Medium"
-                                        FontSize="16"
-                                        LineBreakMode="TailTruncation"
-                                        LineHeight="{OnPlatform Android=1.5,
-                                Default=-1}"
-                                        Text="{Binding Description}"
-                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
-
-                                    <!--Detailed Description-->
-                                    <Label
-                                        Grid.Row="1"
-                                        Grid.Column="1"
-                                        Margin="8,0,16,8"
-                                        FontFamily="Roboto-Regular"
-                                        FontSize="14"
-                                        HeightRequest="21"
-                                        LineBreakMode="TailTruncation"
-                                        LineHeight="{OnPlatform Android=1.5,
-                                Default=-1}"
-                                        Text="{Binding Detail}"
-                                        TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
-
-                                    <Border StrokeThickness="0"
-                                            Background="#EFF1FF"
-                                            HeightRequest="20"
-                                            StrokeShape="RoundRectangle 20"
-                                            WidthRequest="100"
-                                            Grid.Row="2"
-                                            Grid.Column="1"
-                                            Margin="13,3,13,15"
-                                            HorizontalOptions="Start">
-                                        <Label Text="{Binding TaskID}"
-                                                FontFamily="Roboto-Medium"
-                                                FontSize="12"
-                                                TextColor="#0D5CDD"
-                                                VerticalTextAlignment="Center"
-                                                HorizontalTextAlignment="Center"/>
-                                    </Border>
-
-                                    <!--Time-->
-                                    <Label
-                                        Grid.RowSpan="4"
-                                        Grid.Column="1"
-                                        Margin="0,68,16,0"
-                                        FontFamily="Roboto-Regular"
-                                        FontSize="12"
-                                        HeightRequest="18"
-                                        HorizontalOptions="End"
-                                        LineHeight="{OnPlatform Android=1.5,
-                                Default=-1}"
-                                        Text="{Binding Time}"
-                                        TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
-
-                                    <!--Seperator-->
-                                    <BoxView Margin="30,0,30,0"
-                                             Grid.Row="3"
-                                             Grid.ColumnSpan="2"
-                                             Style="{DynamicResource HorizontalSeparatorStyle}"/>
-
-                                </Grid>
-                            </ViewCell>
-                        </DataTemplate>
-                    </listView:SfListView.ItemTemplate>
-                </listView:SfListView>
-            </Grid>
+            <buttons:SfButton Grid.Column="3"
+                              Margin="0,0,4,0"
+                              HorizontalOptions="Center" WidthRequest="30"
+                              HeightRequest="30" CornerRadius="25"
+                              IsVisible="{OnPlatform MacCatalyst=True, WinUI=True, Android=False, iOS=False}"
+                              Style="{DynamicResource IconButtonStyle}"
+                              Text="&#xe78f;" FontFamily="MaterialAssets"
+                              TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
         </Grid>
-    </ContentView.Content>
+
+        <BoxView Grid.Row="1" 
+                 Style="{DynamicResource HorizontalSeparatorStyle}" />
+
+        <!--  Notifications body  -->
+        <ScrollView Grid.Row="2"
+                    HorizontalScrollBarVisibility="Never"
+                    VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Spacing="10"
+                                 MaximumWidthRequest="{OnIdiom Desktop=590, Tablet=590, Default=800}"
+                                 HorizontalOptions="Fill"
+                                 Padding="0,10,0,10">
+
+                <!--  Section: Today  -->
+                <Grid Margin="{OnIdiom Phone='20,8,20,4', Default='0,8,20,4'}">
+                    <Label FontFamily="Roboto-Medium"
+                       FontSize="14"
+                       VerticalOptions="Start"
+                       HorizontalOptions="Start"
+                       Text="Today"
+                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
+                    <Label 
+                        Text="3 NEW"
+                        FontFamily="Roboto-Medium"
+                        FontSize="11" IsVisible="{OnPlatform WinUI=False, MacCatalyst=False, Android=True, iOS=True}"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                        LineBreakMode="WordWrap" VerticalOptions="End"
+                        HorizontalOptions="End"/>
+                </Grid>
+
+                <Border StrokeShape="RoundRectangle 10"
+                        Margin="{OnIdiom Phone='20,0,20,10', Default='0,0,0,10'}">
+                    <listView:SfListView
+                        x:Name="TodayTaskListView"
+                        AllowSwiping="True"
+                        AutoFitMode="Height"
+                        ScrollBarVisibility="Never"
+                        IsScrollingEnabled="False"
+                        ItemSize="140"
+                        ItemSpacing="0"
+                        ItemsSource="{Binding TodayTaskNotifications}"
+                        SelectionBackground="Transparent"
+                        SelectionGesture="Tap"
+                        SelectionMode="None"
+                        VerticalOptions="Fill"
+                        ItemTemplate="{StaticResource TaskNotificationRowTemplate}" />
+                </Border>
+
+                <!--  Section: Yesterday  -->
+                <Label FontFamily="Roboto-Medium"
+                       FontSize="14"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Start"
+                       Margin="{OnIdiom Phone='20,8,20,4', Default='0,8,20,4'}"
+                       Text="Yesterday"
+                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                       SemanticProperties.HeadingLevel="Level2" />
+
+                <Border StrokeShape="RoundRectangle 10"
+                        Margin="{OnIdiom Phone='20,0,20,10', Default='0,0,0,10'}">
+                    <listView:SfListView
+                        x:Name="YesterdayTaskListView"
+                        AllowSwiping="True"
+                        AutoFitMode="Height"
+                        ScrollBarVisibility="Never"
+                        IsScrollingEnabled="False"
+                        ItemSize="140"
+                        ItemSpacing="0"
+                        ItemsSource="{Binding YesterdayTaskNotifications}"
+                        SelectionBackground="Transparent"
+                        SelectionGesture="Tap"
+                        SelectionMode="None"
+                        VerticalOptions="Fill"
+                        ItemTemplate="{StaticResource TaskNotificationRowTemplate}" />
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentView>

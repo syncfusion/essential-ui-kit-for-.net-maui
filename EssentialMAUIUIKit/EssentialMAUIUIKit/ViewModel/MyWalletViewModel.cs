@@ -3,6 +3,7 @@ using Syncfusion.Maui.DataSource.Extensions;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
+using System.Windows.Input;
 
 namespace EssentialMAUIUIKit
 {
@@ -47,6 +48,8 @@ namespace EssentialMAUIUIKit
         /// To update label text for chart
         /// </summary>
         private string? chartLabel;
+
+        private MyWalletMenuItems? hoveredMenuItem;
 
         #endregion
 
@@ -111,6 +114,10 @@ namespace EssentialMAUIUIKit
             this.DashboardTitle = "Pay Karo";
             this.chartLabel = "Weekly Analysis";
             this.LayoutHeight = DeviceDisplay.MainDisplayInfo.Height > 280 ? DeviceDisplay.MainDisplayInfo.Height - 280 : 400;
+
+            // Initialize hover commands
+            this.PointerEnteredCommand = new Command<MyWalletMenuItems>(OnMenuItemPointerEntered);
+            this.PointerExitedCommand = new Command<MyWalletMenuItems>(OnMenuItemPointerExited);
         }
 
         #endregion
@@ -334,6 +341,18 @@ namespace EssentialMAUIUIKit
                 this.layoutHeight = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets the command for pointer entered event
+        /// </summary>
+        public ICommand? PointerEnteredCommand { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the command for pointer exited event
+        /// </summary>
+        public ICommand? PointerExitedCommand { get; private set; }
+
+        public new event PropertyChangedEventHandler? PropertyChanged;
 
         #endregion
 
@@ -785,6 +804,37 @@ namespace EssentialMAUIUIKit
             // Do something
         }
 
+        protected void OnPropertyChanged(string property)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+        }
+
+        /// <summary>
+        /// Handles pointer entered event for menu items to show hover effect
+        /// </summary>
+        private void OnMenuItemPointerEntered(MyWalletMenuItems menuItem)
+        {
+            if (menuItem != null && !menuItem.IsSelected)
+            {
+                this.hoveredMenuItem = menuItem;
+                menuItem.IsHovered = true;
+                OnPropertyChanged(nameof(MenuItemList));
+            }
+        }
+
+        /// <summary>
+        /// Handles pointer exited event for menu items to hide hover effect
+        /// </summary>
+        private void OnMenuItemPointerExited(MyWalletMenuItems menuItem)
+        {
+            if (menuItem != null && !menuItem.IsSelected)
+            {
+                this.hoveredMenuItem = null;
+                menuItem.IsHovered = false;
+                OnPropertyChanged(nameof(MenuItemList));
+            }
+        }
+
         #endregion
     }
 
@@ -1002,17 +1052,66 @@ namespace EssentialMAUIUIKit
         #endregion
     }
 
-    public class MyWalletMenuItems
+    public class MyWalletMenuItems : INotifyPropertyChanged
     {
+        private string? name;
+        private bool isSelected;
+        private bool isHovered;
+
         /// <summary>
         /// Displays menu items in left panel.
         /// </summary>
-        public string? Name { get; set; }
+        public string? Name
+        {
+            get { return name; }
+            set
+            {
+                if (name != value)
+                {
+                    name = value;
+                    OnPropertyChanged(nameof(Name));
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the property to update selected menu 
         /// </summary>
-        public bool IsSelected { get; set; }
+        public bool IsSelected
+        {
+            get { return isSelected; }
+            set
+            {
+                if (isSelected != value)
+                {
+                    isSelected = value;
+                    OnPropertyChanged(nameof(IsSelected));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether the menu item is currently hovered
+        /// </summary>
+        public bool IsHovered
+        {
+            get { return isHovered; }
+            set
+            {
+                if (isHovered != value)
+                {
+                    isHovered = value;
+                    OnPropertyChanged(nameof(IsHovered));
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 
     public class TransactionGroup : ObservableCollection<PaymentDetail>

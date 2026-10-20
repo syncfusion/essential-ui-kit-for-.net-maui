@@ -9,7 +9,8 @@
         <Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="HorizontalTextAlignment" Value="Center" />
-        <Setter Property="FontFamily" Value="Roboto-Medium" />
+        <Setter Property="FontFamily" Value="Roboto-Regular" />
+        <Setter Property="CharacterSpacing" Value="0.5" />
         <Setter Property="LineHeight" Value="{OnPlatform Android=1.5, Default=-1}" />
     </Style>
 

@@ -1,38 +1,79 @@
 namespace EssentialMAUIUIKit
 {
+    using EssentialMAUIUIKit.Models.Dashboard;
     using EssentialMAUIUIKit.ViewModel;
     using System.Collections.ObjectModel;
-    using System.Globalization;
 
+    /// <summary>
+    /// View-model backing the Company History page.
+    /// </summary>
     public class CompanyHistoryViewModel : BaseViewModel
     {
+        #region Fields
+
+        private readonly ObservableCollection<CompanyHistoryMenuItem> menuItems;
+        private readonly ObservableCollection<CompanyHistoryData> companyHistoryDetails;
+
+        #endregion
 
         /// <summary>
-        /// To update pages that can be navigated from dashboard.
+        /// Initializes a new instance of the <see cref="CompanyHistoryViewModel"/> class.
         /// </summary>
-        private ObservableCollection<CompanyHistoryMenuItem> menuItems;
-
-        private ObservableCollection<CompanyHistoryData> companyHistoryDetails;
-
         public CompanyHistoryViewModel()
         {
             this.menuItems = new ObservableCollection<CompanyHistoryMenuItem>
             {
-                new CompanyHistoryMenuItem { Name = "Dashboard" },                
-                new CompanyHistoryMenuItem { Name = "About us", IsSelected = true },
-                new CompanyHistoryMenuItem { Name = "Contact us" },
-                new CompanyHistoryMenuItem { Name = "Settings" }
+                new CompanyHistoryMenuItem
+                {
+                    Name = "Dashboard",
+                    IconGlyph = "\ue733"
+                },
+                new CompanyHistoryMenuItem
+                {
+                    Name = "About us",
+                    IconGlyph = "\ue71b",
+                    IsSelected = true
+                },
+                new CompanyHistoryMenuItem
+                {
+                    Name = "Contact Us",
+                    IconGlyph = "\ue718"
+                },
+                new CompanyHistoryMenuItem
+                {
+                    Name = "Settings",
+                    IconGlyph = "\ue716"
+                }
             };
 
+            // Build the timeline with explicit, deterministic 1-based indices so the
+            // converters and IsFirstItem/IsLastItem flags remain correct regardless
+            // of how many times the page is constructed during the app's lifetime.
             this.companyHistoryDetails = new ObservableCollection<CompanyHistoryData>
             {
-                new CompanyHistoryData { Year = 2020, Achievements = "The Texas cedar Elm Vault is released, impressing vault enthusiasts with its height and oblique-based leaves"},
-                new CompanyHistoryData { Year = 2018, Achievements = "The David Elm vault design receives an overhaul to further distinguish it from the american elm vault"},
-                new CompanyHistoryData { Year = 2016, Achievements = "The Heartwood and sapwood vault add-ons are announced, introducing an unprecedented elements of modularity to elm vaults products"},
-                new CompanyHistoryData { Year = 2014, Achievements = "Elm Vaults formed a strategic partnership with ROLT, enhancing its capabilities in cloud storage technology and expanding its customer base."},
+                new CompanyHistoryData(1)
+                {
+                    Year = 2020,
+                    Achievements = "The Texas cedar Elm Vault is released, impressing vault enthusiasts with its height and oblique-based leaves",
+                    IsFirstItem = true
+                },
+                new CompanyHistoryData(2)
+                {
+                    Year = 2018,
+                    Achievements = "The David Elm vault design receives an overhaul to further distinguish it from the american elm vault"
+                },
+                new CompanyHistoryData(3)
+                {
+                    Year = 2016,
+                    Achievements = "The Heartwood and sapwood vault add-ons are announced, introducing an unprecedented elements of modularity to elm vaults products"
+                },
+                new CompanyHistoryData(4)
+                {
+                    Year = 2014,
+                    Achievements = "Elm Vaults formed a strategic partnership with ROLT, enhancing its capabilities in cloud storage technology and expanding its customer base.",
+                    IsLastItem = true
+                }
             };
-            this.companyHistoryDetails[0].IsFirstItem = true;
-            this.companyHistoryDetails[this.companyHistoryDetails.Count - 1].IsLastItem = true;
 
             this.ProfileImage = "profileavatar.png";
             this.CompanyLogo = "companylogo.png";
@@ -43,27 +84,27 @@ namespace EssentialMAUIUIKit
         #region Properties
 
         /// <summary>
-        /// Gets or sets the profile image path.
+        /// Gets the profile image path.
         /// </summary>
-        public string ProfileImage { get; set; }
+        public string ProfileImage { get; }
 
         /// <summary>
-        /// Gets or sets the company logo image path.
+        /// Gets the company logo image path.
         /// </summary>
-        public string CompanyLogo { get; set; }
+        public string CompanyLogo { get; }
 
         /// <summary>
-        /// Gets or sets the value for Page title.
+        /// Gets the page title.
         /// </summary>
-        public string PageTitle { get; set; }
+        public string PageTitle { get; }
 
         /// <summary>
-        /// Gets or sets the value for Page description.
+        /// Gets the page description shown above the timeline.
         /// </summary>
-        public string PageDescription { get; set; }
+        public string PageDescription { get; }
 
         /// <summary>
-        /// Gets the list of HealthCareMenuItems.
+        /// Gets the list of menu items shown in the left navigation rail.
         /// </summary>
         public ObservableCollection<CompanyHistoryMenuItem> MenuItemList
         {
@@ -71,15 +112,10 @@ namespace EssentialMAUIUIKit
             {
                 return this.menuItems;
             }
-
-            private set
-            {
-                this.SetProperty(ref this.menuItems, value);
-            }
         }
 
         /// <summary>
-        /// Gets the list of CompanyHistoryDetails.
+        /// Gets the list of timeline entries shown in the right content area.
         /// </summary>
         public ObservableCollection<CompanyHistoryData> CompanyHistoryDetails
         {
@@ -87,55 +123,8 @@ namespace EssentialMAUIUIKit
             {
                 return this.companyHistoryDetails;
             }
-
-            private set
-            {
-                this.SetProperty(ref this.companyHistoryDetails, value);
-            }
         }
 
         #endregion
     }
-
-    public class CompanyHistoryMenuItem
-    {
-        public string? Name { get; set; }
-
-        public bool IsSelected { get; set; }
-    }
-
-    public class CompanyHistoryData
-    {
-        private static int _autoIncrementValue = 0;
-
-        public int Index { get; } = ++_autoIncrementValue; // Auto-increment logic
-
-        public int Year { get; set; }
-
-        public string? Achievements { get; set; }
-
-        public bool IsLastItem { get; set; }
-
-        public bool IsFirstItem { get; set; }
-
-    }
-
-    public class EvenOddConverter : IValueConverter
-    {
-        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
-        {
-            if (value is int intValue)
-            {
-                // Return true if even, false if odd
-                return intValue % 2 == 0;
-            }
-            return false;
-        }
-
-        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
 }

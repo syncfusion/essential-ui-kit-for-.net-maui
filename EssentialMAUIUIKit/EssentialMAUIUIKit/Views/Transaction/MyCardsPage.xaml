@@ -17,14 +17,12 @@
                     <VisualStateGroup>
                         <VisualState x:Name="Normal">
                             <VisualState.Setters>
-                                <Setter Property="Background"
-                        Value="Transparent" />
+                                <Setter Property="Background" Value="Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                         <VisualState x:Name="PointerOver">
                             <VisualState.Setters>
-                                <Setter Property="Background"
-                        Value= "Transparent" />
+                                <Setter Property="Background" Value= "Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -33,162 +31,246 @@
         </Style>
     </ContentView.Resources>
     <ContentView.Content>
-        <Grid
-            ColumnSpacing="0"
-            RowDefinitions="*, Auto"
-            RowSpacing="0">
 
-            <!--  ListView displaying saved cards  -->
-            <listView:SfListView
-                x:Name="myCards"
-                AllowSwiping="True"
-                AutoFitMode="Height"
-                ScrollBarVisibility="Never"
-                ItemSpacing="16,24,16,0"
-                ItemsSource="{Binding CardDetails}"
-                SelectionBackground="Transparent"
-                SelectionGesture="Tap"
-                SelectionMode="Single">
-                <listView:SfListView.ItemTemplate>
-                    <DataTemplate x:DataType="local:CardDetail">
-                        <card:SfCardView
-                            Padding="0"
-                            BorderWidth="0"
-                            CornerRadius="10"
-                            HeightRequest="180"
-                            HorizontalOptions="Center"
-                            WidthRequest="{OnPlatform MacCatalyst=343,WinUI=343}">
-                            <Border StrokeThickness="0">
-                                <Border.Background>
-                                    <LinearGradientBrush>
-                                        <GradientStop Offset="0.0"
-                                                      Color="{DynamicResource PrimaryGradient}"/>
-                                        <GradientStop Offset="1.0"
-                                                      Color="{DynamicResource SecondaryGradient}"/>
-                                    </LinearGradientBrush>
-                                </Border.Background>
-                                <Grid
-                                    Margin="16,20"
-                                    ColumnDefinitions="*, *, *"
-                                    RowDefinitions="Auto, Auto, *"
-                                    RowSpacing="27">
+        <ScrollView HorizontalOptions="Start" VerticalOptions="Start">
+            <Grid ColumnSpacing="20" RowSpacing="0" RowDefinitions="{OnIdiom Desktop='Auto,Auto,Auto,Auto', Tablet='Auto,Auto,Auto,Auto', Phone='Auto,Auto,Auto,*,Auto'}">
+                <Grid Grid.Row="0" Padding="20,20,0,0" IsVisible="{OnIdiom Desktop=True, Tablet=True, Phone=False}" ColumnDefinitions="Auto,Auto,Auto">
+                    <Label Grid.Column="0"
+                       Margin="8"
+                       FontSize="12"
+                       FontFamily="Roboto-Regular"
+                       LineHeight="{OnPlatform Android=1.25, Default=-1}"
+                       Style="{DynamicResource TitleLabelStyle}"
+                       HorizontalOptions="Start"
+                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                       Text="Account"/>
 
-                                    <!--  Card Type  -->
-                                    <Label
-                                        Grid.Row="0"
-                                        Grid.ColumnSpan="3"
-                                        Margin="0,3"
-                                        FontSize="14"
-                                        HorizontalOptions="Start"
-                                        Text="{Binding CardType}"
-                                        FontFamily="Roboto-Medium"
-                                        TextColor="{DynamicResource Gray-White}"
-                                        VerticalOptions="Center"/>
+                    <Label Grid.Column="1"
+                       Margin="0,8,0,8"
+                       FontSize="12"
+                       FontFamily="Roboto-Regular"
+                       LineHeight="{OnPlatform Android=1.25, Default=-1}"
+                       Style="{DynamicResource TitleLabelStyle}"
+                       HorizontalOptions="Start"
+                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                       Text=">"/>
 
-                                    <!--  Icon displaying card type  -->
-                                    <Image
-                                        Grid.Row="0"
-                                        Grid.ColumnSpan="3"
-                                        HeightRequest="27"
-                                        HorizontalOptions="End"
-                                        Source="{Binding CardTypeIcon}"
-                                        VerticalOptions="Start"
-                                        WidthRequest="45"/>
+                    <Label Grid.Column="2"
+                       Margin="8"
+                       FontFamily="Roboto-Regular"
+                       LineHeight="{OnPlatform Android=1.25, Default=-1}" 
+                       HorizontalOptions="Start"
+                       Style="{DynamicResource TitleLabelStyle}"
+                       TextColor="#7633DA"
+                       FontSize="12"
+                       Text="Payment Methods"/>
+                </Grid>
 
-                                    <!--  Card Number  -->
-                                    <Label
-                                        Grid.Row="1"
-                                        Grid.ColumnSpan="3"
-                                        FontFamily="Roboto-Regular"
-                                        FontSize="20"
-                                        HorizontalOptions="Start"
-                                        LineHeight="{OnPlatform Default=-1,
-Android=1.5}"
-                                        Text="{Binding Number}"
-                                        TextColor="{DynamicResource Gray-White}"/>
 
-                                    <Grid Grid.Row="2"
-                                          Grid.ColumnSpan="3">
+                <Label Grid.Row="1"
+                       Margin="{OnIdiom Phone='16,18,0,10', Desktop='25,8', Tablet='25,8'}"
+                       FontSize="{OnIdiom Phone=16, Desktop=45, Tablet=45}"
+                       FontFamily="Roboto-Medium"
+                       LineHeight="{OnPlatform Android=1.25, Default=-1}"
+                       Style="{DynamicResource TitleLabelStyle}"
+                       HorizontalOptions="Start"
+                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                       Text="Saved Cards"/>
 
-                                        <!--  Card Holder Name  -->
-                                        <StackLayout Grid.Column="0"
-                                                     Spacing="0">
-                                            <Label
-                                                FontFamily="Roboto-Regular"
-                                                FontSize="12"
-                                                LineHeight="{OnPlatform Default=-1,
-        Android=1.5}"
-                                                Text="Card Holder"
-                                                TextColor="{DynamicResource Gray-White}"/>
-                                            <Label
-                                                FontFamily="Roboto-Medium"
-                                                FontSize="14"
-                                                HorizontalOptions="Start"
-                                                Text="{Binding Name}"
-                                                TextColor="{DynamicResource Gray-White}"/>
-                                        </StackLayout>
+                <Label Grid.Row="2"
+                       Margin="{OnIdiom Phone='16,4,0,10', Desktop='25,8', Tablet='25,8'}"
+                       FontFamily="Roboto-Regular"
+                       LineHeight="{OnPlatform Android=1.25, Default=-1}" 
+                       HorizontalOptions="Start" HorizontalTextAlignment="Start"
+                       Style="{DynamicResource TitleLabelStyle}"
+                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                       FontSize="{OnIdiom Desktop=16, Tablet=16 ,Phone=14}"
+                       Text="Manage your payment preferences with ease and security. Your sensitive data is encrypted using industry-standard protocols."/>
 
-                                        <!--  Card Expiry  -->
-                                        <StackLayout
-                                            Grid.Column="1"
-                                            HorizontalOptions="Center"
-                                            Spacing="0">
-                                            <Label
-                                                FontFamily="Roboto-Regular"
-                                                FontSize="12"
-                                                LineHeight="{OnPlatform Default=-1,
-        Android=1.5}"
-                                                Text="Expires"
-                                                TextColor="{DynamicResource Gray-White}"/>
-                                            <Label
-                                                FontFamily="Roboto-Medium"
-                                                FontSize="14"
-                                                HorizontalOptions="Start"
-                                                Text="{Binding Expiry}"
-                                                TextColor="{DynamicResource Gray-White}"/>
-                                        </StackLayout>
+                <buttons:SfButton
+                    Margin="{OnIdiom Phone='16,10,16,0', Desktop='16', Tablet='16'}" Grid.Row="3"
+                            CornerRadius="24"
+                            FontSize="14" HeightRequest="40" IsVisible="{OnIdiom Desktop=False, Tablet=False, Phone=True}"
+                            Stroke="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                            StrokeThickness="2"
+                            ImageSize="14"
+                            Background="Transparent"
+                            FontFamily="Roboto-Medium" ShowIcon="True" HorizontalTextAlignment="Start"
+                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                            Text="Add card" ImageAlignment="Default">
+                    <buttons:SfButton.ImageSource>
+                        <FontImageSource
+                                    FontFamily="MaterialAssets"
+                                    Glyph="&#xe70d;"
+                                    Color="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                    Size="20"/>
+                    </buttons:SfButton.ImageSource>
+                </buttons:SfButton>
 
-                                        <!--  Card Cvv Number  -->
-                                        <StackLayout
-                                            Grid.Column="2"
-                                            HorizontalOptions="End"
-                                            Margin="0,0,30,0"
-                                            Spacing="0">
-                                            <Label
-                                                FontFamily="Roboto-Regular"
-                                                FontSize="12"
-                                                LineHeight="{OnPlatform Default=-1,
-        Android=1.5}"
-                                                Text="CVV"
-                                                TextColor="{DynamicResource Gray-White}"/>
-                                            <Label
-                                                FontFamily="Roboto-Medium"
-                                                FontSize="14"
-                                                HorizontalOptions="Start"
-                                                Text="{Binding CardCvv}"
-                                                TextColor="{DynamicResource Gray-White}"/>
-                                        </StackLayout>
-                                    </Grid>
-                                </Grid>
+                <Grid Grid.Row="{OnIdiom Desktop=3, Tablet=3, Phone=4}" ColumnSpacing="0" ColumnDefinitions="{OnIdiom Phone='*', Tablet='*,*,*', Desktop='*,*,*'}" RowDefinitions="{OnIdiom Phone='Auto,Auto,Auto', Tablet='Auto', Desktop='Auto'}">
+                    <!--  ListView displaying saved cards  -->
+                    <listView:SfListView 
+                        x:Name="myCards"
+                        AllowSwiping="True"
+                        AutoFitMode="Height"
+                        IsScrollingEnabled="True"
+                        ScrollBarVisibility="Never" Grid.ColumnSpan="2"
+                        ItemSpacing="16,24,16,0"
+                        ItemsSource="{Binding CardDetails}"
+                        SelectionBackground="Transparent"
+                        SelectionGesture="Tap"
+                        SelectionMode="Single">
+                        <listView:SfListView.ItemTemplate>
+                            <DataTemplate x:DataType="local:CardDetail">
+                                <card:SfCardView
+                                    Padding="0"
+                                    BorderWidth="0"
+                                    CornerRadius="10"
+                                    HeightRequest="200"
+                                    HorizontalOptions="Fill">
+                                    <Border StrokeThickness="0">
+                                        <Border.Background>
+                                            <LinearGradientBrush>
+                                                <GradientStop Offset="0.0" Color="{DynamicResource PrimaryGradient}"/>
+                                                <GradientStop Offset="1.0" Color="{DynamicResource SecondaryGradient}"/>
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                        <Grid Margin="16,20" ColumnDefinitions="*, *, *" RowDefinitions="Auto, Auto, *" RowSpacing="27">
+
+                                            <!--  Card Type  -->
+                                            <Label Grid.Row="0"
+                                                   Grid.ColumnSpan="3"
+                                                   Margin="0,3"
+                                                   FontSize="14"
+                                                   HorizontalOptions="Start"
+                                                   Text="{Binding CardType}"
+                                                   FontFamily="Roboto-Medium"
+                                                   TextColor="{DynamicResource Gray-White}"
+                                                   VerticalOptions="Center"/>
+
+                                            <!--  Icon displaying card type  -->
+                                            <Image Grid.Row="0"
+                                                   Grid.ColumnSpan="3"
+                                                   HeightRequest="27"
+                                                   HorizontalOptions="End"
+                                                   Source="{Binding CardTypeIcon}"
+                                                   VerticalOptions="Start"
+                                                   WidthRequest="45"/>
+
+                                            <!--  Card Number  -->
+                                            <Label Grid.Row="1"
+                                                   Grid.ColumnSpan="3"
+                                                   FontFamily="Roboto-Regular"
+                                                   FontSize="20"
+                                                   HorizontalOptions="Start"
+                                                   LineHeight="{OnPlatform Default=-1, Android=1.5}"
+                                                   Text="{Binding Number}"
+                                                   TextColor="{DynamicResource Gray-White}"/>
+
+                                            <Grid Grid.Row="2" Grid.ColumnSpan="3" Padding="0,14,0,0" >
+
+                                                <!--  Card Holder Name  -->
+                                                <StackLayout Grid.Column="0"  Spacing="0">
+                                                    <Label FontFamily="Roboto-Regular"
+                                                           FontSize="12"
+                                                           LineHeight="{OnPlatform Default=-1, Android=1.5}"
+                                                           Text="Card Holder"
+                                                           TextColor="{DynamicResource Gray-White}"/>
+                                                    <Label FontFamily="Roboto-Medium"
+                                                           FontSize="14"
+                                                           HorizontalOptions="Start"
+                                                           Text="{Binding Name}"
+                                                           TextColor="{DynamicResource Gray-White}"/>
+                                                </StackLayout>
+
+                                                <!--  Card Expiry  -->
+                                                <StackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="0">
+                                                    <Label FontFamily="Roboto-Regular"
+                                                           FontSize="12"
+                                                           LineHeight="{OnPlatform Default=-1, Android=1.5}"
+                                                           Text="Expires"
+                                                           TextColor="{DynamicResource Gray-White}"/>
+                                                    <Label FontFamily="Roboto-Medium"
+                                                           FontSize="14"
+                                                           HorizontalOptions="Start"
+                                                           Text="{Binding Expiry}"
+                                                           TextColor="{DynamicResource Gray-White}"/>
+                                                </StackLayout>
+
+                                                <!--  Card Cvv Number  -->
+                                                <StackLayout Grid.Column="2" HorizontalOptions="End" Margin="0,0,50,0" Spacing="0">
+                                                    <Label FontFamily="Roboto-Regular"
+                                                           FontSize="12"
+                                                           LineHeight="{OnPlatform Default=-1, Android=1.5}"
+                                                           Text="CVV"
+                                                           TextColor="{DynamicResource Gray-White}"/>
+                                                    <Label FontFamily="Roboto-Medium"
+                                                           FontSize="14"
+                                                           HorizontalOptions="Start"
+                                                           Text="{Binding CardCvv}"
+                                                           TextColor="{DynamicResource Gray-White}"/>
+                                                </StackLayout>
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+
+                                </card:SfCardView>
+                            </DataTemplate>
+                        </listView:SfListView.ItemTemplate>
+                        <listView:SfListView.ItemsLayout>
+                            <listView:GridLayout  SpanCount="{OnPlatform WinUI=2, Android=1, iOS=1, MacCatalyst=2}"/>
+                        </listView:SfListView.ItemsLayout>
+                    </listView:SfListView>
+
+                    <Border HeightRequest="200"
+                            Grid.Column="{OnIdiom Phone=0, Tablet=2, Desktop=2}"
+                            Grid.Row="{OnIdiom Phone=1, Tablet=0, Desktop=0}"
+                            Margin="{OnIdiom Phone='16,24,16,20', Tablet='16,24,16,0', Desktop='16,24,16,0'}"
+                            StrokeThickness="1"
+                            StrokeDashArray="4,4"
+                            BackgroundColor="Transparent"
+                            StrokeShape="RoundRectangle 10"
+                            Style="{DynamicResource HorizontalSeparatorStyle}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnDebitCardTapped" />
+                        </Border.GestureRecognizers>
+                        <Grid RowDefinitions="Auto,Auto,Auto">
+                            <Border Grid.Row="0" Margin="0,40,0,0" 
+                                    VerticalOptions="Center" 
+                                    Stroke="#E5E1E3"
+                                    StrokeThickness="0"
+                                    StrokeShape="Ellipse"
+                                    BackgroundColor="#F3F0F2"
+                                    WidthRequest="64"
+                                    HeightRequest="64">
+                                <Image Source="add_cards.png"
+                                       WidthRequest="29.33"
+                                       HeightRequest="24"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
                             </Border>
 
-                        </card:SfCardView>
-                    </DataTemplate>
-                </listView:SfListView.ItemTemplate>
-                <listView:SfListView.ItemsLayout>
-                    <listView:GridLayout SpanCount="{OnPlatform WinUI=3, Android=1, iOS=1, MacCatalyst=3}"/>
-                </listView:SfListView.ItemsLayout>
-            </listView:SfListView>
-
-            <!--Add Card button command-->
-            <buttons:SfButton Margin="0,0,0,10"
-                              x:Name="addCardButton"
-                              Grid.Row="1"
-                              CornerRadius="40"
-                              Style="{DynamicResource FormsButtonStyle}"
-                              HorizontalOptions="Center"
-                              Text="ADD NEW CARD"
-                              VerticalOptions="End"/>
-        </Grid>
+                            <Label Grid.Row="1"
+                                   Margin="0,20,0,5"
+                                   FontSize="14"
+                                   FontFamily="Roboto-Regular"
+                                   LineHeight="{OnPlatform Android=1.25, Default=-1}"
+                                   Style="{DynamicResource TitleLabelStyle}"
+                                   HorizontalOptions="Center"
+                                   TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                   Text="Add a new payment method"/>
+                            <Label Grid.Row="2"
+                                   Margin="0"
+                                   FontFamily="Roboto-Regular"
+                                   LineHeight="{OnPlatform Android=1.25, Default=-1}" HorizontalOptions="Center"
+                                   Style="{DynamicResource TitleLabelStyle}"
+                                   TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                   FontSize="12"
+                                   Text="Visa, Mastercard, Amex"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Grid>
+        </ScrollView>
     </ContentView.Content>
 </ContentView>

@@ -1,6 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using EssentialMAUIUIKit.Models;
+using System.Collections.ObjectModel;
 using System.Text.Json;
-using EssentialMAUIUIKit.Models;
 
 namespace EssentialMAUIUIKit
 {
@@ -79,9 +79,13 @@ namespace EssentialMAUIUIKit
                 return;
             }
 
-            var articles = data["articles"];
+            if (!data.TryGetValue("articles", out var articles) || articles == null)
+            {
+                return;
+            }
+
             var images = new List<string> { "ArticleParallaxHeaderImage.png", "Event-Image.png", "ArticleImage2.png", "ArticleImage7.jpg", "ArticleImage4.png" };
-            for (int i = 0; i < articles.Count; i++)
+            for (int i = 0; i < articles.Count && i < images.Count; i++)
             {
                 var article = articles[i];
                 article.ImagePath = images[i];

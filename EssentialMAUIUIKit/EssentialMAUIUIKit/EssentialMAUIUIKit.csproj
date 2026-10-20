@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net10.0-android;net10.0-ios;net10.0-maccatalyst</TargetFrameworks>
@@ -125,6 +125,8 @@
 	  <None Remove="Images\about.png" />
 	  <None Remove="Images\aboutusicon.png" />
 	  <None Remove="Images\aboutusimage.png" />
+	  <None Remove="Images\bag.png" />
+	  <None Remove="Images\bellicon.png" />
 	  <None Remove="Images\businessregistrationbackground.png" />
 	  <None Remove="Images\CaloriesEaten.png" />
 	  <None Remove="Images\card.png" />
@@ -133,23 +135,33 @@
 	  <None Remove="Images\close.png" />
 	  <None Remove="Images\companylogo.png" />
 	  <None Remove="Images\ConfirmGradient.png" />
+	  <None Remove="Images\contacticon.png" />
 	  <None Remove="Images\DeliverGradient.png" />
 	  <None Remove="Images\emptycart.png" />
+	  <None Remove="Images\emptycartbackgroundicon.png" />
+	  <None Remove="Images\emptycartbackgroundicondark.png" />
 	  <None Remove="Images\excel.png" />
 	  <None Remove="Images\facebook.png" />
+	  <None Remove="Images\facebook1.png" />
 	  <None Remove="Images\file.png" />
 	  <None Remove="Images\google.png" />
 	  <None Remove="Images\headericon.png" />
 	  <None Remove="Images\headeryriangle.png" />
 	  <None Remove="Images\HeartRate.png" />
 	  <None Remove="Images\icon.png" />
+	  <None Remove="Images\illustration.png" />
 	  <None Remove="Images\invertedtriangle.png" />
+	  <None Remove="Images\loackicon.png" />
 	  <None Remove="Images\locationdenied.png" />
 	  <None Remove="Images\loginbackgroundscale100.png" />
 	  <None Remove="Images\loginbackgroundscale200.png" />
 	  <None Remove="Images\loginbackgroundscale400.png" />
+	  <None Remove="Images\mailicon.png" />
 	  <None Remove="Images\mastercardlogo.png" />
 	  <None Remove="Images\microsoft.png" />
+	  <None Remove="Images\middle1.jpg" />
+	  <None Remove="Images\middle2.jpg" />
+	  <None Remove="Images\middle3.jpg" />
 	  <None Remove="Images\nocredits.png" />
 	  <None Remove="Images\nointernet.png" />
 	  <None Remove="Images\noitem.png" />
@@ -161,13 +173,18 @@
 	  <None Remove="Images\onboardingimage2.png" />
 	  <None Remove="Images\onboardingimage3.png" />
 	  <None Remove="Images\ourteam.png" />
+	  <None Remove="Images\passwordicon.png" />
 	  <None Remove="Images\paymentfailed.png" />
 	  <None Remove="Images\paymentfailure.png" />
 	  <None Remove="Images\paymentsuccess.png" />
 	  <None Remove="Images\pdf.png" />
+	  <None Remove="Images\phoneicon.png" />
 	  <None Remove="Images\pin.png" />
 	  <None Remove="Images\placeholder.png" />
 	  <None Remove="Images\placeholderrectangle.png" />
+	  <None Remove="Images\plusicon.png" />
+	  <None Remove="Images\plusicondark.png" />
+	  <None Remove="Images\pointer.png" />
 	  <None Remove="Images\profile.png" />
 	  <None Remove="Images\profileavatar.png" />
 	  <None Remove="Images\reschedule.png" />
@@ -216,8 +233,18 @@
 	  <EmbeddedResource Include="AppLayout\Icons\tracking.png" />
 	  <EmbeddedResource Include="AppLayout\Icons\transaction.png" />
 	  <MauiImage Include="Images\about.png" />
+	  <MauiImage Include="Images\articlebook1.png" />
+	  <MauiImage Include="Images\articlebook2.png" />
+	  <MauiImage Include="Images\articlebook3.png" />
+	  <MauiImage Include="Images\articlebook4.png" />
+	  <MauiImage Include="Images\articlebook5.png" />
+	  <MauiImage Include="Images\articlebook6.png" />
 	  <MauiImage Include="Images\aboutusicon.png" />
 	  <MauiImage Include="Images\aboutusimage.png" />
+	  <MauiImage Include="Images\add_cards.png" />
+	  <MauiImage Include="Images\alert_icon.png" />
+	  <MauiImage Include="Images\bag.png" />
+	  <MauiImage Include="Images\bellicon.png" />
 	  <MauiImage Include="Images\businessregistrationbackground.png" />
 	  <MauiImage Include="Images\calorieseaten.png" />
 	  <MauiImage Include="Images\card.png" />
@@ -226,23 +253,39 @@
 	  <MauiImage Include="Images\close.png" />
 	  <MauiImage Include="Images\companylogo.png" />
 	  <MauiImage Include="Images\confirmgradient.png" />
+	  <MauiImage Include="Images\contacticon.png" />
 	  <MauiImage Include="Images\delivergradient.png" />
+	  <MauiImage Include="Images\delete_light.png" />
+	  <MauiImage Include="Images\delete_dark.png" />
+	  <MauiImage Include="Images\double_tick_light.png" />
+	  <MauiImage Include="Images\double_tick_dark.png" />
 	  <MauiImage Include="Images\emptycart.png" />
+	  <MauiImage Include="Images\emptycartbackgroundicon.png" />
+	  <MauiImage Include="Images\emptycartbackgroundicondark.png" />
 	  <MauiImage Include="Images\excel.png" />
+	  <MauiImage Include="Images\facebooktabbed.png" />
 	  <MauiImage Include="Images\facebook.png" />
+	  <MauiImage Include="Images\facebook1.png" />
 	  <MauiImage Include="Images\file.png" />
 	  <MauiImage Include="Images\google.png" />
 	  <MauiImage Include="Images\headericon.png" />
 	  <MauiImage Include="Images\headeryriangle.png" />
 	  <MauiImage Include="Images\heartrate.png" />
+	  <MauiImage Include="Images\heart.png" />
 	  <MauiImage Include="Images\icon.png" />
+	  <MauiImage Include="Images\illustration.png" />
 	  <MauiImage Include="Images\invertedtriangle.png" />
+	  <MauiImage Include="Images\loackicon.png" />
 	  <MauiImage Include="Images\locationdenied.png" />
 	  <MauiImage Include="Images\loginbackgroundscale100.png" />
 	  <MauiImage Include="Images\loginbackgroundscale200.png" />
 	  <MauiImage Include="Images\loginbackgroundscale400.png" />
+	  <MauiImage Include="Images\mailicon.png" />
 	  <MauiImage Include="Images\mastercardlogo.png" />
 	  <MauiImage Include="Images\microsoft.png" />
+	  <MauiImage Include="Images\middle1.jpg" />
+	  <MauiImage Include="Images\middle2.jpg" />
+	  <MauiImage Include="Images\middle3.jpg" />
 	  <MauiImage Include="Images\nocredits.png" />
 	  <MauiImage Include="Images\nointernet.png" />
 	  <MauiImage Include="Images\noitem.png" />
@@ -253,45 +296,78 @@
 	  <MauiImage Include="Images\onboardingimage1.png" />
 	  <MauiImage Include="Images\onboardingimage2.png" />
 	  <MauiImage Include="Images\onboardingimage3.png" />
+	  <MauiImage Include="Images\order_summary_image.png" />
 	  <MauiImage Include="Images\ourteam.png" />
+	  <MauiImage Include="Images\passwordicon.png" />
 	  <MauiImage Include="Images\paymentfailed.png" />
 	  <MauiImage Include="Images\paymentfailure.png" />
 	  <MauiImage Include="Images\paymentsuccess.png" />
 	  <MauiImage Include="Images\pdf.png" />
+	  <MauiImage Include="Images\phoneicon.png" />
 	  <MauiImage Include="Images\pin.png" />
+	  <MauiImage Include="Images\photo.png" />
 	  <MauiImage Include="Images\placeholder.png" />
 	  <MauiImage Include="Images\placeholderrectangle.png" />
+	  <MauiImage Include="Images\plusicon.png" />
+	  <MauiImage Include="Images\plusicondark.png" />
+	  <MauiImage Include="Images\pointer.png" />
 	  <MauiImage Include="Images\profile.png" />
 	  <MauiImage Include="Images\profileavatar.png" />
 	  <MauiImage Include="Images\reschedule.png" />
+	  <MauiImage Include="Images\silk_shirt.png" />
 	  <MauiImage Include="Images\sleepduration.png" />
 	  <MauiImage Include="Images\somethingwentwrong.png" />
 	  <MauiImage Include="Images\timezone.png" />
+	  <MauiImage Include="Images\twitterx.png" />
 	  <MauiImage Include="Images\viewmode.png" />
 	  <MauiImage Include="Images\visa.png" />
+	  <MauiImage Include="Images\video.png" />
 	  <MauiImage Include="Images\visalogo.png" />
 	  <MauiImage Include="Images\waterconsumed.png" />
+	  <MauiImage Include="Images\womans_skirt_plain_long.png" />
 	  <MauiImage Include="Images\word.png" />
+	  <MauiImage Include="Images\deer.png" />
+	  <MauiImage Include="Images\password.png" />
+	  <MauiImage Include="Images\movie_1.jpg" />
+	  <MauiImage Include="Images\movie_2.jpg" />
+	  <MauiImage Include="Images\movie_3.jpg" />
+	  <MauiImage Include="Images\movie_4.jpg" />
+	  <MauiImage Include="Images\movie_5.jpg" />
+	  <MauiImage Include="Images\movie_6.jpg" />
+	  <MauiImage Include="Images\movie_7.jpg" />
+	  <MauiImage Include="Images\movie_8.jpg" />
+      <MauiImage Include="Images\maze_runner.png" />
+	  <MauiImage Include="Images\blade_runner.png" />
+	  <MauiImage Include="Images\avatar.png" />
+	  <MauiImage Include="Images\no_time_to_die.png" />
+	  <MauiImage Include="Images\ends_with_us.png" />
+	  <MauiImage Include="Images\deadpool_wolverine.png" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.10" />
 		<PackageReference Include="Syncfusion.Maui.Buttons" Version="*" />
+		<PackageReference Include="Syncfusion.Maui.Calendar" Version="*" />
 		<PackageReference Include="Syncfusion.Maui.Cards" Version="*" />
 		<PackageReference Include="Syncfusion.Maui.Charts" Version="*" />
 		<PackageReference Include="Syncfusion.Maui.Core" Version="*" />
 		<PackageReference Include="Syncfusion.Maui.DataForm" Version="*" />
+		<PackageReference Include="Syncfusion.Maui.DataGrid" Version="*" />
 		<PackageReference Include="Syncfusion.Maui.Expander" Version="*" />
 		<PackageReference Include="Syncfusion.Maui.Gauges" Version="*" />
 		<PackageReference Include="Syncfusion.Maui.Inputs" Version="*" />
 		<PackageReference Include="Syncfusion.Maui.ListView" Version="*" />
+		<PackageReference Include="Syncfusion.Maui.Chat" Version="*" />
 		<PackageReference Include="Syncfusion.Maui.Maps" Version="*" />
 		<PackageReference Include="Syncfusion.Maui.Picker" Version="*" />
 		<PackageReference Include="Syncfusion.Maui.Popup" Version="*" />
 		<PackageReference Include="Syncfusion.Maui.ProgressBar" Version="*" />
 		<PackageReference Include="Syncfusion.Maui.Rotator" Version="*" />
+		<PackageReference Include="Syncfusion.Maui.TabView" Version="*" />
 		<PackageReference Include="Syncfusion.Maui.Toolkit" Version="*" />
+		<PackageReference Include="Syncfusion.Maui.Data" Version="*" />
+		<PackageReference Include="Syncfusion.Maui.PullToRefresh" Version="*" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -377,18 +453,6 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Bookmark\ArticleListTemplate.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Chat\IncomingImageTemplate.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Chat\IncomingTextTemplate.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Chat\OutgoingImageTemplate.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Chat\OutgoingTextTemplate.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Dashboard\CompanyHistoryPage.xaml">

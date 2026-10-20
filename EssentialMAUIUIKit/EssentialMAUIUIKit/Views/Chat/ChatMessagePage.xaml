@@ -2,20 +2,85 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Chat.ChatMessagePage"
+             xmlns:sfchat="clr-namespace:Syncfusion.Maui.Chat;assembly=Syncfusion.Maui.Chat"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
              xmlns:controls="clr-namespace:EssentialMAUIUIKit.Controls"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Toolkit.EffectsView;assembly=Syncfusion.Maui.Toolkit"
              xmlns:templateSelector="clr-namespace:EssentialMAUIUIKit.Views.Chat"
+             xmlns:chatViews="clr-namespace:EssentialMAUIUIKit.Views.Chat"
              xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
-             x:DataType="local:ChatMessageViewModel">
-    <ContentView.BindingContext>
-        <local:ChatMessageViewModel/>
-    </ContentView.BindingContext>
+             xmlns:badge="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core">
+
     <ContentView.Resources>
         <ResourceDictionary>
             <converter:DateTimeToStringConverter x:Key="DateTimeToStringConverter"/>
-            <templateSelector:MessageDataTemplateSelector x:Key="MessageDataTemplateSelector"/>
+            <converter:MessageTypeConverter x:Key="MessageTypeConverter"/>
+            <converter:StringNotEmptyConverter x:Key="StringNotEmptyConverter"/>
+            <converter:NotNullConverter x:Key="NotNullConverter"/>
+            <converter:InvertStringNotEmptyConverter x:Key="InvertStringNotEmptyConverter"/>
+            <converter:IsTextMessageConverter x:Key="IsTextMessageConverter"/>
+            <converter:IsImageMessageConverter x:Key="IsImageMessageConverter"/>
+            <converter:MessageAlignmentConverter x:Key="MessageAlignmentConverter"/>
+            
+            <Style TargetType="sfchat:IncomingMessageAvatarView">
+                <Setter Property="VerticalOptions" Value="Start" />
+                <Setter Property="Margin" Value="0,6,8,0" />
+            </Style>
+
+            <Color x:Key="SfChatEditorBackground">#FCF8FA</Color>
+            <Color x:Key="SfChatEditorStroke">#C9C6C8</Color>
+            <Color x:Key="SfChatSendButtonDisabledColor">#FFFFFF</Color>
+            <Color x:Key="SfChatDisabledSendButtonBackground">#7633DA</Color>
+            
+            <DataTemplate x:Key="TextTemplate">
+                <Grid Padding="4,2" ColumnDefinitions="Auto,*">
+                    <!-- ✅ AVATAR -->
+                    <Border Grid.Column="0"  WidthRequest="32" HeightRequest="32" InputTransparent="True" StrokeThickness="0" StrokeShape="RoundRectangle 16" VerticalOptions="Start" Margin="10,6,4,0" IsVisible="{OnIdiom Phone=False, Tablet=True, Desktop=True}">
+                        <Image Source="{Binding Author.Avatar}" Aspect="AspectFill" />
+                    </Border>
+                    <!-- ✅ MESSAGE -->
+                    <Grid Grid.Column="1" Margin="15,0" HorizontalOptions="{Binding ., Converter={StaticResource MessageTypeConverter}, ConverterParameter=Alignment}">
+                        <Border Padding="14,10" StrokeThickness="0" Margin="-10,0" StrokeShape="RoundRectangle 12" MaximumWidthRequest="{OnPlatform WinUI=520, Android=280, iOS=320, MacCatalyst=400}" BackgroundColor="{AppThemeBinding Light=#FCF8FA, Dark=#313032}">
+                            <Border.Triggers>
+                                <!-- ✅ Outgoing message -->
+                                <DataTrigger TargetType="Border" Binding="{Binding Author.Name}" Value="You">
+                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#F7EDFF, Dark=#35303C}" />
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Grid RowDefinitions="Auto,Auto">
+                                <!-- TEXT -->
+                                <Label Text="{Binding Text}" FontSize="14" FontFamily="Roboto-Regular" LineBreakMode="WordWrap"  TextColor="{AppThemeBinding Light=#313032, Dark=White}" />
+                                <!-- FOOTER -->
+                                <HorizontalStackLayout Grid.Row="1"  HorizontalOptions="End" Spacing="4" Margin="0,4,0,0">
+                                    <Label Text="{Binding DateTime, StringFormat='{0:h:mm tt}'}" FontSize="11" TextColor="#6B6B6B"/>
+                                    <!-- ✅ TICKS ONLY FOR OUTGOING -->
+                                    <Label Text="&#xe711;" FontFamily="UIKitIcons" FontSize="14" TextColor="#7E57C2" IsVisible="{Binding ., Converter={StaticResource MessageTypeConverter}, ConverterParameter=IsOutgoing}" />
+                                </HorizontalStackLayout>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ImageTemplate">
+                <Grid Padding="2,2" Margin="7,0" HorizontalOptions="{Binding .,  Converter={StaticResource MessageAlignmentConverter},  ConverterParameter={x:Reference sfChat}}">
+                    <!-- ✅ OUTER BUBBLE -->
+                    <Border BackgroundColor="{AppThemeBinding Light=#F7EDFF, Dark=#35303C}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="6" HeightRequest="222"  WidthRequest="186">
+                        <VerticalStackLayout Spacing="0">
+                            <!-- Image -->
+                            <Image Source="{Binding Source}" Aspect="AspectFill" HeightRequest="193"  WidthRequest="176" />
+                            <!-- Footer -->
+                            <Grid HorizontalOptions="End" Margin="0,2,4,2" ColumnDefinitions="Auto,Auto">
+                                <Label Grid.Column="0" Text="{Binding DateTime, StringFormat='{0:h:mm tt}'}" FontSize="11" TextColor="#6B6B6B" VerticalOptions="Center" VerticalTextAlignment="Center" />
+                                <Label Grid.Column="1" Margin="2,0,0,0" Text="&#xe711;" FontFamily="UIKitIcons" FontSize="14" TextColor="#7E57C2" VerticalOptions="Center" VerticalTextAlignment="Center" IsVisible="{Binding ., Converter={StaticResource MessageTypeConverter}, ConverterParameter=IsOutgoing}" />
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+            </DataTemplate>
+            <chatViews:ChatSelector x:Key="ChatSelector" TextTemplate="{StaticResource TextTemplate}" ImageTemplate="{StaticResource ImageTemplate}" />
         </ResourceDictionary>
         <Style TargetType="listView:ListViewItem">
             <Setter Property="VisualStateManager.VisualStateGroups">
@@ -40,150 +105,258 @@
     </ContentView.Resources>
 
     <ContentView.Content>
-
-        <Grid>
-            <ScrollView>
-
-                <!--  List view to show the recent chat history  -->
-                <listView:SfListView
-                    x:Name="ListView"
-                    AutoFitMode="Height"
-                    BackgroundColor="{DynamicResource Transparent}"
-                    IsStickyFooter="True"
-                    IsStickyHeader="True"
-                    ItemTemplate="{DynamicResource MessageDataTemplateSelector}"
-                    ItemsSource="{Binding UserProfile.ChatMessageInfo}"
-                    SelectionMode="None"
-                    VerticalOptions="Fill">
-
-                    <!--  Navigation bar  -->
-                    <listView:SfListView.HeaderTemplate>
-                        <DataTemplate>
-                            <Grid RowDefinitions="Auto, Auto"
-                                  RowSpacing="0">
-                                <Grid ColumnDefinitions="Auto,Auto,Auto,*"
-                                      Padding="4,10,10,10"
-                                      BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                      HorizontalOptions="Fill"
-                                      VerticalOptions="Fill">
-
-                                    <!--  Back Button  -->
-                                    <buttons:SfButton
-                                        Style="{DynamicResource IconButtonStyle}"
-                                        Text="{DynamicResource Back}"/>
-
-                                    <!--  Rounded Profile Image  -->
-                                    <Border Grid.Column="1"
-                                            Margin="8,0"
-                                            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                            Style="{DynamicResource ProfileBorderStyle}">
-                                        <Image HeightRequest="35"
-                                               WidthRequest="35"
-                                               x:Name="ProfileImage"
-                                               Source="https://cdn.syncfusion.com/essential-ui-kit-for-xamarin.forms/common/uikitimages/ProfileImage1.png"/>
-
+        <Grid x:Name="MainGrid" ColumnDefinitions="372, *">
+            <!-- Left: Recent chats control -->
+            <chatViews:RecentChatPage x:Name="RecentChat" Grid.Column="0" />
+            <BoxView x:Name="SeparatorBox" Grid.Column="0" Margin="365,0,0,0" WidthRequest="1" BackgroundColor="{AppThemeBinding Light=#E5E1E3, Dark=#474648}" VerticalOptions="Fill"/>
+            <!-- Right: Chat area -->
+            <Grid x:Name="ChatGrid" BackgroundColor="Transparent" Grid.Column="1" RowDefinitions="Auto, *, Auto">
+                <!-- Header -->
+                <Grid Grid.Row="0" BackgroundColor="Transparent" ColumnDefinitions="3*,1,7*" RowDefinitions="Auto, Auto">
+                    <!-- Left Header: profile + name -->
+                    <Grid Grid.Column="0" ColumnDefinitions="Auto,Auto,*" Padding="12,10" VerticalOptions="Center">
+                        <Border Grid.Column="0" Margin="-1,0" Stroke="{AppThemeBinding Light=#ebecef, Dark=#1C1B1D}" Style="{DynamicResource ProfileBorderStyle}">
+                            <Image HeightRequest="35" WidthRequest="35" Source="{Binding Partner.Avatar}"/>
+                        </Border>
+                        <Label Grid.Column="1" Margin="10,0,0,0" Text="{Binding Partner.Name, FallbackValue=Nick jones}" VerticalOptions="Center" Style="{DynamicResource TitleLabelStyle}" />
+                    </Grid>
+                    <!-- Right Header: action icons aligned to end -->
+                    <Grid Grid.Column="2" Padding="12,10" VerticalOptions="Center" HorizontalOptions="End">
+                        <Grid ColumnDefinitions="Auto,Auto,Auto,Auto">
+                            <Grid IsVisible="{OnIdiom Phone=False, Tablet=True, Desktop=True}" ColumnSpacing="10" ColumnDefinitions="Auto,Auto,Auto,Auto">
+                                <buttons:SfButton Grid.Column="0" Text="&#xe705;" FontFamily="UIKitIcons" Background="Transparent" CornerRadius="20" HeightRequest="30" WidthRequest="30" TextColor="{AppThemeBinding Light=#474648 ,Dark=#C9C6C8}" HorizontalTextAlignment="Center" FontSize="18" />
+                                <buttons:SfButton Grid.Column="1" Text="&#xe705;" FontFamily="MaterialAssets" Background="Transparent" CornerRadius="20" HeightRequest="30" WidthRequest="30" TextColor="{AppThemeBinding Light=#474648 ,Dark=#C9C6C8}" HorizontalTextAlignment="Center" FontSize="14" Margin="-16,0,0,0" />
+                                <buttons:SfButton Grid.Column="2" Text="&#xe715;" FontFamily="MaterialAssets" Background="Transparent" CornerRadius="20" HeightRequest="30" WidthRequest="30" TextColor="{AppThemeBinding Light=#474648 ,Dark=#C9C6C8}" HorizontalTextAlignment="Center" FontSize="14" />
+                                <buttons:SfButton Grid.Column="3" Text="&#xe759;" FontFamily="MaterialAssets" Background="Transparent" CornerRadius="20" HeightRequest="30" WidthRequest="30" TextColor="{AppThemeBinding Light=#474648 ,Dark=#C9C6C8}" HorizontalTextAlignment="Center" FontSize="14"  />
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="5" IsVisible="{OnIdiom Phone=True, Tablet=False, Desktop=False}">
+                                <buttons:SfButton Grid.Column="0" Text="&#xe705;" FontFamily="UIKitIcons" Background="Transparent" CornerRadius="20" HeightRequest="30" WidthRequest="30" TextColor="{AppThemeBinding Light=#474648 ,Dark=#C9C6C8}" HorizontalTextAlignment="Center" FontSize="18" Margin="0,0,0,0" />
+                                <buttons:SfButton Grid.Column="1" FontSize="16" Text="&#xe718;" FontFamily="MaterialAssets" Background="Transparent" CornerRadius="20" HeightRequest="30" WidthRequest="30" TextColor="{AppThemeBinding Light=#474648 ,Dark=#C9C6C8}" HorizontalTextAlignment="End" Margin="0,0,0,0" />
+                                <buttons:SfButton Grid.Column="3" Text="&#xe759;" FontFamily="MaterialAssets" Background="Transparent" CornerRadius="20" HeightRequest="30" WidthRequest="30" TextColor="{AppThemeBinding Light=#474648 ,Dark=#C9C6C8}" HorizontalTextAlignment="Center" FontSize="14"  />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <!-- Horizontal Separator -->
+                    <BoxView Grid.Row="1" Margin="0,-1,0,0" Grid.ColumnSpan="3" HeightRequest="1" BackgroundColor="{AppThemeBinding Light=#E5E1E3, Dark=#474648}"/>
+                </Grid>
+                <!-- Chat messages -->
+                <Grid Grid.Row="1" RowDefinitions="*,Auto">
+                    <sfchat:SfChat x:Name="sfChat"  Background="{AppThemeBinding Light=White, Dark=#1C1B1D}" Messages="{Binding Messages}" CurrentUser="{Binding CurrentUser}"   TypingIndicator="{Binding TypingIndicator}"  ShowTypingIndicator="{Binding ShowTypingIndicator}" ShowOutgoingMessageAvatar="False" ShowTimeBreak="True" ShowAttachmentButton="True" ShowIncomingMessageAuthorName="False"
+                                   ShowOutgoingMessageAuthorName="False" ShowMessageInputView="False" ShowIncomingMessageTimestamp="False" ShowOutgoingMessageTimestamp="False" StickyTimeBreak="False" ShowDeliveryState="True" MessageSpacing="16" MessageTemplate="{StaticResource ChatSelector}" ShowScrollToBottomButton="True" ShowKeyboardAlways="False" SendMessageCommand="{Binding SendMessageCommand}" AllowPinning="True">
+                        <sfchat:SfChat.TimeBreakTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="*,Auto,*" VerticalOptions="Center" Margin="0,12">
+                                    <!--LEFT LINE (shorter)-->
+                                    <BoxView Grid.Column="0" HeightRequest="1" BackgroundColor="{AppThemeBinding Light=#E5E1E3, Dark=#474648}" VerticalOptions="Center" Margin="{OnPlatform WinUI='60,0,12,0', Android='30,0,8,0', iOS='30,0,8,0', MacCatalyst='60,0,12,0'}"/>
+                                    <!--CENTER TEXT-->
+                                    <Border Grid.Column="1" Padding="8,3" StrokeThickness="1" Stroke="{AppThemeBinding Light=#D6D6D6, Dark=#474648}"  BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}" StrokeShape="RoundRectangle 12">
+                                        <Label Text="Today" FontSize="12" HorizontalOptions="Center" VerticalOptions="Center" FontFamily="Roboto-Medium" TextColor="{AppThemeBinding Light=#313032, Dark=#FFFFFF}" />
                                     </Border>
 
-                                    <!--  Profile Name  -->
-                                    <Label Grid.Column="2"
-                                           HorizontalOptions="Fill"
-                                           HorizontalTextAlignment="Start"
-                                           Style="{DynamicResource TitleLabelStyle}"
-                                           Text="Alex Russell"
-                                           VerticalOptions="Center"
-                                           VerticalTextAlignment="Center">
+                                    <!--RIGHT LINE (shorter)-->
+                                    <BoxView Grid.Column="2" HeightRequest="1" BackgroundColor="{AppThemeBinding Light=#E5E1E3, Dark=#474648}" VerticalOptions="Center" Margin="{OnPlatform WinUI='12,0,60,0', Android='8,0,35,0', iOS='8,0,30,0', MacCatalyst='12,0,60,0'}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </sfchat:SfChat.TimeBreakTemplate>
+                        <!-- Message templates are provided via a DataTemplateSelector in code-behind -->
+                        <sfchat:SfChat.AttachmentButtonTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="Auto, Auto" ColumnSpacing="15" VerticalOptions="Center">
+                                    <Label Grid.Column="0" FontFamily="MaterialAssets" Text="&#xe785;" FontSize="20" Margin="0,0,10,0" TextColor="{AppThemeBinding Light=#474648, Dark=#C9C6C8}" VerticalOptions="Center">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding AttachmentCommand}" />
+                                        </Label.GestureRecognizers>
                                     </Label>
 
-                                    <StackLayout Orientation="Horizontal"
-                                            Grid.Column="3"
-                                            HorizontalOptions="End">
-                                        <!--  Video call button  -->
-                                        <buttons:SfButton Grid.Column="3"
-                                                          Style="{DynamicResource IconButtonStyle}"
-                                                          Text="{DynamicResource VideoCall}"/>
+                                    <!--  Audio Button  -->
+                                    <Label Grid.Column="1" FontFamily="UIKitIcons" Text="&#xe703;" Margin="0,0,10,0" FontSize="20" TextColor="{AppThemeBinding Light=#474648, Dark=#C9C6C8}" VerticalOptions="Center">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding AudioCommand}" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                </Grid>
+                            </DataTemplate>
+                        </sfchat:SfChat.AttachmentButtonTemplate>
+                        <sfchat:SfChat.ScrollToBottomButtonTemplate>
+                            <DataTemplate>
+                                <badge:SfBadgeView x:Name="ScrollDown" Margin="2" VerticalOptions="End"  HorizontalOptions="End" IsVisible="{Binding IsBadgeViewVisible}" BadgeText="{Binding MessageCount}">
+                                    <badge:SfBadgeView.BadgeSettings>
+                                        <badge:BadgeSettings Animation="None" Position="Left" FontSize="10" Offset="28, 5"  FontAttributes="Bold" BadgeAlignment="Start"/>
+                                    </badge:SfBadgeView.BadgeSettings>
+                                    <badge:SfBadgeView.Content>
+                                        <Grid WidthRequest="60" HeightRequest="60">
+                                            <Border HeightRequest="40" WidthRequest="40"  Background="{AppThemeBinding Light=#FFFBFE,Dark=#302D38}"  Stroke="Transparent"  HorizontalOptions="End" VerticalOptions="End">
+                                                <Border.Shadow>
+                                                    <Shadow Offset="0,1" Radius="2" Brush="#4d000000"/>
+                                                </Border.Shadow>
+                                                <Border.StrokeShape>
+                                                    <RoundRectangle CornerRadius="20"/>
+                                                </Border.StrokeShape>
+                                                <Label Text="&#xe7D1;" TextColor="{AppThemeBinding Light=#49454F,Dark=#CAC4D0}"   FontSize="20" Margin="0,3,0,0"    HorizontalOptions="Center" VerticalOptions="Center"    FontFamily="MaterialAssets"/>
+                                            </Border>
+                                        </Grid>
+                                    </badge:SfBadgeView.Content>
+                                </badge:SfBadgeView>
+                            </DataTemplate>
+                        </sfchat:SfChat.ScrollToBottomButtonTemplate>
+                    </sfchat:SfChat>
+                    <Border Grid.Row="1"
+                            Margin="12,8,12,10"
+                            HeightRequest="48"
+                            BackgroundColor="Transparent"
+                            Stroke="Transparent"
+                            StrokeThickness="1">
 
-                                        <!--  Voice call button  -->
-                                        <buttons:SfButton Grid.Column="4"
-                                                          Style="{DynamicResource IconButtonStyle}"
-                                                          Text="{DynamicResource Phone}"/>
 
-                                        <!--  Menu Button  -->
-                                        <buttons:SfButton Grid.Column="5"
-                                                          Style="{DynamicResource IconButtonStyle}"
-                                                          Text="{DynamicResource More}"/>
-                                    </StackLayout>
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="22"/>
+                        </Border.StrokeShape>
+
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <!-- Input Container -->
+                            <Border Grid.Column="0"
+                                    HeightRequest="44"
+                                    BackgroundColor="{AppThemeBinding Light=#FCF8FA, Dark=#313032}"
+                                    Stroke="{AppThemeBinding Light=#C9C6C8, Dark=#5F5E60}"
+                                    StrokeThickness="1">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="22"/>
+                                </Border.StrokeShape>
+
+                                <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="12" Padding="16,0">
+                                    <!-- Editable message input -->
+                                    <controls:BorderlessEntry Grid.Column="0"
+                                                           x:Name="MessageEntry"
+                                                           Placeholder="Type Message..."
+                                                           PlaceholderColor="{AppThemeBinding Light=#ADAAAC, Dark=#878386}"
+                                                           Text="{Binding MessageText, Mode=TwoWay}"
+                                                           BackgroundColor="Transparent"
+                                                           TextColor="{AppThemeBinding Light=#313032, Dark=#FFFFFF}"
+                                                           FontSize="14"
+                                                           FontFamily="Roboto-Regular"
+                                                           VerticalOptions="Center"
+                                                           HorizontalOptions="Fill"
+                                                           HeightRequest="40"/>
+
+                                    <!-- ✅ Attachment icon with hover effect -->
+                                    <Border Grid.Column="1"
+                                            Margin="0,0,4,0"
+                                            Padding="6"
+                                            BackgroundColor="Transparent"
+                                            StrokeThickness="0"
+                                            VerticalOptions="Center">
+                                        <Border.StrokeShape>
+                                            <Ellipse/>
+                                        </Border.StrokeShape>
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroupList>
+                                                <VisualStateGroup x:Name="CommonStates">
+                                                    <VisualState x:Name="Normal"/>
+                                                    <VisualState x:Name="PointerOver">
+                                                        <VisualState.Setters>
+                                                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#E5E1E3, Dark=#3A3741}"/>
+                                                        </VisualState.Setters>
+                                                    </VisualState>
+                                                </VisualStateGroup>
+                                            </VisualStateGroupList>
+                                        </VisualStateManager.VisualStateGroups>
+                                        <syncEffectsView:SfEffectsView RippleBackground="{AppThemeBinding Light=#E5E1E3, Dark=#3A3741}" TouchDownEffects="Ripple">
+                                            <Label
+                                                   FontFamily="MaterialAssets"
+                                                   Text="&#xe785;"
+                                                   FontSize="18"
+                                                   VerticalOptions="Center"
+                                                   HorizontalOptions="Center"
+                                                   TextColor="{AppThemeBinding Light=#474648 , Dark=#C9C6C8}">
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding AttachmentCommand}" />
+                                                </Label.GestureRecognizers>
+                                            </Label>
+                                        </syncEffectsView:SfEffectsView>
+                                    </Border>
+
+                                    <!-- ✅ Camera icon with hover effect -->
+                                    
+                                    <Border Grid.Column="2"
+                                            Margin="0,0,4,0"
+                                            Padding="6"
+                                            BackgroundColor="Transparent"
+                                            StrokeThickness="0"
+                                            VerticalOptions="Center">
+                                        <Border.StrokeShape>
+                                            <Ellipse/>
+                                        </Border.StrokeShape>
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroupList>
+                                                <VisualStateGroup x:Name="CommonStates">
+                                                    <VisualState x:Name="Normal"/>
+                                                    <VisualState x:Name="PointerOver">
+                                                        <VisualState.Setters>
+                                                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#E5E1E3, Dark=#3A3741}"/>
+                                                        </VisualState.Setters>
+                                                    </VisualState>
+                                                </VisualStateGroup>
+                                            </VisualStateGroupList>
+                                        </VisualStateManager.VisualStateGroups>
+                                        <syncEffectsView:SfEffectsView  RippleBackground="{AppThemeBinding Light=#E5E1E3, Dark=#3A3741}" TouchDownEffects="Ripple">
+                                            <Label
+                                                   FontFamily="UIKitIcons"
+                                                   Text="&#xe703;"
+                                                   FontSize="18"
+                                                   VerticalOptions="Center"
+                                                   HorizontalOptions="Center"
+                                                   TextColor="{AppThemeBinding Light=#474648 , Dark=#C9C6C8}">
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding AudioCommand}" />
+                                                </Label.GestureRecognizers>
+                                            </Label>
+                                        </syncEffectsView:SfEffectsView>
+                                    </Border>
 
                                 </Grid>
-                                <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"
-                                        Grid.Row="1"
-                                        Grid.ColumnSpan="4"/>
-                            </Grid>
-                        </DataTemplate>
-                    </listView:SfListView.HeaderTemplate>
 
-                    <!--  New text entry in the chat conversation  -->
-                    <listView:SfListView.FooterTemplate>
-                        <DataTemplate>
-                            <Grid
-                                Padding="16,5,16,24"
-                                ColumnDefinitions="*, Auto"
-                                ColumnSpacing="16"
-                                RowDefinitions="Auto">
+                            </Border>
 
-                                <!--  Rounded Border  -->
-                                <Border BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                        Padding="5,0"
-                                        Stroke="{DynamicResource Gray-Bg}"
-                                        StrokeThickness="0"
-                                        StrokeShape="RoundRectangle 25"
-                                        Style="{DynamicResource ThemeBorderStyle}">
-
-                                    <Grid
-                                        ColumnDefinitions="*, Auto, Auto"
-                                        ColumnSpacing="0"
-                                        RowDefinitions="Auto">
-
-                                        <!--  Extendable editor  -->
-                                        <controls:BorderlessEditor
-                                            Margin="5,0"
-                                            Placeholder="Type here"
-                                            Style="{DynamicResource BorderlessEditorStyle}"
-                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
-
-                                        <!--  Camera Button  -->
-                                        <buttons:SfButton
-                                            Grid.Column="1"
-                                            Style="{DynamicResource IconButtonStyle}"
-                                            Text="{DynamicResource Camera}"
-                                            VerticalOptions="End"/>
-
-                                        <!--  Attachment Button  -->
-                                        <buttons:SfButton
-                                            Grid.Column="2"
-                                            Style="{DynamicResource IconButtonStyle}"
-                                            Text="{DynamicResource Attachment}"
-                                            VerticalOptions="End"/>
-
-                                    </Grid>
+                            <!-- Mic / Send Button (swaps icon when the composer has text) -->
+                            <Grid Grid.Column="1" WidthRequest="40" HeightRequest="40" VerticalOptions="Center">
+                                <Border BackgroundColor="#7633DA" StrokeThickness="0">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="20"/>
+                                    </Border.StrokeShape>
                                 </Border>
 
-                                <!--  Send Button  -->
-                                <buttons:SfButton
-                                    Grid.Column="1"
-                                    Padding="0,2,2,0"
-                                    Background="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                    HorizontalOptions="End"
-                                    Style="{DynamicResource IconButtonStyle}"
-                                    Text="{DynamicResource Send}"
-                                    TextColor="{DynamicResource Gray-White}"
-                                    VerticalOptions="End"/>
+                                <!-- Mic state: visible when composer is empty -->
+                                <Label Text="&#xe7ec;"
+                                       FontFamily="MaterialAssets"
+                                       BackgroundColor="Transparent"
+                                       TextColor="White"
+                                       FontSize="20"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"
+                                       IsVisible="{Binding MessageText, Converter={StaticResource InvertStringNotEmptyConverter}}">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding MicCommand}" />
+                                    </Label.GestureRecognizers>
+                                </Label>
 
+                                <!-- Send state: visible when composer has text -->
+                                <Label Text="&#xe784;"
+                                       FontFamily="MaterialAssets"
+                                       BackgroundColor="Transparent"
+                                       TextColor="White"
+                                       FontSize="20"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"
+                                       IsVisible="{Binding MessageText, Converter={StaticResource StringNotEmptyConverter}}">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnSendTapped" />
+                                    </Label.GestureRecognizers>
+                                </Label>
                             </Grid>
-                        </DataTemplate>
-                    </listView:SfListView.FooterTemplate>
-                </listView:SfListView>
-
-            </ScrollView>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Grid>
         </Grid>
     </ContentView.Content>
 </ContentView>

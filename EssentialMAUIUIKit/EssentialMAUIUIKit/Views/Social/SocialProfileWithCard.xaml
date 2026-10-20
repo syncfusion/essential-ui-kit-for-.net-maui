@@ -3,8 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Social.SocialProfileWithCard"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Toolkit.EffectsView;assembly=Syncfusion.Maui.Toolkit"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:tabView="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.TabView"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:model="clr-namespace:EssentialMAUIUIKit.Models"
              x:DataType="local:ProfileViewModel">
     <ContentView.BindingContext>
         <local:ProfileViewModel/>
@@ -35,30 +38,32 @@
     <ContentView.Content>
         <ScrollView
             VerticalScrollBarVisibility="Never"
-            Padding="10">
-            <Grid WidthRequest="{OnPlatform WinUI=650, MacCatalyst=650}"
-                    RowDefinitions="Auto, Auto, Auto, Auto, Auto"
-                  RowSpacing="0">
+            Padding="{OnIdiom Desktop=10, Tablet=10, Phone=0}">
+            <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto"
+                  RowSpacing="0" WidthRequest="{OnPlatform WinUI=687, MacCatalyst=687, Android=400}"
+                  HorizontalOptions="Fill">
 
                 <Border BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                         Stroke="Transparent"
+                        StrokeShape="RoundRectangle 0"
                         Grid.Row="0"
-                        Margin="16,0,16,32">
+                        Margin="{OnIdiom Phone='-10,-5,0,28', Tablet='16,0,16,28', Desktop='16,0,16,20'}">
 
                     <Border
                         Stroke="Transparent"
                         StrokeThickness="0"
-                        StrokeShape="RoundRectangle 4,4,4,4">
-                        <StackLayout
-                            Margin="0"
-                            Padding="0"
-                            Spacing="0">
+                        StrokeShape="RoundRectangle 0">
+                        <Grid Margin="0"
+                              Padding="0"
+                              RowDefinitions="190, Auto, Auto, Auto, Auto, Auto"
+                              RowSpacing="0">
 
-                            <!--  Header image path  -->
+                            <!--  Header image  -->
                             <Image
+                                Grid.Row="0"
                                 Aspect="Fill"
                                 BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                HeightRequest="120"
+                                HeightRequest="190"
                                 HorizontalOptions="Fill">
                                 <Image.Source>
                                     <UriImageSource
@@ -68,42 +73,82 @@
                                 </Image.Source>
                             </Image>
 
-                            <Border
-                                Margin="0,-60,0,16"
-                                BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                Stroke="{DynamicResource Gray-White}"
-                                StrokeThickness="2"
-                                StrokeShape="RoundRectangle 10,10,10,10"
-                                HeightRequest="80"
-                                HorizontalOptions="Center"
-                                WidthRequest="80">
+                            <!-- Profile image + Follow button row -->
+                            <Grid Grid.Row="1"
+                                  Margin="{OnIdiom Phone='24,0,24,4', Tablet='24,0,24,6', Desktop='24,0,24,6'}"
+                                  ColumnDefinitions="Auto, *"
+                                  ColumnSpacing="0"
+                                  RowDefinitions="Auto, Auto"
+                                  RowSpacing="0">
 
-                                <!--  Profile image  -->
-                                <Image Margin="-10"
-                                       Aspect="Fill"
-                                       BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                       HeightRequest="80"
-                                       WidthRequest="80">
-                                    <Image.Source>
-                                        <UriImageSource
-                                            CacheValidity="14"
-                                            CachingEnabled="true"
-                                            Uri="{Binding Profile.ProfileImage}"/>
-                                    </Image.Source>
-                                </Image>
+                                <Border
+                                    Grid.Row="0"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="0"
+                                    Margin="{OnIdiom Phone='0,-40,0,0', Tablet='0,-50,0,0', Desktop='0,-50,0,0'}"
+                                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                    Stroke="{DynamicResource Gray-White}"
+                                    StrokeThickness="2"
+                                    StrokeShape="RoundRectangle 60,60,60,60"
+                                    HeightRequest="{OnIdiom Phone=74, Tablet=104, Desktop=104}"
+                                    HorizontalOptions="Start"
+                                    VerticalOptions="Start"
+                                    WidthRequest="{OnIdiom Phone=74, Tablet=104, Desktop=104}">
 
-                            </Border>
+                                    <!--  Profile image  -->
+                                    <Image Margin="-10"
+                                           Aspect="Fill"
+                                           BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                           HeightRequest="95"
+                                           WidthRequest="104">
+                                        <Image.Source>
+                                            <UriImageSource
+                                                CacheValidity="14"
+                                                CachingEnabled="true"
+                                                Uri="{Binding Profile.ProfileImage}"/>
+                                        </Image.Source>
+                                    </Image>
 
-                            <!--  Profile name  -->
-                            <Label
-                                FontSize="20"
-                                Style="{DynamicResource TitleLabelStyle}"
-                                Text="{Binding Profile.ProfileName}"/>
+                                </Border>
 
+                                <!--  Follow button  -->
+                                <buttons:SfButton
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Padding="10,0,10,0"
+                                    Margin="0,12,0,8"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Start"
+                                    CornerRadius="24"
+                                    FontSize="14"
+                                    Stroke="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                    StrokeThickness="2"
+                                    FontFamily="Roboto-Medium"
+                                    Background="Transparent"
+                                    Text="Follow"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                    WidthRequest="90">
+                                </buttons:SfButton>
+
+                                <!--  Profile name  -->
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Margin="0" FontFamily="Roboto-Medium"
+                                    FontSize="{OnIdiom Phone=14, Tablet=16, Desktop=16}"
+                                    HorizontalOptions="Start"
+                                    HorizontalTextAlignment="Start"
+                                    Style="{DynamicResource TitleLabelStyle}"
+                                    Text="{Binding Profile.ProfileName}"/>
+
+                            </Grid>
+
+                            <!--  Designation + location row  -->
                             <StackLayout
-                                Margin="0,0,0,16"
+                                Grid.Row="2"
+                                Margin="{OnIdiom Desktop='24,0,24,0', Tablet='24,0,24,6', Phone='24,0,24,16'}"
                                 BackgroundColor="Transparent"
-                                HorizontalOptions="Center"
+                                HorizontalOptions="Start"
                                 Orientation="Horizontal"
                                 Spacing="5">
 
@@ -111,76 +156,98 @@
                                 <Label
                                     FontSize="12"
                                     Style="{DynamicResource DescriptionLabelStyle}"
+                                    TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
                                     Text="{Binding Profile.Designation}"/>
 
                                 <BoxView HorizontalOptions="Center"
-                                         Style="{DynamicResource VerticalSeparatorStyle}"/>
+                                         VerticalOptions="Center"
+                                         Style="{DynamicResource VerticalSeparatorStyle}"
+                                         Color="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
 
                                 <!--  state and country label  -->
                                 <Label FontSize="12"
+                                       VerticalOptions="Center"
                                        Style="{DynamicResource DescriptionLabelStyle}">
                                     <Label.FormattedText>
                                         <FormattedString>
-                                            <Span Text="{Binding Profile.State}"/>
+                                            <Span Text="{Binding Profile.State}" TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
                                             <Span Text=" "/>
-                                            <Span Text="{Binding Profile.Country}"/>
+                                            <Span Text="{Binding Profile.Country}" TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
                                         </FormattedString>
                                     </Label.FormattedText>
                                 </Label>
 
                             </StackLayout>
 
-                            <!--  Follow button  -->
-                            <buttons:SfButton
-                                Margin="0,0,0,16"
-                                CornerRadius="24"
-                                FontSize="14"
-                                Stroke="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                FontFamily="Roboto-Medium"
-                                Background="Transparent"
-                                Text="Follow"
-                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                WidthRequest="120">
-                            </buttons:SfButton>
-
-                            <!--  About title label  -->
-                            <Label
-                                Margin="16,0,0,4"
-                                FontSize="14"
-                                HorizontalOptions="Start"
-                                HorizontalTextAlignment="Start"
-                                Style="{DynamicResource TitleLabelStyle}"
-                                Text="About"/>
-
                             <!--  About label  -->
                             <Label
-                                Margin="16,0,16,24"
+                                Grid.Row="3"
+                                Margin="24,0,16,12"
                                 FontSize="12"
                                 HorizontalOptions="Start"
                                 HorizontalTextAlignment="Start"
                                 Style="{DynamicResource DescriptionLabelStyle}"
+                                IsVisible="{OnPlatform Default=False, Android=False, iOS=False, WinUI=True, MacCatalyst=True}"
+                                TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
                                 Text="{Binding Profile.About}"/>
 
-                        </StackLayout>
+                            <!-- Stats row bound to data instead of hard-coded values -->
+                            <HorizontalStackLayout Grid.Row="4"
+                                                   Padding="{OnIdiom Desktop='18,0,16,0', Tablet='18,0,16,0', Phone='18,0,16,0'}">
+                                <Label
+                                    Margin="6,0,6,0"
+                                    FontSize="16" FontFamily="Roboto-Medium"
+                                    HorizontalOptions="Start"
+                                    HorizontalTextAlignment="Start"
+                                    Style="{DynamicResource TitleLabelStyle}"
+                                    Text="{Binding Profile.FollowingCount}"/>
+                                <Label
+                                    Margin="0,0,4,0"
+                                    FontSize="12"
+                                    HorizontalOptions="Start"
+                                    HorizontalTextAlignment="Start"
+                                    VerticalOptions="Center"
+                                    Style="{DynamicResource TitleLabelStyle}"
+                                    TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                    Text="Following"/>
+                                <Label
+                                    Margin="6,0,6,0"
+                                    FontSize="16" FontFamily="Roboto-Medium"
+                                    HorizontalOptions="Start"
+                                    HorizontalTextAlignment="Start"
+                                    Style="{DynamicResource TitleLabelStyle}"
+                                    Text="{Binding Profile.FollowersCount}"/>
+                                <Label
+                                    Margin="0"
+                                    FontSize="12"
+                                    HorizontalOptions="Start"
+                                    HorizontalTextAlignment="Start"
+                                    VerticalOptions="Center"
+                                    TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                    Style="{DynamicResource TitleLabelStyle}"
+                                    Text="Followers"/>
+                            </HorizontalStackLayout>
+
+                        </Grid>
                     </Border>
                 </Border>
 
                 <!--  Interest title label  -->
                 <Label
                     Grid.Row="1"
-                    Margin="16,0,0,0"
-                    FontSize="12"
+                    Margin="{OnIdiom Phone='16,-10,0,8', Tablet='40,0,0,0', Desktop='40,0,0,0'}"
+                    FontSize="{OnIdiom Phone=14, Tablet=16, Desktop=16}"
                     HorizontalOptions="Start"
                     HorizontalTextAlignment="Start"
                     Style="{DynamicResource TitleLabelStyle}"
-                    Text="INTERESTS"
+                    Text="Interests" FontFamily="Roboto-Medium"
                     TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
 
                 <listView:SfListView
                     Grid.Row="2"
-                    Margin="16,0,0,24"
+                    Margin="{OnIdiom Phone='14,0,0,8', Tablet='0,0,0,0', Desktop='30,0,0,0'}"
                     Padding="0"
-                    AutoFitMode="DynamicHeight"
+                    AutoFitMode="Height"
                     HeightRequest="100"
                     HorizontalOptions="Fill"
                     ScrollBarVisibility="Never"
@@ -190,32 +257,32 @@
                     SelectionBackground="Transparent">
 
                     <listView:SfListView.ItemTemplate>
-                        <DataTemplate x:DataType="local:Interest">
-                            <StackLayout Margin="10,16,10,0"
-                                         Spacing="0">
-
-                                <Border
+                        <DataTemplate x:DataType="model:Interest">
+                            <StackLayout Margin="8,16,8,0" Spacing="0">
+                                <syncEffectsView:SfEffectsView TouchDownEffects="Ripple" RippleBackground="{DynamicResource Gray-300}">
+                                    <Border
                                     Margin="0,0,0,4"
                                     StrokeThickness="0"
                                     StrokeShape="RoundRectangle 35,35,35,35"
-                                    HeightRequest="64"
+                                    HeightRequest="56"
                                     HorizontalOptions="Center"
-                                    WidthRequest="64">
+                                    WidthRequest="56">
 
-                                    <Image
+                                        <Image
                                         Aspect="AspectFill"
                                         BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                        HeightRequest="64"
+                                        HeightRequest="56"
                                         HorizontalOptions="Center"
-                                        WidthRequest="64">
-                                        <Image.Source>
-                                            <UriImageSource
+                                        WidthRequest="56">
+                                            <Image.Source>
+                                                <UriImageSource
                                                 CacheValidity="14"
                                                 CachingEnabled="true"
                                                 Uri="{Binding ImagePath}"/>
-                                        </Image.Source>
-                                    </Image>
-                                </Border>
+                                            </Image.Source>
+                                        </Image>
+                                    </Border>
+                                </syncEffectsView:SfEffectsView>
 
                                 <!--  Profile name  -->
                                 <Label
@@ -233,47 +300,54 @@
                     </listView:SfListView.ItemTemplate>
                 </listView:SfListView>
 
-                <!--  Photos title  -->
-                <Label
-                    Grid.Row="3"
-                    Margin="16,0,16,16"
-                    FontSize="12"
-                    HorizontalOptions="Start"
-                    Style="{DynamicResource TitleLabelStyle}"
-                    Text="PHOTOS"
-                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
-
+                <!--  Photos tab icons  -->
+                <tabView:SfTabView Grid.Row="3"
+                                       HeightRequest="48" WidthRequest="{OnIdiom Phone=400, Desktop=596, Tablet=596}"
+                                       Margin="{OnIdiom Phone='18,0,20,1', Desktop='32,0,12,2', Tablet='6,0,4,2'}"
+                                       TabWidthMode="Default"
+                                       HorizontalOptions="Center"
+                                       HeaderDisplayMode="Text"
+                                       IndicatorWidthMode="Stretch"
+                                       SelectedIndex="0"
+                                       BackgroundColor="Transparent">
+                    <tabView:SfTabItem Header="Posts" FontAttributes="Bold" ImageSource="photo.png" />
+                    <tabView:SfTabItem Header="Replies" FontAttributes="Bold" ImageSource="video.png" />
+                    <tabView:SfTabItem Header="Media" FontAttributes="Bold" ImageSource="heart.png" />
+                </tabView:SfTabView>
                 <listView:SfListView
                     x:Name="listView"
                     Grid.Row="4"
-                    Margin="16,0,0,0"
+                    Margin="{OnIdiom Phone='-10,0,0,10', Tablet='30,0,32,0', Desktop='24,0,32,0'}"
+                    Padding="{OnIdiom Desktop='26,0,0,0', Tablet='26,0,0,0', Phone='0'}"
                     AutoFitMode="Height"
                     ScrollBarVisibility="Never"
-                    ItemSpacing="0,0,16,16"
+                    IsScrollingEnabled="False"
+                    HorizontalOptions="Center"
+                    ItemSpacing="{OnIdiom Phone='1', Tablet='0,0,0,0', Desktop='2,0,0,2'}"
                     ItemsSource="{Binding Profile.Pictures}"
                     SelectionBackground="Transparent">
                     <listView:SfListView.ItemTemplate>
-                        <DataTemplate x:DataType="local:Picture">
-                            <Grid>
-                                <Border HeightRequest="{OnPlatform Default=190, Android=165, iOS=165}"
-                                        WidthRequest="{OnPlatform Default=190, Android=165, iOS=165}"
-                                        StrokeShape="RoundRectangle 10"
+                        <DataTemplate x:DataType="model:Picture">
+                            <syncEffectsView:SfEffectsView TouchDownEffects="Ripple" RippleBackground="{DynamicResource Gray-300}">
+                                <Grid>
+                                    <Border HeightRequest="{OnIdiom Desktop=177, Phone=185, Tablet=208}"
+                                        WidthRequest="{OnIdiom Desktop=208, Phone=204, Tablet=208}"
+                                        StrokeShape="RoundRectangle 0"
                                         StrokeThickness="0">
-                                    <!--  Photos  -->
-                                    <Image
+
+                                        <Image
                                         Aspect="AspectFill"
                                         BackgroundColor="{DynamicResource Gray-200}">
-                                        <Image.Source>
-                                            <UriImageSource
+                                            <Image.Source>
+                                                <UriImageSource
                                                 CacheValidity="14"
                                                 CachingEnabled="true"
                                                 Uri="{Binding ImagePath}"/>
-                                        </Image.Source>
-                                    </Image>
-                                </Border>
-
-
-                            </Grid>
+                                            </Image.Source>
+                                        </Image>
+                                    </Border>
+                                </Grid>
+                            </syncEffectsView:SfEffectsView>
                         </DataTemplate>
                     </listView:SfListView.ItemTemplate>
 
@@ -282,7 +356,10 @@
                     </listView:SfListView.ItemsLayout>
 
                 </listView:SfListView>
+
+
             </Grid>
+
         </ScrollView>
     </ContentView.Content>
 </ContentView>

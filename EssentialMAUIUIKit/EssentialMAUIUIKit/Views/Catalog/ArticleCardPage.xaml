@@ -11,8 +11,8 @@
              x:DataType="local:ArticleCardViewModel">
     <ContentView.Resources>
         <ResourceDictionary>
-            <converter:BooleanToStringConverter x:Key="boolToStringConverter"/>
-            <converter:BooleanToColorConverter x:Key="boolToColorConverter"/>
+            <converter:BooleanToStringConverter x:Key="boolToStringConverter" />
+            <converter:BooleanToColorConverter x:Key="boolToColorConverter" />
         </ResourceDictionary>
         <Style TargetType="listView:ListViewItem">
             <Setter Property="VisualStateManager.VisualStateGroups">
@@ -21,13 +21,13 @@
                         <VisualState x:Name="Normal">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                        Value="Transparent" />
+                                        Value="Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                         <VisualState x:Name="PointerOver">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                        Value= "Transparent" />
+                                        Value="Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -36,19 +36,76 @@
         </Style>
     </ContentView.Resources>
     <ContentView.BindingContext>
-        <local:ArticleCardViewModel/>
+        <local:ArticleCardViewModel />
     </ContentView.BindingContext>
     <ContentView.Content>
-        <Grid RowDefinitions="Auto, *"
+        <Grid RowDefinitions="Auto,Auto,*"
               RowSpacing="0">
+            <Grid ColumnDefinitions="Auto,*"
+                  Padding="0,5,0,5">
+                <buttons:SfButton Background="Transparent"
+                                  CornerRadius="4"
+                                  Margin="{OnIdiom Desktop='0,0,0,0',Phone='0,7,0,9', Tablet='0,15,0,17'}"
+                                  HeightRequest="32"
+                                  WidthRequest="110"
+                                  TextColor="{DynamicResource Gray-700}">
+                    <buttons:SfButton.Content>
+                        <DataTemplate>
+                            <StackLayout Padding="8,5,8,6"
+                                         Orientation="Horizontal"
+                                         Spacing="8"
+                                         VerticalOptions="Center">
+                                <Label FontFamily="FontIcons"
+                                       Rotation="180"
+                                       FontSize="20"
+                                       Style="{DynamicResource DescriptionLabelStyle}"
+                                       IsVisible="{OnIdiom Phone=True, Tablet=True, Desktop=False}"
+                                       Text="{DynamicResource ArrowRight}"
+                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                       VerticalOptions="Center"
+                                       VerticalTextAlignment="Center" />
+                                <Label FontFamily="Roboto-Medium"
+                                       FontSize="16"
+                                       Text="Articles"
+                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                       VerticalOptions="Center"
+                                       VerticalTextAlignment="Center" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </buttons:SfButton.Content>
+                </buttons:SfButton>
+                <HorizontalStackLayout Grid.Column="1"
+                                       Margin="5"
+                                       Spacing="8"
+                                       HorizontalOptions="End">
+                    <buttons:SfButton Background="Transparent"
+                                      CornerRadius="4"
+                                      TextColor="{DynamicResource Gray-700}">
+                        <buttons:SfButton.Content>
+                            <DataTemplate>
+                                <StackLayout Padding="8,5,8,6"
+                                             VerticalOptions="Center">
+                                    <Label FontFamily="FontIcons"
+                                           FontSize="18"
+                                           FontAttributes="Bold"
+                                           Text="{DynamicResource Search}"
+                                           TextColor="{AppThemeBinding Light={DynamicResource ContentTextColorLight}, Dark={DynamicResource ContentTextColorDark}}"
+                                           VerticalOptions="Center"
+                                           VerticalTextAlignment="Center" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </buttons:SfButton.Content>
+                    </buttons:SfButton>
+                </HorizontalStackLayout>
+            </Grid>
 
-            <BoxView
-                Grid.Row="0"
-                HeightRequest="1"
-                Style="{DynamicResource HorizontalSeparatorStyle}"/>
+            <BoxView Grid.Row="1"
+                     Style="{DynamicResource HorizontalSeparatorStyle}" />
 
-            <Grid Grid.Row="1">
-                <listView:SfListView  ItemSpacing="10"
+            <Grid Grid.Row="2"
+                  HorizontalOptions="Center"
+                  MaximumWidthRequest="{OnPlatform WinUI=1100, MacCatalyst=1100}">
+                <listView:SfListView  ItemSpacing="5"
                                       x:Name="ArticlesCard"
                                       AllowSwiping="True"
                                       AutoFitMode="Height"
@@ -61,92 +118,87 @@
                     <listView:SfListView.ItemTemplate>
                         <DataTemplate x:DataType="model:Story">
                             <Border HeightRequest="240"
-                                    WidthRequest="{OnIdiom Phone=343,
+                                    WidthRequest="{OnIdiom Phone=383,
     Tablet=343,
     Desktop=344}"
-                                    Margin="16"
+                                    Margin="0,16,0,16"
                                     Padding="0"
                                     StrokeThickness="0"
                                     StrokeShape="RoundRectangle 4"
                                     BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
                                 <Border.Content>
-                                    <syncEffectsView:SfEffectsView
-                                        RippleBackground="{DynamicResource Gray-300}"
-                                        TouchDownEffects="Ripple">
+                                    <syncEffectsView:SfEffectsView RippleBackground="{DynamicResource Gray-300}"
+                                                                   TouchDownEffects="Ripple">
 
-                                        <Border
-                                            Stroke="Transparent"
-                                            StrokeThickness="0"
-                                            StrokeShape="RoundRectangle 4,4,4,4">
-                                            <Grid WidthRequest="343"
+                                        <Border Stroke="Transparent"
+                                                StrokeThickness="0"
+                                                StrokeShape="RoundRectangle 4,4,4,4">
+                                            <Grid WidthRequest="{OnIdiom Phone=383, Tablet=343, Desktop=344}"
                                                   ColumnSpacing="0"
-                                                  ColumnDefinitions=".5*, .5*"
-                                                  RowDefinitions="*, Auto"
+                                                  ColumnDefinitions="6.5*, 3.5*"
+                                                  RowDefinitions="*,Auto,Auto"
                                                   RowSpacing="0">
 
                                                 <Border Grid.ColumnSpan="2"
                                                         Grid.Row="0"
                                                         Stroke="Transparent"
                                                         StrokeShape="RoundRectangle 10">
-                                                    <Image
-                                                        Aspect="AspectFill">
+                                                    <Image Aspect="AspectFill">
                                                         <Image.Source>
-                                                            <UriImageSource
-                                                                CacheValidity="14"
-                                                                CachingEnabled="true"
-                                                                Uri="{Binding ImagePath}"/>
+                                                            <UriImageSource CacheValidity="14"
+                                                                            CachingEnabled="true"
+                                                                            Uri="{Binding ImagePath}" />
                                                         </Image.Source>
                                                     </Image>
 
                                                 </Border>
 
                                                 <!--  Description of the Article  -->
-                                                <StackLayout
-                                                    Grid.Row="1"
-                                                    Grid.Column="0"
-                                                    Margin="16,0,16,0"
-                                                    Spacing="0"
-                                                    HorizontalOptions="Start"
-                                                    VerticalOptions="Start">
+                                                <StackLayout Grid.Row="1"
+                                                             Grid.Column="0"
+                                                             Margin="5,10,5,0"
+                                                             Spacing="2"
+                                                             HorizontalOptions="Start"
+                                                             VerticalOptions="Start">
 
                                                     <!--  Article Title  -->
-                                                    <Label
-                                                        Margin="0,8"
-                                                        HorizontalOptions="Start"
-                                                        LineBreakMode="TailTruncation"
-                                                        Style="{DynamicResource TitleLabelStyle}"
-                                                        Text="{Binding Name}"
-                                                        VerticalOptions="End"/>
+                                                    <Label Margin="0"
+                                                           FontFamily="Roboto-Medium"
+                                                           HorizontalOptions="Start"
+                                                           LineBreakMode="TailTruncation"
+                                                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                           Text="{Binding Name}"
+                                                           VerticalOptions="End" />
 
                                                     <!--  Author name  -->
-                                                    <Label
-                                                        FontFamily="Roboto-Regular"
-                                                        FontSize="12"
-                                                        LineHeight="{OnPlatform Default=-1,
+                                                    <Label FontFamily="Roboto-Medium"
+                                                           FontSize="12"
+                                                           LineHeight="{OnPlatform Default=-1,
                                                             Android=1.5}"
-                                                        Text="{Binding Author}"
-                                                        TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
-                                                        VerticalOptions="End"/>
+                                                           Text="{Binding Author}"
+                                                           TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                                           VerticalOptions="End" />
 
                                                     <!--  Published date and average reading time  -->
-                                                    <Label
-                                                        Grid.Row="2"
-                                                        Margin="0,0,0,8"
-                                                        FontSize="12"
-                                                        LineHeight="{OnPlatform Default=-1,
+                                                    <Label Grid.Row="2"
+                                                           FontFamily="Roboto-Regular"
+                                                           Margin="0,0,0,8"
+                                                           FontSize="12"
+                                                           TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                                           LineHeight="{OnPlatform Default=-1,
                                                             Android=1.5}"
-                                                        VerticalOptions="End">
+                                                           VerticalOptions="End">
                                                         <Label.FormattedText>
                                                             <FormattedString>
                                                                 <Span Text="{Binding Date}"
                                                                       TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
-                                                                        FontFamily="Roboto-Regular"/>
+                                                                      FontFamily="Roboto-Regular" />
                                                                 <Span Text=" | "
                                                                       TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
-                                                                        FontFamily="Roboto-Regular"/>
+                                                                      FontFamily="Roboto-Regular" />
                                                                 <Span Text="{Binding AverageReadingTime}"
                                                                       TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
-                                                                        FontFamily="Roboto-Regular"/>
+                                                                      FontFamily="Roboto-Regular" />
                                                             </FormattedString>
                                                         </Label.FormattedText>
                                                     </Label>
@@ -154,46 +206,54 @@
 
                                                 <StackLayout Grid.Row="1"
                                                              Grid.Column="1">
-                                                    <StackLayout
-                                                        Margin="0,8,16,8"
-                                                        HorizontalOptions="End"
-                                                        VerticalOptions="Start"
-                                                        Orientation="Horizontal"
-                                                        Spacing="0">
-
-                                                        <!--  Bookmark Button  -->
-                                                        <buttons:SfButton
-                                                            HeightRequest="30"
-                                                            Style="{DynamicResource IconButtonStyle}"
-                                                            Text="{Binding IsBookmarked, Converter={StaticResource boolToStringConverter}, ConverterParameter=0}"
-                                                            TextColor="{Binding IsBookmarked, Converter={StaticResource boolToColorConverter}, ConverterParameter=4}"
-                                                            Clicked="BookmarkButton_Clicked"
-                                                            WidthRequest="30"/>
-
-                                                        <!--  Favourite Icon  -->
-                                                        <buttons:SfButton
-                                                            HeightRequest="30"
-                                                            Style="{DynamicResource IconButtonStyle}"
-                                                            Text="{Binding IsFavourite, Converter={StaticResource boolToStringConverter}, ConverterParameter=1}"
-                                                            TextColor="{Binding IsFavourite, Converter={x:StaticResource boolToColorConverter}, ConverterParameter=4}"
-                                                            Clicked="FavouriteButton_Clicked_1"
-                                                            WidthRequest="30"/>
+                                                    <StackLayout Margin="0,8,5,8"
+                                                                 HorizontalOptions="End"
+                                                                 VerticalOptions="Start"
+                                                                 Orientation="Horizontal"
+                                                                 Spacing="0">
 
                                                         <!--  Share Icon  -->
-                                                        <buttons:SfButton
-                                                            x:Name="shareButton"
-                                                            Margin="0"
-                                                            Padding="0"
-                                                            HeightRequest="30"
-                                                            HorizontalTextAlignment="Center"
-                                                            Style="{DynamicResource IconButtonStyle}"
-                                                            Text="{DynamicResource Share}"
-                                                            WidthRequest="30"/>
+                                                        <buttons:SfButton x:Name="shareButton"
+                                                                          Padding="0"
+                                                                          FontAttributes="Bold"
+                                                                          HeightRequest="30"
+                                                                          FontSize="18"
+                                                                          HorizontalTextAlignment="Center"
+                                                                          Style="{DynamicResource IconButtonStyle}"
+                                                                          Text="{DynamicResource Share}"
+                                                                          WidthRequest="30" />
+
+                                                        <!--  Favourite Icon  -->
+                                                        <buttons:SfButton HeightRequest="30"
+                                                                          FontAttributes="Bold"
+                                                                          FontSize="18"
+                                                                          Style="{DynamicResource IconButtonStyle}"
+                                                                          Text="{Binding IsFavourite, Converter={StaticResource boolToStringConverter}, ConverterParameter=1}"
+                                                                          TextColor="{Binding IsFavourite, Converter={StaticResource boolToColorConverter}, ConverterParameter=4}"
+                                                                          Clicked="FavouriteButton_Clicked_1"
+                                                                          WidthRequest="30" />
+
+                                                        <!--  Bookmark Button  -->
+                                                        <buttons:SfButton HeightRequest="30"
+                                                                          FontSize="18"
+                                                                          FontAttributes="Bold"
+                                                                          Style="{DynamicResource IconButtonStyle}"
+                                                                          Text="{Binding IsBookmarked, Converter={StaticResource boolToStringConverter}, ConverterParameter=0}"
+                                                                          TextColor="{AppThemeBinding Light=#474648, Dark=#C9C6C8}"
+                                                                          Clicked="BookmarkButton_Clicked"
+                                                                          WidthRequest="30" />
+
+
                                                     </StackLayout>
 
                                                 </StackLayout>
 
+                                                <BoxView Grid.Row="2"
+                                                         Margin="0,5,0,0"
+                                                         Grid.ColumnSpan="2"
+                                                         Style="{DynamicResource HorizontalSeparatorStyle}" />
                                             </Grid>
+
                                         </Border>
                                     </syncEffectsView:SfEffectsView>
                                 </Border.Content>
@@ -203,7 +263,7 @@
 
                     <!--  Layout to customize no. of columns in SfListView  -->
                     <listView:SfListView.ItemsLayout>
-                        <listView:GridLayout SpanCount="{OnPlatform Default=3, Android=1, iOS=1}"/>
+                        <listView:GridLayout SpanCount="{OnIdiom Phone=1, Tablet=2, Desktop=3}" />
                     </listView:SfListView.ItemsLayout>
 
                 </listView:SfListView>

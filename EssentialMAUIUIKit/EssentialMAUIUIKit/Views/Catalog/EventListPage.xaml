@@ -12,343 +12,231 @@
              x:DataType="local:EventListViewModel">
     <ContentView.Resources>
         <ResourceDictionary>
-            <converter:BooleanToStringConverter x:Key="boolToStringConverter"/>
-            <converter:BooleanToColorConverter x:Key="boolToColorConverter"/>
+            <converter:BooleanToStringConverter x:Key="boolToStringConverter" />
+            <converter:BooleanToColorConverter x:Key="boolToColorConverter" />
+
+            <DataTemplate x:Key="EventCardTemplate"
+                          x:DataType="model:EventList">
+                <Border BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                        WidthRequest="{OnIdiom Phone=384, Desktop=728, Tablet=728}"
+                        StrokeThickness="0.3"
+                        StrokeShape="RoundRectangle 12"
+                        HeightRequest="110"
+                        Padding="0">
+                    <Border.Shadow>
+                        <Shadow Brush="#80000000"
+                                Offset="0,2"
+                                Radius="3"
+                                Opacity="0.4" />
+                    </Border.Shadow>
+
+                    <syncEffectsView:SfEffectsView RippleBackground="{DynamicResource Gray-300}"
+                                                   TouchDownEffects="Ripple">
+                        <Grid ColumnSpacing="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0"
+                                    StrokeThickness="0"
+                                    WidthRequest="129">
+                                <Image Source="{Binding ImagePath}"
+                                       Aspect="AspectFill" />
+                            </Border>
+
+                            <Grid Grid.Column="1"
+                                  RowDefinitions="Auto,*"
+                                  Padding="0,10,0,10">
+                                <Label Text="{Binding EventName}"
+                                       FontSize="14"
+                                       FontFamily="Roboto-Medium"
+                                       LineBreakMode="TailTruncation"
+                                       VerticalOptions="Start"
+                                       MaxLines="2"
+                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
+
+                                <StackLayout Grid.Row="1"
+                                             Spacing="2"
+                                             VerticalOptions="End">
+                                    <Label Text="Marshall"
+                                           FontSize="12"
+                                           FontFamily="Roboto-Medium"
+                                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}" />
+
+                                    <Label Text="{Binding EventTime}"
+                                           FontSize="12"
+                                           FontFamily="Roboto-Regular"
+                                           TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}" />
+                                </StackLayout>
+                            </Grid>
+
+                            <buttons:SfButton Grid.Column="2"
+                                              Margin="0,2,2,0"
+                                              HeightRequest="30"
+                                              HorizontalOptions="End"
+                                              Style="{DynamicResource IconButtonStyle}"
+                                              Text="{Binding IsPopular, Converter={StaticResource boolToStringConverter}, ConverterParameter=1}"
+                                              TextColor="{Binding IsPopular, Converter={StaticResource boolToColorConverter}, ConverterParameter=4}"
+                                              Clicked="FavouriteButton_Clicked"
+                                              VerticalOptions="Start"
+                                              WidthRequest="30" />
+                        </Grid>
+                    </syncEffectsView:SfEffectsView>
+                </Border>
+            </DataTemplate>
         </ResourceDictionary>
     </ContentView.Resources>
     <ContentView.BindingContext>
-        <local:EventListViewModel/>
+        <local:EventListViewModel />
     </ContentView.BindingContext>
     <ContentView.Content>
-        <Grid RowDefinitions="Auto, *"
+        <Grid RowDefinitions="Auto,Auto,*"
               RowSpacing="0">
-
-            <BoxView Grid.Row="0"
-                     Style="{DynamicResource HorizontalSeparatorStyle}"/>
-
-            <StackLayout Grid.Row="1">
-
-                <!--  Tab view  -->
-                <tabView:SfTabView x:DataType="tabView:SfTabView" x:Name="tabView"
-                                   SelectedIndex="{Binding SelectedIndex}">
-                    <!--  Tab view for All  -->
-                    <tabView:SfTabItem
-                        Header="All"
-                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                        FontFamily="Roboto-Medium"
-                        FontSize="14">
-
-                        <tabView:SfTabItem.Content>
-
-                            <StackLayout x:DataType="local:EventListViewModel"
-                                Margin="10,0,10,16"
-                                BindableLayout.ItemsSource="{Binding EventItems}"
-                                Spacing="16">
-                                <BindableLayout.ItemTemplate>
-                                    <DataTemplate x:DataType="model:EventList">
-                                        <Grid>
-                                            <syncEffectsView:SfEffectsView
-                                                RippleBackground="{DynamicResource Gray-300}"
-                                                TouchDownEffects="Ripple">
-                                                <Border Stroke="Transparent"
-                                                        StrokeShape="RoundRectangle 10">
-                                                    <Grid
-                                                        ColumnSpacing="16"
-                                                        HeightRequest="110"
-                                                        RowDefinitions="*, Auto, Auto"
-                                                        RowSpacing="0">
-
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="Auto"/>
-                                                            <ColumnDefinition>
-                                                                <ColumnDefinition.Width>
-                                                                    <OnPlatform Default="*"/>
-                                                                </ColumnDefinition.Width>
-                                                            </ColumnDefinition>
-                                                            <ColumnDefinition Width="Auto"/>
-                                                        </Grid.ColumnDefinitions>
-
-                                                        <!--  Blog image  -->
-                                                        <Image
-                                                            Grid.RowSpan="3"
-                                                            Margin="0,0,0,0"
-                                                            Aspect="AspectFill"
-                                                            BackgroundColor="{DynamicResource Gray-200}"
-                                                            HeightRequest="110"
-                                                            Source="{Binding ImagePath}"
-                                                            VerticalOptions="Center"
-                                                            WidthRequest="120"/>
-
-                                                        <!--  Blog title  -->
-                                                        <Label
-                                                            Grid.Column="1"
-                                                            Margin="0,8,0,0"
-                                                            FontSize="14"
-                                                            HorizontalOptions="Start"
-                                                            HorizontalTextAlignment="Start"
-                                                            LineBreakMode="TailTruncation"
-                                                            MaxLines="2"
-                                                            Style="{DynamicResource TitleLabelStyle}"
-                                                            Text="{Binding EventName}"/>
-
-                                                        <!--  Author name  -->
-                                                        <Label
-                                                            Grid.Row="1"
-                                                            Grid.Column="1"
-                                                            Margin="0,8,0,0"
-                                                            FontFamily="Roboto-Regular"
-                                                            FontSize="12"
-                                                            LineHeight="{OnPlatform Default=-1,
-                            Android=1.5}"
-                                                            Text="John Doe"
-                                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"/>
-
-                                                        <!--  Published date and Average reading time  -->
-                                                        <Label
-                                                            Grid.Row="2"
-                                                            Grid.Column="1"
-                                                            Margin="0,2,0,8"
-                                                            FontFamily="Roboto-Regular"
-                                                            FontSize="12"
-                                                            LineHeight="{OnPlatform Default=-1,
-                            Android=1.5}"
-                                                            TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
-                                                            Text="{Binding EventTime}">
-                                                        </Label>
-
-                                                        <!--  Favourite Icon  -->
-                                                        <buttons:SfButton Grid.Column="2"
-                                                                          Margin="0,2,2,0"
-                                                                          HeightRequest="-1"
-                                                                          HorizontalOptions="End"
-                                                                          Style="{DynamicResource IconButtonStyle}"
-                                                                          Text="{Binding IsPopular, Converter={StaticResource boolToStringConverter}, ConverterParameter=1}"
-                                                                          TextColor="{Binding IsPopular, Converter={StaticResource boolToColorConverter}, ConverterParameter=4}"
-                                                                          Clicked="FavouriteButton_Clicked"
-                                                                          VerticalOptions="Start"
-                                                                          WidthRequest="30"/>
-
-                                                    </Grid>
-                                                </Border>
-                                            </syncEffectsView:SfEffectsView>
-                                        </Grid>
-                                    </DataTemplate>
-                                </BindableLayout.ItemTemplate>
+            <Grid ColumnDefinitions="Auto,*"
+                  Padding="0,5,0,5">
+                <buttons:SfButton Background="Transparent"
+                                  CornerRadius="4"
+                                  Margin="{OnIdiom Desktop='0,0,0,0',Phone='0,7,0,9', Tablet='0,15,0,17'}"
+                                  HeightRequest="32"
+                                  WidthRequest="110"
+                                  TextColor="{DynamicResource Gray-700}">
+                    <buttons:SfButton.Content>
+                        <DataTemplate>
+                            <StackLayout Padding="8,5,8,6"
+                                         Orientation="Horizontal"
+                                         Spacing="8"
+                                         VerticalOptions="Center">
+                                <Label FontFamily="FontIcons"
+                                       Rotation="180"
+                                       FontSize="20"
+                                       Style="{DynamicResource DescriptionLabelStyle}"
+                                       IsVisible="{OnIdiom Phone=True, Tablet=True, Desktop=False}"
+                                       Text="{DynamicResource ArrowRight}"
+                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                       VerticalOptions="Center"
+                                       VerticalTextAlignment="Center" />
+                                <Label FontFamily="Roboto-Medium"
+                                       FontSize="16"
+                                       Text="Events"
+                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                       VerticalOptions="Center"
+                                       VerticalTextAlignment="Center" />
                             </StackLayout>
-                        </tabView:SfTabItem.Content>
-                    </tabView:SfTabItem>
+                        </DataTemplate>
+                    </buttons:SfButton.Content>
+                </buttons:SfButton>
+                <HorizontalStackLayout Grid.Column="1"
+                                       Margin="5"
+                                       Spacing="8"
+                                       HorizontalOptions="End">
+                    <buttons:SfButton Background="Transparent"
+                                      CornerRadius="4"
+                                      TextColor="{DynamicResource Gray-700}">
+                        <buttons:SfButton.Content>
+                            <DataTemplate>
+                                <StackLayout Padding="8,5,8,6"
+                                             VerticalOptions="Center">
+                                    <Label FontFamily="FontIcons"
+                                           FontSize="18"
+                                           FontAttributes="Bold"
+                                           Text="{DynamicResource Search}"
+                                           TextColor="{AppThemeBinding Light={DynamicResource ContentTextColorLight}, Dark={DynamicResource ContentTextColorDark}}"
+                                           VerticalOptions="Center"
+                                           VerticalTextAlignment="Center" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </buttons:SfButton.Content>
+                    </buttons:SfButton>
+                </HorizontalStackLayout>
+            </Grid>
 
-                    <!--  Tab view for upcoming  -->
-                    <tabView:SfTabItem x:DataType="local:EventListViewModel"
-                        Header="Upcoming"
-                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                        FontFamily="Roboto-Medium"
-                        FontSize="14">
-                        <tabView:SfTabItem.Content>
-                            <StackLayout
-                                Margin="10,0,10,16"
-                                BindableLayout.ItemsSource="{Binding UpcomingItems}"
-                                Spacing="16">
-                                <BindableLayout.ItemTemplate>
-                                    <DataTemplate x:DataType="model:EventList">
-                                        <Grid>
-                                            <syncEffectsView:SfEffectsView
-                                                RippleBackground="{DynamicResource Gray-300}"
-                                                TouchDownEffects="Ripple">
-                                                <Border Stroke="Transparent"
-                                                        StrokeShape="RoundRectangle 10">
-                                                    <Grid
-                                                        ColumnSpacing="16"
-                                                        HeightRequest="110"
-                                                        RowDefinitions="*, Auto, Auto"
-                                                        RowSpacing="0">
+            <BoxView Grid.Row="1"
+                     Style="{DynamicResource HorizontalSeparatorStyle}" />
 
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="Auto"/>
-                                                            <ColumnDefinition>
-                                                                <ColumnDefinition.Width>
-                                                                    <OnPlatform Default="*"/>
-                                                                </ColumnDefinition.Width>
-                                                            </ColumnDefinition>
-                                                            <ColumnDefinition Width="Auto"/>
-                                                        </Grid.ColumnDefinitions>
+            <ScrollView Grid.Row="2">
+                <StackLayout MaximumWidthRequest="{OnPlatform WinUI=830, MacCatalyst=830}" 
+                             HorizontalOptions="Center">
 
-                                                        <!--  Blog image  -->
-                                                        <Image
-                                                            Grid.RowSpan="3"
-                                                            Margin="0,0,0,0"
-                                                            Aspect="AspectFill"
-                                                            BackgroundColor="{DynamicResource Gray-200}"
-                                                            HeightRequest="110"
-                                                            Source="{Binding ImagePath}"
-                                                            VerticalOptions="Center"
-                                                            WidthRequest="120"/>
+                    <!--  Tab view  -->
+                    <tabView:SfTabView x:DataType="tabView:SfTabView"
+                                       x:Name="tabView"
+                                       TabWidthMode="SizeToContent"
+                                       WidthRequest="{OnIdiom Phone=480, Desktop=830, Tablet=830}"
+                                       TabItemTapped="tabView_TabItemTapped"
+                                       Margin="0,30,0,0"
+                                       IndicatorPlacement="Fill"
+                                       IndicatorBackground="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                       TabBarHeight="30"
+                                       IndicatorCornerRadius="30"
+                                       SelectedIndex="{Binding SelectedIndex}">
+                        <!--  Tab view for All  -->
+                        <tabView:SfTabItem x:Name="tabItem1"
+                                           Header="All"
+                                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                           FontFamily="Roboto-Medium"
+                                           FontSize="14">
 
-                                                        <!--  Blog title  -->
-                                                        <Label
-                                                            Grid.Column="1"
-                                                            Margin="0,8,0,0"
-                                                            FontSize="14"
-                                                            HorizontalOptions="Start"
-                                                            HorizontalTextAlignment="Start"
-                                                            LineBreakMode="TailTruncation"
-                                                            MaxLines="2"
-                                                            Style="{DynamicResource TitleLabelStyle}"
-                                                            Text="{Binding EventName}"/>
+                            <tabView:SfTabItem.Content>
 
-                                                        <!--  Author name  -->
-                                                        <Label
-                                                            Grid.Row="1"
-                                                            Grid.Column="1"
-                                                            Margin="0,8,0,0"
-                                                            FontFamily="Roboto-Regular"
-                                                            FontSize="12"
-                                                            LineHeight="{OnPlatform Default=-1,
-                            Android=1.5}"
-                                                            Text="John Doe"
-                                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"/>
+                                <StackLayout x:DataType="local:EventListViewModel"
+                                             Margin="10,18,10,16"
+                                             HorizontalOptions="Center"
+                                             BindableLayout.ItemsSource="{Binding EventItems}"
+                                             Spacing="14">
 
-                                                        <!--  Published date and Average reading time  -->
-                                                        <Label
-                                                            Grid.Row="2"
-                                                            Grid.Column="1"
-                                                            Margin="0,2,0,8"
-                                                            FontFamily="Roboto-Regular"
-                                                            FontSize="12"
-                                                            LineHeight="{OnPlatform Default=-1,
-                            Android=1.5}"
-                                                            TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
-                                                            Text="{Binding EventTime}">
-                                                        </Label>
+                                    <BindableLayout.ItemTemplate>
+                                        <StaticResource Key="EventCardTemplate" />
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+                            </tabView:SfTabItem.Content>
+                        </tabView:SfTabItem>
 
-                                                        <!--  Favourite Icon  -->
-                                                        <buttons:SfButton Grid.Column="2"
-                                                                          Margin="0,2,2,0"
-                                                                          HeightRequest="-1"
-                                                                          HorizontalOptions="End"
-                                                                          Style="{DynamicResource IconButtonStyle}"
-                                                                          Text="{Binding IsPopular, Converter={StaticResource boolToStringConverter}, ConverterParameter=1}"
-                                                                          TextColor="{Binding IsPopular, Converter={StaticResource boolToColorConverter}, ConverterParameter=4}"
-                                                                          Clicked="FavouriteButton_Clicked"
-                                                                          VerticalOptions="Start"
-                                                                          WidthRequest="30"/>
+                        <!--  Tab view for upcoming  -->
+                        <tabView:SfTabItem x:DataType="local:EventListViewModel"
+                                           x:Name="tabItem2"
+                                           Header="Upcoming"
+                                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                           FontFamily="Roboto-Medium"
+                                           FontSize="14">
+                            <tabView:SfTabItem.Content>
+                                <StackLayout x:DataType="local:EventListViewModel"
+                                             Margin="10,18,10,16"
+                                             HorizontalOptions="Center"
+                                             BindableLayout.ItemsSource="{Binding UpcomingItems}"
+                                             Spacing="14">
 
-                                                    </Grid>
-                                                </Border>
-                                            </syncEffectsView:SfEffectsView>
-                                        </Grid>
-                                    </DataTemplate>
-                                </BindableLayout.ItemTemplate>
-                            </StackLayout>
-                        </tabView:SfTabItem.Content>
-                    </tabView:SfTabItem>
+                                    <BindableLayout.ItemTemplate>
+                                        <StaticResource Key="EventCardTemplate" />
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+                            </tabView:SfTabItem.Content>
+                        </tabView:SfTabItem>
 
-                    <!--  Tab view for popular  -->
-                    <tabView:SfTabItem x:DataType="local:EventListViewModel"
-                        Header="Popular"
-                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                        FontFamily="Roboto-Medium"
-                        FontSize="14">
-                        <tabView:SfTabItem.Content>
-                            <StackLayout
-                                Margin="10,0,10,16"
-                                BindableLayout.ItemsSource="{Binding PopularItems}"
-                                Spacing="16">
-                                <BindableLayout.ItemTemplate>
-                                    <DataTemplate x:DataType="model:EventList">
-                                        <Grid>
-                                            <syncEffectsView:SfEffectsView
-                                                RippleBackground="{DynamicResource Gray-300}"
-                                                TouchDownEffects="Ripple">
-                                                <Border Stroke="Transparent"
-                                                        StrokeShape="RoundRectangle 10">
-                                                    <Grid
-                                                        ColumnSpacing="16"
-                                                        HeightRequest="110"
-                                                        RowDefinitions="*, Auto, Auto"
-                                                        RowSpacing="0">
+                        <!--  Tab view for popular  -->
+                        <tabView:SfTabItem x:DataType="local:EventListViewModel"
+                                           x:Name="tabItem3"
+                                           Header="Popular"
+                                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                           FontFamily="Roboto-Medium"
+                                           FontSize="14">
+                            <tabView:SfTabItem.Content>
+                                <StackLayout x:DataType="local:EventListViewModel"
+                                             Margin="10,18,10,16"
+                                             HorizontalOptions="Center"
+                                             BindableLayout.ItemsSource="{Binding PopularItems}"
+                                             Spacing="14">
 
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="Auto"/>
-                                                            <ColumnDefinition>
-                                                                <ColumnDefinition.Width>
-                                                                    <OnPlatform Default="*"/>
-                                                                </ColumnDefinition.Width>
-                                                            </ColumnDefinition>
-                                                            <ColumnDefinition Width="Auto"/>
-                                                        </Grid.ColumnDefinitions>
-
-                                                        <!--  Blog image  -->
-                                                        <Image
-                                                            Grid.RowSpan="3"
-                                                            Margin="0,0,0,0"
-                                                            Aspect="AspectFill"
-                                                            BackgroundColor="{DynamicResource Gray-200}"
-                                                            HeightRequest="110"
-                                                            Source="{Binding ImagePath}"
-                                                            VerticalOptions="Center"
-                                                            WidthRequest="120"/>
-
-                                                        <!--  Blog title  -->
-                                                        <Label
-                                                            Grid.Column="1"
-                                                            Margin="0,8,0,0"
-                                                            FontSize="14"
-                                                            HorizontalOptions="Start"
-                                                            HorizontalTextAlignment="Start"
-                                                            LineBreakMode="TailTruncation"
-                                                            MaxLines="2"
-                                                            Style="{DynamicResource TitleLabelStyle}"
-                                                            Text="{Binding EventName}"/>
-
-                                                        <!--  Author name  -->
-                                                        <Label
-                                                            Grid.Row="1"
-                                                            Grid.Column="1"
-                                                            Margin="0,8,0,0"
-                                                            FontFamily="Roboto-Regular"
-                                                            FontSize="12"
-                                                            LineHeight="{OnPlatform Default=-1,
-                            Android=1.5}"
-                                                            Text="John Doe"
-                                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"/>
-
-                                                        <!--  Published date and Average reading time  -->
-                                                        <Label
-                                                            Grid.Row="2"
-                                                            Grid.Column="1"
-                                                            Margin="0,2,0,8"
-                                                            FontFamily="Roboto-Regular"
-                                                            FontSize="12"
-                                                            LineHeight="{OnPlatform Default=-1,
-                            Android=1.5}"
-                                                            TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
-                                                            Text="{Binding EventTime}">
-                                                        </Label>
-
-                                                        <!--  Favourite Icon  -->
-                                                        <buttons:SfButton Grid.Column="2"
-                                                                          Margin="0,2,2,0"
-                                                                          HeightRequest="-1"
-                                                                          Style="{DynamicResource IconButtonStyle}"
-                                                                          HorizontalOptions="End"
-                                                                          Text="{Binding IsPopular, Converter={StaticResource boolToStringConverter}, ConverterParameter=1}"
-                                                                          TextColor="{Binding IsPopular, Converter={StaticResource boolToColorConverter}, ConverterParameter=4}"
-                                                                          Clicked="FavouriteButton_Clicked"
-                                                                          VerticalOptions="Start"
-                                                                          WidthRequest="30"/>
-
-                                                    </Grid>
-                                                </Border>
-                                            </syncEffectsView:SfEffectsView>
-                                        </Grid>
-                                    </DataTemplate>
-                                </BindableLayout.ItemTemplate>
-                            </StackLayout>
-                        </tabView:SfTabItem.Content>
-                    </tabView:SfTabItem>
-                </tabView:SfTabView>
-            </StackLayout>
+                                    <BindableLayout.ItemTemplate>
+                                        <StaticResource Key="EventCardTemplate" />
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+                            </tabView:SfTabItem.Content>
+                        </tabView:SfTabItem>
+                    </tabView:SfTabView>
+                </StackLayout>
+            </ScrollView>
         </Grid>
     </ContentView.Content>
 </ContentView>

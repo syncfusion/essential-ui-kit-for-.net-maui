@@ -1,3 +1,6 @@
+
+using Microsoft.Maui.Controls;
+
 namespace EssentialMAUIUIKit.Views.Chat
 {
     public partial class ChatMessagePage : ContentView
@@ -5,94 +8,43 @@ namespace EssentialMAUIUIKit.Views.Chat
         public ChatMessagePage()
         {
             InitializeComponent();
-        }
-    }
 
-    public class MessageDataTemplateSelector : DataTemplateSelector
-    {
-        #region Constructor
+            BindingContext = new ChatMessageViewModel();
+
+            // On phones, hide the left recent-chats panel and show only the conversation
+            if (DeviceInfo.Idiom == DeviceIdiom.Phone)
+            {
+                RecentChat.IsVisible = false;
+                SeparatorBox.IsVisible = false;
+
+                MainGrid.ColumnDefinitions.Clear();
+                MainGrid.ColumnDefinitions.Add(
+                    new ColumnDefinition
+                    {
+                        Width = GridLength.Star
+                    });
+
+                Grid.SetColumn(ChatGrid, 0);
+            }
+        }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MessageDataTemplateSelector" /> class.
+        /// Handles the tap on the send (paper-plane) icon.
+        /// On WinUI and MacCatalyst the entry does not flush its in-progress text
+        /// to the bound <see cref="ChatMessageViewModel.MessageText"/> property
+        /// until the entry loses focus, so tapping a sibling control runs the
+        /// send command with stale (empty) text. Forcing <c>Unfocus()</c> on the
+        /// entry commits the binding synchronously before the command runs.
         /// </summary>
-        public MessageDataTemplateSelector()
+        private void OnSendTapped(object? sender, TappedEventArgs e)
         {
-            this.IncomingTextTemplate = new DataTemplate(typeof(IncomingTextTemplate));
-            this.OutgoingTextTemplate = new DataTemplate(typeof(OutgoingTextTemplate));
-            this.IncomingImageTemplate = new DataTemplate(typeof(IncomingImageTemplate));
-            this.OutgoingImageTemplate = new DataTemplate(typeof(OutgoingImageTemplate));
-        }
-        #endregion
+            MessageEntry.Unfocus();
 
-        #region Properties
-
-        /// <summary>
-        /// Gets or sets the incoming text template.
-        /// </summary>
-        public DataTemplate IncomingTextTemplate { get; set; }
-
-        /// <summary>
-        /// Gets or sets the outgoing text template.
-        /// </summary>
-        public DataTemplate OutgoingTextTemplate { get; set; }
-
-        /// <summary>
-        /// Gets or sets the incoming image template.
-        /// </summary>
-        public DataTemplate IncomingImageTemplate { get; set; }
-
-        /// <summary>
-        /// Gets or sets the outgoing text template.
-        /// </summary>
-        public DataTemplate OutgoingImageTemplate { get; set; }
-
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// Returns the incoming or outgoing text template.
-        /// </summary>
-        /// <param name="item">The item</param>
-        /// <param name="container">The bindable object</param>
-        /// <returns>Returns the data template</returns>
-        protected override DataTemplate? OnSelectTemplate(object item, BindableObject container)
-        {
-            if (item == null)
+            if (BindingContext is ChatMessageViewModel viewModel
+                && viewModel.SendMessageCommand?.CanExecute(null) == true)
             {
-                return null;
-            }
-
-            ChatMessageInfoModel? chatMessage = item as ChatMessageInfoModel;
-            if (chatMessage == null)
-            {
-                return null;
-            }
-
-            if ((bool)chatMessage.IsReceived)
-            {
-                if (chatMessage.ImagePath == App.ImageServerPath)
-                {
-                    return this.IncomingTextTemplate;
-                }
-                else
-                {
-                    return this.IncomingImageTemplate;
-                }
-            }
-            else
-            {
-                if (chatMessage.ImagePath == App.ImageServerPath)
-                {
-                    return this.OutgoingTextTemplate;
-                }
-                else
-                {
-                    return this.OutgoingImageTemplate;
-                }
+                viewModel.SendMessageCommand.Execute(null);
             }
         }
-
-        #endregion
     }
 }

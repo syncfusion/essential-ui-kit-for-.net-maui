@@ -1,14 +1,29 @@
-﻿using EssentialMAUIUIKit.Models.Notification;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text.Json;
+using System.Windows.Input;
+using EssentialMAUIUIKit.Models.Notification;
+using EssentialMAUIUIKit.ViewModel;
+using Microsoft.Maui.Controls;
 
 namespace EssentialMAUIUIKit
 {
+    /// <summary>
+    /// View model bind surface for the e-commerce notifications page.
+    /// Data is sourced from <see cref="NotificationMockDataService"/> rather
+    /// than inline JSON, which keeps the view models thin and the seed
+    /// content in a single, testable location.
+    /// </summary>
     public class ECommerceNotificationViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<ECommerceNotificationsListModel>? ecommerceNotifications;
+        private string? statusMessage;
+        private ICommand? markAllAsReadCommand;
+
+        public ECommerceNotificationViewModel()
+        {
+            PopulateData();
+        }
 
         public ObservableCollection<ECommerceNotificationsListModel>? EcommerceNotifications
         {
@@ -20,55 +35,59 @@ namespace EssentialMAUIUIKit
             }
         }
 
-        public ECommerceNotificationViewModel()
+        /// <summary>
+        /// UI-friendly status message shown when the data load fails or
+        /// the collection is empty. Keeping it on the view model lets the
+        /// page surface a fallback state instead of silently swallowing errors.
+        /// </summary>
+        public string? StatusMessage
         {
-            PopulateData();
+            get => statusMessage;
+            set
+            {
+                statusMessage = value;
+                OnPropertyChanged();
+            }
         }
 
         public void PopulateData()
         {
-            string jsonData = @"
-        {
-            ""ecommerceNotificationPageList"": [
-                {
-                    ""notificationIcon"": ""Delivered"",
-                    ""description"": ""Delivered: Your package of boAt BassHeads 100 Stereo In-Ear Earphones (Black)"",
-                    ""backgroundColor"": ""#f29f40"",
-                    ""time"": ""5 Mins ago"",
-                    ""isRead"": false
-                },
-                {
-                    ""notificationIcon"": ""Offer"",
-                    ""description"": ""Get 20% OFF on Home Products. Offer Valid for 24 hours."",
-                    ""backgroundColor"": ""#6c88ff"",
-                    ""time"": ""4 hours ago"",
-                    ""isRead"": true
-                },
-                {
-                    ""notificationIcon"": ""FlashSale"",
-                    ""description"": ""Flash Sale starting tomorrow. Don't forget to check it out."",
-                    ""backgroundColor"": ""#a8d35f"",
-                    ""time"": ""9 hours ago"",
-                    ""isRead"": true
-                },
-                {
-                    ""notificationIcon"": ""Arrived"",
-                    ""description"": ""Package order #246734 has arrived."",
-                    ""backgroundColor"": ""#cf62e2"",
-                    ""time"": ""9 hours ago"",
-                    ""isRead"": true
-                }
-            ]
-        }";
-
-            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            var data = JsonSerializer.Deserialize<EcommerceNotificationsList>(jsonData, options);
-            if (data?.EcommerceNotificationPageList == null)
+            var seed = NotificationMockDataService.GetECommerceNotifications();
+            if (seed is null || seed.Count == 0)
             {
+                StatusMessage = "No notifications available.";
+                EcommerceNotifications = new ObservableCollection<ECommerceNotificationsListModel>();
                 return;
             }
 
-            EcommerceNotifications = new ObservableCollection<ECommerceNotificationsListModel>(data.EcommerceNotificationPageList);
+            EcommerceNotifications = new ObservableCollection<ECommerceNotificationsListModel>(seed);
+            StatusMessage = string.Empty;
+        }
+
+        /// <summary>
+        /// Command-driven "mark all as read" action. Drives the existing
+        /// button via <c>Command="{Binding MarkAllAsReadCommand}"</c> so the
+        /// behavior is consistent with the social and task notification pages.
+        /// </summary>
+        public ICommand? MarkAllAsReadCommand
+        {
+            get
+            {
+                return markAllAsReadCommand ??= new Command(() =>
+                {
+                    if (EcommerceNotifications is null)
+                    {
+                        return;
+                    }
+
+                    foreach (var item in EcommerceNotifications)
+                    {
+                        item.IsRead = true;
+                    }
+
+                    OnPropertyChanged(nameof(EcommerceNotifications));
+                });
+            }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -77,10 +96,5 @@ namespace EssentialMAUIUIKit
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-    }
-
-    public class EcommerceNotificationsList
-    {
-        public ObservableCollection<ECommerceNotificationsListModel>? EcommerceNotificationPageList { get; set; }
     }
 }

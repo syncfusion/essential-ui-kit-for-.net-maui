@@ -12,13 +12,13 @@
     </ContentView.BindingContext>
     <ContentView.Resources>
         <ResourceDictionary>
-            <converter:BooleanToStringConverter x:Key="BoolToStringConverter"/>
-            <converter:BooleanToColorConverter x:Key="BoolToColorConverter"/>
+            <converter:BooleanToStringConverter x:Key="boolToStringConverter" />
+            <converter:BooleanToColorConverter x:Key="boolToColorConverter" />
         </ResourceDictionary>
     </ContentView.Resources>
     <ContentView.Content>
 
-        <ScrollView Margin="10"
+        <ScrollView Margin="10" VerticalScrollBarVisibility="Never"
                     WidthRequest="{OnPlatform WinUI=680, MacCatalyst=680}">
             <!--  Featured blog list  -->
             <StackLayout
@@ -28,8 +28,16 @@
                 Spacing="16">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate x:DataType="model:Story">
-                        <Border StrokeShape="RoundRectangle 10"
+                        <Border StrokeShape="RoundRectangle 10" Margin="10,0"
+                                BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
                                 StrokeThickness="0">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnArticleItemTapped" />
+                            </Border.GestureRecognizers>
+                            <Border.Shadow>
+                                <!--Combined Shadow Effect-->
+                                <Shadow Brush="{AppThemeBinding Dark={DynamicResource SeparatorColorDark}, Light={DynamicResource SeparatorColorLight}}" Offset="0,1" Radius="3" />
+                            </Border.Shadow>
                             <Grid
                                 ColumnSpacing="16"
                                 HeightRequest="110"
@@ -37,9 +45,9 @@
                                 RowSpacing="0">
 
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0.4*"/>
-                                    <ColumnDefinition Width="0.5*"/>
-                                    <ColumnDefinition Width="0.1*"/>
+                                    <ColumnDefinition Width="{OnIdiom Desktop=0.25*, Tablet=0.25*, Phone=0.5*}" />
+                                    <ColumnDefinition Width="{OnIdiom Desktop=0.8*, Tablet=0.8*, Phone=0.6*}" />
+                                    <ColumnDefinition Width="{OnIdiom Desktop=0.1*, Tablet=0.1*, Phone=0.1*}" />
                                 </Grid.ColumnDefinitions>
 
                                 <!--  Blog image  -->
@@ -55,7 +63,7 @@
                                 <Label
                                     Grid.Column="1"
                                     Margin="0,8,0,0"
-                                    FontSize="14"
+                                    FontSize="14" FontFamily="Roboto-Medium"
                                     HorizontalOptions="Start"
                                     HorizontalTextAlignment="Start"
                                     LineBreakMode="TailTruncation"
@@ -68,7 +76,7 @@
                                     Grid.Row="1"
                                     Grid.Column="1"
                                     Margin="0,8,0,0"
-                                    FontFamily="Roboto-Regular"
+                                    FontFamily="Roboto-Medium"
                                     FontSize="12"
                                     LineHeight="{OnPlatform Default=-1,
                                 Android=1.5}"
@@ -81,37 +89,34 @@
                                     Grid.Column="1"
                                     Margin="0,2,0,8"
                                     FontSize="12"
-                                    LineHeight="{OnPlatform Default=-1,
-                                Android=1.5}"
-                                    TextColor="{DynamicResource SecondaryTextColor}">
+                                    LineHeight="{OnPlatform Default=-1, Android=1.5}">
                                     <Label.FormattedText>
                                         <FormattedString>
-                                            <Span Text="{Binding Date}"
+                                            <Span Text="{Binding Date}" TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
                                                   FontFamily="Roboto-Regular"/>
-                                            <Span Text=" | "
+                                            <Span Text=" | " TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
                                                   FontFamily="Roboto-Regular"/>
-                                            <Span Text="{Binding AverageReadingTime}"
+                                            <Span Text="{Binding AverageReadingTime}" TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
                                                   FontFamily="Roboto-Regular"/>
                                         </FormattedString>
                                     </Label.FormattedText>
                                 </Label>
 
-                                <!--  Bookmark button  -->
-                                <buttons:SfButton
-                                    Grid.Row="0"
-                                    Grid.Column="2"
-                                    Margin="0,0,0,0"
-                                    Padding="0"
-                                    CornerRadius="4"
-                                    FontSize="16"
-                                    HeightRequest="-1"
-                                    HorizontalOptions="End"
-                                    Style="{DynamicResource IconButtonStyle}"
-                                    Text="{Binding IsBookmarked, Converter={StaticResource BoolToStringConverter}, ConverterParameter=0}"
-                                    TextColor="{Binding IsBookmarked, Converter={StaticResource BoolToColorConverter}, ConverterParameter=4}"
-                                    Clicked="BookmarkButton_Clicked"
-                                    VerticalOptions="Start"
-                                    WidthRequest="20">
+                                <!--  Bookmark button driven by the bound command  -->
+                                <buttons:SfButton Grid.Row="0"
+                                                Grid.Column="2"
+                                                Margin="{OnIdiom Desktop='10,0,0,0', Tablet='10,0,0,0', Phone='0,0,10,0'}"
+                                                Padding="0"
+                                                CornerRadius="25"
+                                                FontSize="16"
+                                                HeightRequest="35"
+                                                HorizontalOptions="End"
+                                                Style="{DynamicResource IconButtonStyle}"
+                                                Text="{Binding IsBookmarked, Converter={StaticResource boolToStringConverter}, ConverterParameter=0}"
+                                                TextColor="{Binding IsBookmarked, Converter={StaticResource boolToColorConverter}, ConverterParameter=9}"
+                                                VerticalOptions="Start"
+                                                Clicked="ArticleBookmarkButton_Clicked"
+                                                WidthRequest="35">
                                 </buttons:SfButton>
 
                             </Grid>

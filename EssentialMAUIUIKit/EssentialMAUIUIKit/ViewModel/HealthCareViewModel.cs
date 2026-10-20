@@ -1,10 +1,10 @@
 ﻿namespace EssentialMAUIUIKit
 {
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using EssentialMAUIUIKit.Models.Dashboard;
     using EssentialMAUIUIKit.ViewModel;
     using Syncfusion.Maui.Core.Chips;
-    using System.Collections.ObjectModel;
-    using EssentialMAUIUIKit.Models.Dashboard;
-    using System.ComponentModel;
 
     public class HealthCareViewModel : BaseViewModel
     {
@@ -43,7 +43,9 @@
         /// <summary>
         /// To update pages that can be navigated from dashboard.
         /// </summary>
-        private ObservableCollection<HealthCareMenuItem> menuItems; 
+        private ObservableCollection<HealthCareMenuItem> menuItems;
+
+        private ObservableCollection<HealthCareMenuItem> menuItemIcons; 
 
         private ObservableCollection<CaloriesConsumedData> caloriesConsumedList;
 
@@ -149,6 +151,15 @@
                 new HealthCareMenuItem { Name = "Settings" }
             };
 
+            this.menuItemIcons = [
+                new HealthCareMenuItem { Icons = "&#xe714;", IsSelected = true, FontFamily="UIKitIcons"},
+                new HealthCareMenuItem { Icons = "&#xe729;", FontFamily="UIKitIcons"},
+                new HealthCareMenuItem { Icons = "&#xe71f;", FontFamily="UIKitIcons"},
+                new HealthCareMenuItem { Icons = "&#xe71b;", FontFamily="MaterialAssets"},
+                new HealthCareMenuItem { Icons = "&#xe716;", FontFamily="MaterialAssets"}
+            ];
+
+
             this.caloriesChartDataValue = this.UpdateCaloriesConsumedData();
             this.ProfileImage = "profileavatar.png";
             this.MenuCommand = new Command(this.MenuButtonClicked);
@@ -216,6 +227,19 @@
             private set
             {
                 this.SetProperty(ref this.menuItems, value);
+            }
+        }
+
+        public ObservableCollection<HealthCareMenuItem> MenuList
+        {
+            get
+            {
+                return this.menuItemIcons;
+            }
+
+            private set
+            {
+                this.SetProperty(ref this.menuItemIcons, value);
             }
         }
 
@@ -469,7 +493,7 @@
         /// Updates calories consumed data based on the selected chip
         /// </summary>
         /// <param name="e">Selection changed argument from chipsgroup</param>
-        public void ChipSelectionChanged(SelectionChangedEventArgs e)
+        public void ChipSelectionChanged(Syncfusion.Maui.Core.Chips.SelectionChangedEventArgs e)
         {
             var selectedData = this.CaloriesConsumedList
                 .Where(item => item.IsSelected)
@@ -635,6 +659,10 @@
         /// Gets or sets the property to update the selected menu.
         /// </summary>
         public bool IsSelected { get; set; }
+
+        public string? Icons { get; set; }
+
+        public string? FontFamily { get; set; }
     }   
 
     public class MealCalorieConsumed : INotifyPropertyChanged
@@ -1030,7 +1058,7 @@
             set
             {
                 this.selectedMealDetails = value;
-                OnPropertyChanged("SelectedMealDetails");
+                //OnPropertyChanged("SelectedMealDetails");
             }
         }
 

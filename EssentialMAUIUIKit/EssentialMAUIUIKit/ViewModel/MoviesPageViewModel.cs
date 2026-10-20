@@ -1,20 +1,31 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 
 namespace EssentialMAUIUIKit
 {
     public class MoviesPageViewModel
     {
+
+        private string selectedLanguage = "English";
+
+        public string SelectedLanguage
+        {
+            get => selectedLanguage;
+            set { selectedLanguage = value; }
+        }
+
+        public ObservableCollection<string> Languages { get; set; }
         public ObservableCollection<RotatorMovie> RotatorMoviesList { get; set; }
         public ObservableCollection<ShowingMovie> ShowingMoviesList { get; set; }
-        public ObservableCollection<TrailerMovie> TrailerMoviesList { get; set; }
         public ObservableCollection<UpcomingMovie> UpcomingMoviesList { get; set; }
 
         public MoviesPageViewModel()
         {
+            Languages = new ObservableCollection<string> { "English", "Japanese", "German", "Korean", "Italian" };
             RotatorMoviesList = new ObservableCollection<RotatorMovie>();
             ShowingMoviesList = new ObservableCollection<ShowingMovie>();
-            TrailerMoviesList = new ObservableCollection<TrailerMovie>();
             UpcomingMoviesList = new ObservableCollection<UpcomingMovie>();
             LoadData();
         }
@@ -31,30 +42,32 @@ namespace EssentialMAUIUIKit
                 { ""image"": ""BanarImage5.jpg"" }
             ],
             ""showingMoviesList"": [
-                { ""moviename"": ""The Lion King"", ""image"": ""Lion+King.png"", ""movierating"": 5 },
-                { ""moviename"": ""Captain Marvel"", ""image"": ""Captain+Marvel.png"", ""movierating"": 5 },
-                { ""moviename"": ""The Irishman"", ""image"": ""The+Irishman.png"", ""movierating"": 5 }
-            ],
-            ""trailerMoviesList"": [
-                { ""moviename"": ""Toy Story 4"", ""image"": ""Toy+Story+4.png"" },
-                { ""moviename"": ""Star Wars: The Rise of Skywalker"", ""image"": ""Star+Wars.png"" },
-                { ""moviename"": ""The Aeronauts"", ""image"": ""The+Aeronauts.png"" }
+                { ""moviename"": ""Aladdin"", ""image"": ""Aladdin.png"", ""movierating"":4.2, ""MoviesVotes"": ""14K votes"" },
+                { ""moviename"": ""Avengers: Endgame"", ""image"": ""Avengers+End+Game.png"", ""movierating"": 4.6, ""MoviesVotes"": ""11K votes"" },
+                { ""moviename"": ""Joker"", ""image"": ""Joker.png"", ""movierating"": 4.7, ""MoviesVotes"": ""16K votes"" },
+                { ""moviename"": ""The Lion King"", ""image"": ""Lion+King.png"", ""movierating"": 4.3, ""MoviesVotes"": ""22K votes"" },
+                { ""moviename"": ""Captain Marvel"", ""image"": ""Captain+Marvel.png"", ""movierating"": 3.9, ""MoviesVotes"": ""17K votes"" },
+                { ""moviename"": ""The Irishman"", ""image"": ""The+Irishman.png"", ""movierating"": 4.8, ""MoviesVotes"": ""27K votes"" }
+                
             ],
             ""upcomingMoviesList"": [
-                { ""moviename"": ""Aladdin"", ""image"": ""Aladdin.png"", ""movierating"": 5 },
-                { ""moviename"": ""Avengers: Endgame"", ""image"": ""Avengers+End+Game.png"", ""movierating"": 5 },
-                { ""moviename"": ""Joker"", ""image"": ""Joker.png"", ""movierating"": 5 }
+                { ""moviename"": ""Blade Runner 2049"", ""image"": ""blade_runner.png"", ""movierating"":4.6, ""MoviesVotes"": ""19K votes"" },
+                { ""moviename"": ""Avatar"", ""image"": ""avatar.png"", ""movierating"": 4.2, ""MoviesVotes"": ""32K votes"" },
+                { ""moviename"": ""Maze Runner"", ""image"": ""maze_runner.png"", ""movierating"": 4.0, ""MoviesVotes"": ""12K votes"" },
+                { ""moviename"": ""Deadpool & Wolverine"", ""image"": ""deadpool_wolverine.png"", ""movierating"": 4.6, ""MoviesVotes"": ""27K votes""},
+                { ""moviename"": ""No Time To Die"", ""image"": ""no_time_to_die.png"", ""movierating"": 4.2, ""MoviesVotes"": ""17K votes"" },
+                { ""moviename"": ""It ends with us"", ""image"": ""ends_with_us.png"", ""movierating"": 4.6, ""MoviesVotes"": ""15K votes"" }
+                
             ]
         }";
 
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             var data = JsonSerializer.Deserialize<MoviesPageData>(jsonData, options);
             var rotatorMovieImages = new List<string>() { "BannerImage.png", "BanarImage2.jpg", "BanarImage3.jpg", "BanarImage4.jpeg", "BanarImage5.jpg" };
-            var showingMovieImages = new List<string>() { "Lion+King.png", "Captain+Marvel.png", "The+Irishman.png" };
-            var trailerMovieImages = new List<string>() { "Toy+Story+4.png", "Star+Wars.png", "The+Aeronauts.png" };
-            var upcomingMovieImages = new List<string>() { "Aladdin.png", "Avengers+End+Game.png", "Joker.png" };
+            var showingMovieImages = new List<string>() { "Aladdin.png", "Avengers+End+Game.png", "Joker.png", "Lion+King.png", "Captain+Marvel.png", "The+Irishman.png" };
+            var upcomingMovieImages = new List<string>() { "blade_runner.png", "avatar.png", "maze_runner.png", "deadpool_wolverine.png", "no_time_to_die.png", "ends_with_us.png" };
 
-            if (data?.RotatorMoviesList == null || data?.ShowingMoviesList == null || data?.TrailerMoviesList == null || data?.UpcomingMoviesList == null)
+            if (data?.RotatorMoviesList == null || data?.ShowingMoviesList == null || data?.UpcomingMoviesList == null)
             {
                 return;
             }
@@ -71,12 +84,6 @@ namespace EssentialMAUIUIKit
                 ShowingMoviesList.Add(data.ShowingMoviesList[i]);
             }
 
-            for (int i = 0; i < data.TrailerMoviesList.Count; i++)
-            {
-                data.TrailerMoviesList[i].Image = trailerMovieImages[i];
-                TrailerMoviesList.Add(data.TrailerMoviesList[i]);
-            }
-
             for (int i = 0; i < data.UpcomingMoviesList.Count; i++)
             {
                 data.UpcomingMoviesList[i].Image = upcomingMovieImages[i];
@@ -89,7 +96,6 @@ namespace EssentialMAUIUIKit
     {
         public List<RotatorMovie>? RotatorMoviesList { get; set; }
         public List<ShowingMovie>? ShowingMoviesList { get; set; }
-        public List<TrailerMovie>? TrailerMoviesList { get; set; }
         public List<UpcomingMovie>? UpcomingMoviesList { get; set; }
     }
 
@@ -111,33 +117,16 @@ namespace EssentialMAUIUIKit
             get { return App.ImageServerPath + image; }
             set { image = value; }
         }
-
         public string? Moviename { get; set; }
-        public int Movierating { get; set; }
-    }
-
-    public class TrailerMovie
-    {
-        private string? image;
-        public string Image
-        {
-            get { return App.ImageServerPath + image; }
-            set { image = value; }
-        }
-
-        public string? Moviename { get; set; }
+        public double Movierating { get; set; }
+        public string? MoviesVotes { get; set; }
     }
 
     public class UpcomingMovie
     {
-        private string? image;
-        public string Image
-        {
-            get { return App.ImageServerPath + image; }
-            set { image = value; }
-        }
-
+        public string? Image { get; set; }
         public string? Moviename { get; set; }
-        public int Movierating { get; set; }
+        public double Movierating { get; set; }
+        public string? MoviesVotes { get; set; }
     }
 }

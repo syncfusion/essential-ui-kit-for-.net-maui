@@ -4,25 +4,49 @@
              x:Class="EssentialMAUIUIKit.Views.Navigation.SuggestionPage"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:avatar="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:navigation="clr-namespace:EssentialMAUIUIKit.Views.Navigation"
              x:DataType="local:SuggestionViewModel">
-    <ContentView.BindingContext>
-        <local:SuggestionViewModel/>
-    </ContentView.BindingContext>
+
+    <!-- ViewModel is set in code-behind -->
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+
+            <Shadow x:Key="LightShadow"
+                Brush="#A0A0A0"
+                Offset="0,2"
+                Radius="2"
+                Opacity="0.55" />
+
+            <Shadow x:Key="DarkShadow"
+                    Brush="#000000"
+                    Offset="0,4"
+                    Radius="8"
+                    Opacity="0.4" />
+
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <!-- Content -->
     <ContentView.Content>
-
         <Grid RowSpacing="0"
-                Padding="0,10,0,0"
-                RowDefinitions="{OnPlatform Default=*, MacCatalyst=Auto}">
+              RowDefinitions="*">
 
-            <Border StrokeShape="RoundRectangle 10"
-                    WidthRequest="{OnPlatform WinUI=550, MacCatalyst=550}" HeightRequest="{OnPlatform MacCatalyst=600}"
+            <!-- DESKTOP VIEW -->
+            <Border StrokeShape="RoundRectangle 8"
+                    Margin="0,24,0,24"
+                    StrokeThickness="1"
+                    Stroke="{AppThemeBinding Light= #E5E1E3, Dark=#474648}"
+                    MaximumWidthRequest="{OnPlatform WinUI=766, MacCatalyst=766}"
+                   
                     BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                    Padding="20"
                     IsVisible="{OnPlatform Android=False, iOS=False}">
+
                 <Grid>
 
-                    <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
+                    <BoxView Style="{DynamicResource HorizontalSeparatorStyle}" />
 
                     <listView:SfListView
                         AutoFitMode="Height"
@@ -34,84 +58,101 @@
 
                         <listView:SfListView.ItemTemplate>
                             <DataTemplate x:DataType="local:SuggestionItem">
-                                <ViewCell>
-                                    <StackLayout BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                                 Spacing="0">
-                                        <Grid
-                                            Margin="16,0"
-                                            ColumnDefinitions="Auto, *, Auto"
-                                            ColumnSpacing="0">
+                                <StackLayout Spacing="0"
+                                                BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
 
-                                            <!--  Suggestion Profile image  -->
-                                            <Border
-                                                Margin="0,16"
-                                                BackgroundColor="{DynamicResource Gray-200}"
-                                                Stroke="{DynamicResource Gray-Bg}"
-                                                StrokeThickness="1"
-                                                StrokeShape="RoundRectangle 22,22,22,22"
-                                                HeightRequest="40"
-                                                Style="{DynamicResource ProfileBorderStyle}"
-                                                WidthRequest="40">
-                                                <Image>
-                                                    <Image.Source>
-                                                        <UriImageSource
-                                                            CacheValidity="14"
-                                                            CachingEnabled="true"
-                                                            Uri="{Binding ImagePath}"/>
-                                                    </Image.Source>
-                                                </Image>
-                                            </Border>
+                                    <Grid Margin="24,0"
+                                             ColumnDefinitions="Auto,*,Auto"
+                                             ColumnSpacing="0">
 
-                                            <StackLayout
-                                                Grid.Column="1"
-                                                Margin="16,16,0,13"
-                                                BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                                Spacing="3">
+                                        <!-- Profile Image -->
+                                        <avatar:SfAvatarView WidthRequest="48"
+                                                   HeightRequest="48"
+                                                   Margin="0,16"
+                                                   BackgroundColor="{DynamicResource Gray-200}"
+                                                   Stroke="{DynamicResource Gray-Bg}"
+                                                   StrokeThickness="1"
+                                                   CornerRadius="24"
+                                                   ContentType="Default"
+                                                   ImageSource="{Binding ImagePath}"
+                                                   Style="{DynamicResource ProfileBorderStyle}">
+                                        </avatar:SfAvatarView>
 
-                                                <!--  Suggestion name  -->
-                                                <Label
-                                                    FontFamily="Roboto-Regular"
-                                                    HorizontalOptions="Start"
-                                                    Style="{DynamicResource TitleLabelStyle}"
-                                                    Text="{Binding SuggestionName}"/>
+                                        <!-- Name & ID -->
+                                        <StackLayout Grid.Column="1"
+                                                        Margin="16,16,0,13"
+                                                        Spacing="3"
+                                                        VerticalOptions="Center"
+                                                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
 
-                                                <!--  Suggestion Id  -->
-                                                <Label
-                                                    Grid.Row="1"
-                                                    HorizontalOptions="Start"
-                                                    Style="{DynamicResource DescriptionLabelStyle}"
-                                                    Text="{Binding Id}"/>
+                                            <Label Text="{Binding SuggestionName}"
+                                                      FontFamily="Roboto-Medium"
+                                                      Style="{DynamicResource TitleLabelStyle}"
+                                                      HorizontalOptions="Start" />
 
-                                            </StackLayout>
+                                            <Label Text="{Binding Id}"
+                                                      TextColor="{AppThemeBinding Light=#5F5E60 ,Dark=#929092}"
+                                                      Style="{DynamicResource DescriptionLabelStyle}"
+                                                      HorizontalOptions="Start" />
 
-                                            <!--  Suggestion button  -->
-                                            <buttons:SfButton
-                                                Grid.Column="2"
-                                                Margin="0,20"
-                                                Stroke="Transparent"
-                                                StrokeThickness="1"
-                                                CornerRadius="24"
-                                                FontSize="12"
-                                                HeightRequest="32"
-                                                Style="{DynamicResource FormsButtonStyle}"
-                                                Text="FOLLOW"
-                                                WidthRequest="100">
-                                            </buttons:SfButton>
+                                        </StackLayout>
 
-                                        </Grid>
-                                        <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
-                                    </StackLayout>
-                                </ViewCell>
+                                        <!-- FOLLOW Button -->
+                                        <buttons:SfButton Grid.Column="2"
+                                                             Margin="0,20"
+                                                             WidthRequest="90"
+                                                             HeightRequest="40"
+                                                             CornerRadius="24"
+                                                             FontSize="14"
+                                                             Style="{DynamicResource FormsButtonStyle}"
+                                                             Text="follow"
+                                                             IsVisible="{Binding IsNotRequested}"
+                                                             Clicked="OnFollowButtonClicked"
+                                                             x:Name="FollowButtonDesktop"/>
+
+                                        <!-- REQUESTED Button -->
+                                        <Border Grid.Column="2"
+                                                   Margin="0,20"
+                                                   WidthRequest="116"
+                                                   HeightRequest="40"
+                                                   StrokeShape="RoundRectangle 20"
+                                                   StrokeThickness="0.5"
+                                                   Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#505050}"
+                                                   BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#3C3B3D}"
+                                                   VerticalOptions="Center"
+                                                   HorizontalOptions="End"
+                                                   IsVisible="{Binding IsRequested}"
+                                                   Shadow="{AppThemeBinding Light={StaticResource LightShadow}, Dark={StaticResource DarkShadow}}"
+                                                   x:Name="RequestedBorderDesktop">
+
+                                            <Label FontSize="14"
+                                                       FontFamily="Roboto-Medium"
+                                                      VerticalOptions="Center"
+                                                      HorizontalOptions="Center"
+                                                       TextColor="{AppThemeBinding Light=#3C3B3D, Dark=#FFFFFF}"
+                                                       Text="Requested" />
+
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnRequestedBorderTapped"/>
+                                            </Border.GestureRecognizers>
+                                        </Border>
+
+                                    </Grid>
+
+                                    <BoxView Style="{DynamicResource HorizontalSeparatorStyle}" />
+
+                                </StackLayout>
                             </DataTemplate>
                         </listView:SfListView.ItemTemplate>
+
                     </listView:SfListView>
+
                 </Grid>
             </Border>
 
+            <!-- MOBILE VIEW -->
             <Grid Grid.Row="1"
                   IsVisible="{OnPlatform WinUI=False, MacCatalyst=False}">
-
-                <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
 
                 <listView:SfListView
                     AutoFitMode="Height"
@@ -123,78 +164,97 @@
 
                     <listView:SfListView.ItemTemplate>
                         <DataTemplate x:DataType="local:SuggestionItem">
-                            <ViewCell>
-                                <StackLayout BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                             Spacing="0">
-                                    <Grid
-                                        Margin="16,0"
-                                        ColumnDefinitions="Auto, *, Auto"
-                                        ColumnSpacing="0">
+                            <StackLayout Spacing="0"
+                                             BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
 
-                                        <!--  Suggestion Profile image  -->
-                                        <Border
-                                            Margin="0,16"
-                                            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                            Stroke="{DynamicResource Gray-Bg}"
-                                            StrokeThickness="1"
-                                            StrokeShape="RoundRectangle 22,22,22,22"
-                                            HeightRequest="40"
-                                            Style="{DynamicResource ProfileBorderStyle}"
-                                            WidthRequest="40">
-                                            <Image>
-                                                <Image.Source>
-                                                    <UriImageSource
-                                                        CacheValidity="14"
-                                                        CachingEnabled="true"
-                                                        Uri="{Binding ImagePath}"/>
-                                                </Image.Source>
-                                            </Image>
-                                        </Border>
+                                <Grid 
+                                          ColumnDefinitions="Auto,*,Auto"
+                                          RowSpacing="0"
+                                          ColumnSpacing="0">
 
-                                        <StackLayout
-                                            Grid.Column="1"
-                                            Margin="16,16,0,13"
-                                            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                            Spacing="3">
+                                    <!-- Profile Image -->
+                                    <avatar:SfAvatarView WidthRequest="48"
+                                                    HeightRequest="48"
+                                                    Margin="16,0,0,0"
+                                                    BackgroundColor="{DynamicResource Gray-200}"
+                                                    Stroke="{DynamicResource Gray-Bg}"
+                                                    StrokeThickness="1"
+                                                    CornerRadius="24"
+                                                    ContentType="Default"
+                                                    ImageSource="{Binding ImagePath}"
+                                                    Style="{DynamicResource ProfileBorderStyle}">
+                                    </avatar:SfAvatarView>
 
-                                            <!--  Suggestion name  -->
-                                            <Label
-                                                FontFamily="Roboto-Regular"
-                                                HorizontalOptions="Start"
-                                                Style="{DynamicResource TitleLabelStyle}"
-                                                Text="{Binding SuggestionName}"/>
+                                    <!-- Name & ID -->
+                                    <StackLayout Grid.Column="1"
+                                                     Margin="16,16,0,13"
+                                                     Spacing="3"
+                                                     VerticalOptions="Start"
+                                                     HorizontalOptions="Start"
+                                                     BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
 
-                                            <!--  Suggestion Id  -->
-                                            <Label
-                                                Grid.Row="1"
-                                                HorizontalOptions="Start"
-                                                Style="{DynamicResource DescriptionLabelStyle}"
-                                                Text="{Binding Id}"/>
+                                        <Label Text="{Binding SuggestionName}"
+                                                   FontFamily="Roboto-Medium"
+                                                   Style="{DynamicResource TitleLabelStyle}" />
 
-                                        </StackLayout>
+                                        <Label Text="{Binding Id}"
+                                                   VerticalOptions="Start"
+                                                   HorizontalOptions="Start"
+                                                   Style="{DynamicResource DescriptionLabelStyle}" />
 
-                                        <!--  Suggestion button  -->
-                                        <buttons:SfButton
-                                            Grid.Column="2"
-                                            Margin="0,20"
-                                            Stroke="Transparent"
-                                            StrokeThickness="1"
-                                            CornerRadius="24"
-                                            FontSize="12"
-                                            HeightRequest="32"
-                                            Style="{DynamicResource FormsButtonStyle}"
-                                            Text="FOLLOW"
-                                            WidthRequest="100">
-                                        </buttons:SfButton>
+                                    </StackLayout>
 
-                                    </Grid>
-                                    <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
-                                </StackLayout>
-                            </ViewCell>
+                                    <buttons:SfButton Grid.Column="2"
+                                                          Margin="0,12,12,12"
+                                                          WidthRequest="90"
+                                                          HeightRequest="40"
+                                                          CornerRadius="24"
+                                                          FontSize="12"
+                                                          Style="{DynamicResource FormsButtonStyle}"
+                                                          Text="FOLLOW"
+                                                          IsVisible="{Binding IsNotRequested}"
+                                                          Clicked="OnFollowButtonClicked"
+                                                          x:Name="FollowButtonMobile"/>
+
+
+                                    <Border Grid.Column="2"
+                                                Margin="0,12,12,12"
+                                                WidthRequest="116"
+                                                HeightRequest="40"
+                                                StrokeShape="RoundRectangle 20"
+                                                StrokeThickness="0.5"
+                                                Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#505050}"
+                                                BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#3C3B3D}"
+                                                VerticalOptions="Center"
+                                                HorizontalOptions="End"
+                                                IsVisible="{Binding IsRequested}"
+                                                Shadow="{AppThemeBinding Light={StaticResource LightShadow}, Dark={StaticResource DarkShadow}}"
+                                                x:Name="RequestedBorderMobile">
+
+                                        <Label FontSize="14"
+                                                   FontFamily="Roboto-Medium"
+                                                   VerticalOptions="Center"
+                                                   HorizontalOptions="Center"
+                                                   TextColor="{AppThemeBinding Light=#3C3B3D, Dark=#FFFFFF}"
+                                                   Text="Requested" />
+
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnRequestedBorderTapped"/>
+                                        </Border.GestureRecognizers>
+                                    </Border>
+
+                                </Grid>
+
+                                <BoxView Style="{DynamicResource HorizontalSeparatorStyle}" />
+
+                            </StackLayout>
                         </DataTemplate>
                     </listView:SfListView.ItemTemplate>
+
                 </listView:SfListView>
+
             </Grid>
+
         </Grid>
     </ContentView.Content>
 </ContentView>

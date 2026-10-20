@@ -61,5 +61,6 @@
     <Color x:Key="SelectionBackgroundDark">#2e2e2e</Color>
     <Color x:Key="ContentTextColorDark">#C9C6C8</Color>
     <Color x:Key="DataVisualizationDark">#36323B</Color>
+    <Color x:Key="UnSelectedDotDark">#3C3B3D</Color>
 
 </ResourceDictionary>

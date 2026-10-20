@@ -3,6 +3,7 @@ namespace EssentialMAUIUIKit
     using EssentialMAUIUIKit.ViewModel;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using System.Windows.Input;
 
     public class RestaurantDashboardViewModel : BaseViewModel, INotifyPropertyChanged
     {
@@ -27,6 +28,8 @@ namespace EssentialMAUIUIKit
         private ObservableCollection<RevenueSummary> currentWeekSummary;
 
         private ObservableCollection<string> orderDetailsHeader;
+
+        private RestaurantDashboardMenuItem? hoveredMenuItem;
 
         #endregion
 
@@ -57,7 +60,12 @@ namespace EssentialMAUIUIKit
                 {
                     UpdateSummaryOnThemeChange();
                 };
-            }            
+            }
+            
+            // Initialize hover commands
+            this.PointerEnteredCommand = new Command<RestaurantDashboardMenuItem>(OnMenuItemPointerEntered);
+            this.PointerExitedCommand = new Command<RestaurantDashboardMenuItem>(OnMenuItemPointerExited);
+            
         }
         #endregion
 
@@ -156,6 +164,16 @@ namespace EssentialMAUIUIKit
 
             set { this.SetProperty(ref this.orderDetailsHeader, value); }
         }
+
+        /// <summary>
+        /// Gets or sets the command for pointer entered event
+        /// </summary>
+        public ICommand? PointerEnteredCommand { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the command for pointer exited event
+        /// </summary>
+        public ICommand? PointerExitedCommand { get; private set; }
 
         // PropertyChanged event handler
         public new event PropertyChangedEventHandler? PropertyChanged;
@@ -267,7 +285,31 @@ namespace EssentialMAUIUIKit
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
-        #endregion
+        /// <summary>
+        /// Handles pointer entered event for menu items to show hover effect
+        /// </summary>
+        private void OnMenuItemPointerEntered(RestaurantDashboardMenuItem menuItem)
+        {
+            if (menuItem != null && !menuItem.IsSelected)
+            {
+                this.hoveredMenuItem = menuItem;
+                menuItem.IsHovered = true;
+                OnPropertyChanged(nameof(MenuItemList));
+            }
+        }
+
+        /// <summary>
+        /// Handles pointer exited event for menu items to hide hover effect
+        /// </summary>
+        private void OnMenuItemPointerExited(RestaurantDashboardMenuItem menuItem)
+        {
+            if (menuItem != null && !menuItem.IsSelected)
+            {
+                this.hoveredMenuItem = null;
+                menuItem.IsHovered = false;
+                OnPropertyChanged(nameof(MenuItemList));
+            }
+        }
     }
 
     public class RestaurantOrder
@@ -406,10 +448,61 @@ namespace EssentialMAUIUIKit
         #endregion
     }
 
-    public class RestaurantDashboardMenuItem
+    public class RestaurantDashboardMenuItem : INotifyPropertyChanged
     {
-        public string? Name { get; set; }
+        private string? name;
+        private bool isSelected;
+        private bool isHovered;
 
-        public bool IsSelected { get; set; }
+        public string? Name
+        {
+            get { return name; }
+            set
+            {
+                if (name != value)
+                {
+                    name = value;
+                    OnPropertyChanged(nameof(Name));
+                }
+            }
+        }
+
+        public bool IsSelected
+        {
+            get { return isSelected; }
+            set
+            {
+                if (isSelected != value)
+                {
+                    isSelected = value;
+                    OnPropertyChanged(nameof(IsSelected));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether the menu item is currently hovered
+        /// </summary>
+        public bool IsHovered
+        {
+            get { return isHovered; }
+            set
+            {
+                if (isHovered != value)
+                {
+                    isHovered = value;
+                    OnPropertyChanged(nameof(IsHovered));
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
+
+#endregion

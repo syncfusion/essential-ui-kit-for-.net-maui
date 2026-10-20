@@ -3,90 +3,99 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Dashboard.CompanyHistoryPage"
              xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters;assembly=EssentialMAUIUIKit"
              x:DataType="local:CompanyHistoryViewModel"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
+             xmlns:local="clr-namespace:EssentialMAUIUIKit"
+             xmlns:models="clr-namespace:EssentialMAUIUIKit.Models.Dashboard;assembly=EssentialMAUIUIKit">
+
     <ContentView.BindingContext>
         <local:CompanyHistoryViewModel/>
     </ContentView.BindingContext>
+
     <ContentView.Resources>
-        <local:EvenOddConverter x:Key="EvenOddConverter" />
-        <Style x:Key="BorderStyleLeft" x:DataType="local:CompanyHistoryData" TargetType="Border">
-            <Style.Triggers>
-                <!-- Check if Index is odd (false) -->
-                <DataTrigger TargetType="Border" Binding="{Binding Index, Converter={StaticResource EvenOddConverter}}" Value="false">
-                    <Setter Property="IsVisible" Value="True" />
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="LineStyleLeft" x:DataType="local:CompanyHistoryData" TargetType="Border">
-            <Style.Triggers>
-                <!-- Check if Index is odd (false) -->
-                <DataTrigger TargetType="Border" Binding="{Binding Index, Converter={StaticResource EvenOddConverter}}" Value="false">
-                    <Setter Property="IsVisible" Value="{OnPlatform Android=True,iOS=True, Default=False}" />
-                </DataTrigger>
-                <DataTrigger TargetType="Border" Binding="{Binding IsFirstItem}" Value="True" >
-                    <Setter Property="IsVisible"  Value="False">
-                    </Setter>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="BorderStyleRight" x:DataType="local:CompanyHistoryData" TargetType="Border">
-            <Style.Triggers>
-                <!-- Check if Index is odd (false) -->
-                <DataTrigger TargetType="Border" Binding="{Binding Index, Converter={StaticResource EvenOddConverter}}" Value="true">
-                    <Setter Property="IsVisible" Value="True" />
-                </DataTrigger>
-            </Style.Triggers>            
-        </Style>
-        <Style x:Key="LineStyleRight" x:DataType="local:CompanyHistoryData" TargetType="Border">
-            <Style.Triggers>
-                <!-- Check if Index is odd (false) -->
-                <DataTrigger TargetType="Border" Binding="{Binding Index, Converter={StaticResource EvenOddConverter}}" Value="true">
-                    <Setter Property="IsVisible" Value="True" />
-                </DataTrigger>
-                <DataTrigger TargetType="Border" Binding="{Binding IsLastItem}" Value="True">
-                    <Setter Property="IsVisible">
-                        <OnPlatform x:TypeArguments="x:Boolean">
-                            <On Platform="Android" Value="False" />
-                            <On Platform="iOS" Value="False" />
-                            <On Platform="WinUI" Value="True" />
-                            <On Platform="MacCatalyst" Value="True" />
-                        </OnPlatform>
-                    </Setter>
-                   
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
+        <converter:IndexToBooleanConverter x:Key="IndexToBooleanConverter"/>
     </ContentView.Resources>
-    <StackLayout>
-        <Grid HeightRequest="{OnPlatform WinUI=60,MacCatalyst=60}" Padding="0,10,24,10" IsVisible="{OnPlatform Android=False, iOS=False}">
-            <Image Source="{Binding CompanyLogo}"  HeightRequest="32" WidthRequest="32" VerticalOptions="Center" HorizontalOptions="Start" Margin="{OnPlatform WinUI='24,0,0,0', MacCatalyst='24,0,0,0'}"/>
 
-            <!-- Notification Bell Icon with Badge -->
-            <syncfusion:SfBadgeView HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,99,0" IsVisible="{OnPlatform Android=False, iOS=False}">
-                <syncfusion:SfBadgeView.Content>
-                    <Label Text="&#xe708;" FontFamily="DashboardFontIcons" HeightRequest="16" WidthRequest="16"  />
-                </syncfusion:SfBadgeView.Content>
-            </syncfusion:SfBadgeView>
+    <ScrollView Orientation="Vertical"
+                VerticalScrollBarVisibility="Never"
+                HorizontalScrollBarVisibility="Never">
 
-            <!-- Profile Image Avatar -->
-            <syncfusion:SfAvatarView ContentType="Custom" AvatarSize="Medium" AvatarShape="Circle" ImageSource="{Binding ProfileImage}" HorizontalOptions="End" Background="White" Margin="0,0,24,0" IsVisible="{OnPlatform Android=False, iOS=False}"/>
-        </Grid>
-        <BoxView HeightRequest="1" Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" HorizontalOptions="Fill" />
-        <Grid RowDefinitions="*" VerticalOptions="{OnPlatform Default=FillAndExpand}" ColumnDefinitions="*" HorizontalOptions="Fill" Margin="{OnPlatform Android='0,10,10,0', iOS='0,10,10,0'}">
-            <ScrollView Grid.Row="0">
-                <Grid ColumnDefinitions="{OnPlatform WinUI='Auto,Auto,*', MacCatalyst='Auto,Auto,3*'}" RowDefinitions="*" VerticalOptions="Fill" Background="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
-                    <!-- First Layout with Width 257 and Height 769 -->
-                    <Grid Grid.Column="0" VerticalOptions="Start" HorizontalOptions="Start" IsVisible="{OnPlatform Android=False, iOS=False}" WidthRequest="{OnPlatform MacCatalyst=350}" Background="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
-                        <VerticalStackLayout>
+        <Grid RowDefinitions="Auto,*" Background="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+              VerticalOptions="Fill"
+              HorizontalOptions="Fill">
+
+            <Grid Grid.Row="0" HeightRequest="{OnPlatform WinUI=60,MacCatalyst=60,iOS=60,Android=60}"
+              Padding="0,10,24,10"
+              IsVisible="{OnIdiom Phone=False,Tablet=True,Desktop=True}">
+
+                <Image Source="{Binding CompanyLogo}"
+                   HeightRequest="30"
+                   WidthRequest="30"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Start"
+                   Margin="{OnIdiom Tablet='28,0,0,0', Desktop='24,0,0,0'}"/>
+
+                <!-- Notification Bell Icon with Badge -->
+
+                <syncfusion:SfBadgeView HorizontalOptions="End"
+                                    VerticalOptions="Center"
+                                    Margin="0,0,67,0"
+                                    IsVisible="{OnIdiom Phone=False,Tablet=True,Desktop=True}">
+                    <syncfusion:SfBadgeView.Content>
+                        <Label Text="&#xe708;" FontSize="18"
+                           FontFamily="DashboardFontIcons"
+                           HeightRequest="16"
+                           WidthRequest="16"/>
+                    </syncfusion:SfBadgeView.Content>
+
+                </syncfusion:SfBadgeView>
+
+                <!-- Profile Image Avatar -->
+
+                <syncfusion:SfAvatarView ContentType="Custom"
+                                     AvatarSize="Medium"
+                                     AvatarShape="Circle"
+                                     ImageSource="{Binding ProfileImage}"
+                                     HorizontalOptions="End"
+                                     Background="Transparent"
+                                     Margin="0"
+                                     IsVisible="{OnIdiom Phone=False,Tablet=True,Desktop=True}"/>
+            </Grid>
+
+            <BoxView HeightRequest="1" Margin="0,60,0,0" IsVisible="{OnIdiom Phone=False, Default=True, Tablet=True}"
+                 Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}"
+                 HorizontalOptions="Fill"/>
+            <Grid Grid.Row="1" RowDefinitions="*"
+              VerticalOptions="Fill"
+              ColumnDefinitions="*" Margin="{OnIdiom Desktop='10,0,24,0', Phone='16,0,0,0',Tablet='32,0,32,0'}"
+              HorizontalOptions="Fill" >
+
+                <Grid ColumnDefinitions="{OnIdiom Desktop='257,1,*', Tablet='50,1,*',Phone='Auto,360,*'}" RowDefinitions="*"
+                      VerticalOptions="Fill"
+                      Background="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
+                    <Grid Grid.Column="0">
+                        <!-- Desktop (WinUI/Mac) -->
+                        <Grid WidthRequest="{OnPlatform WinUI=257,MacCatalyst=257,iOS=250}"
+                              HorizontalOptions="Start"
+                              VerticalOptions="Fill"
+                              IsVisible="{OnIdiom Desktop=True,Phone=False,Tablet=False}">
+
                             <CollectionView ItemsSource="{Binding MenuItemList}">
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate>
                                         <Border Padding="10" Stroke="Transparent">
-                                            <!-- Menu Item Text -->
-                                            <Label x:DataType="local:CompanyHistoryMenuItem"  Text="{Binding Name}" FontSize="16" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" VerticalOptions="Center" Margin="0,0,5,0">
+                                            <Label x:DataType="models:CompanyHistoryMenuItem"
+                                                   Text="{Binding Name}"
+                                                   FontFamily="Roboto-Regular"
+                                                   FontSize="16"
+                                                   TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                   HorizontalOptions="Start"
+                                                   VerticalOptions="Center"
+                                                   Margin="{OnPlatform WinUI='5,0,5,5', iOS='20,0,0,0', MacCatalyst='8,0,5,0'}">
                                                 <Label.Triggers>
-                                                    <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
+                                                    <DataTrigger TargetType="Label"
+                                                                 Binding="{Binding IsSelected}"
+                                                                 Value="True">
                                                         <Setter Property="TextColor" Value="{StaticResource PrimaryFormsColor}" />
                                                     </DataTrigger>
                                                 </Label.Triggers>
@@ -95,74 +104,301 @@
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>
                             </CollectionView>
-                        </VerticalStackLayout>
-                    </Grid>
-                    <BoxView Grid.Column="{OnPlatform WinUI='1',MacCatalyst='1'}"  WidthRequest="1" Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" HorizontalOptions="Start" VerticalOptions="Fill" IsVisible="{OnPlatform Android=False, iOS=False}"/>
-                    <Grid Grid.Column="{OnPlatform WinUI='2',MacCatalyst='2'}" Grid.Row="{OnPlatform Android='0', iOS='0'}" VerticalOptions="{OnPlatform WinUI=FillAndExpand, MacCatalyst=Fill, Android=Start,iOS=Start}">
+                        </Grid>
 
-                        <Grid Grid.Row="0" RowDefinitions="Auto,*, *, *" VerticalOptions="Start" Background="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
-                            <Grid Grid.Row="0" Margin="16,0,16,0" HeightRequest="72" Background="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
-                                <HorizontalStackLayout Grid.Column="0" HorizontalOptions="Start" HeightRequest="{OnPlatform WinUI=28, MacCatalyst=28}" VerticalOptions="Center">
-                                    <Label Text="{Binding PageTitle}" FontSize="{OnPlatform WinUI='22', MacCatalyst='22',Android='16', iOS='16'}" FontFamily="{OnPlatform WinUI='Roboto-Regular', Android='Roboto-Medium', iOS='Roboto-Medium'}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" VerticalOptions="Start"/>
+                        <!-- Tablet -->
+                        <Grid HorizontalOptions="Start"
+                              VerticalOptions="Start"
+                              IsVisible="{OnIdiom Tablet=True,Desktop=False,Phone=False}">
+
+                            <CollectionView Margin="0"
+                                            ItemsSource="{Binding MenuItemList}"
+                                            SelectionMode="None">
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="24" />
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="models:CompanyHistoryMenuItem">
+
+                                        <Grid HeightRequest="64" WidthRequest="72" HorizontalOptions="Center">
+                                            <Label Text="{Binding IconGlyph}"
+                                                   FontFamily="MaterialAssets"
+                                                   FontSize="24"
+                                                   HorizontalOptions="Center"
+                                                   VerticalOptions="Center">
+                                                <Label.Triggers>
+                                                    <DataTrigger TargetType="Label"
+                                                                 Binding="{Binding IsSelected}"
+                                                                 Value="True">
+                                                        <Setter Property="TextColor" Value="#7633DA" />
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                            </Label>
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </Grid>
+                    </Grid>
+
+                    <BoxView Grid.Column="1" WidthRequest="1" Margin="0" HorizontalOptions="Fill" VerticalOptions="Fill" Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" IsVisible="{OnIdiom Phone=False, Default=True}"/>
+                    <Grid Grid.Column="{OnIdiom Desktop=2, Phone=1,Tablet=2}"
+                          Grid.Row="0"
+                          VerticalOptions="{OnPlatform WinUI=FillAndExpand, Android=Start, iOS=Start, MacCatalyst=Start}">
+                        <Grid Grid.Row="0" RowDefinitions="Auto,Auto,Auto,*" VerticalOptions="Fill"
+                              Background="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
+                            <Grid Grid.Row="0"
+                                  Margin="{OnIdiom Phone='16,0', Default='24,0,24,0'}"
+                                  HeightRequest="72"
+                                  Background="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
+                                <HorizontalStackLayout Grid.Column="0" Margin="{x:OnIdiom Phone='0', Desktop=0,Tablet=0}"
+                                                       HorizontalOptions="Start"
+                                                       HeightRequest="{OnPlatform WinUI=28, MacCatalyst=28}"
+                                                       VerticalOptions="Center">
+                                    <Label Text="{Binding PageTitle}"
+                                           FontSize="{OnPlatform WinUI='22', MacCatalyst='22',Android='16', iOS='16'}"
+                                           FontFamily="{OnPlatform WinUI='Roboto-Regular', Android='Roboto-Medium', iOS='Roboto-Medium'}"
+                                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                           VerticalOptions="Start"/>
                                 </HorizontalStackLayout>
                             </Grid>
-                            <BoxView Grid.Row="1" HeightRequest="1" HorizontalOptions="Fill" Margin="0,0,0,0" Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" VerticalOptions="Start" IsVisible="{OnPlatform Android=False,iOS=False}"/>
-                            <Grid Grid.Row="2" HeightRequest="{OnPlatform WinUI=60,MacCatalyst=60}" VerticalOptions="Start" HorizontalOptions="Start" Margin="{OnPlatform WinUI='16,32,16,0',MacCatalyst='16,32,16,0', Android='16,16,16,16', iOS='16,16,16,16'}">
-                                <Label  Text="{Binding PageDescription}" TextColor="{AppThemeBinding Light={DynamicResource ContentTextColorLight}, Dark={DynamicResource ContentTextColorDark}}"  FontFamily="Roboto-Regular" FontSize="16" />
+                            <BoxView Grid.Row="1" HeightRequest="1" HorizontalOptions="Fill" Margin="30,-10,10,0"  Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" VerticalOptions="Start" IsVisible="{OnIdiom Phone=False,Tablet=True,Desktop=True}"/>
+                            <Grid Grid.Row="2"
+                                  VerticalOptions="Start"
+                                  HorizontalOptions="Fill"
+                                  Margin="{OnIdiom Desktop='24,20,24,0',Tablet='32,32,16,50', Phone='16,0,0,0'}">
+                                <Label Text="{Binding PageDescription}"
+                                       TextColor="{AppThemeBinding Light={DynamicResource ContentTextColorLight}, Dark={DynamicResource ContentTextColorDark}}"
+                                       FontFamily="Roboto-Regular"
+                                       FontSize="16"
+                                       LineBreakMode="WordWrap"
+                                       HorizontalTextAlignment="Start"/>
                             </Grid>
-                            <Grid Grid.Row="3" VerticalOptions="Fill" HorizontalOptions="Fill">
-                                <CollectionView ItemsSource="{Binding CompanyHistoryDetails}" SelectionMode="None">
+
+                            <Grid Grid.Row="3"
+                                  VerticalOptions="Fill"
+                                  HorizontalOptions="Fill" Padding="-18,0,-18,0"
+                                  Margin="{OnIdiom Phone='20,20,0,0', Desktop=20, Tablet=20}">
+                                <BoxView WidthRequest="2" Color="#7633DA" Margin="10" HeightRequest="560" IsVisible="{OnIdiom Desktop=True,Phone=False,Tablet=True}" HorizontalOptions="Center" VerticalOptions="Fill"/>
+                                <CollectionView ItemsSource="{Binding CompanyHistoryDetails}" IsVisible="{OnIdiom Phone=False, Desktop=True, Tablet=True}" VerticalOptions="Fill" SelectionMode="None">
                                     <CollectionView.ItemTemplate>
-                                        <DataTemplate>
-                                            <VerticalStackLayout>
-
-                                                <Grid ColumnDefinitions="{OnPlatform WinUI='Auto,Auto,Auto',MacCatalyst='Auto,Auto,Auto'}" HorizontalOptions="Center" VerticalOptions="Fill" Margin="{OnPlatform Android='8,0,8,0', iOS='8,0,8,0'}">
-                                                    <!-- Left Border -->
-                                                    <Grid Grid.Column="{OnPlatform WinUI=0, MacCatalyst=0}" HorizontalOptions="Start" WidthRequest="{OnPlatform WinUI='324',MacCatalyst='324'}" HeightRequest="136" Margin="{OnPlatform Default='16,0,0,0',iOS='0,0,0,0'}" Background="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
-                                                        <Border Style="{StaticResource BorderStyleLeft}" VerticalOptions="Center" HorizontalOptions="Fill" Background="#7633DA" HeightRequest="2" WidthRequest="{OnPlatform Android='280', iOS='280'}" BackgroundColor="#7633DA" Stroke="#7633DA" Margin="0,0,-2,0" IsVisible="False"/>
-                                                        <Border Style="{StaticResource BorderStyleLeft}" VerticalOptions="Center" HorizontalOptions="End" Background="#7633DA" HeightRequest="{OnPlatform Android=136, iOS=136}" WidthRequest="{OnPlatform Android='2', iOS='2'}" BackgroundColor="#7633DA" Stroke="#7633DA" Margin="0,134,43,0" IsVisible="False"/>
-                                                        <Border Style="{StaticResource LineStyleLeft}" VerticalOptions="Fill" HorizontalOptions="Start" Background="#7633DA" HeightRequest="{OnPlatform Android=136, iOS=136}" WidthRequest="{OnPlatform Android='2', iOS='2'}" BackgroundColor="#7633DA" Stroke="#7633DA" Margin="32,-40,0,0" IsVisible="False"/>
-                                                        <Border Style="{StaticResource BorderStyleLeft}" Stroke="#7633DA" VerticalOptions="Fill" StrokeThickness="2" Margin="0,0,100,0" Padding="10" Background="#7633DA" IsVisible="False">
-                                                            <VerticalStackLayout>
-                                                                <Label x:DataType="local:CompanyHistoryData" Text="{Binding Year}" TextColor="#FFFFFF" FontFamily="{OnPlatform WinUI='Roboto-Thin', MacCatalyst='Roboto-Thin', Android='Roboto-Regular', iOS='Roboto-Regular'}" FontAttributes="Bold" FontSize="16" />
-                                                                <Label x:DataType="local:CompanyHistoryData" Text="{Binding Achievements}" TextColor="#FFFFFF" FontFamily="{OnPlatform WinUI='Roboto-Thin', MacCatalyst='Roboto-Thin', Android='Roboto-Regular', iOS='Roboto-Regular'}" Margin="0,8,0,0" />
-                                                            </VerticalStackLayout>  
-                                                        </Border>
-                                                    </Grid>
-
-                                                    <!-- Middle Vertical Line -->
-                                                    <Grid Grid.Column="{OnPlatform WinUI='1', MacCatalyst='1'}" WidthRequest="14" VerticalOptions="Fill" IsVisible="{OnPlatform Android=False, iOS=False}">
-                                                        <Border VerticalOptions="Fill"   WidthRequest="14" HeightRequest="14" Stroke="#7633DA" BackgroundColor="#7633DA" HorizontalOptions="Center">
-                                                            <Border.StrokeShape>
-                                                                <RoundRectangle CornerRadius="50" />
-                                                            </Border.StrokeShape>                                                            
-                                                        </Border>
-                                                        <Border VerticalOptions="Fill" HorizontalOptions="Center" WidthRequest="2" BackgroundColor="#7633DA" Stroke="#7633DA" />
-                                                    </Grid>
-
-                                                    <!-- Right Border -->
-                                                    <Grid Grid.Column="{OnPlatform WinUI='2', MacCatalyst='2'}" WidthRequest="{OnPlatform WinUI='324',MacCatalyst='324'}" HeightRequest="136" Margin="0,16,0,16">
-                                                        <Border Style="{StaticResource LineStyleRight}" Background="#7633DA" VerticalOptions="Fill" HorizontalOptions="Fill" HeightRequest="2" WidthRequest="{OnPlatform Android='280', iOS='280'}" BackgroundColor="Transparent" Stroke="Transparent" Margin="{OnPlatform Default='-6,0,0,0',iOS='-16,0,0,0'}" IsVisible="False"/>
-                                                        <Border Style="{StaticResource BorderStyleRight}" VerticalOptions="Center" HorizontalOptions="End" Background="#7633DA" HeightRequest="{OnPlatform Android=136, iOS=136}" WidthRequest="{OnPlatform Android='2'}" BackgroundColor="#7633DA" Stroke="#7633DA" Margin="0,-43,43,0" IsVisible="False"/>
-                                                        <Border Style="{StaticResource LineStyleRight}" VerticalOptions="Center" HorizontalOptions="Start" Background="#7633DA" HeightRequest="{OnPlatform Android=136, iOS=136}" WidthRequest="{OnPlatform Android='2'}" BackgroundColor="#7633DA" Stroke="#7633DA" Margin="{OnPlatform Default='48,135,0,0', iOS='32,135,0,0'}" IsVisible="False"/>
-
-                                                        <Border Style="{StaticResource BorderStyleRight}" Background="{AppThemeBinding Dark={DynamicResource ReceivedMessageColorDark}, Light={DynamicResource ReceivedMessageColorLight}}" Stroke="Transparent" StrokeThickness="0" Margin="100,0,0,0" Padding="10" IsVisible="False">
-                                                            <VerticalStackLayout>
-                                                                <Label x:DataType="local:CompanyHistoryData"  Text="{Binding Year}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" FontFamily="{OnPlatform WinUI='Roboto-Thin', MacCatalyst='Roboto-Thin', Android='Roboto-Regular', iOS='Roboto-Regular'}" FontAttributes="Bold" FontSize="16" />
-                                                                <Label x:DataType="local:CompanyHistoryData" Text="{Binding Achievements}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" FontFamily="{OnPlatform WinUI='Roboto-Thin', MacCatalyst='Roboto-Thin', Android='Roboto-Regular', iOS='Roboto-Regular'}" FontSize="14" Margin="0,8,0,0" />
-                                                            </VerticalStackLayout>                                                           
-                                                        </Border>
-                                                    </Grid>
-                                                </Grid>                             
-                                            </VerticalStackLayout>                                           
+                                        <DataTemplate x:DataType="models:CompanyHistoryData">
+                                            <Grid WidthRequest="600" ColumnDefinitions="224,152,224" Padding="0,10">
+                                                <!-- LEFT CARD -->
+                                                <Border Grid.Column="0"
+                                                        WidthRequest="224" 
+                                                        MinimumHeightRequest="120"
+                                                        HorizontalOptions="End"
+                                                        VerticalOptions="Fill"
+                                                        Background="{AppThemeBinding Light=#7633DA, Dark=#8D4CF5}"
+                                                        StrokeThickness="0">
+                                                    <Border.Triggers>
+                                                        <DataTrigger TargetType="Border"
+                                                                     Binding="{Binding Index, Converter={StaticResource IndexToBooleanConverter}, ConverterParameter=Even}"
+                                                                     Value="True">
+                                                            <Setter Property="IsVisible" Value="False"/>
+                                                        </DataTrigger>
+                                                    </Border.Triggers>
+                                                    <Border.StrokeShape>
+                                                        <RoundRectangle CornerRadius="3"/>
+                                                    </Border.StrokeShape>
+                                                    <VerticalStackLayout Padding="12" Spacing="8">
+                                                        <Label Text="{Binding Year}"
+                                                               FontSize="14"
+                                                               FontAttributes="Bold" FontFamily="Roboto-Regular"
+                                                               TextColor="White"/>
+                                                        <Label Text="{Binding Achievements}"
+                                                               FontSize="14"
+                                                               TextColor="White" FontFamily="Roboto-Regular"
+                                                               LineBreakMode="WordWrap"/>
+                                                    </VerticalStackLayout>
+                                                </Border>
+                                                <!-- CENTER -->
+                                                <Grid Grid.Column="1">
+                                                    <!-- VERTICAL TIMELINE SEGMENT (hidden on the last item so the line ends at the final dot) -->
+                                                    <BoxView WidthRequest="2"
+                                                             Color="{AppThemeBinding Light=#7633DA, Dark=#8D4CF5}"
+                                                             HorizontalOptions="Center"
+                                                             VerticalOptions="Fill"
+                                                             IsVisible="{Binding IsLastItem, Converter={StaticResource IndexToBooleanConverter}, ConverterParameter=NotLast}">
+                                                    </BoxView>
+                                                    <!-- LEFT CONNECTOR -->
+                                                    <BoxView WidthRequest="76"
+                                                             HeightRequest="2"
+                                                             Color="{AppThemeBinding Light=#7633DA, Dark=#8D4CF5}"
+                                                             HorizontalOptions="Start"
+                                                             VerticalOptions="Center">
+                                                        <BoxView.Triggers>
+                                                            <DataTrigger TargetType="BoxView"
+                                                                         Binding="{Binding Index, Converter={StaticResource IndexToBooleanConverter}, ConverterParameter=Even}"
+                                                                         Value="True">
+                                                                <Setter Property="IsVisible" Value="False"/>
+                                                            </DataTrigger>
+                                                        </BoxView.Triggers>
+                                                    </BoxView>
+                                                    <!-- RIGHT CONNECTOR -->
+                                                    <BoxView WidthRequest="76"
+                                                             HeightRequest="2"
+                                                             Color="{AppThemeBinding Light=#7633DA, Dark=#8D4CF5}"
+                                                             HorizontalOptions="End"
+                                                             VerticalOptions="Center">
+                                                        <BoxView.Triggers>
+                                                            <DataTrigger TargetType="BoxView"
+                                                                         Binding="{Binding Index, Converter={StaticResource IndexToBooleanConverter}, ConverterParameter=Even}"
+                                                                         Value="False">
+                                                                <Setter Property="IsVisible" Value="False"/>
+                                                            </DataTrigger>
+                                                        </BoxView.Triggers>
+                                                    </BoxView>
+                                                    <!-- DOT -->
+                                                    <Border WidthRequest="12"
+                                                            HeightRequest="12"
+                                                            BackgroundColor="{AppThemeBinding Light=#7633DA, Dark=#8D4CF5}"
+                                                            HorizontalOptions="Center"
+                                                            VerticalOptions="Center"
+                                                            StrokeThickness="0"
+                                                            ZIndex="10">
+                                                        <Border.StrokeShape>
+                                                            <RoundRectangle CornerRadius="20"/>
+                                                        </Border.StrokeShape>
+                                                    </Border>
+                                                </Grid>
+                                                <!-- RIGHT CARD -->
+                                                <Border Grid.Column="2"
+                                                        WidthRequest="224"
+                                                        MinimumHeightRequest="120"
+                                                        HorizontalOptions="Start"
+                                                        VerticalOptions="Fill"
+                                                        Background="{AppThemeBinding Light=#F4EBFA, Dark=#35303C}"
+                                                        StrokeThickness="0">
+                                                    <Border.Triggers>
+                                                        <DataTrigger TargetType="Border" Binding="{Binding Index, Converter={StaticResource IndexToBooleanConverter}, ConverterParameter=Even}"  Value="False">
+                                                            <Setter Property="IsVisible" Value="False"/>
+                                                        </DataTrigger>
+                                                    </Border.Triggers>
+                                                    <Border.StrokeShape>
+                                                        <RoundRectangle CornerRadius="3"/>
+                                                    </Border.StrokeShape>
+                                                    <VerticalStackLayout Padding="12" Spacing="8">
+                                                        <Label Text="{Binding Year}"
+                                                               FontSize="14"
+                                                               FontAttributes="Bold" FontFamily="Roboto-Regular"
+                                                               TextColor="{AppThemeBinding Light=#313032 , Dark=#FFFFFF}"/>
+                                                        <Label Text="{Binding Achievements}"
+                                                               FontSize="14" FontFamily="Roboto-Regular"
+                                                               TextColor="{AppThemeBinding Light=#313032 , Dark=#FFFFFF}"
+                                                               LineBreakMode="WordWrap"/>
+                                                    </VerticalStackLayout>
+                                                </Border>
+                                            </Grid>
                                         </DataTemplate>
                                     </CollectionView.ItemTemplate>
-                                </CollectionView>                                
+                                </CollectionView>
+
+                                <!--Mobile view -->
+                                <CollectionView ItemsSource="{Binding CompanyHistoryDetails}" VerticalOptions="Fill" SelectionMode="None" IsVisible="{OnIdiom Phone=True,Desktop=False, Tablet=False}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="models:CompanyHistoryData">
+                                            <Grid RowDefinitions="Auto,Auto" RowSpacing="30">
+                                                <!-- LEFT ITEM -->
+                                                <AbsoluteLayout HeightRequest="136" Padding="10" IsVisible="{Binding Index, Converter={StaticResource IndexToBooleanConverter}, ConverterParameter=Odd}">
+                                                    <!-- Card -->
+                                                    <Border MinimumWidthRequest="224"
+                                                            HorizontalOptions="Start" IsVisible="{Binding Index, Converter={StaticResource IndexToBooleanConverter}, ConverterParameter=Odd}"
+                                                            Margin="5,10,10,10" AbsoluteLayout.LayoutBounds="0,-20,224,-1"
+                                                            AbsoluteLayout.LayoutFlags="None"
+                                                            Background="#7633DA" Stroke="Transparent"
+                                                            Padding="12">
+                                                        <Border.StrokeShape>
+                                                            <RoundRectangle CornerRadius="2"/>
+                                                        </Border.StrokeShape>
+                                                        <VerticalStackLayout Spacing="5">
+                                                            <Label Text="{Binding Year}"
+                                                                   TextColor="White"
+                                                                   FontAttributes="Bold"
+                                                                   FontSize="14"/>
+                                                            <Label Text="{Binding Achievements}"
+                                                                   TextColor="White"
+                                                                   FontSize="12"
+                                                                   LineBreakMode="WordWrap"/>
+                                                        </VerticalStackLayout>
+                                                    </Border>
+                                                    <!-- Connector -->
+                                                    <Path Stroke="#7633DA"
+                                                          StrokeThickness="2" Margin="30,0"
+                                                          AbsoluteLayout.LayoutBounds="0,0,400,400"
+                                                          AbsoluteLayout.LayoutFlags="None"
+                                                          HorizontalOptions="Fill">
+                                                        <Path.Data>
+                                                            <PathGeometry>
+                                                                <PathFigure StartPoint="180,40">
+                                                                    <!-- Short horizontal -->
+                                                                    <LineSegment Point="255,40"/>
+                                                                    <!-- Rounded corner -->
+                                                                    <ArcSegment Point="260,45" Size="5,5" SweepDirection="Clockwise"/>
+                                                                    <!-- Tall vertical -->
+                                                                    <LineSegment Point="260,200"/>
+                                                                </PathFigure>
+                                                            </PathGeometry>
+                                                        </Path.Data>
+                                                    </Path>
+                                                </AbsoluteLayout>
+                                                <!-- RIGHT ITEM -->
+                                                <AbsoluteLayout
+                                                                Grid.ColumnSpan="3" Padding="0"
+                                                                HeightRequest="136" 
+                                                                IsVisible="{Binding Index, Converter={StaticResource IndexToBooleanConverter}, ConverterParameter=Even}">
+                                                    <!-- Connector -->
+                                                    <Path
+                                                        AbsoluteLayout.LayoutBounds="0,-20,220,224"
+                                                        AbsoluteLayout.LayoutFlags="None" Margin="60,0"
+                                                        IsVisible="{Binding Index, Converter={StaticResource IndexToBooleanConverter},ConverterParameter=NotLast:4}"
+                                                        Stroke="#7633DA"
+                                                        StrokeThickness="2">    
+                                                        <Path.Data>
+                                                            <PathGeometry>
+                                                                <!--Start from left-middle of card-->
+                                                                <PathFigure StartPoint="20,210">
+                                                                    <LineSegment Point="20,73"/>
+                                                                    <ArcSegment Point="25,68" Size="5,5" SweepDirection="Clockwise"/>
+                                                                    <LineSegment Point="120,68"/>
+                                                                </PathFigure>
+                                                            </PathGeometry>
+                                                        </Path.Data>
+                                                    </Path>
+                                                    <!-- Card -->
+                                                    <Border
+                                                            WidthRequest="224"
+                                                            MinimumHeightRequest="136"
+                                                            Background="#F4EBFA"
+                                                            Stroke="Transparent"
+                                                            Padding="14,22" 
+                                                            AbsoluteLayout.LayoutBounds="{OnPlatform Android='110,0,240,-1',iOS='140,0,240,-1'}"
+                                                            AbsoluteLayout.LayoutFlags="None">                              
+                                                        <Border.StrokeShape>
+                                                            <RoundRectangle CornerRadius="2"/>
+                                                        </Border.StrokeShape>
+                                                        <VerticalStackLayout Spacing="5">
+                                                            <Label Text="{Binding Year}"
+                                                                   TextColor="#444"
+                                                                   FontAttributes="Bold"
+                                                                   FontSize="14"/>
+                                                            <Label Text="{Binding Achievements}"
+                                                                   TextColor="#444"
+                                                                   FontSize="12"
+                                                                   LineBreakMode="WordWrap"/>
+                                                        </VerticalStackLayout>
+                                                    </Border>
+                                                </AbsoluteLayout>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
                             </Grid>
                         </Grid>
-                    </Grid>               
+                    </Grid>
                 </Grid>
-            </ScrollView>
+            </Grid>
         </Grid>
-    </StackLayout>
+    </ScrollView>
 </ContentView>

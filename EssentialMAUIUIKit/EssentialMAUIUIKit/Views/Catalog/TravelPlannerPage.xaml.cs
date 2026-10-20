@@ -11,12 +11,18 @@ namespace EssentialMAUIUIKit.Views.Catalog
 
         private void FavouriteButton_Clicked(object sender, EventArgs e)
         {
-            SfButton? button = sender as SfButton;
-            var travel = button?.BindingContext as EssentialMAUIUIKit.Models.Catalog.Travel;
-            if (travel != null)
+            if (sender is not SfButton button)
             {
-                travel.IsFavourite = !travel.IsFavourite;
+                return;
             }
+
+            if (button.BindingContext is not EssentialMAUIUIKit.Models.Catalog.Travel travel)
+            {
+                return;
+            }
+
+            travel.IsFavourite = !travel.IsFavourite;
+            travel.NotifyPropertyChanged(nameof(travel.IsFavourite));
         }
     }
 }

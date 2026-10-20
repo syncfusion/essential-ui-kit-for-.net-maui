@@ -20,12 +20,15 @@ namespace EssentialMAUIUIKit
             ""fileExploreList"": [
                 { ""folderName"": ""Documents"", ""items"": ""8 Items"", ""dateTime"": ""28/11/2019  10:30 PM"" },
                 { ""folderName"": ""Downloads"", ""items"": ""28 Items"", ""dateTime"": ""8/11/2019  11:20 PM"" },
-                { ""folderName"": ""My Music"", ""items"": ""148 Items"", ""dateTime"": ""2/1/2020  8:44 AM"" },
-                { ""folderName"": ""My Videos"", ""items"": ""48 Items"", ""dateTime"": ""21/9/2019  12:10 PM"" },
+                { ""folderName"": ""My music"", ""items"": ""148 Items"", ""dateTime"": ""2/1/2020  8:44 AM"" },
+                { ""folderName"": ""Videos"", ""items"": ""48 Items"", ""dateTime"": ""21/9/2019  12:10 PM"" },
                 { ""folderName"": ""Images"", ""items"": ""342 Items"", ""dateTime"": ""16/12/2019  6:45 PM"" },
                 { ""folderName"": ""Data"", ""items"": ""21 Items"", ""dateTime"": ""18/11/2019  10:24 AM"" },
                 { ""folderName"": ""Movies"", ""items"": ""12 Items"", ""dateTime"": ""25/11/2019  7:30 AM"" },
-                { ""folderName"": ""Files"", ""items"": ""43 Items"", ""dateTime"": ""14/12/2019  11:30 PM"" }
+                { ""folderName"": ""Files"", ""items"": ""43 Items"", ""dateTime"": ""14/12/2019  11:30 PM"" },
+                { ""folderName"": ""Albums"", ""items"": ""12 Items"", ""dateTime"": ""19/12/2019  10:00 AM"" },
+                { ""folderName"": ""PDF files"", ""items"": ""25 Items"", ""dateTime"": ""24/12/2019  03:30 PM"" },
+                { ""folderName"": ""Screenshots"", ""items"": ""50 Items"", ""dateTime"": ""28/12/2019  07:00 PM"" }
             ]
         }";
 

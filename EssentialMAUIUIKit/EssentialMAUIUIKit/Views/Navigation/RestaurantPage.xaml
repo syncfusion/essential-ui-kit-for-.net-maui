@@ -3,130 +3,180 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Navigation.RestaurantPage"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:avatar="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              x:DataType="local:NavigationListViewModel">
+
     <ContentView.BindingContext>
-        <local:NavigationListViewModel/>
+        <local:NavigationListViewModel />
     </ContentView.BindingContext>
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style TargetType="listView:ListViewItem">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Background" Value="Transparent" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="PointerOver">
+                                <VisualState.Setters>
+                                    <Setter Property="Background" Value="Transparent" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="Background"
+                                            Value="{AppThemeBinding Light=#1A000000, Dark=#1AFFFFFF}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="Background" Value="Transparent" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
     <ContentView.Content>
 
-        <Grid RowSpacing="0"
-                RowDefinitions="{OnPlatform Default=*, MacCatalyst=Auto}"
-                Padding="0,10,0,0">
+        <Grid 
+              RowSpacing="0"
+              RowDefinitions="*">
+
+            <!-- Desktop View -->
             <Border StrokeShape="RoundRectangle 10"
-                    WidthRequest="{OnPlatform WinUI=550, MacCatalyst=550}"
+                    Margin="0,24,0,24"
+                    StrokeThickness="1"
+                    Stroke="{AppThemeBinding Light= #E5E1E3, Dark=#474648}"
+                    MaximumWidthRequest="{OnPlatform WinUI=776, MacCatalyst=776}"
+                    HorizontalOptions="Fill"
                     BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                    Padding="10"
                     IsVisible="{OnPlatform Android=False, iOS=False}">
+
                 <Grid>
 
-                    <listView:SfListView BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                         Padding="0"
-                                         AutoFitMode="Height"
-                                         ScrollBarVisibility="Never"
-                                         ItemSpacing="0"
-                                         ItemsSource="{Binding NavigationList}"
-                                         SelectionBackground="Transparent"
-                                         StickyFooterPosition="Body"
-                                         VerticalOptions="Fill">
+                    <listView:SfListView
+                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                        Padding="0"
+                        AutoFitMode="Height"
+                        ScrollBarVisibility="Never"
+                        ItemSpacing="0"
+                        ItemSize="80"
+                        ItemsSource="{Binding NavigationList}"
+                        SelectionGesture="Tap"
+                        SelectionMode="None"
+                        SelectionBackground="Transparent"
+                        VerticalOptions="Fill">
 
                         <listView:SfListView.ItemTemplate>
                             <DataTemplate x:DataType="local:NavigationItem">
-                                <ViewCell>
-                                    <StackLayout BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                <StackLayout BackgroundColor="Transparent"
                                                  Spacing="0">
 
-                                        <Grid
-                                            Margin="16,8,8,8"
-                                            ColumnDefinitions="Auto, *, Auto"
-                                            ColumnSpacing="0"
-                                            RowSpacing="0">
+                                    <Grid Margin="16,8,8,8"
+                                              ColumnDefinitions="Auto,*,Auto"
+                                              ColumnSpacing="0"
+                                              RowSpacing="0">
 
-                                            <Border
-                                                BackgroundColor="{DynamicResource Gray-200}"
-                                                StrokeShape="RoundRectangle 10"
-                                                HorizontalOptions="Start"
-                                                Style="{DynamicResource ProfileBorderStyle}">
-                                                <Image
-                                                    Aspect="AspectFill"
-                                                    BackgroundColor="{DynamicResource Gray-200}"
-                                                    HeightRequest="80"
-                                                    WidthRequest="80">
-                                                    <Image.Source>
-                                                        <UriImageSource
-                                                            CacheValidity="14"
-                                                            CachingEnabled="true"
-                                                            Uri="{Binding ItemImage}"/>
-                                                    </Image.Source>
-                                                </Image>
-                                            </Border>
+                                        <!-- Restaurant Image -->
+                                        <avatar:SfAvatarView Grid.Row="0"
+                                                                 Grid.Column="0"
+                                                                 Margin="12,12,0,12"
+                                                                 ContentType="Default"
+                                                                 ImageSource="{Binding ItemImage}"
+                                                                 WidthRequest="56"
+                                                                 HeightRequest="56"
+                                                                 CornerRadius="8"
+                                                                 VerticalOptions="Center"
+                                                                 HorizontalOptions="Center" />
 
-                                            <StackLayout
-                                                Grid.Column="1"
-                                                Margin="16,5"
-                                                HorizontalOptions="Start"
-                                                Spacing="2"
-                                                VerticalOptions="Fill">
+                                        <!-- Details -->
+                                        <StackLayout Grid.Column="1"
+                                                         Margin="12,12,0,0"
+                                                         HorizontalOptions="Start"
+                                                         VerticalOptions="Fill"
+                                                         Spacing="2">
 
-                                                <!--  Name of the Restaurant  -->
-                                                <Label
-                                                    FontFamily="Roboto-Medium"
-                                                    FontSize="16"
-                                                    LineHeight="{OnPlatform Android=1.5,
-                                Default=-1}"
-                                                    Text="{Binding Name}"
-                                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+                                            <!-- Restaurant Name -->
+                                            <Label FontFamily="Roboto-Medium"
+                                                       FontSize="14"
+                                                       LineHeight="{OnPlatform Android=1.5, Default=-1}"
+                                                       Text="{Binding Name}"
+                                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
 
-                                                <!--  Description about the item  -->
-                                                <Label
-                                                    FontFamily="Roboto-Regular"
-                                                    FontSize="14"
-                                                    LineHeight="{OnPlatform Android=1.25,
-                                Default=-1}"
-                                                    Text="{Binding Description}"
-                                                    TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+                                            <!-- Description -->
+                                            <Label FontFamily="Roboto-Regular"
+                                                       FontSize="12"
+                                                       LineHeight="{OnPlatform Android=1.25, Default=-1}"
+                                                       Text="{Binding Description}"
+                                                       TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}" />
 
-                                                <!--  Label for Offer  -->
-                                                <Label
-                                                    FontFamily="Roboto-Regular"
-                                                    FontSize="14"
-                                                    LineHeight="{OnPlatform Android=1.25,
-                                Default=-1}"
-                                                    Text="{Binding Offer}"
-                                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"/>
+                                            <!-- Offer -->
+                                            <Label Padding="0,2,0,0"
+                                                       FontFamily="Roboto-Regular"
+                                                       FontSize="12"
+                                                       LineHeight="{OnPlatform Android=1.25, Default=-1}"
+                                                       Text="{Binding Offer}"
+                                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}" />
+                                        </StackLayout>
+
+                                        <!-- Rating -->
+                                        <Border Grid.RowSpan="2"
+                                                    Grid.Column="2"
+                                                    Margin="16,12,16,20"
+                                                    BackgroundColor="{AppThemeBinding Light=#1C7E39,Dark=#3CB053}"
+                                                    Padding="6,3"
+                                                    Stroke="Transparent"
+                                                    StrokeShape="RoundRectangle 16"
+                                                    VerticalOptions="Start"
+                                                    HorizontalOptions="End">
+
+                                            <StackLayout Orientation="Horizontal"
+                                                             HorizontalOptions="Center"
+                                                             Spacing="4">
+
+                                                <Label Text="&#xE71E;" 
+                                                           FontFamily="UIKitIcons"
+                                                           FontSize="10"
+                                                           LineHeight="{OnPlatform Android=1.5, Default=-1}"
+                                                           TextColor="#FFFFFF"
+                                                           VerticalOptions="Center"
+                                                           VerticalTextAlignment="Center" />
+
+                                                <Label FontFamily="Roboto-Regular"
+                                                           FontSize="11"
+                                                           HorizontalOptions="Start"
+                                                           LineHeight="{OnPlatform Android=1.5, Default=-1}"
+                                                           Text="{Binding ItemRating}"
+                                                           TextColor="#FFFFFF"
+                                                           VerticalTextAlignment="Center" />
+
                                             </StackLayout>
+                                        </Border>
 
-                                            <Border
-                                                Grid.Column="2"
-                                                Margin="0,8,0,0"
-                                                BackgroundColor="#1C7E39"
-                                                Stroke="Transparent"
-                                                StrokeShape="RoundRectangle 10"
-                                                HeightRequest="20"
-                                                HorizontalOptions="End"
-                                                VerticalOptions="Start"
-                                                WidthRequest="30">
-                                                <Label
-                                                    FontFamily="Roboto-Regular"
-                                                    FontSize="12"
-                                                    HorizontalOptions="Center"
-                                                    LineHeight="{OnPlatform Android=1.5,
-                                Default=-1}"
-                                                    Text="{Binding ItemRating}"
-                                                    TextColor="{DynamicResource Gray-White}"
-                                                    VerticalTextAlignment="Center"/>
-                                            </Border>
-                                        </Grid>
-                                        <!--  Separator  -->
-                                        <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
-                                    </StackLayout>
-                                </ViewCell>
+                                    </Grid>
+
+                                    <!-- Separator -->
+                                    <BoxView Style="{DynamicResource HorizontalSeparatorStyle}" />
+
+                                </StackLayout>
                             </DataTemplate>
                         </listView:SfListView.ItemTemplate>
+
                     </listView:SfListView>
+
                 </Grid>
+
             </Border>
 
+            <!-- Mobile View -->
             <Grid Grid.Row="2"
                   IsVisible="{OnPlatform WinUI=False, MacCatalyst=False}">
 
@@ -135,107 +185,121 @@
                     AutoFitMode="Height"
                     ScrollBarVisibility="Never"
                     ItemSpacing="0"
+                    ItemSize="80"
                     ItemsSource="{Binding NavigationList}"
+                    SelectionGesture="Tap"
+                    SelectionMode="None"
                     SelectionBackground="Transparent"
                     StickyFooterPosition="Body"
                     VerticalOptions="Fill">
 
                     <listView:SfListView.ItemTemplate>
                         <DataTemplate x:DataType="local:NavigationItem">
-                            <ViewCell>
-                                <StackLayout BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                            <StackLayout Margin="0"
+                                             Padding="0"
+                                             BackgroundColor="Transparent"
                                              Spacing="0">
 
-                                    <Grid
-                                        Margin="16,8,8,8"
-                                        ColumnDefinitions="Auto, *, Auto"
-                                        ColumnSpacing="0"
-                                        RowSpacing="0">
+                                <Grid Margin="8,6,6,6"
+                                          ColumnDefinitions="Auto,*,Auto"
+                                          RowDefinitions="80,1"
+                                          ColumnSpacing="0"
+                                          RowSpacing="0">
 
-                                        <Border
-                                            BackgroundColor="{DynamicResource Gray-200}"
-                                            StrokeShape="RoundRectangle 10"
-                                            HorizontalOptions="Start"
-                                            Style="{DynamicResource ProfileBorderStyle}">
-                                            <Image
-                                                Aspect="AspectFill"
-                                                BackgroundColor="{DynamicResource Gray-200}"
-                                                HeightRequest="80"
-                                                WidthRequest="80">
-                                                <Image.Source>
-                                                    <UriImageSource
-                                                        CacheValidity="14"
-                                                        CachingEnabled="true"
-                                                        Uri="{Binding ItemImage}"/>
-                                                </Image.Source>
-                                            </Image>
-                                        </Border>
+                                    <!-- Restaurant Image -->
+                                    <avatar:SfAvatarView Grid.Row="0"
+                                                             Grid.Column="0"
+                                                             Margin="12,12,0,12"
+                                                             ContentType="Default"
+                                                             ImageSource="{Binding ItemImage}"
+                                                             WidthRequest="60"
+                                                             HeightRequest="60"
+                                                             CornerRadius="8"
+                                                             VerticalOptions="Center"
+                                                             HorizontalOptions="Center" />
 
-                                        <StackLayout
-                                            Grid.Column="1"
-                                            Margin="16,5"
-                                            HorizontalOptions="Start"
-                                            Spacing="2"
-                                            VerticalOptions="Fill">
+                                    <!-- Details -->
+                                    <StackLayout Grid.Column="1"
+                                                     Margin="14,6"
+                                                     HorizontalOptions="Start"
+                                                     VerticalOptions="Fill"
+                                                     Spacing="2">
 
-                                            <!--  Name of the Restaurant  -->
-                                            <Label
-                                                FontFamily="Roboto-Medium"
-                                                FontSize="16"
-                                                LineHeight="{OnPlatform Android=1.5,
-                                Default=-1}"
-                                                Text="{Binding Name}"
-                                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+                                        <!-- Restaurant Name -->
+                                        <Label FontFamily="Roboto-Medium"
+                                                   FontSize="16"
+                                                   LineHeight="{OnPlatform Android=1.5, Default=-1}"
+                                                   Text="{Binding Name}"
+                                                   TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
 
-                                            <!--  Description about the item  -->
-                                            <Label
-                                                FontFamily="Roboto-Regular"
-                                                FontSize="14"
-                                                LineHeight="{OnPlatform Android=1.25,
-                                Default=-1}"
-                                                Text="{Binding Description}"
-                                                TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+                                        <!-- Description -->
+                                        <Label FontFamily="Roboto-Regular"
+                                                   FontSize="14"
+                                                   LineHeight="{OnPlatform Android=1.25, Default=-1}"
+                                                   Text="{Binding Description}"
+                                                   TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}" />
 
-                                            <!--  Label for Offer  -->
-                                            <Label
-                                                FontFamily="Roboto-Regular"
-                                                FontSize="14"
-                                                LineHeight="{OnPlatform Android=1.25,
-                                Default=-1}"
-                                                Text="{Binding Offer}"
-                                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"/>
+                                        <!-- Offer -->
+                                        <Label FontFamily="Roboto-Regular"
+                                                   FontSize="14"
+                                                   LineHeight="{OnPlatform Android=1.25, Default=-1}"
+                                                   Text="{Binding Offer}"
+                                                   TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}" />
+                                    </StackLayout>
+
+                                    <!-- Rating -->
+                                    <Border Grid.RowSpan="2"
+                                                Grid.Column="2"
+                                                Margin="16,6,8,20"
+                                                Padding="6,3"
+                                                BackgroundColor="{AppThemeBinding Light=#1C7E39,Dark=#3CB053}"
+                                                Stroke="Transparent"
+                                                StrokeShape="RoundRectangle 16"
+                                                VerticalOptions="Start"
+                                                HorizontalOptions="End">
+
+                                        <StackLayout Orientation="Horizontal"
+                                                         HorizontalOptions="Center"
+                                                         VerticalOptions="Center"
+                                                         Spacing="4">
+
+                                            <Label 
+                                                       FontSize="10"
+                                                       Margin="{OnPlatform Android='0,0,0,2', iOS='0,0,0,2'}"
+                                                       LineHeight="{OnPlatform Android=1.5, Default=-1}"
+                                                       Text="&#xE71E;" 
+                                                       FontFamily="UIKitIcons"
+                                                       TextColor="#FFFFFF"
+                                                       VerticalOptions="Center"
+                                                       VerticalTextAlignment="Center" />
+
+                                            <Label FontFamily="Roboto-Regular"
+                                                       FontSize="11"
+                                                       HorizontalOptions="Start"
+                                                       LineHeight="{OnPlatform Android=1.5, Default=-1}"
+                                                       Text="{Binding ItemRating}"
+                                                       TextColor="#FFFFFF"
+                                                       VerticalTextAlignment="Center" />
+
                                         </StackLayout>
 
-                                        <Border
-                                            Grid.Column="2"
-                                            Margin="0,8,0,0"
-                                            BackgroundColor="#1C7E39"
-                                            Stroke="Transparent"
-                                            StrokeShape="RoundRectangle 10"
-                                            HeightRequest="20"
-                                            HorizontalOptions="End"
-                                            VerticalOptions="Start"
-                                            WidthRequest="30">
-                                            <Label
-                                                FontFamily="Roboto-Regular"
-                                                FontSize="12"
-                                                HorizontalOptions="Center"
-                                                LineHeight="{OnPlatform Android=1.5,
-                                Default=-1}"
-                                                Text="{Binding ItemRating}"
-                                                TextColor="{DynamicResource Gray-White}"
-                                                VerticalTextAlignment="Center"/>
-                                        </Border>
-                                    </Grid>
-                                    <!--  Separator  -->
-                                    <BoxView Style="{DynamicResource HorizontalSeparatorStyle}"/>
-                                </StackLayout>
-                            </ViewCell>
+                                    </Border>
+
+                                </Grid>
+
+                                <!-- Separator -->
+                                <BoxView Style="{DynamicResource HorizontalSeparatorStyle}" />
+
+                            </StackLayout>
                         </DataTemplate>
                     </listView:SfListView.ItemTemplate>
+
                 </listView:SfListView>
+
             </Grid>
 
         </Grid>
+
     </ContentView.Content>
+
 </ContentView>

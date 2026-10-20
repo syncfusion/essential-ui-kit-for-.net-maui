@@ -6,5 +6,6 @@ namespace EssentialMAUIUIKit.Views.Catalog
         {
             InitializeComponent();
         }
+
     }
 }

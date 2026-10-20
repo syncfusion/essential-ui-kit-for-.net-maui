@@ -3,12 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Notification.SocialNotificationPage"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Toolkit.EffectsView;assembly=Syncfusion.Maui.Toolkit"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
-             xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
              x:DataType="local:SocialNotificationViewModel">
-    <ContentView.BindingContext>
-        <local:SocialNotificationViewModel x:Name="viewModel"/>
-    </ContentView.BindingContext>
+
     <ContentView.Resources>
         <Style TargetType="listView:ListViewItem">
             <Setter Property="VisualStateManager.VisualStateGroups">
@@ -16,205 +14,352 @@
                     <VisualStateGroup>
                         <VisualState x:Name="Normal">
                             <VisualState.Setters>
-                                <Setter Property="Background"
-                        Value="Transparent" />
+                                <Setter Property="Background" Value="Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                         <VisualState x:Name="PointerOver">
                             <VisualState.Setters>
-                                <Setter Property="Background"
-                        Value= "Transparent" />
+                                <Setter Property="Background" Value="Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
                 </VisualStateGroupList>
             </Setter>
         </Style>
-        <ResourceDictionary>
-            <converter:BooleanToColorConverter x:Key="BoolToColorConverter"/>
-        </ResourceDictionary>
     </ContentView.Resources>
 
-    <ContentView.Content>
+    <ContentView.BindingContext>
+        <local:SocialNotificationViewModel x:Name="viewModel" />
+    </ContentView.BindingContext>
 
-        <ScrollView>
+    <ScrollView>
+        <Grid>
+            <Border Margin="0,20,0,10"
+                   StrokeShape="RoundRectangle 10"
+                   IsVisible="{OnPlatform WinUI=True, MacCatalyst=True, Android=False, iOS=False}"
+                   WidthRequest="{OnPlatform WinUI=524, MacCatalyst=660}">
+                <Grid RowDefinitions="Auto,Auto,Auto">
 
-            <Grid Padding="10"
-                    RowDefinitions="Auto,Auto">
+                    <listView:SfListView Grid.Row="0"
+                           x:Name="RecentList"
+                           AllowSwiping="True"
+                           AutoFitMode="Height"
+                           ScrollBarVisibility="Never"
+                           ItemSpacing="0" IsScrollingEnabled="False"
+                           Margin="0,10,0,0"
+                           ItemsSource="{Binding RecentSocialNotifications}"
+                           SelectionBackground="Transparent"
+                           SelectionGesture="Tap"
+                           SelectionMode="Single"
+                           VerticalOptions="Fill">
+                        <listView:SfListView.HeaderTemplate>
+                            <DataTemplate>
+                                <Grid Margin="24,0,16,8">
+                                    <Label
+                          FontFamily="Roboto-Medium"
+                          FontSize="14"
+                          HorizontalOptions="Start"
+                          Text="Today"
+                          TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}" />
+                                </Grid>
+                            </DataTemplate>
+                        </listView:SfListView.HeaderTemplate>
+
+                        <listView:SfListView.ItemTemplate>
+                            <DataTemplate x:DataType="local:SocialNotificationItem">
+                                <syncEffectsView:SfEffectsView Margin="0,0,0,0" TouchDownEffects="Ripple">
+                                    <Grid ColumnDefinitions="Auto, *"
+                                        ColumnSpacing="16"
+                                        RowDefinitions="Auto, Auto"
+                                        RowSpacing="0">
+
+                                        <!--  Profile image  -->
+                                        <Border Grid.RowSpan="2"
+                                              Margin="24,0,0,0"
+                                              HeightRequest="40"
+                                              WidthRequest="40"
+                                              StrokeShape="RoundRectangle 60"
+                                              StrokeThickness="0">
+                                            <Image BackgroundColor="Transparent" Source="{Binding ProfileImage}" />
+                                        </Border>
+
+                                        <!--  Notification detail  -->
+                                        <Label Grid.Row="0"
+                                             Grid.Column="1"
+                                             Margin="0,10,16,0"
+                                             FontFamily="Roboto-Medium"
+                                             FontSize="16"
+                                             LineHeight="{OnPlatform Android=1.25, Default=-1}"
+                                             LineBreakMode="TailTruncation"
+                                             Text="{Binding Name}"
+                                             TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
+
+                                        <!--  Received time  -->
+                                        <Label Grid.Row="1"
+                                             Grid.Column="1"
+                                             Margin="0,4,16,16"
+                                             FontFamily="Roboto-Regular"
+                                             FontSize="14"
+                                             LineBreakMode="TailTruncation"
+                                             LineHeight="{OnPlatform Android=1.5, Default=-1}"
+                                             Text="{Binding ReceivedTime}"
+                                             TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}" />
+                                    </Grid>
+                                </syncEffectsView:SfEffectsView>
+                            </DataTemplate>
+                        </listView:SfListView.ItemTemplate>
+                    </listView:SfListView>
+
+                    <!--  Separator between sections  -->
+                    <BoxView Grid.Row="1"
+               Margin="24,10,24,8"
+               Style="{DynamicResource HorizontalSeparatorStyle}" />
+
+                    <listView:SfListView Grid.Row="2"
+                           x:Name="EarlierList"
+                           Margin="0,10,0,0"
+                           AllowSwiping="True"
+                           AutoFitMode="Height"
+                           ScrollBarVisibility="Never"
+                           ItemSpacing="0" IsScrollingEnabled="False"
+                           ItemsSource="{Binding EarlierSocialNotifications}"
+                           SelectionBackground="Transparent"
+                           SelectionGesture="Tap"
+                           SelectionMode="Single"
+                           VerticalOptions="Fill">
+                        <listView:SfListView.HeaderTemplate>
+                            <DataTemplate>
+                                <Grid Margin="24,0,16,8">
+                                    <Label
+                                        FontFamily="Roboto-Medium"
+                                        FontSize="14"
+                                        HorizontalOptions="Start"
+                                        Text="Last 7 days"
+                                        TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}" />
+                                </Grid>
+                            </DataTemplate>
+                        </listView:SfListView.HeaderTemplate>
+
+                        <listView:SfListView.ItemTemplate>
+                            <DataTemplate x:DataType="local:SocialNotificationItem">
+                                <syncEffectsView:SfEffectsView Margin="0,0,0,0" TouchDownEffects="Ripple">
+                                    <Grid ColumnDefinitions="Auto, *"
+                                   ColumnSpacing="16"
+                                   RowDefinitions="Auto, Auto"
+                                   RowSpacing="0">
+
+                                        <!--  Profile image  -->
+                                        <Border Grid.RowSpan="2"
+                                         Margin="24,0,0,0"
+                                         HeightRequest="40"
+                                         WidthRequest="40"
+                                         StrokeShape="RoundRectangle 60"
+                                         StrokeThickness="0">
+                                            <Image BackgroundColor="Transparent" Source="{Binding ProfileImage}" />
+                                        </Border>
+
+                                        <!--  Notification detail  -->
+                                        <Label Grid.Row="0"
+                                        Grid.Column="1"
+                                        Margin="0,16,16,0"
+                                        FontFamily="Roboto-Medium"
+                                        FontSize="16"
+                                        LineHeight="{OnPlatform Android=1.25, Default=-1}"
+                                        LineBreakMode="TailTruncation"
+                                        Text="{Binding Name}"
+                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
+
+                                        <!--  Received time  -->
+                                        <Label Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="0,4,16,16"
+                                        FontFamily="Roboto-Regular"
+                                        FontSize="14"
+                                        LineBreakMode="TailTruncation"
+                                        LineHeight="{OnPlatform Android=1.5, Default=-1}"
+                                        Text="{Binding ReceivedTime}"
+                                        TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}" />
+                                    </Grid>
+                                </syncEffectsView:SfEffectsView>
+                            </DataTemplate>
+                        </listView:SfListView.ItemTemplate>
+                    </listView:SfListView>
+                </Grid>
+            </Border>
+
+            <Grid Padding="0"
+                     IsVisible="{OnPlatform WinUI=False, MacCatalyst=False, Android=True, iOS=True}"
+                   RowDefinitions="Auto,Auto,Auto">
 
                 <listView:SfListView Grid.Row="0"
-                                     x:Name="RecentList"
-                                     AllowSwiping="True"
-                                     AutoFitMode="Height"
-                                     ScrollBarVisibility="Never"
-                                     IsScrollingEnabled="False"
-                                     ItemSpacing="0"
-                                     ItemsSource="{Binding RecentSocialNotifications}"
-                                     SelectionBackground="Transparent"
-                                     SelectionGesture="Tap"
-                                     SelectionMode="Single"
-                                     ItemSize="20"
-                                     VerticalOptions="Fill">
+                                    x:Name="RecentListMobile"
+                                    AllowSwiping="True"
+                                    AutoFitMode="Height"
+                                    ScrollBarVisibility="Never"
+                                    IsScrollingEnabled="False"
+                                    ItemSpacing="0"
+                                    ItemsSource="{Binding RecentSocialNotifications}"
+                                    SelectionBackground="Transparent"
+                                    SelectionGesture="Tap"
+                                    SelectionMode="Single"
+                                    ItemSize="20" Margin="0,10,0,0"
+                                    VerticalOptions="Fill">
 
 
                     <listView:SfListView.HeaderTemplate>
                         <DataTemplate>
                             <Grid
-                                Margin="16,0,16,8"
-                                ColumnSpacing="0"
-                                RowSpacing="0">
+                               Margin="16,0,16,8"
+                               ColumnSpacing="0"
+                               RowSpacing="0">
 
                                 <Label
-                                    FontFamily="Roboto-Medium"
-                                    FontSize="14"
-                                    HorizontalOptions="Start"
-                                    Text="Recent"
-                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+                                   FontFamily="Roboto-Medium"
+                                   FontSize="14"
+                                   HorizontalOptions="Start"
+                                   Text="Today"
+                                   TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
                             </Grid>
                         </DataTemplate>
                     </listView:SfListView.HeaderTemplate>
 
                     <listView:SfListView.ItemTemplate>
                         <DataTemplate x:DataType="local:SocialNotificationItem">
-                            <Grid HeightRequest="70"
-                                  ColumnDefinitions="Auto, *"
-                                  ColumnSpacing="16"
-                                  RowDefinitions="Auto, Auto, Auto"
-                                  RowSpacing="0">
+                            <syncEffectsView:SfEffectsView Margin="0,0,0,0" TouchDownEffects="Ripple">
+                                <Grid HeightRequest="70"
+                                 ColumnDefinitions="Auto, *"
+                                 ColumnSpacing="16"
+                                 RowDefinitions="Auto, Auto, Auto"
+                                 RowSpacing="0">
 
-                                  <!--Profile image-->  
-                                <Border Grid.RowSpan="2"
-                                        Margin="16,0,0,0"
-                                        HeightRequest="44"
-                                        WidthRequest="44"
-                                        StrokeShape="RoundRectangle 60"
-                                        StrokeThickness="0">
-                                    <Image BackgroundColor="Transparent"
-                                           Source="{Binding ProfileImage}"/>
-                                </Border>
+                                    <!--Profile image-->
+                                    <Border Grid.RowSpan="2"
+                                       Margin="16,0,0,0"
+                                       HeightRequest="40"
+                                       WidthRequest="40"
+                                       StrokeShape="RoundRectangle 60"
+                                       StrokeThickness="0">
+                                        <Image BackgroundColor="Transparent"
+                                          Source="{Binding ProfileImage}"/>
+                                    </Border>
 
-                                  <!--Notification Detail-->  
-                                <Label
-                                    Grid.Row="0"
-                                    Grid.Column="1"
-                                    Margin="0,10,16,0"
-                                    FontFamily="Roboto-Regular"
-                                    FontSize="16"
-                                    LineHeight="{OnPlatform Android=1.25,
-                                                        Default=-1}"
-                                    LineBreakMode="TailTruncation"
-                                    Text="{Binding Name}"
-                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+                                    <!--Notification Detail-->
+                                    <Label
+                                   Grid.Row="0"
+                                   Grid.Column="1"
+                                   Margin="0,10,16,0"
+                                   FontFamily="Roboto-Regular"
+                                   FontSize="16"
+                                   LineHeight="{OnPlatform Android=1.25,
+                                                       Default=-1}"
+                                   LineBreakMode="TailTruncation"
+                                   Text="{Binding Name}"
+                                   TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
 
-                                  <!--Received Time-->  
-                                <Label
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    Margin="0,4,16,16"
-                                    FontFamily="Roboto-Regular"
-                                    FontSize="12"
-                                    LineBreakMode="TailTruncation"
-                                    LineHeight="{OnPlatform Android=1.5,
-                                                        Default=-1}"
-                                    Text="{Binding ReceivedTime}"
-                                    TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+                                    <!--Received Time-->
+                                    <Label
+                                   Grid.Row="1"
+                                   Grid.Column="1"
+                                   Margin="0,4,16,16"
+                                   FontFamily="Roboto-Regular"
+                                   FontSize="14"
+                                   LineBreakMode="TailTruncation"
+                                   LineHeight="{OnPlatform Android=1.5,
+                                                       Default=-1}"
+                                   Text="{Binding ReceivedTime}"
+                                   TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
 
-                                  <!--Seperator-->  
-                                <BoxView
-                                    Grid.Row="2"
-                                    Grid.ColumnSpan="2"
-                                    Style="{DynamicResource HorizontalSeparatorStyle}"/>
-
-                            </Grid>
+                                </Grid>
+                            </syncEffectsView:SfEffectsView>
                         </DataTemplate>
                     </listView:SfListView.ItemTemplate>
                 </listView:SfListView>
 
-                <listView:SfListView Grid.Row="1"
-                        Margin="0,20,0,0"
-                                     x:Name="EarlierList"
-                                     AllowSwiping="True"
-                                     AutoFitMode="Height"
-                                     ScrollBarVisibility="Never"
-                                     IsScrollingEnabled="False"
-                                     ItemSpacing="0"
-                                     ItemsSource="{Binding EarlierSocialNotifications}"
-                                     SelectionBackground="Transparent"
-                                     SelectionGesture="Tap"
-                                     SelectionMode="Single"
-                                     VerticalOptions="Fill">
+                <!--Seperator-->
+                <BoxView
+                                   Grid.Row="1"
+                                   Grid.ColumnSpan="1" Margin="16,10,16,8"
+                                   Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+                <listView:SfListView Grid.Row="2"
+                       Margin="0,10,0,0"
+                                    x:Name="EarlierListMobile"
+                                    AllowSwiping="True"
+                                    AutoFitMode="Height"
+                                    ScrollBarVisibility="Never"
+                                    IsScrollingEnabled="False"
+                                    ItemSpacing="0"
+                                    ItemsSource="{Binding EarlierSocialNotifications}"
+                                    SelectionBackground="Transparent"
+                                    SelectionGesture="Tap"
+                                    SelectionMode="Single"
+                                    VerticalOptions="Fill">
 
                     <listView:SfListView.HeaderTemplate>
                         <DataTemplate>
 
                             <Label
-                                Margin="16,0,16,8"
-                                FontFamily="Roboto-Medium"
-                                FontSize="14"
-                                HorizontalOptions="Start"
-                                Text="Earlier"
-                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+                               Margin="16,0,16,8"
+                               FontFamily="Roboto-Medium"
+                               FontSize="14"
+                               HorizontalOptions="Start"
+                               Text="Last 7 days"
+                               TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
 
                         </DataTemplate>
                     </listView:SfListView.HeaderTemplate>
 
                     <listView:SfListView.ItemTemplate>
                         <DataTemplate x:DataType="local:SocialNotificationItem">
-                            <Grid HeightRequest="70"
-                                  ColumnDefinitions="Auto, *"
-                                  ColumnSpacing="16"
-                                  RowDefinitions="Auto, Auto, Auto"
-                                  RowSpacing="0">
+                            <syncEffectsView:SfEffectsView Margin="0,0,0,0" TouchDownEffects="Ripple">
+                                <Grid HeightRequest="70"
+                                     ColumnDefinitions="Auto, *"
+                                     ColumnSpacing="16"
+                                     RowDefinitions="Auto, Auto, Auto"
+                                     RowSpacing="0">
 
-                                  <!--Profile image-->  
-                                <Border Grid.RowSpan="3"
-                                        Margin="16,0,0,0"
-                                        HeightRequest="44"
-                                        WidthRequest="44"
-                                        StrokeShape="RoundRectangle 60"
-                                        StrokeThickness="0">
-                                    <Image BackgroundColor="Transparent"
-                                           Source="{Binding ProfileImage}"/>
-                                </Border>
+                                    <!--Profile image-->
+                                    <Border Grid.RowSpan="3"
+                                       Margin="16,0,0,0"
+                                       HeightRequest="40"
+                                       WidthRequest="40"
+                                       StrokeShape="RoundRectangle 60"
+                                       StrokeThickness="0">
+                                       <Image BackgroundColor="Transparent" Source="{Binding ProfileImage}"/>
+                                    </Border>
 
-                                  <!--Notification Detail-->  
-                                <Label
-                                    Grid.Row="0"
-                                    Grid.Column="1"
-                                    Margin="0,16,16,0"
-                                    FontFamily="Roboto-Regular"
-                                    FontSize="16"
-                                    LineHeight="{OnPlatform Android=1.25,
-                                                        Default=-1}"
-                                    LineBreakMode="TailTruncation"
-                                    Text="{Binding Name}"
-                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+                                    <!--Notification Detail-->
+                                    <Label
+                                       Grid.Row="0"
+                                       Grid.Column="1"
+                                       Margin="0,16,16,0"
+                                       FontFamily="Roboto-Regular"
+                                       FontSize="16"
+                                       LineHeight="{OnPlatform Android=1.25,
+                                                           Default=-1}"
+                                       LineBreakMode="TailTruncation"
+                                       Text="{Binding Name}"
+                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
 
-                                  <!--Received Time-->  
-                                <Label
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    Margin="0,4,16,16"
-                                    FontFamily="Roboto-Regular"
-                                    FontSize="12"
-                                    LineBreakMode="TailTruncation"
-                                    LineHeight="{OnPlatform Android=1.5,
-                                                        Default=-1}"
-                                    Text="{Binding ReceivedTime}"
-                                    TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+                                    <!--Received Time-->
+                                    <Label
+                                       Grid.Row="1"
+                                       Grid.Column="1"
+                                       Margin="0,4,16,16"
+                                       FontFamily="Roboto-Regular"
+                                       FontSize="14"
+                                       LineBreakMode="TailTruncation"
+                                       LineHeight="{OnPlatform Android=1.5,
+                                                           Default=-1}"
+                                       Text="{Binding ReceivedTime}"
+                                       TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
 
-                                  <!--Seperator-->  
-                                <BoxView
-                                    Grid.Row="2"
-                                    Grid.ColumnSpan="2"
-                                    Style="{DynamicResource HorizontalSeparatorStyle}"/>
-
-                            </Grid>
+                                </Grid>
+                            </syncEffectsView:SfEffectsView>
                         </DataTemplate>
                     </listView:SfListView.ItemTemplate>
                 </listView:SfListView>
-
             </Grid>
-        </ScrollView>
-    </ContentView.Content>
+        </Grid>
+    </ScrollView>
 </ContentView>

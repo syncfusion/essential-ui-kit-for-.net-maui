@@ -26,8 +26,11 @@
                 <ResourceDictionary Source="Styles/SegmentedControlStyles.xaml"/>
                 <ResourceDictionary Source="Themes/DarkTheme.xaml"/>
                 <ResourceDictionary Source="Themes/LightTheme.xaml"/>
-                <syncTheme:SyncfusionThemeResourceDictionary />
-                <syncThemeToolkit:SyncfusionThemeResourceDictionary />
+                <syncTheme:SyncfusionThemeResourceDictionary>
+                    <Color x:Key="SfListViewHoverListViewItemBackground">Transparent</Color>
+                    <Color x:Key="SfListViewItemRippleBackground">Transparent</Color>
+                </syncTheme:SyncfusionThemeResourceDictionary>
+                <syncThemeToolkit:SyncfusionThemeResourceDictionary /> 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

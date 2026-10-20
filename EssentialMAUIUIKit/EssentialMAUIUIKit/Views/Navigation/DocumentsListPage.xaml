@@ -9,15 +9,50 @@
     <ContentView.BindingContext>
         <local:DocumentsViewModel/>
     </ContentView.BindingContext>
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style TargetType="listView:ListViewItem">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Background" Value="Transparent" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="PointerOver">
+                                <VisualState.Setters>
+                                    <Setter Property="Background" Value="Transparent" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="Background"
+                                            Value="{AppThemeBinding Light=#1A000000, Dark=#1AFFFFFF}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="Background" Value="Transparent" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
     <ContentView.Content>
 
-        <Grid RowDefinitions="{OnPlatform Default=*, MacCatalyst=Auto}"
+        <Grid RowDefinitions="*"
               ColumnSpacing="0"
               RowSpacing="0">
-            <Border StrokeShape="RoundRectangle 10"
-                    WidthRequest="{OnPlatform WinUI=550, MacCatalyst=550}"
+            <Border StrokeShape="RoundRectangle 8"
+                    Margin="0,24,0,24"
+                    StrokeThickness="1"
+                    Stroke="{AppThemeBinding Light= #E5E1E3, Dark=#474648}"
+                    MaximumWidthRequest="{OnPlatform WinUI=550, MacCatalyst=550}"
                     BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                    Margin="20"
                     IsVisible="{OnPlatform Android=False, iOS=False}">
                 <Grid>
 
@@ -27,81 +62,95 @@
                         ScrollBarVisibility="Never"
                         ItemSpacing="0"
                         ItemsSource="{Binding DocumentsList}"
-                        SelectionBackground="{AppThemeBinding Light={DynamicResource SelectionBackgroundLight}, Dark={DynamicResource SelectionBackgroundDark}}"
+                        SelectionMode="None"
+                        SelectionBackground="Transparent"
                         SelectionGesture="Tap"
-                        SelectionMode="Single"
                         VerticalOptions="Fill">
 
                         <listView:SfListView.ItemTemplate>
                             <DataTemplate x:DataType="local:Document">
-                                <ViewCell>
-                                    <StackLayout Spacing="0">
+                                <StackLayout Spacing="0">
 
-                                        <Grid
+                                    <Grid
                                             ColumnDefinitions="Auto, Auto, Auto, *"
                                             ColumnSpacing="0"
                                             HeightRequest="72"
                                             RowDefinitions="Auto, Auto, Auto"
                                             RowSpacing="0">
 
-                                            <!--  Document Icon  -->
-                                            <Image
+                                        <!--  Document Icon  -->
+                                        <Image
                                                 Grid.RowSpan="3"
-                                                Margin="17,0"
+                                                Margin="24,0,12,0"
                                                 Source="{Binding DocumentType}"
                                                 VerticalOptions="Center"/>
 
-                                            <!--  Document Name  -->
-                                            <Label
+                                        <!--  Document Name  -->
+                                        <Label
                                                 Grid.Column="1"
                                                 Grid.ColumnSpan="3"
-                                                Margin="0,13,0,0"
+                                                Margin="0,12,0,0"
                                                 FontFamily="Roboto-Regular"
                                                 FontSize="16"
                                                 HeightRequest="24"
                                                 Text="{Binding DocumentName}"
                                                 TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
 
-                                            <!--  Time  -->
-                                            <Label
+                                        <!--  Document Size  -->
+                                        <Label
                                                 Grid.Row="1"
                                                 Grid.Column="1"
+                                                
+                                                FontFamily="Roboto-Regular"
+                                                FontSize="14"
+                                                Margin="0,0,8,14"
+                                                HeightRequest="21"
+                                                Text="{Binding DocumentSize}"
+                                                TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                                        <Label
+                                                Grid.Row="1"
+                                                Grid.Column="2"
+                                                Margin="0,0,8,14"
+                                                FontFamily="Roboto-Regular"
+                                                FontSize="14"
+                                                HeightRequest="21"
+                                                Text="|"
+                                                TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                                        <Label
+                                                Grid.Row="1"
+                                                Grid.Column="3"
                                                 Margin="0,0,0,14"
                                                 FontFamily="Roboto-Regular"
                                                 FontSize="14"
                                                 HeightRequest="21"
                                                 Text="{Binding Time}"
                                                 TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
-                                            <!--  Document Size  -->
-                                            <Label
-                                                Grid.Row="1"
-                                                Grid.Column="2"
-                                                Margin="24,0,0,14"
-                                                FontFamily="Roboto-Regular"
-                                                FontSize="14"
-                                                HeightRequest="21"
-                                                Text="{Binding DocumentSize}"
-                                                TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
 
-                                            <!--  More Button  -->
-                                            <buttons:SfButton
-                                                Grid.RowSpan="3"
-                                                Grid.Column="3"
-                                                Margin="15,0,15,0"
-                                                CornerRadius="4"
-                                                HorizontalOptions="End"
-                                                Style="{DynamicResource IconButtonStyle}"
-                                                Text="{DynamicResource Menu}"/>
+                                        <!--  More Button  -->
 
-                                            <!--  Seperator  -->
-                                            <BoxView
+                                        <buttons:SfButton
+                                                    x:Name="MenuButton"
+                                                    Grid.RowSpan="3"
+                                                    Grid.Column="3"
+                                                    Margin="15,0,15,0"
+                                                    CornerRadius="50"
+                                                    HorizontalOptions="End"
+                                                    TextColor="{AppThemeBinding Light=#474648, Dark=#C9C6C8}"
+                                                    Style="{DynamicResource IconButtonStyle}"
+                                                    Text="{DynamicResource More}">
+                                        </buttons:SfButton>
+
+
+                                        <!--  Seperator  -->
+                                        <BoxView
                                                 Grid.Row="2"
                                                 Grid.ColumnSpan="4"
                                                 Style="{DynamicResource HorizontalSeparatorStyle}"/>
 
-                                        </Grid>
-                                    </StackLayout>
-                                </ViewCell>
+                                    </Grid>
+                                </StackLayout>
                             </DataTemplate>
                         </listView:SfListView.ItemTemplate>
                     </listView:SfListView>
@@ -117,32 +166,31 @@
                     ScrollBarVisibility="Never"
                     ItemSpacing="0"
                     ItemsSource="{Binding DocumentsList}"
-                    SelectionBackground="{AppThemeBinding Light={DynamicResource SelectionBackgroundLight}, Dark={DynamicResource SelectionBackgroundDark}}"
+                    SelectionMode="None"
+                    SelectionBackground="Transparent"
                     SelectionGesture="Tap"
-                    SelectionMode="Single"
                     VerticalOptions="Fill">
 
                     <listView:SfListView.ItemTemplate>
                         <DataTemplate x:DataType="local:Document">
-                            <ViewCell>
-                                <StackLayout Spacing="0">
+                            <StackLayout Spacing="0">
 
-                                    <Grid
+                                <Grid
                                         ColumnDefinitions="Auto, Auto, Auto, *"
                                         ColumnSpacing="0"
                                         HeightRequest="72"
                                         RowDefinitions="Auto, Auto, Auto"
                                         RowSpacing="0">
 
-                                        <!--  Document Icon  -->
-                                        <Image
+                                    <!--  Document Icon  -->
+                                    <Image
                                             Grid.RowSpan="3"
                                             Margin="17,0"
                                             Source="{Binding DocumentType}"
                                             VerticalOptions="Center"/>
 
-                                        <!--  Document Name  -->
-                                        <Label
+                                    <!--  Document Name  -->
+                                    <Label
                                             Grid.Column="1"
                                             Grid.ColumnSpan="3"
                                             Margin="0,13,0,0"
@@ -152,46 +200,57 @@
                                             Text="{Binding DocumentName}"
                                             TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
 
-                                        <!--  Time  -->
-                                        <Label
+                                    <!--  Document Size  -->
+                                    <Label
                                             Grid.Row="1"
                                             Grid.Column="1"
-                                            Margin="0,0,0,14"
-                                            FontFamily="Roboto-Regular"
-                                            FontSize="14"
-                                            HeightRequest="21"
-                                            Text="{Binding Time}"
-                                            TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
-                                        <!--  Document Size  -->
-                                        <Label
-                                            Grid.Row="1"
-                                            Grid.Column="2"
-                                            Margin="24,0,0,14"
+                                            Margin="0,0,6,14"
                                             FontFamily="Roboto-Regular"
                                             FontSize="14"
                                             HeightRequest="21"
                                             Text="{Binding DocumentSize}"
                                             TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
 
-                                        <!--  More Button  -->
-                                        <buttons:SfButton
+                                    <Label
+                                             Grid.Row="1"
+                                             Grid.Column="2"
+                                             Margin="0,0,6,14"
+                                             FontFamily="Roboto-Regular"
+                                             FontSize="14"
+                                             HeightRequest="21"
+                                             Text="|"
+                                             TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                                    <!--  Time  -->
+                                    <Label
+                                            Grid.Row="1"
+                                            Grid.Column="3"
+                                            Margin="0,0,0,14"
+                                            FontFamily="Roboto-Regular"
+                                            FontSize="14"
+                                            HeightRequest="21"
+                                            Text="{Binding Time}"
+                                            TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                                    <!--  More Button  -->
+                                    <buttons:SfButton
+                                            x:Name="MenuButton"
                                             Grid.RowSpan="3"
                                             Grid.Column="3"
-                                            Margin="15,0,15,0"
-                                            CornerRadius="4"
+                                            Margin="15,0,5,0"
+                                            CornerRadius="50"
                                             HorizontalOptions="End"
+                                            TextColor="{AppThemeBinding Light=#474648, Dark=#C9C6C8}"
                                             Style="{DynamicResource IconButtonStyle}"
-                                            Text="{DynamicResource Menu}"/>
+                                            Text="{DynamicResource More}"/>
+                                </Grid>
 
-                                        <!--  Seperator  -->
-                                        <BoxView
-                                            Grid.Row="2"
-                                            Grid.ColumnSpan="4"
-                                            Style="{DynamicResource HorizontalSeparatorStyle}"/>
-
-                                    </Grid>
-                                </StackLayout>
-                            </ViewCell>
+                                <!--  Seperator  -->
+                                <BoxView
+                                         Grid.Row="2"
+                                         Grid.ColumnSpan="4"
+                                         Style="{DynamicResource HorizontalSeparatorStyle}"/>
+                            </StackLayout>
                         </DataTemplate>
                     </listView:SfListView.ItemTemplate>
                 </listView:SfListView>

@@ -1,11 +1,12 @@
 ﻿using EssentialMAUIUIKit.ViewModel;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Input;
 
 namespace EssentialMAUIUIKit
 {
-    public class RoomBookingPageViewModel : BaseViewModel
+    public class RoomBookingPageViewModel : BaseViewModel, INotifyPropertyChanged
     {
         #region Fields
 
@@ -100,23 +101,28 @@ namespace EssentialMAUIUIKit
             {
                new RoomDetail
                {
-                   Icon = "\ue704",
-                   Facility = "Wi-Fi",
+                   Icon = "\ue718",
+                   Facility = "Breakfast",
                },
                new RoomDetail
                {
-                   Icon = "\ue74e",
-                   Facility = "Kitchen",
+                   Icon = "\ue716",
+                   Facility = "Car parking",
                },
                new RoomDetail
                {
-                   Icon = "\ue740",
-                   Facility = "Parking",
-               },
-               new RoomDetail
-               {
-                   Icon = "\ue74c",
+                   Icon = "\ue715",
                    Facility = "Gym",
+               },
+               new RoomDetail
+               {
+                   Icon = "\ue717",
+                   Facility = "Dinner",
+               },
+               new RoomDetail
+               {
+                   Icon = "\ue72A",
+                   Facility = "Music Party",
                },
             };
 
@@ -259,7 +265,10 @@ namespace EssentialMAUIUIKit
 
             set
             {
-                this.SetProperty(ref this.isFavourite, value);
+                if (this.SetProperty(ref this.isFavourite, value))
+                {
+                    OnPropertyChanged(nameof(IsFavourite));
+                }
             }
         }
 
@@ -408,6 +417,24 @@ namespace EssentialMAUIUIKit
         }
 
         /// <summary>
+        /// Gets the computed price for the sticky footer (per-night cost
+        /// multiplied by total days). Kept as a string for direct binding.
+        /// </summary>
+        public string FooterPrice
+        {
+            get
+            {
+                var totalCost = (this.RoomDetail?.Cost ?? 0) * (this.RoomDetail?.TotalDays ?? 1);
+                return $"${totalCost:0.00}";
+            }
+        }
+
+        /// <summary>
+        /// Gets the stay summary for the sticky footer.
+        /// </summary>
+        public string FooterSummary => "2 adults, 1 bedroom, 2 nights";
+
+        /// <summary>
         /// Gets or sets a value indicating whether the drop down is open or not.
         /// </summary>
         public bool IsDropDownOpen
@@ -551,6 +578,10 @@ namespace EssentialMAUIUIKit
             }
         }
 
+        private void OnPropertyChanged(string propertyName)
+        {
+            this.NotifyPropertyChanged(propertyName);
+        }
 
 
         /// <summary>
@@ -592,15 +623,17 @@ namespace EssentialMAUIUIKit
         #endregion
     }
 
-    public class RoomDetail : BaseViewModel
+    public class RoomDetail : BaseViewModel, INotifyPropertyChanged
     {
         #region Fields
 
         private string? imagePath;
 
+        private bool isFavourite;
+
         private int cost;
 
-        private string? selectedRanges = $"{DateTime.Now:dd MMM yyyy} - {DateTime.Now.AddDays(2):dd MMM yyy}";
+        private string? selectedRanges = $"{DateTime.Now:dd MMM yyyy} - {DateTime.Now.AddDays(2):dd MMM yyyy}";
 
         private IReadOnlyCollection<RoomBookingReview> reviews = new ObservableCollection<RoomBookingReview>();
 
@@ -615,6 +648,15 @@ namespace EssentialMAUIUIKit
         {
             get { return App.ImageServerPath + this.imagePath; }
             set { this.imagePath = value; }
+        }
+
+        public bool IsFavourite
+        {
+            get => isFavourite;
+            set
+            {
+                this.SetProperty(ref this.isFavourite, value, nameof(IsFavourite));
+            }
         }
 
         /// <summary>
@@ -731,12 +773,14 @@ namespace EssentialMAUIUIKit
 
             set
             {
-                this.reviews = value;
-                this.NotifyPropertyChanged(nameof(this.Reviews));
+                this.SetProperty(ref this.reviews, value);
             }
         }
 
-        #endregion    
+        #endregion
+
+        private void OnPropertyChanged(string propertyName) =>
+            this.NotifyPropertyChanged(propertyName);
     }
 
     public class RoomBookingReview

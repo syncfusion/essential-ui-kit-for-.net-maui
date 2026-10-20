@@ -10,6 +10,11 @@ namespace EssentialMAUIUIKit
         public ObservableCollection<EventList> PopularItems { get; set; }
         public ObservableCollection<EventList> UpcomingItems { get; set; }
 
+        /// <summary>
+        /// Gets or sets the index of the currently selected tab. Bound to SfTabView.SelectedIndex.
+        /// </summary>
+        public int SelectedIndex { get; set; }
+
         public EventListViewModel()
         {
             EventItems = new ObservableCollection<EventList>();

@@ -5,7 +5,6 @@ namespace EssentialMAUIUIKit.Views.History
         public TransactionHistoryPage()
         {
             InitializeComponent();
-            BindingContext = this.viewModel;
         }
     }
 }

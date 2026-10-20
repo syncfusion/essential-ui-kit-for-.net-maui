@@ -9,132 +9,216 @@
     <ContentView.BindingContext>
         <local:NavigationListViewModel/>
     </ContentView.BindingContext>
+    <ContentView.Resources>
+
+        <Style TargetType="listView:ListViewItem">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                    Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                    Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                    Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                    Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+
+
     <ContentView.Content>
+        
+        <Grid RowDefinitions="*">
 
-        <Grid RowDefinitions="Auto, *">
+            <listView:SfListView
+                x:Name="navigationList"
+                Padding="10"
+                
+                AutoFitMode="Height"
+                ScrollBarVisibility="Never"
+                ItemSpacing="0"
+                ItemsSource="{Binding NavigationList}"
+                SelectionMode="None"
+                SelectionBackground="Transparent">
 
-            <Grid Grid.Row="1"
-                  Padding="10">
+                <listView:SfListView.ItemTemplate>
+                    <DataTemplate x:DataType="local:NavigationItem">
+                        <!--  Outer card border with shadow  -->
+                        <Border
+                                Margin="8"
+                                BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                Stroke="{AppThemeBinding Light=#E5E7EB, Dark=#2A2A2A}"
+                                StrokeThickness="1"
+                                HeightRequest="274"
+                                StrokeShape="RoundRectangle 8"
+                                HorizontalOptions="Fill"
+                                VerticalOptions="Fill">
 
-                <listView:SfListView
-                    x:Name="navigationList"
-                    AutoFitMode="Height"
-                    ScrollBarVisibility="Never"
-                    ItemSpacing="10"
-                    ItemsSource="{Binding NavigationList}"
-                    SelectionBackground="Transparent">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnItemTapped" />
+                            </Border.GestureRecognizers>
 
-                    <listView:SfListView.ItemTemplate>
-                        <DataTemplate x:DataType="local:NavigationItem">
-                            <ViewCell>
-                                <!--  View of each tile item  -->
-                                <Border
-                                    Margin="5,2,5,5"
-                                    Padding="0"
-                                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                    Stroke="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                    StrokeThickness="1"
-                                    StrokeShape="RoundRectangle 4"
-                                    HorizontalOptions="Fill"
-                                    VerticalOptions="Fill">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroupList>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal">
+                                            <VisualState.Setters>
+                                                <Setter Property="Opacity" Value="1" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <VisualState.Setters>
+                                                <Setter Property="Opacity" Value="0.6" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateGroupList>
+                            </VisualStateManager.VisualStateGroups>
 
-                                    <Border
-                                        Stroke="Transparent"
-                                        StrokeThickness="0"
-                                        StrokeShape="RoundRectangle 4,4,4,4">
-                                        <Grid
-                                            BackgroundColor="{DynamicResource PlaceholderColor}"
-                                            ColumnSpacing="0"
-                                            RowDefinitions="Auto, Auto"
+                            <Border.Shadow>
+                                <Shadow
+                                            Offset="0,1"
+                                            Radius="3"
+                                            Opacity="0.15"
+                                            Brush="{AppThemeBinding Light=#000000, Dark=#1C1B1D}" />
+                            </Border.Shadow>
+
+                            <!--  Card layout: image on top, content below  -->
+                            <Grid
+                                        BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                        RowDefinitions="150, *"
+                                        RowSpacing="0">
+
+                                <!--  Food image  -->
+                                <Image
+                                            Grid.Row="0"
+                                            Aspect="AspectFill"
+                                            WidthRequest="{OnPlatform WinUI=310, MacCatalyst=310}"
+                                            BackgroundColor="{DynamicResource Gray-200}"
+                                            HeightRequest="154">
+                                    <Image.Source>
+                                        <UriImageSource
+                                                    CacheValidity="14"
+                                                    CachingEnabled="true"
+                                                    Uri="{Binding ItemImage}"/>
+                                    </Image.Source>
+                                </Image>
+
+                                <!--  Content area: title, description, footer  -->
+                                <Grid
+                                            Grid.Row="1"
+                                            Padding="14,12,0,14"
+                                            RowDefinitions="Auto, Auto, Auto"
                                             RowSpacing="0">
 
-                                            <!--  Image of an item  -->
-                                            <Image
-                                                Aspect="AspectFill"
-                                                BackgroundColor="{DynamicResource Gray-200}"
-                                                HeightRequest="254">
-                                                <Image.Source>
-                                                    <UriImageSource
-                                                        CacheValidity="14"
-                                                        CachingEnabled="true"
-                                                        Uri="{Binding ItemImage}"/>
-                                                </Image.Source>
-                                            </Image>
-                                            <StackLayout
+                                    <!--  Item name  -->
+                                    <Label
+                                                Grid.Row="0"
+                                                Text="{Binding ItemName}"
+                                                FontFamily="Roboto-Medium"
+                                                FontSize="14"
+                                                MaxLines="1"
+                                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                HorizontalOptions="Fill"/>
+
+                                    <!--  Item description: max 2 lines with tail truncation  -->
+                                    <Label
                                                 Grid.Row="1"
-                                                Padding="16"
-                                                HorizontalOptions="Fill"
-                                                Spacing="0"
-                                                VerticalOptions="Fill">
+                                                Margin="0,12,14,4"
+                                                Text="{Binding ItemDescription}"
+                                                FontFamily="Roboto-Regular"
+                                                FontSize="12"
+                                                MaxLines="2"
+                                                HeightRequest="32"
+                                                VerticalOptions="End"
+                                                LineBreakMode="TailTruncation"
+                                                LineHeight="{OnPlatform Android=1.25, Default=-1}"
+                                                TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                                HorizontalOptions="Fill"/>
 
-                                                <!--  Name of an item  -->
-                                                <Label
-                                                    HorizontalOptions="Start"
-                                                    Style="{DynamicResource TitleLabelStyle}"
-                                                    Text="{Binding ItemName}"/>
+                                    <!--  Footer row: rating badge (left) + arrow (right)  -->
+                                    <Grid
+                                                Grid.Row="2"
+                                                ColumnDefinitions="Auto,*">
 
-                                                <!--  Description about an item  -->
-                                                <Label
-                                                    Margin="0,4,0,8"
-                                                    FontSize="12"
-                                                    HorizontalOptions="Start"
-                                                    HorizontalTextAlignment="Start"
-                                                    LineHeight="{OnPlatform Android=1.25,
-                                    Default=-1}"
-                                                    Style="{DynamicResource DescriptionLabelStyle}"
-                                                    Text="{Binding ItemDescription}"/>
-                                                <Grid ColumnDefinitions="Auto,Auto,*"
-                                                      HorizontalOptions="Fill"
-                                                      VerticalOptions="End">
-
-                                                    <!--  Average rating from the overall rating  -->
-                                                    <Label
-                                                        Margin="0,0,4,0"
-                                                        FontFamily="FontIcons"
-                                                        FontSize="16"
-                                                        Text="{DynamicResource Rating}"
-                                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                        <!--  Purple pill rating badge  -->
+                                        <Border
+                                                    Grid.Column="0"
+                                                    Padding="6,4"
+                                                    BackgroundColor="#7633DA"
+                                                    StrokeShape="RoundRectangle 16"
+                                                    StrokeThickness="0"
+                                                    VerticalOptions="Center">
+                                            <HorizontalStackLayout
+                                                        Spacing="4"
                                                         VerticalOptions="Center"
-                                                        WidthRequest="16"/>
-                                                    <Label Grid.Column="1"
-                                                           FontFamily="Roboto-Regular"
-                                                           FontSize="12"
-                                                           LineHeight="{OnPlatform Android=1.5,
-                                        Default=-1}"
-                                                           Text="{Binding ItemRating}"
-                                                           TextColor="{DynamicResource Gray-700}"
-                                                           VerticalOptions="Center">
+                                                        HorizontalOptions="Center">
+                                                <Label
+                                                            Text="&#xE71E;" 
+                                                            FontFamily="UIKitIcons"
+                                                            FontSize="10"
+                                                            TextColor="White"
+                                                            Margin="0,1,0,0"/>
+                                                <Label
+                                                            Text="{Binding ItemRating, StringFormat='{0:F1}'}"
+                                                            FontFamily="Roboto-Medium"
+                                                            FontSize="11"
+                                                            TextColor="White"
+                                                            Padding="0,0,2,0"/>
+                                            </HorizontalStackLayout>
+                                        </Border>
 
-                                                    </Label>
+                                        <!--  Arrow navigation button  -->
+                                        <button:SfButton
+                                                    Grid.Column="1"
+                                                    Background="Transparent"
+                                                    CornerRadius="30"
+                                                    Margin="0,0,4,0"
+                                                    WidthRequest="40"
+                                                    HeightRequest="40"
+                                                    FontSize="16"
+                                                    HorizontalOptions="End"
+                                                    VerticalOptions="Center"
+                                                    Text="&#xE709;" 
+                                                    FontFamily="UIKitIcons"
+                                                    TextColor="{AppThemeBinding Light={DynamicResource ContentTextColorLight}, Dark={DynamicResource ContentTextColorDark}}" />
 
-                                                    <!--  Navigation icon  -->
-                                                    <button:SfButton Grid.Column="2"
-                                                                     Background="Transparent"
-                                                                     CornerRadius="4"
-                                                                     FontFamily="FontIcons"
-                                                                     FontSize="14"
-                                                                     HorizontalOptions="End"
-                                                                     Text="{DynamicResource ArrowRight}"
-                                                                     TextColor="{DynamicResource Gray-600}"
-                                                                     VerticalOptions="Center">
-                                                    </button:SfButton>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </listView:SfListView.ItemTemplate>
 
-                                                </Grid>
-                                            </StackLayout>
-                                        </Grid>
-                                    </Border>
+                <!--  Grid layout: 1 col on phone, 2 on tablet, 4 on desktop  -->
+                <listView:SfListView.ItemsLayout>
+                    <listView:GridLayout SpanCount="{OnIdiom Phone=1, Tablet=2, Desktop=4}"/>
+                </listView:SfListView.ItemsLayout>
 
-                                </Border>
-                            </ViewCell>
-                        </DataTemplate>
-                    </listView:SfListView.ItemTemplate>
-
-                    <!--  Span count to specify in the different layouts  -->
-                    <listView:SfListView.ItemsLayout>
-                        <listView:GridLayout SpanCount="{OnIdiom Phone=1, Tablet=2, Desktop=3}"/>
-                    </listView:SfListView.ItemsLayout>
-                </listView:SfListView>
-            </Grid>
+            </listView:SfListView>
 
         </Grid>
 

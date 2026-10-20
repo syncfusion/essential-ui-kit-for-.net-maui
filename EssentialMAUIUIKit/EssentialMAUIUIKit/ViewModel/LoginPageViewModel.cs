@@ -27,13 +27,13 @@ namespace EssentialMAUIUIKit
 
         [Display(Name = "Email")]
         [DataFormDisplayOptions(ColumnSpan = 3)]
-        [EmailAddress(ErrorMessage = "Enter your email")]
+        [Required(ErrorMessage = "Enter your Email")]
         public string Email { get; set; }
 
         [Display(Name = "Password")]
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Enter the password")]
         [DataFormDisplayOptions(ColumnSpan = 3)]
+        [Required(ErrorMessage = "Enter your Password")]
         public string Password { get; set; }
     }
 }

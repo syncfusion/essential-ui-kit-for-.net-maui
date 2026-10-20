@@ -125,7 +125,26 @@ namespace EssentialMAUIUIKit
                         "Action Figures",
                         "Outdoor Play"
                     }
-                }
+                },
+                new CategoryItem
+                {
+                    Icon = "Electronics.png",
+                    Name = "Laptops",
+                    SubCategories = new List<string>
+                    {
+                        "Laptops",
+                    }
+                },
+                 new CategoryItem
+                {
+                    Icon = "Fashion.png",
+                    Name = "Bags",
+                    SubCategories = new List<string>
+                    {
+                        "Hand Bags",
+                        "School Bags",
+                    }
+                },
             };
         }
     }
@@ -143,8 +162,4 @@ namespace EssentialMAUIUIKit
         public List<string>? SubCategories { get; set; }
     }
 
-    public class CategoryTilesRoot
-    {
-        public List<CategoryItem>? Categories { get; set; }
-    }
 }

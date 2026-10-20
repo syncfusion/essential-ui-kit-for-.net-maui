@@ -1,57 +1,195 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="EssentialMAUIUIKit.Views.AboutUs.AboutUsSimplePage"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit">
-    <ContentView.BindingContext>
-        <local:AboutUsViewModel x:Name="viewModel"/>
-    </ContentView.BindingContext>
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EssentialMAUIUIKit.Views.AboutUs.AboutUsSimplePage"
+    xmlns:sfavatar="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+    xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+    xmlns:local="clr-namespace:EssentialMAUIUIKit" x:DataType="local:AboutUsViewModel">
+    <ContentView.Resources>
+        <!--  VSM for nav SfButtons: transparent by default, subtle highlight on hover/press  -->
+        <Style x:Key="NavButtonStyle" TargetType="buttons:SfButton">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="CornerRadius" Value="0" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Background" Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+
+        </Style>
+        <ResourceDictionary>
+            <x:String x:Key="WavyDesignPath">M479.796 340.892C479.307 341.319 478.858 341.735 478.38 342.139C476.614
+               343.637 474.765 344.989 472.847 346.187C462.797 352.542 450.407 355.646 438.341 357.755C411.277 362.488
+               383.646 363.407 356.133 364.309C281.793 366.758 207.272 369.2 133.113 363.56C103.812 361.334 73.8672
+               357.609 47.3161 346.187C43.5103 344.554 39.7794 342.754 36.1233 340.786C28.725 336.797 21.6196 331.941
+               15.7107 326.143C10.1582 320.707 5.65574 314.463 2.96499 307.364C-2.64605 292.58 0.323061 275.974 6.73009
+               261.483C9.39107 255.621 12.392 249.99 15.7107 244.631C20.6576 236.472 26.1123 228.547 31.0885
+               220.394C48.7958 191.411 60.3499 154.744 44.0052 125.018C39.3073 116.478 32.5194 108.981 28.6908
+               100.066C23.8074 88.6613 24.1834 75.9976 25.7363 63.6971C25.9382 62.1352 26.1514 60.5888 26.3761
+               59.0581C29.0277 40.8182 34.0186 21.1667 49.4062 9.78C65.3896 -2.0519 88.0877 -1.45445 107.924
+               2.75115C138.773 9.35827 167.228 23.1114 195.987 35.529C224.745 47.9467 254.832 59.2924 286.437
+               60.5107C314.346 61.5885 346.899 53.5229 365.421 32.5593C383.412 12.1991 417.23 10.6469 441.603
+               22.9474C458.333 31.3879 470.815 46.5936 476.08 63.6971C477.146 67.1309 477.913 70.6877 478.37
+               74.3107C478.792 77.6218 478.929 80.9762 478.78 84.321C478.707 85.9727 478.565 87.6069 478.37
+               89.2236C474.297 122.974 444.982 149.596 427.162 179.743C418.455 194.469 412.307 212.158 418.294
+               228.038C427.426 252.234 459.183 260.839 478.36 278.844C481.969 282.121 485.146 286.031 487.785
+               290.442C497.088 306.468 493.655 328.111 479.796 340.892Z</x:String>
+        </ResourceDictionary>
+    </ContentView.Resources>
     <ContentView.Content>
-        <Grid
-            ColumnSpacing="0"
-            RowSpacing="0">
-            <ScrollView
-                HorizontalOptions="Center"
+        <Grid ColumnSpacing="0" RowSpacing="0">
+            <!-- WINDOWS AND MAC VIEW -->
+            <ScrollView IsVisible="{OnIdiom Phone=False,  Default=true}" HorizontalOptions="Fill"
+                VerticalOptions="Fill" VerticalScrollBarVisibility="Never">
+                <StackLayout HorizontalOptions="Fill" Spacing="0" VerticalOptions="Start">
+                    <!--  NAVBAR AT TOP  -->
+                    <StackLayout IsVisible="{OnIdiom Phone=False, Default=true}" HorizontalOptions="Fill"
+                        Spacing="0" Grid.ColumnSpan="3" Grid.Row="0" VerticalOptions="Start">
+                        <Grid
+                            Background="{AppThemeBinding Light={DynamicResource BackgroundColorLight} ,Dark={DynamicResource BackgroundColorDark}}"
+                            ColumnDefinitions="*,Auto" HeightRequest="60">
+                            <!--  Navigation Items (Right Side)  -->
+                            <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
+                                <HorizontalStackLayout Padding="0,10,8,10">
+
+                                    <buttons:SfButton Text="Home" Style="{StaticResource NavButtonStyle}"
+                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                        FontFamily="Roboto-Medium" FontSize="14" HeightRequest="40" WidthRequest="58"
+                                        CornerRadius="0">
+
+                                    </buttons:SfButton>
+
+
+                                    <!--  About Button  -->
+                                    <buttons:SfButton Text="About Us" Style="{StaticResource NavButtonStyle}"
+                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                        FontFamily="Roboto-Medium" FontSize="14" Margin="4,0" HeightRequest="40"
+                                        WidthRequest="79" CornerRadius="0" />
+                                    <!--  Contact Button  -->
+                                    <buttons:SfButton Text="Contact Us" Style="{StaticResource NavButtonStyle}"
+                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                        FontFamily="Roboto-Medium" FontSize="14" HeightRequest="40" WidthRequest="98"
+                                        CornerRadius="0" />
+
+                                </HorizontalStackLayout>
+
+                                <Border WidthRequest="40" HeightRequest="40" StrokeThickness="0"
+    StrokeShape="RoundRectangle 50">
+                                    <buttons:SfButton Style="{StaticResource NavButtonStyle}">
+                                        <buttons:SfButton.Content>
+                                            <DataTemplate>
+                                                <Label Text="&#xE700;" FontFamily="UIKitIcons" VerticalOptions="Center"
+                    FontSize="20" HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center" HeightRequest="22" WidthRequest="22" />
+                                            </DataTemplate>
+                                        </buttons:SfButton.Content>
+
+                                    </buttons:SfButton>
+                                </Border>
+                                <!--  Profile Image  -->
+                                <Border StrokeThickness="0" Padding="0,6,24,6" BackgroundColor="Transparent"
+                                x:Name="ProfileAvatarBorder">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="ProfileButton_Tapped" />
+                                    </Border.GestureRecognizers>
+                                    <sfavatar:SfAvatarView ContentType="Custom" ImageSource="profileavatar.png"
+                                    AvatarShape="Circle" AvatarSize="Small" />
+                                </Border>
+                            </HorizontalStackLayout>
+                        </Grid>
+                        <!--  SEPARATOR LINE  -->
+                        <BoxView BackgroundColor="{AppThemeBinding Light=#E5E1E3, Dark=#474648}" HeightRequest="1"
+                            HorizontalOptions="Fill" />
+                    </StackLayout>
+
+                    <!--  MAIN CONTENT  -->
+                    <StackLayout HorizontalOptions="Center" Spacing="0" VerticalOptions="Center">
+                        <!--  SVG PATH WITH AVATARS ON TOP  -->
+                        <Grid HorizontalOptions="Center" VerticalOptions="Center"
+                            Margin="{OnIdiom Desktop='0,54,0,62', Phone='0,77,0,64'}">
+                            <!--  SVG WAVY DESIGN (Background)  -->
+                            <Path Data="{StaticResource WavyDesignPath}"
+                                Fill="{AppThemeBinding Light=#F7EDFF, Dark=#35303C}" Opacity="0.7"
+                                HorizontalOptions="Fill" VerticalOptions="Fill" />
+                            <!--  3 GROUPED AVATAR IMAGES (On Top)  -->
+                            <Grid HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="367"
+                                WidthRequest="493">
+                                <!--  First Avatar  -->
+                                <sfavatar:SfAvatarView ContentType="Custom" ImageSource="middle3.jpg"
+                                    HeightRequest="218" Margin="65,177,310,0" WidthRequest="118" ZIndex="3"
+                                    CornerRadius="100" />
+                                <!--  Second Avatar  -->
+                                <sfavatar:SfAvatarView ContentType="Custom" ImageSource="middle1.jpg"
+                                    Margin="152,49,161,29" HeightRequest="289" ZIndex="1" WidthRequest="180"
+                                    CornerRadius="100" />
+                                <!--  Third Avatar  -->
+                                <sfavatar:SfAvatarView ContentType="Custom" ImageSource="middle2.jpg"
+                                    Margin="285,14,90,135" HeightRequest="218" ZIndex="3" WidthRequest="118"
+                                    CornerRadius="100" />
+                            </Grid>
+                        </Grid>
+                        <!--  Product title  -->
+                        <Label LineHeight="{OnPlatform Android=1.25, Default=1.22}" FontSize="36"
+                            FontFamily="Roboto-Regular" Style="{DynamicResource TitleLabelStyle}" Padding="0"
+                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                            HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="About Us"
+                            Margin="0,16,0,8" />
+                        <!--  Product description  -->
+                        <Label Margin="{OnPlatform Android='32,0,32,56' , Default='110,0,110,36'}"
+                            Style="{DynamicResource DescriptionLabelStyle}" Padding="0"
+                            TextColor="{AppThemeBinding Light={DynamicResource ContentTextColorLight}, Dark={DynamicResource ContentTextColorDark}}"
+                            HorizontalTextAlignment="Center" FontSize="16" LineHeight="1.5" CharacterSpacing="0.5"
+                            FontFamily="Roboto-Regular" HeightRequest="{OnPlatform Android=202, Default=138}"
+                            Text="We are passionate about [industry/sector focus], driven by a commitment to quality, innovation, and customer satisfaction. Since our founding in [1996], we have dedicated ourselves to delivering exceptional products/services that meet the evolving needs of our clients. Our team of experienced professionals works tirelessly to push the boundaries of what's possible, ensuring that we stay ahead of industry trends while maintaining the highest standards of excellence. We believe in the power of collaboration, creativity, and integrity, which are the core values that guide everything." />
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+            <!-- ANDROID AND iOS VIEW -->
+            <ScrollView IsVisible="{OnIdiom Default=false, Phone=true}" HorizontalOptions="Center"
                 VerticalOptions="Center">
-                <StackLayout
-                    HorizontalOptions="Center"
-                    Spacing="0"
-                    VerticalOptions="Center">
-
+                <StackLayout HorizontalOptions="Center" Spacing="0" VerticalOptions="Center">
                     <!--  Product image  -->
-                    <Image HeightRequest="110"
-                           WidthRequest="124"
-                           Source="aboutusicon.png"/>
-
-                    <!--  Product version  -->
-                    <Label
-                        Margin="0,8.7,0,0"
-                        HorizontalOptions="Center"
-                        HorizontalTextAlignment="Start"
-                        Style="{DynamicResource SimpleLabelStyle}"
-                        Text="1.0.0"
-                        VerticalOptions="Start"
-                        VerticalTextAlignment="Start"/>
-
+                    <Grid HorizontalOptions="Center" VerticalOptions="Center"
+                    Margin="{OnIdiom Desktop='0,54,0,62', Phone='10,77,0,64'}">
+                        <!--  SVG WAVY DESIGN (Background)  -->
+                        <Path Data="{StaticResource WavyDesignPath}"
+                    Fill="{AppThemeBinding Light={OnIdiom Default='#F7EDFF', Phone=Transparent}, Dark={OnIdiom Default='#35303C', Phone=Transparent}}" Opacity="0.7"
+                    HorizontalOptions="Fill" VerticalOptions="Fill" />
+                        <!--  3 GROUPED AVATAR IMAGES (On Top)  -->
+                        <Grid HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="367"
+                    WidthRequest="493">
+                            <!--  First Avatar  -->
+                            <sfavatar:SfAvatarView ContentType="Custom" ImageSource="middle3.jpg"
+                    HeightRequest="218" Margin="65,177,310,0" WidthRequest="118" ZIndex="3"
+                    CornerRadius="100" />
+                            <!--  Second Avatar  -->
+                            <sfavatar:SfAvatarView ContentType="Custom" ImageSource="middle1.jpg"
+                    Margin="152,49,161,29" HeightRequest="289" ZIndex="1" WidthRequest="180"
+                    CornerRadius="100" />
+                            <!--  Third Avatar  -->
+                            <sfavatar:SfAvatarView ContentType="Custom" ImageSource="middle2.jpg"
+                    Margin="285,14,90,135" HeightRequest="218" ZIndex="3" WidthRequest="118"
+                    CornerRadius="100" />
+                        </Grid>
+                    </Grid>
                     <!--  Product title  -->
-                    <Label
-                        LineHeight="{OnPlatform Android=1.25,
-                                            Default=-1}"
-                        Style="{DynamicResource TitleLabelStyle}"
-                        Text="Acme Products">
-                        <Label.Margin>
-                            <OnIdiom
-                                x:TypeArguments="Thickness"
-                                Default="0, 32, 0, 8"
-                                Phone="0, 16, 0, 16"/>
-                        </Label.Margin>
-                    </Label>
+                    <Label LineHeight="{OnPlatform Android=1.22,
+                          Default=-1}" FontFamily="Roboto-Regular" Style="{DynamicResource TitleLabelStyle}"
+                        FontSize="36" Margin="0,0,0,16"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                        HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="About Us">
 
+                    </Label>
                     <!--  Product description  -->
-                    <Label
-                        Margin="15,0,15,0"
-                        Style="{DynamicResource DescriptionLabelStyle}"
-                        Text="Situated in the heart of Smith-town, Acme Products, Inc., has a long-standing tradition of selling the best products while providing the fastest service on the market. Since 1952, we have helped our customers identify their needs, understand their wants, and capture their dreams."/>
+                    <Label Margin="16,0,16,0" Style="{DynamicResource DescriptionLabelStyle}" FontSize="16"
+                        FontFamily="Roboto-Regular" LineHeight="1.5" CharacterSpacing="0.5"
+                        TextColor="{AppThemeBinding Light={DynamicResource ContentTextColorLight}, Dark={DynamicResource ContentTextColorDark}}"
+                        Text="We are passionate about [industry/sector focus], driven by a commitment to quality, innovation, and customer satisfaction. Since our founding in [1996], we have dedicated ourselves to delivering exceptional products/services that meet the evolving needs of our clients. Our team of experienced professionals works tirelessly to push the boundaries of what's possible, ensuring that we stay ahead of industry trends while maintaining the highest standards of excellence. We believe in the power of collaboration, creativity, and integrity, which are the core values that guide everything." />
                 </StackLayout>
             </ScrollView>
         </Grid>

@@ -3,124 +3,269 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Notification.ECommerceNotificationPage"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Toolkit.EffectsView;assembly=Syncfusion.Maui.Toolkit"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              xmlns:model="clr-namespace:EssentialMAUIUIKit.Models.Notification"
              xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
-             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
              x:DataType="local:ECommerceNotificationViewModel">
+
     <ContentView.Resources>
-        <ResourceDictionary>
-            <converter:BooleanToColorConverter x:Key="BoolToColorConverter"/>
-            <converter:StringToGlyphConverter x:Key="GlyphConverter"/>
-        </ResourceDictionary>
+        <converter:StringToGlyphConverter x:Key="GlyphConverter" />
     </ContentView.Resources>
+
     <ContentView.BindingContext>
-        <local:ECommerceNotificationViewModel x:Name="viewModel"/>
+        <local:ECommerceNotificationViewModel x:Name="viewModel" />
     </ContentView.BindingContext>
-    <ContentView.Content>
-        <StackLayout Spacing="0">
-            <Grid Grid.Row="1" ColumnDefinitions="*,*">
 
-                <Label
-                    Margin="20,20,20,20"
-                    FontFamily="Roboto-Medium"
-                    FontSize="14"
-                    VerticalOptions="Start"
-                    HorizontalOptions="Start"
-                    Text="Recent"
-                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+    <ScrollView>
+        <Grid>
+            <Border Margin="0,20,0,10"
+                   StrokeShape="RoundRectangle 10"
+                   IsVisible="{OnPlatform WinUI=True, MacCatalyst=True, Android=False, iOS=False}"
+                   WidthRequest="{OnPlatform WinUI=524, MacCatalyst=660}">
 
-                <buttons:SfButton Grid.Column="1"
-                    HorizontalOptions="End"
-                    VerticalOptions="Center"
-                    Style="{DynamicResource TransparentButtonStyle}"
-                    WidthRequest="134"
-                    FontSize="14"
-                    Text="Mark all as read">
-                </buttons:SfButton>
+                <Grid  ColumnSpacing="0"
+                   RowDefinitions="Auto,Auto,Auto,*"
+                   RowSpacing="0">
+                    <BoxView Margin="0,0,0,0"
+                    Grid.Row="0"
+                    Grid.ColumnSpan="2"
+                    Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+                    <Grid Grid.Row="1" ColumnDefinitions="*,*" Padding="0,0,10,0">
+
+                        <Label
+                           Margin="20,20,20,20"
+                           FontFamily="Roboto-Medium"
+                           FontSize="14"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Start"
+                           Text="Recent notifications"
+                           TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                        <buttons:SfButton Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" Style="{DynamicResource TransparentButtonStyle}" WidthRequest="140" HeightRequest="30">
+                            <buttons:SfButton.Content>
+                                <DataTemplate>
+                                    <HorizontalStackLayout HorizontalOptions="End">
+                                        <Label Text="&#xe711;"
+                                           FontSize="14"
+                                           FontFamily="UIKitIcons"
+                                           TextColor="{AppThemeBinding Light=#7633DA, Dark=#8D4CF5}"
+                                           VerticalOptions="Center"/>
+                                        <Label Text=" Mark all as read"
+                                           FontSize="14" Padding="6,0,6,0"
+                                           FontFamily="Roboto-Medium"
+                                           TextColor="{AppThemeBinding Light=#7633DA, Dark=#8D4CF5}"
+                                           VerticalOptions="Center"/>
+                                    </HorizontalStackLayout>
+                                </DataTemplate>
+                            </buttons:SfButton.Content>
+                        </buttons:SfButton>
+                    </Grid>
+
+                    <BoxView Margin="0"
+                    Grid.Row="2"
+                    Grid.ColumnSpan="2"
+                    Style="{DynamicResource HorizontalSeparatorStyle}"/>
+
+                    <Grid Grid.Row="3" Margin="16,0,16,0">
+                        <!--  Notification list  -->
+                        <listView:SfListView
+                             x:Name="ECommerceNotifications"
+                             AllowSwiping="True"
+                             AutoFitMode="Height"
+                             ScrollBarVisibility="Never"
+                             ItemSpacing="0"
+                             Padding="0,4,0,4" IsScrollingEnabled="False"
+                             VerticalOptions="Fill"
+                             HorizontalOptions="Fill"
+                             ItemsSource="{Binding EcommerceNotifications}"
+                             SelectionBackground="Transparent"
+                             SelectionGesture="Tap"
+                             SelectionMode="Single">
+
+                            <listView:SfListView.ItemTemplate>
+                                <DataTemplate x:DataType="model:ECommerceNotificationsListModel">
+                                    <syncEffectsView:SfEffectsView Margin="0,0,0,0" TouchDownEffects="Ripple">
+                                        <Grid
+                                         BackgroundColor="Transparent"
+                                         ColumnDefinitions="Auto, *"
+                                         ColumnSpacing="0"
+                                         RowDefinitions="Auto, Auto, Auto"
+                                         RowSpacing="0">
+
+                                            <!--  Circular Border for icons  -->
+                                            <Border
+                                             Grid.RowSpan="3"
+                                             Margin="8,10,16,0"
+                                             BackgroundColor="{Binding BackgroundColor}"
+                                             StrokeThickness="0"
+                                             StrokeShape="RoundRectangle 24,24,24,24"
+                                             VerticalOptions="Start">
+                                                <Label
+                                                 x:Name="NotificationIcon"
+                                                 FontFamily="FontIcons"
+                                                 FontSize="25"
+                                                 HeightRequest="40"
+                                                 HorizontalTextAlignment="Center"
+                                                 Text="{Binding NotificationIcon, Converter={StaticResource GlyphConverter}, ConverterParameter={x:Reference NotificationIcon}}"
+                                                 TextColor="{DynamicResource Gray-White}"
+                                                 VerticalTextAlignment="Center"
+                                                 WidthRequest="40">
+                                                    <Label.Resources>
+                                                        <ResourceDictionary>
+                                                            <ResourceDictionary.MergedDictionaries>
+                                                                <ResourceDictionary Source="../../Styles/FontIcons.xaml" />
+                                                            </ResourceDictionary.MergedDictionaries>
+                                                        </ResourceDictionary>
+                                                    </Label.Resources>
+                                                </Label>
+                                            </Border>
+
+                                            <!--  Description  -->
+                                            <Label
+                                             Grid.Column="1"
+                                             Margin="0,10,16,8"
+                                             FontFamily="Roboto-Medium"
+                                             FontSize="14"
+                                             LineBreakMode="WordWrap"
+                                             LineHeight="{OnPlatform Android=1.5, Default=-1}"
+                                             Text="{Binding Description}"
+                                             TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
+
+                                            <!--  Time  -->
+                                            <Label
+                                             Grid.Row="1"
+                                             Grid.Column="1"
+                                             Margin="0,0,0,16"
+                                             FontFamily="Roboto-Regular"
+                                             FontSize="12"
+                                             LineHeight="{OnPlatform Android=1.5, Default=-1}"
+                                             Text="{Binding Time}"
+                                             TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}" />
+                                        </Grid>
+                                    </syncEffectsView:SfEffectsView>
+                                </DataTemplate>
+                            </listView:SfListView.ItemTemplate>
+                        </listView:SfListView>
+                    </Grid>
+                </Grid>
+            </Border>
+            <Grid
+                ColumnSpacing="0" IsVisible="{OnPlatform WinUI=False, MacCatalyst=False, Android=True, iOS=True}" Padding="0"
+                RowDefinitions="Auto,Auto,Auto,*"
+                RowSpacing="0">
+
+                <Grid Grid.Row="1" ColumnDefinitions="*,*">
+
+                    <Label
+                        Margin="20,20,20,20"
+                        FontFamily="Roboto-Medium"
+                        FontSize="14"
+                        VerticalOptions="Start"
+                        HorizontalOptions="Start"
+                        Text="Recent notifications"
+                        TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+
+                    <buttons:SfButton Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" Style="{DynamicResource TransparentButtonStyle}" WidthRequest="140" HeightRequest="30">
+                        <buttons:SfButton.Content>
+                            <DataTemplate>
+                                <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                                    <Label Text="&#xe711;"
+                                           FontSize="14"
+                                           FontFamily="UIKitIcons"
+                                           TextColor="{AppThemeBinding Light=#7633DA, Dark=#8D4CF5}"
+                                           VerticalOptions="Center"/>
+                                    <Label Text=" Mark all as read"
+                                           FontSize="14"
+                                           FontFamily="Roboto-Medium"
+                                           TextColor="{AppThemeBinding Light=#7633DA, Dark=#8D4CF5}"
+                                           VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
+                            </DataTemplate>
+                        </buttons:SfButton.Content>
+                    </buttons:SfButton>
+                </Grid>
+
+                <Grid Grid.Row="3" Margin="10,0,10,0">
+                    <listView:SfListView
+                            x:Name="ECommerceNotificationsMobile"
+                            AllowSwiping="True"
+                            AutoFitMode="Height"
+                            ScrollBarVisibility="Never"
+                            ItemSpacing="0" Grid.Row="0"
+                            ItemsSource="{Binding EcommerceNotifications}"
+                            SelectionBackground="Transparent"
+                            SelectionGesture="Tap"
+                            SelectionMode="Single"
+                            VerticalOptions="Fill">
+
+                        <listView:SfListView.ItemTemplate>
+                            <DataTemplate x:DataType="model:ECommerceNotificationsListModel">
+                                <syncEffectsView:SfEffectsView Margin="0,0,0,0" TouchDownEffects="Ripple">
+                                    <Grid
+                                        BackgroundColor="Transparent"
+                                        ColumnDefinitions="Auto, *"
+                                        ColumnSpacing="0"
+                                        RowDefinitions="Auto, Auto, Auto"
+                                        RowSpacing="0">
+                                        <!--  Circular Border for icons  -->
+                                        <Border
+                                                Grid.RowSpan="3"
+                                                Margin="8,16,16,0"
+                                                BackgroundColor="{Binding BackgroundColor}"
+                                                StrokeThickness="0"
+                                                StrokeShape="RoundRectangle 24,24,24,24"
+                                                VerticalOptions="Start">
+                                            <Label
+                                                    x:Name="NotificationIconMobile"
+                                                    FontFamily="FontIcons"
+                                                    FontSize="25"
+                                                    HeightRequest="48"
+                                                    HorizontalTextAlignment="Center"
+                                                    Text="{Binding NotificationIcon, Converter={StaticResource GlyphConverter}, ConverterParameter={x:Reference NotificationIconMobile}}"
+                                                    TextColor="{DynamicResource Gray-White}"
+                                                    VerticalTextAlignment="Center"
+                                                    WidthRequest="48">
+                                                <Label.Resources>
+                                                    <ResourceDictionary>
+                                                        <ResourceDictionary.MergedDictionaries>
+                                                            <ResourceDictionary Source="../../Styles/FontIcons.xaml"/>
+                                                        </ResourceDictionary.MergedDictionaries>
+                                                    </ResourceDictionary>
+                                                </Label.Resources>
+                                            </Label>
+                                        </Border>
+                                        <!--  Description  -->
+                                        <Label
+                                                Grid.Column="1"
+                                                Margin="0,16,16,4"
+                                                FontFamily="Roboto-Regular"
+                                                FontSize="16"
+                                                LineBreakMode="WordWrap"
+                                                LineHeight="{OnPlatform Android=1.5, Default=-1}"
+                                                Text="{Binding Description}"
+                                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+                                        <!--  Time  -->
+                                        <Label
+                                                Grid.Row="1"
+                                                Grid.Column="1"
+                                                Margin="0,0,0,16"
+                                                FontFamily="Roboto-Regular"
+                                                FontSize="12"
+                                                LineHeight="{OnPlatform Android=1.5, Default=-1}"
+                                                Text="{Binding Time}"
+                                                TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+                                        <!--  Seperator  -->
+                                        <BoxView Grid.Row="2" Grid.ColumnSpan="2"/>
+                                    </Grid>
+                                </syncEffectsView:SfEffectsView>
+                            </DataTemplate>
+                        </listView:SfListView.ItemTemplate>
+                    </listView:SfListView>
+                </Grid>
             </Grid>
-
-            <listView:SfListView
-                x:Name="ECommerceNotifications"
-                AllowSwiping="True"
-                AutoFitMode="Height"
-                ScrollBarVisibility="Never"
-                ItemSpacing="0"
-                ItemsSource="{Binding EcommerceNotifications}"
-                SelectionBackground="Transparent"
-                SelectionGesture="Tap"
-                SelectionMode="Single"
-                VerticalOptions="Fill">
-
-                <listView:SfListView.ItemTemplate>
-                    <DataTemplate x:DataType="model:ECommerceNotificationsListModel">
-                        <ViewCell>
-                            <Grid
-                                BackgroundColor="Transparent"
-                                ColumnDefinitions="Auto, *"
-                                ColumnSpacing="0"
-                                RowDefinitions="Auto, Auto, Auto"
-                                RowSpacing="0">
-                                <!--  Circular Border for icons  -->
-                                <Border
-                                    Grid.RowSpan="3"
-                                    Margin="8,16,16,0"
-                                    BackgroundColor="{Binding BackgroundColor}"
-                                    StrokeThickness="0"
-                                    StrokeShape="RoundRectangle 24,24,24,24"
-                                    VerticalOptions="Start">
-                                    <Label
-                                        x:Name="NotificationIcon"
-                                        FontFamily="FontIcons"
-                                        FontSize="25"
-                                        HeightRequest="48"
-                                        HorizontalTextAlignment="Center"
-                                        Text="{Binding NotificationIcon, Converter={StaticResource GlyphConverter}, ConverterParameter={x:Reference NotificationIcon}}"
-                                        TextColor="{DynamicResource Gray-White}"
-                                        VerticalTextAlignment="Center"
-                                        WidthRequest="48">
-                                        <Label.Resources>
-                                            <ResourceDictionary>
-                                                <ResourceDictionary.MergedDictionaries>
-                                                    <ResourceDictionary Source="../../Styles/FontIcons.xaml"/>
-                                                </ResourceDictionary.MergedDictionaries>
-                                            </ResourceDictionary>
-                                        </Label.Resources>
-                                    </Label>
-                                </Border>
-                                <!--  Description  -->
-                                <Label
-                                    Grid.Column="1"
-                                    Margin="0,16,16,4"
-                                    FontFamily="Roboto-Regular"
-                                    FontSize="16"
-                                    LineBreakMode="WordWrap"
-                                    LineHeight="{OnPlatform Android=1.5,
-                                Default=-1}"
-                                    Text="{Binding Description}"
-                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
-                                <!--  Time  -->
-                                <Label
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    Margin="0,0,0,16"
-                                    FontFamily="Roboto-Regular"
-                                    FontSize="12"
-                                    LineHeight="{OnPlatform Android=1.5,
-                                Default=-1}"
-                                    Text="{Binding Time}"
-                                    TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
-                                <!--  Seperator  -->
-                                <BoxView
-                                    Grid.Row="2"
-                                    Grid.ColumnSpan="2">
-
-                                </BoxView>
-                            </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </listView:SfListView.ItemTemplate>
-            </listView:SfListView>
-        </StackLayout>
-    </ContentView.Content>
+        </Grid>
+    </ScrollView>
 </ContentView>

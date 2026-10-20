@@ -1,21 +1,14 @@
 ﻿using Syncfusion.Maui.Core;
 using System.Globalization;
+using Microsoft.Maui.Graphics;
 
 namespace EssentialMAUIUIKit.Converters
 {
     /// <summary>
-    /// This class have methods to convert the availability-status of chat message recipients from string to Syncfusion.XForms.BadgeView.BadgeIcon.
+    /// Maps a chat member's status string to the appropriate <see cref="BadgeIcon"/>.
     /// </summary>
     public class StringToBadgeIconConverter : IValueConverter
     {
-        /// <summary>
-        /// This method is used to convert the string to badge icon.
-        /// </summary>
-        /// <param name="value">Gets the value.</param>
-        /// <param name="targetType">Gets the target type.</param>
-        /// <param name="parameter">Gets the parameter.</param>
-        /// <param name="culture">Gets the culture.</param>
-        /// <returns>Return the badge icon.</returns>
         public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value == null)
@@ -23,20 +16,41 @@ namespace EssentialMAUIUIKit.Converters
                 return BadgeIcon.None;
             }
 
-            return (string)value == "Available" ? BadgeIcon.Dot : BadgeIcon.None;
+            // ✅ Use a plain dot for every known status so the badge shows only the
+            // presence color, without any extra icon.
+            return value.ToString() switch
+            {
+                "Available" => BadgeIcon.Dot,
+                "Not available" => BadgeIcon.Dot,
+                _ => BadgeIcon.None
+            };
         }
 
-        /// <summary>
-        /// This method is used to convert the color to badge icon.
-        /// </summary>
-        /// <param name="value">Gets the value.</param>
-        /// <param name="targetType">Gets the target type.</param>
-        /// <param name="parameter">Gets the parameter.</param>
-        /// <param name="culture">Gets the culture.</param>
-        /// <returns>Returns null.</returns>
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             return null;
         }
+    }
+
+    /// <summary>
+    /// Maps a chat member's status string to a presence color.
+    /// </summary>
+    public class StatusToColorConverter : IValueConverter
+    {
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+        {
+            // ✅ Default → Not Available (Purple)
+            if (value == null)
+            {
+                return Color.FromArgb("#8D4CF5");
+            }
+
+            return value.ToString() == "Available"
+                ? Color.FromArgb("#3CB053")  // ✅ Green (Available)
+                : Color.FromArgb("#8D4CF5"); // ✅ Purple (Not Available)
+        }
+
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+            => null;
     }
 }

@@ -3,355 +3,138 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EssentialMAUIUIKit.Views.Detail.DataTablePage"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              x:DataType="local:DataTableViewModel">
     <ContentView.BindingContext>
         <local:DataTableViewModel></local:DataTableViewModel>
     </ContentView.BindingContext>
+    <ContentView.Resources>
+        <Style TargetType="syncfusion:DataGridHeaderCell">
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+            <Setter Property="FontSize"
+                    Value="14"/>
+            <Setter Property="FontFamily"
+                    Value="Roboto-Medium"/>
+        </Style>
+
+        <Style TargetType="syncfusion:DataGridUnboundRowCell">
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+            <Setter Property="FontSize"
+                    Value="14"/>
+            <Setter Property="FontFamily"
+                    Value="Roboto-Regular"/>
+        </Style>
+    </ContentView.Resources>
     <ContentView.Content>
         <Grid RowSpacing="0"
-                RowDefinitions="*"
-              Padding="0,10,0,10">
+              RowDefinitions="Auto,*"
+              Padding="{OnIdiom Default='0,10,0,10', Phone='0'}">
 
-            <Border StrokeShape="RoundRectangle 10"
-                    WidthRequest="{OnPlatform WinUI=650, MacCatalyst=650}"
-                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                    IsVisible="{OnPlatform Android=False, iOS=False}">
+            <Grid BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                  HeightRequest="55"
+                  RowDefinitions="Auto,Auto"
+                  ColumnDefinitions="Auto,*">
+
+                <Label  Grid.Column="0"
+                         FontFamily="FontIcons"
+                         Margin="16"
+                         Text="&#xe728;"
+                         TextColor="{AppThemeBinding Light={DynamicResource ContentTextColorLight}, Dark={DynamicResource ContentTextColorDark}}"
+                         Rotation="180"
+                         FontSize="18"
+                         FontAttributes="Bold"
+                         VerticalOptions="Center" />
+
+                <Label Grid.Column="1"
+                        Text="Data table"
+                        FontSize="16"
+                        FontFamily="Roboto-Medium"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start" />
+
+                <BoxView  HeightRequest="1"
+                          Grid.Row="1"
+                          Grid.ColumnSpan="2"
+                          Style="{DynamicResource HorizontalSeparatorStyle}"/>
+            </Grid>
+
+            <Border StrokeShape="{OnIdiom Desktop='RoundRectangle 8', Tablet='RoundRectangle 8'}"
+                    Grid.Row="1"
+                    Margin="{OnIdiom Default='24', Phone='8'}"
+                    Padding="{OnIdiom Default='0', Phone='4'}"
+                    WidthRequest="{OnIdiom Desktop='766', Tablet='720', Phone='-1'}"
+                    HorizontalOptions="Fill"
+                    Stroke="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}"
+                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}">
                 <Grid>
 
-                    <listView:SfListView
-                        Padding="0"
-                        AutoFitMode="Height"
-                        ScrollBarVisibility="Never"
-                        ItemSpacing="0"
-                        ItemsSource="{Binding DataTableLists}"
-                        SelectionBackground="Transparent"
-                        StickyFooterPosition="Body"
-                        VerticalOptions="Fill">
+                    <syncfusion:SfDataGrid
+                                    ItemsSource="{Binding DataTableLists}"
+                                    AutoGenerateColumnsMode="None"
+                                    ColumnWidthMode="Fill"
+                                    HeaderRowHeight="{OnIdiom Default='36', Phone='46', Tablet='46'}"
+                                    RowHeight="48"
+                                    SelectionMode="None"
+                                    VerticalScrollBarVisibility="Never"
+                                    HorizontalOptions="Center"
+                                    GridLinesVisibility="Horizontal"
+                                    HeaderGridLinesVisibility="Horizontal"
+                                    VerticalOptions="Fill">
 
-                        <listView:SfListView.HeaderTemplate>
-                            <DataTemplate>
-                                <Grid
-                                    Grid.Row="2"
-                                    Margin="0"
-                                    Padding="16,0,8,0"
-                                    BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                    ColumnSpacing="0"
-                                    HeightRequest="48">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="{OnIdiom Desktop=0.5*, Tablet=1*, Phone=0.8*}"/>
-                                        <ColumnDefinition Width="{OnIdiom Desktop=2.5*, Tablet=1*, Phone=2*}"/>
-                                        <ColumnDefinition Width="{OnIdiom Desktop=0.7*, Tablet=1*, Phone=0.8*}"/>
-                                        <ColumnDefinition Width="{OnIdiom Desktop=0.7*, Tablet=1*, Phone=0.8*}"/>
-                                        <ColumnDefinition Width="{OnIdiom Desktop=0.7*, Tablet=1*, Phone=*}"/>
-                                        <ColumnDefinition Width="{OnIdiom Desktop=5*, Tablet=1*, Phone=*}"/>
-                                    </Grid.ColumnDefinitions>
+                        <syncfusion:SfDataGrid.DefaultStyle>
+                            <syncfusion:DataGridStyle  HeaderGridLineColor="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}"
+                                                       GridLineColor="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}"/>
+                        </syncfusion:SfDataGrid.DefaultStyle>
 
-                                    <Label
-                                        FontFamily="Roboto-Medium"
-                                        FontSize="12"
-                                        HorizontalOptions="Start"
-                                        Text="Pos"
-                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                        VerticalOptions="Center"/>
+                        <syncfusion:SfDataGrid.Columns>
 
-                                    <Label
-                                        Grid.Column="1"
-                                        FontFamily="Roboto-Medium"
-                                        FontSize="12"
-                                        HorizontalOptions="Start"
-                                        Text="Club"
-                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                        VerticalOptions="Center"/>
+                            <!-- Pos -->
+                            <syncfusion:DataGridTextColumn
+                                                    MappingName="SerialNumber"
+                                                    CellTextAlignment="{OnIdiom Default='Center', Phone='Start'}"
+                                                    HeaderTextAlignment="{OnIdiom Default='Center', Phone='Start'}"
+                                                    HeaderText="Pos" 
+                                                    MaximumWidth="{OnIdiom Phone=50}"/>
 
-                                    <Label
-                                        Grid.Column="2"
-                                        FontFamily="Roboto-Medium"
-                                        FontSize="12"
-                                        HorizontalOptions="Start"
-                                        Text="Pl"
-                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                        VerticalOptions="Center"/>
+                            <!-- Club -->
+                            <syncfusion:DataGridTemplateColumn
+                                                    MappingName="ClubName"
+                                                    HeaderTextAlignment="{OnIdiom Default='Center', Phone='Start'}"
+                                                    CellTextAlignment="{OnIdiom Default='Center', Phone='Start'}"
+                                                    MinimumWidth="{OnIdiom Default=90, Phone=75}"
+                                                    HeaderText="Teams">
 
-                                    <Label
-                                        Grid.Column="3"
-                                        FontFamily="Roboto-Medium"
-                                        FontSize="12"
-                                        HorizontalOptions="Start"
-                                        Text="Gd"
-                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                        VerticalOptions="Center"/>
-
-                                    <Label
-                                        Grid.Column="4"
-                                        Grid.ColumnSpan="2"
-                                        FontFamily="Roboto-Medium"
-                                        FontSize="12"
-                                        HorizontalOptions="Start"
-                                        Text="Pts"
-                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                        VerticalOptions="Center"/>
-
-                                </Grid>
-                            </DataTemplate>
-                        </listView:SfListView.HeaderTemplate>
-
-                        <!--  List View for the table  -->
-                        <listView:SfListView.ItemTemplate>
-                            <DataTemplate x:DataType="local:DataTableList">
-                                <ViewCell>
-                                    <StackLayout Margin="0"
-                                                 Spacing="0">
-                                        <Grid
-                                            Margin="16,0,8,0"
-                                            ColumnSpacing="0"
-                                            HeightRequest="48">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="{OnIdiom Desktop=0.5*, Tablet=1*, Phone=0.8*}"/>
-                                                <ColumnDefinition Width="{OnIdiom Desktop=2.5*, Tablet=1*, Phone=2*}"/>
-                                                <ColumnDefinition Width="{OnIdiom Desktop=0.7*, Tablet=1*, Phone=0.8*}"/>
-                                                <ColumnDefinition Width="{OnIdiom Desktop=0.7*, Tablet=1*, Phone=0.8*}"/>
-                                                <ColumnDefinition Width="{OnIdiom Desktop=0.7*, Tablet=1*, Phone=*}"/>
-                                                <ColumnDefinition Width="{OnIdiom Desktop=5*, Tablet=1*, Phone=*}"/>
-                                            </Grid.ColumnDefinitions>
-
-                                            <!--  club name  -->
-                                            <Label
-                                                Margin="6,0,0,0"
-                                                FontFamily="Roboto-Regular"
-                                                FontSize="14"
-                                                HorizontalOptions="Start"
-                                                Text="{Binding SerialNumber}"
-                                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                                VerticalOptions="Center"/>
-
-                                            <Grid Grid.Column="1"
-                                                  ColumnSpacing="8">
-
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="0.2*"/>
-                                                    <ColumnDefinition Width="{OnIdiom Desktop=2.3*, Tablet=2.3*, Phone=1.8*}"/>
-                                                </Grid.ColumnDefinitions>
-
-                                                <!--  Club images  -->
-                                                <Image
-                                                    Grid.Column="0"
-                                                    HeightRequest="20"
-                                                    HorizontalOptions="Start"
-                                                    VerticalOptions="Center">
-                                                    <Image.Source>
-                                                        <UriImageSource
-                                                            CacheValidity="14"
-                                                            CachingEnabled="true"
-                                                            Uri="{Binding ImageIcon}"/>
-                                                    </Image.Source>
-
-                                                </Image>
-
-                                                <Label
-                                                    Grid.Column="1"
-                                                    Margin="0"
-                                                    FontFamily="Roboto-Regular"
-                                                    FontSize="14"
-                                                    HorizontalOptions="Start"
-                                                    Text="{Binding ClubName}"
-                                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                                    VerticalOptions="Center"/>
-
-                                            </Grid>
-                                            <!--  Total players  -->
-                                            <Label
-                                                Grid.Column="2"
-                                                FontFamily="Roboto-Regular"
-                                                HorizontalOptions="Start"
-                                                Text="17"
-                                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                                VerticalOptions="Center"/>
-
-                                            <!--  Gold points for the club  -->
-                                            <Label
-                                                Grid.Column="3"
-                                                FontFamily="Roboto-Regular"
-                                                FontSize="14"
-                                                HorizontalOptions="Start"
-                                                Text="{Binding GoldPoints}"
-                                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                                VerticalOptions="Center"/>
-
-                                            <!--  Total points for the club  -->
-                                            <Label
-                                                Grid.Column="4"
-                                                FontFamily="Roboto-Regular"
-                                                FontSize="14"
-                                                HorizontalOptions="Start"
-                                                Text="{Binding Points}"
-                                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                                VerticalOptions="Center"/>
-
-                                            <!--  Ratings for 5 matches  -->
-                                            <StackLayout
-                                                x:Name="stackLayout"
-                                                Grid.Column="5"
-                                                BindableLayout.ItemsSource="{Binding MatchResults}"
-                                                HeightRequest="8"
-                                                HorizontalOptions="Start"
-                                                Orientation="Horizontal"
-                                                Spacing="4"
-                                                VerticalOptions="Center"
-                                                WidthRequest="80">
-                                                <BindableLayout.ItemTemplate>
-                                                    <DataTemplate x:DataType="local:DataTableViewModel">
-                                                        <BoxView x:DataType="x:String"
-                                                            BackgroundColor="{Binding}"
-                                                            CornerRadius="16"
-                                                            HeightRequest="8"
-                                                            WidthRequest="8"/>
-                                                    </DataTemplate>
-                                                </BindableLayout.ItemTemplate>
-                                            </StackLayout>
-                                        </Grid>
-                                        <BoxView
-                                            Grid.Row="1"
-                                            Grid.ColumnSpan="5"
-                                            Style="{DynamicResource HorizontalSeparatorStyle}"/>
-                                    </StackLayout>
-                                </ViewCell>
-                            </DataTemplate>
-                        </listView:SfListView.ItemTemplate>
-                    </listView:SfListView>
-                </Grid>
-            </Border>
-
-            <StackLayout Spacing="0"
-                         IsVisible="{OnPlatform WinUI=False, MacCatalyst=False}">
-
-                <listView:SfListView
-                    Padding="0"
-                    AutoFitMode="Height"
-                    ScrollBarVisibility="Never"
-                    ItemSpacing="0"
-                    ItemsSource="{Binding DataTableLists}"
-                    SelectionBackground="Transparent"
-                    StickyFooterPosition="Body"
-                    VerticalOptions="Fill">
-
-                    <listView:SfListView.HeaderTemplate>
-                        <DataTemplate>
-                            <Grid
-                                Grid.Row="2"
-                                Margin="0"
-                                Padding="16,0,8,0"
-                                BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                ColumnSpacing="0"
-                                HeightRequest="48">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="{OnIdiom Desktop=0.5*, Tablet=1*, Phone=0.8*}"/>
-                                    <ColumnDefinition Width="{OnIdiom Desktop=2.5*, Tablet=1*, Phone=2*}"/>
-                                    <ColumnDefinition Width="{OnIdiom Desktop=0.7*, Tablet=1*, Phone=0.8*}"/>
-                                    <ColumnDefinition Width="{OnIdiom Desktop=0.7*, Tablet=1*, Phone=0.8*}"/>
-                                    <ColumnDefinition Width="{OnIdiom Desktop=0.7*, Tablet=1*, Phone=*}"/>
-                                    <ColumnDefinition Width="{OnIdiom Desktop=5*, Tablet=1*, Phone=*}"/>
-                                </Grid.ColumnDefinitions>
-
-                                <Label
-                                    FontFamily="Roboto-Medium"
-                                    FontSize="12"
-                                    HorizontalOptions="Start"
-                                    Text="Pos"
-                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                    VerticalOptions="Center"/>
-
-                                <Label
-                                    Grid.Column="1"
-                                    FontFamily="Roboto-Medium"
-                                    FontSize="12"
-                                    HorizontalOptions="Start"
-                                    Text="Club"
-                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                    VerticalOptions="Center"/>
-
-                                <Label
-                                    Grid.Column="2"
-                                    FontFamily="Roboto-Medium"
-                                    FontSize="12"
-                                    HorizontalOptions="Start"
-                                    Text="Pl"
-                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                    VerticalOptions="Center"/>
-
-                                <Label
-                                    Grid.Column="3"
-                                    FontFamily="Roboto-Medium"
-                                    FontSize="12"
-                                    HorizontalOptions="Start"
-                                    Text="Gd"
-                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                    VerticalOptions="Center"/>
-
-                                <Label
-                                    Grid.Column="4"
-                                    Grid.ColumnSpan="2"
-                                    FontFamily="Roboto-Medium"
-                                    FontSize="12"
-                                    HorizontalOptions="Start"
-                                    Text="Pts"
-                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                    VerticalOptions="Center"/>
-
-                            </Grid>
-                        </DataTemplate>
-                    </listView:SfListView.HeaderTemplate>
-
-                    <!--  List View for the table  -->
-                    <listView:SfListView.ItemTemplate>
-                        <DataTemplate x:DataType="local:DataTableList">
-                            <ViewCell>
-                                <StackLayout Margin="0"
-                                             Spacing="0">
-                                    <Grid
-                                        Margin="16,0,8,0"
-                                        ColumnSpacing="0"
-                                        HeightRequest="48">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="{OnIdiom Desktop=0.5*, Tablet=1*, Phone=0.8*}"/>
-                                            <ColumnDefinition Width="{OnIdiom Desktop=2.5*, Tablet=1*, Phone=2*}"/>
-                                            <ColumnDefinition Width="{OnIdiom Desktop=0.7*, Tablet=1*, Phone=0.8*}"/>
-                                            <ColumnDefinition Width="{OnIdiom Desktop=0.7*, Tablet=1*, Phone=0.8*}"/>
-                                            <ColumnDefinition Width="{OnIdiom Desktop=0.7*, Tablet=1*, Phone=*}"/>
-                                            <ColumnDefinition Width="{OnIdiom Desktop=5*, Tablet=1*, Phone=*}"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <!--  club name  -->
-                                        <Label
-                                            Margin="6,0,0,0"
-                                            FontFamily="Roboto-Regular"
-                                            FontSize="14"
-                                            HorizontalOptions="Start"
-                                            Text="{Binding SerialNumber}"
-                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                            VerticalOptions="Center"/>
-
+                                <syncfusion:DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
                                         <Grid Grid.Column="1"
-                                              ColumnSpacing="8">
+                                              ColumnSpacing="8"
+                                              Margin="{OnIdiom Default='24,0,0,0', Phone='0'}"
+                                              WidthRequest="70"
+                                              HorizontalOptions="Center"
+                                              x:DataType="local:DataTableList">
 
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="0.2*"/>
-                                                <ColumnDefinition Width="{OnIdiom Desktop=2.3*, Tablet=2.3*, Phone=1.8*}"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
 
                                             <!--  Club images  -->
-                                            <Image
-                                                Grid.Column="0"
-                                                HeightRequest="20"
-                                                HorizontalOptions="Start"
-                                                VerticalOptions="Center">
+                                            <Image  Grid.Column="0"
+                                                    Aspect="AspectFit"
+                                                    HeightRequest="32"
+                                                    WidthRequest="32"
+                                                    HorizontalOptions="Start"
+                                                    VerticalOptions="Center">
                                                 <Image.Source>
                                                     <UriImageSource
                                                         CacheValidity="14"
                                                         CachingEnabled="true"
                                                         Uri="{Binding ImageIcon}"/>
                                                 </Image.Source>
-
                                             </Image>
 
                                             <Label
@@ -359,75 +142,71 @@
                                                 Margin="0"
                                                 FontFamily="Roboto-Regular"
                                                 FontSize="14"
-                                                HorizontalOptions="Start"
                                                 Text="{Binding ClubName}"
                                                 TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
                                                 VerticalOptions="Center"/>
-
                                         </Grid>
-                                        <!--  Total players  -->
-                                        <Label
-                                            Grid.Column="2"
-                                            FontFamily="Roboto-Regular"
-                                            HorizontalOptions="Start"
-                                            Text="17"
-                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                            VerticalOptions="Center"/>
 
-                                        <!--  Gold points for the club  -->
-                                        <Label
-                                            Grid.Column="3"
-                                            FontFamily="Roboto-Regular"
-                                            FontSize="14"
-                                            HorizontalOptions="Start"
-                                            Text="{Binding GoldPoints}"
-                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                            VerticalOptions="Center"/>
+                                    </DataTemplate>
+                                </syncfusion:DataGridTemplateColumn.CellTemplate>
+                            </syncfusion:DataGridTemplateColumn>
 
-                                        <!--  Total points for the club  -->
-                                        <Label
-                                            Grid.Column="4"
-                                            FontFamily="Roboto-Regular"
-                                            FontSize="14"
-                                            HorizontalOptions="Start"
-                                            Text="{Binding Points}"
-                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                            VerticalOptions="Center"/>
+                            <!-- Pl -->
+                            <syncfusion:DataGridTextColumn
+                                                MappingName="Played"
+                                                HeaderText="Pl"
+                                                MaximumWidth="{OnIdiom Phone=50}"
+                                                CellTextAlignment="Center"
+                                                HeaderTextAlignment="Center" />
 
-                                        <!--  Ratings for 5 matches  -->
-                                        <StackLayout
-                                            x:Name="stackLayout"
-                                            Grid.Column="5"
-                                            BindableLayout.ItemsSource="{Binding MatchResults}"
-                                            HeightRequest="8"
-                                            HorizontalOptions="Start"
-                                            Orientation="Horizontal"
-                                            Spacing="4"
-                                            VerticalOptions="Center"
-                                            WidthRequest="80">
+                            <!-- Gd -->
+                            <syncfusion:DataGridTextColumn
+                                                MappingName="GoldPoints"
+                                                HeaderText="Gd"
+                                                CellTextAlignment="Center"
+                                                HeaderTextAlignment="Center" />
+
+                            <!-- Pts -->
+                            <syncfusion:DataGridTextColumn
+                                                MappingName="Points"
+                                                HeaderText="Pts"
+                                                MaximumWidth="{OnIdiom Phone=50}"
+                                                CellTextAlignment="Center"
+                                                HeaderTextAlignment="Center" />
+
+                            <!-- Form -->
+                            <syncfusion:DataGridTemplateColumn HeaderText=" "
+                                                               CellTextAlignment="{OnIdiom Default='Center',Phone='End'}"
+                                                               HeaderTextAlignment="Center">
+
+                                <syncfusion:DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate x:DataType="local:DataTableList">
+                                        <StackLayout Grid.Column="5"
+                                                     Margin="{OnIdiom Default='0,0,0,0', Phone='4,0,0,0'}"
+                                                     BindableLayout.ItemsSource="{Binding MatchResults}"
+                                                     HorizontalOptions="Center"
+                                                     Orientation="Horizontal"
+                                                     Spacing="4"
+                                                     VerticalOptions="Center"
+                                                     WidthRequest="80">
+
                                             <BindableLayout.ItemTemplate>
-                                                <DataTemplate x:DataType="local:DataTableViewModel">
-                                                    <BoxView x:DataType="x:String"
-                                                        BackgroundColor="{Binding}"
-                                                        CornerRadius="16"
-                                                        HeightRequest="8"
-                                                        WidthRequest="8"/>
+                                                <DataTemplate x:DataType="x:String">
+                                                    <Border BackgroundColor="{Binding .}"
+                                                            StrokeThickness="0"
+                                                            StrokeShape="RoundRectangle 6"
+                                                            HeightRequest="12"
+                                                            WidthRequest="12" />
                                                 </DataTemplate>
                                             </BindableLayout.ItemTemplate>
                                         </StackLayout>
-                                    </Grid>
-                                    <BoxView
-                                        Grid.Row="1"
-                                        Grid.ColumnSpan="5"
-                                        Style="{DynamicResource HorizontalSeparatorStyle}"/>
-                                </StackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </listView:SfListView.ItemTemplate>
-                </listView:SfListView>
-            </StackLayout>
-
-
+                                    </DataTemplate>
+                                </syncfusion:DataGridTemplateColumn.CellTemplate>
+                            </syncfusion:DataGridTemplateColumn>
+                        </syncfusion:SfDataGrid.Columns>
+                    </syncfusion:SfDataGrid>
+                </Grid>
+            </Border>
         </Grid>
     </ContentView.Content>
 </ContentView>

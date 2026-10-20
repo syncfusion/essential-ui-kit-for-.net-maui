@@ -1,3 +1,5 @@
+using Microsoft.Maui.Controls;
+
 namespace EssentialMAUIUIKit.Views.OnBoarding;
 
 public partial class OnboardingPage : ContentView
@@ -7,7 +9,7 @@ public partial class OnboardingPage : ContentView
         InitializeComponent();
     }
 
-    private async void ContentLoaded(object sender, EventArgs e)
+    private async void ContentLoaded(object? sender, EventArgs e)
     {
         if (sender is VisualElement element)
         {
@@ -21,5 +23,8 @@ public partial class OnboardingPage : ContentView
                 element.ScaleToAsync(1, 2000, Easing.CubicInOut)
             );
         }
+    }
+    public void CancelAllAnimations()
+    {
     }
 }

@@ -23,9 +23,9 @@ namespace EssentialMAUIUIKit
     ""id"": 1,
     ""previewimage"": ""Image1.png"",
     ""name"": ""Full-Length Skirt"",
-    ""summary"": ""This plaid, cotton skirt will keep you warm in the air-conditioned office or outside on cooler days."",
-    ""description"": ""This plaid, cotton skirt will keep you warm in the air-conditioned office or outside on cooler days."",
-    ""actualprice"": 220,
+    ""summary"": ""Plaid cotton skirt for cooler days."",
+    ""description"": ""Plaid cotton skirt for cooler days."",
+    ""actualprice"": 90,
     ""discountpercent"": 15,
     ""overallrating"": 5,
     ""previewimages"": [ ""Image1.png"", ""Image1.png"", ""Image1.png"", ""Image1.png"", ""Image1.png"" ],
@@ -55,10 +55,10 @@ namespace EssentialMAUIUIKit
     ""id"": 2,
     ""previewimage"": ""Image2.png"",
     ""name"": ""Peasant Blouse"",
-    ""summary"": ""Look your best this fall in this V-neck, pleated peasant blouse with full sleeves. Comes in white, chocolate, forest green, and more."",
-    ""description"": ""Look your best this fall in this V-neck, pleated peasant blouse with full sleeves. Comes in white, chocolate, forest green, and more."",
-    ""actualprice"": 285,
-    ""discountpercent"": 30,
+    ""summary"": ""V-neck pleated blouse with full sleeves."",
+    ""description"": ""V-neck pleated blouse with full sleeves."",
+    ""actualprice"": 95,
+    ""discountpercent"": 15,
     ""overallrating"": 4,
     ""previewimages"": [ ""Image2.png"", ""Image2.png"", ""Image2.png"", ""Image2.png"", ""Image2.png"" ],
     ""reviews"": [],
@@ -70,9 +70,9 @@ namespace EssentialMAUIUIKit
     ""id"": 3,
     ""previewimage"": ""Image3.png"",
     ""name"": ""High-Waisted Skirt"",
-    ""summary"": ""Available in khaki, taupe, and dove gray, this high-waisted, cotton skirt hits just below the knees."",
-    ""description"": ""Available in khaki, taupe, and dove gray, this high-waisted, cotton skirt hits just below the knees."",
-    ""actualprice"": 220,
+    ""summary"": ""Cotton skirt in khaki, taupe, gray."",
+    ""description"": ""Cotton skirt in khaki, taupe, gray."",
+    ""actualprice"": 98,
     ""discountpercent"": 15,
     ""overallrating"": 5,
     ""previewimages"": [ ""Image3.png"", ""Image3.png"", ""Image3.png"", ""Image3.png"", ""Image3.png"" ],
@@ -85,10 +85,10 @@ namespace EssentialMAUIUIKit
     ""id"": 4,
     ""previewimage"": ""Image4.png"",
     ""name"": ""Leather Backpack"",
-    ""summary"": ""This cute miniature pack has adjustable straps, allowing it to be carried on your back, or as a purse. The genuine leather comes in cream, black, mahogany, and wine."",
-    ""description"": ""This cute miniature pack has adjustable straps, allowing it to be carried on your back, or as a purse. The genuine leather comes in cream, black, mahogany, and wine."",
-    ""actualprice"": 285,
-    ""discountpercent"": 30,
+    ""summary"": ""Mini pack with adjustable straps."",
+    ""description"": ""Mini pack with adjustable straps."",
+    ""actualprice"": 99,
+    ""discountpercent"": 15,
     ""overallrating"": 4,
     ""previewimages"": [ ""Image4.png"", ""Image4.png"", ""Image4.png"", ""Image4.png"", ""Image4.png"" ],
     ""reviews"": [],
@@ -100,9 +100,9 @@ namespace EssentialMAUIUIKit
     ""id"": 5,
     ""previewimage"": ""Image5.png"",
     ""name"": ""Sweetheart Dress"",
-    ""summary"": ""Be bold in red with this fashionable, yet comfortable dress. Three-quarter-length sleeves are perfect for the in-between weather of autumn."",
-    ""description"": ""Be bold in red with this fashionable, yet comfortable dress. Three-quarter-length sleeves are perfect for the in-between weather of autumn."",
-    ""actualprice"": 220,
+    ""summary"": ""Bold red dress with 3/4 sleeves."",
+    ""description"": ""Bold red dress with 3/4 sleeves."",
+    ""actualprice"": 90,
     ""discountpercent"": 15,
     ""overallrating"": 5,
     ""previewimages"": [ ""Image5.png"", ""Image5.png"", ""Image5.png"", ""Image5.png"", ""Image5.png"" ],
@@ -114,17 +114,20 @@ namespace EssentialMAUIUIKit
 }";
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             var data = JsonSerializer.Deserialize<Dictionary<string, ObservableCollection<EssentialMAUIUIKit.Models.Product>>>(jsonData, options);
-            if (data == null)
+            if (data == null || !data.TryGetValue("products", out var products) || products == null)
             {
                 return;
             }
 
-            var products = data["products"];
             var previewImages = new List<string> { "Image1.png", "Image2.png", "Image3.png", "Image4.png", "Image5.png" };
             for (int i = 0; i < products.Count; i++)
             {
                 var product = products[i];
-                product.PreviewImage = previewImages[i];
+                if (i < previewImages.Count)
+                {
+                    product.PreviewImage = previewImages[i];
+                }
+
                 Products.Add(product);
             }
         }

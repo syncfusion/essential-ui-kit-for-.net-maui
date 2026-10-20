@@ -1,13 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="EssentialMAUIUIKit.Views.AboutUs.AboutUsWithScrollPage"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit"
-             xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
-             xmlns:model="clr-namespace:EssentialMAUIUIKit.Models.About"
-             x:DataType="local:AboutUsViewModel">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="EssentialMAUIUIKit.Views.AboutUs.AboutUsWithScrollPage" xmlns:local="clr-namespace:EssentialMAUIUIKit"
+    xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+    xmlns:model="clr-namespace:EssentialMAUIUIKit.Models.About"
+    xmlns:sfavatar="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+    xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+    x:DataType="local:AboutUsViewModel">
     <ContentView.BindingContext>
-        <local:AboutUsViewModel x:Name="viewModel"/>
+        <local:AboutUsViewModel x:Name="viewModel" />
     </ContentView.BindingContext>
     <ContentView.Resources>
         <Style TargetType="listView:ListViewItem">
@@ -17,88 +18,142 @@
                         <VisualState x:Name="Normal">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                        Value="Transparent" />
+            Value="Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                         <VisualState x:Name="PointerOver">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                        Value= "Transparent" />
+            Value="Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
                 </VisualStateGroupList>
             </Setter>
+
+        </Style>
+        <!--  VSM for nav SfButtons: transparent by default, subtle highlight on hover/press  -->
+        <Style x:Key="NavButtonStyle" TargetType="buttons:SfButton">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="CornerRadius" Value="0" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Background" Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+
         </Style>
     </ContentView.Resources>
 
     <ContentView.Content>
 
-        <ScrollView>
-            <Grid WidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
-                    RowDefinitions="Auto, *"
-                  RowSpacing="0">
+        <ScrollView VerticalScrollBarVisibility="Never" VerticalOptions="Fill">
+            <Grid RowDefinitions="Auto, Auto, *" RowSpacing="0">
+                <StackLayout IsVisible="{OnIdiom Phone=False, Default=true}" HorizontalOptions="Fill"
+                    Spacing="0" Grid.ColumnSpan="3" Grid.Row="0" VerticalOptions="Start">
+                    <Grid
+                        Background="{AppThemeBinding Light={DynamicResource BackgroundColorLight} ,Dark={DynamicResource BackgroundColorDark}}"
+                        ColumnDefinitions="*,Auto" HeightRequest="60">
+                        <!--  Navigation Items (Right Side)  -->
+                        <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
+                            <HorizontalStackLayout Padding="0,10,8,10">
 
+                                <buttons:SfButton Text="Home" Style="{StaticResource NavButtonStyle}"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                    FontFamily="Roboto-Medium" FontSize="14" HeightRequest="40" WidthRequest="58"
+                                    CornerRadius="0">
+
+                                </buttons:SfButton>
+
+
+                                <!--  About Button  -->
+                                <buttons:SfButton Text="About Us" Style="{StaticResource NavButtonStyle}"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                    FontFamily="Roboto-Medium" FontSize="14" Margin="4,0" HeightRequest="40"
+                                    WidthRequest="79" CornerRadius="0" />
+                                <!--  Contact Button  -->
+                                <buttons:SfButton Text="Contact Us" Style="{StaticResource NavButtonStyle}"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                    FontFamily="Roboto-Medium" FontSize="14" HeightRequest="40" WidthRequest="98"
+                                    CornerRadius="0" />
+
+                            </HorizontalStackLayout>
+
+                            <Border WidthRequest="40" HeightRequest="40" StrokeThickness="0"
+    StrokeShape="RoundRectangle 50">
+                                <buttons:SfButton Style="{StaticResource NavButtonStyle}">
+                                    <buttons:SfButton.Content>
+                                        <DataTemplate>
+                                            <Label Text="&#xE700;" FontFamily="UIKitIcons" VerticalOptions="Center"
+                    FontSize="20" HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center" HeightRequest="22" WidthRequest="22" />
+                                        </DataTemplate>
+                                    </buttons:SfButton.Content>
+
+                                </buttons:SfButton>
+                            </Border>
+                            <!--  Profile Image  -->
+                            <Border StrokeThickness="0" Padding="0,6,24,6" BackgroundColor="Transparent"
+                                x:Name="ProfileAvatarBorder">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="ProfileButton_Tapped" />
+                                </Border.GestureRecognizers>
+                                <sfavatar:SfAvatarView ContentType="Custom" ImageSource="profileavatar.png"
+                                    AvatarShape="Circle" AvatarSize="Small" />
+                            </Border>
+                        </HorizontalStackLayout>
+                    </Grid>
+                    <!--  SEPARATOR LINE  -->
+                    <BoxView BackgroundColor="{AppThemeBinding Light=#E5E1E3, Dark=#474648}" HeightRequest="1"
+                        HorizontalOptions="Fill" />
+                </StackLayout>
                 <!--  Product details  -->
-                <StackLayout
-                    x:Name="AboutUs"
-                    Grid.Row="0"
-                    Margin="0,0,0,23"
+                <StackLayout x:Name="AboutUs" Grid.Row="1"
+                    Margin="{OnIdiom Desktop='0,27,0,35', Tablet='0,30,0,32', Phone='0,38,0,32'}"
                     VerticalOptions="Start">
 
                     <!--  Header  -->
-                    <Label
-                        Margin="0,24,0,16"
-                        FontSize="20"
-                        LineHeight="{OnPlatform Android=1.25,
-                                            Default=-1}"
-                        Style="{DynamicResource TitleLabelStyle}"
-                        HorizontalTextAlignment="Center"
-                        Text="About Us"
-                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"/>
+                    <Label Margin="{OnIdiom Desktop='0,0,0,10', Tablet='0,0,0,12', Phone='0,0,0,24'}"
+                        FontSize="{OnIdiom Phone=22, Default=28}"
+                        FontFamily="{OnIdiom Phone=Roboto-Medium, Default= Roboto-Regular}" LineHeight="{OnPlatform Android=1.25,
+                                            Default=-1}" Style="{DynamicResource TitleLabelStyle}"
+                        HorizontalTextAlignment="Center" Text="About Us"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
 
                     <!--  Product description  -->
-                    <Label
-                        Margin="16,0,16,0"
-                        HorizontalOptions="Start"
-                        HorizontalTextAlignment="Center"
-                        Style="{DynamicResource DescriptionLabelStyle}"
-                        Text="Situated in the heart of Smith-town, Acme Products, Inc., has a long-standing tradition of selling the best products while providing the fastest service on the market. Since 1952, we have helped our customers identify their needs, understand their wants, and capture their dreams."
-                        TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"/>
+                    <Label HorizontalOptions="Center" FontFamily="Roboto-Regular" HorizontalTextAlignment="Center"
+                        FontSize="16" Margin="{OnIdiom Desktop='158,0,158,0', Tablet='80,0,80,0',Phone='16,0,16,0'}"
+                        Style="{DynamicResource DescriptionLabelStyle}" LineHeight="1.5" CharacterSpacing="0.5"
+                        Text="We are passionate about [industry/sector focus], driven by a commitment to quality, innovation, and customer satisfaction. Since our founding in [1996], we have dedicated ourselves to delivering exceptional products/services that meet the evolving needs of our clients. Our team of experienced professionals works tirelessly to push the boundaries of what's possible, ensuring that we stay ahead of industry trends while maintaining the highest standards of excellence. We believe in the power of collaboration, creativity, and integrity, which are the core values that guide everything."
+                        TextColor="{AppThemeBinding Light={DynamicResource ContentTextColorLight}, Dark={DynamicResource ContentTextColorDark}}" />
                 </StackLayout>
 
                 <!--  Background image  -->
-                <Border Grid.Row="1"
-                        StrokeShape="RoundRectangle 20,20,0,0"
-                        StrokeThickness="0">
+                <Border Grid.Row="2" StrokeShape="RoundRectangle 20,20,0,0" StrokeThickness="0">
                     <Border.Background>
-                        <LinearGradientBrush EndPoint="1,0">
-                            <GradientStop Color="#0D62D4"
-                                          Offset="0"/>
-                            <GradientStop Color="#9F3CDC"
-                                          Offset="1"/>
+                        <LinearGradientBrush EndPoint="0,1">
+                            <GradientStop Color="#513FF8" Offset="0" />
+                            <GradientStop Color="#AF1AC2" Offset="1" />
                         </LinearGradientBrush>
                     </Border.Background>
                     <!--  To display the team member's details  -->
-                    <listView:SfListView HeightRequest="600"
-                                         x:Name="OurTeam"
-                                         Grid.Row="1"
-                                         AutoFitMode="Height"
-                                         ItemsSource="{Binding EmployeeDetails}"
-                                         SelectionMode="None"
-                                         VerticalOptions="Start">
+                    <listView:SfListView ScrollBarVisibility="Never" x:Name="OurTeam" Margin="0,0,0,50" ItemSpacing="20"
+                        Grid.Row="1" AutoFitMode="Height" ItemsSource="{Binding EmployeeDetailsScrollPage}"
+                        IsScrollingEnabled="False" SelectionMode="None" VerticalOptions="Start">
 
                         <listView:SfListView.HeaderTemplate>
                             <DataTemplate>
                                 <!--  Header  -->
-                                <Label
-                                    Margin="0,30,0,5"
-                                    FontSize="20"
-                                    LineHeight="{OnPlatform Android=1.25,
-                                     Default=-1}"
-                                    Style="{DynamicResource TitleLabelStyle}"
-                                    Text="Our Team"
-                                    TextColor="{DynamicResource Gray-White}"/>
+                                <Label Margin="0,40,0,0" FontSize="{OnIdiom Phone=22, Default=  28}"
+                                    FontFamily="{OnIdiom Phone=Roboto-Medium, Default=Roboto-Regular}" LineHeight="{OnPlatform Android=1.27,
+                      Default=1.28}" Style="{DynamicResource TitleLabelStyle}" Text="Our Team"
+                                    HorizontalTextAlignment="Center" TextColor="{DynamicResource Gray-White}" />
                             </DataTemplate>
                         </listView:SfListView.HeaderTemplate>
 
@@ -106,56 +161,37 @@
                             <DataTemplate>
 
                                 <!--  Details of each employee  -->
-                                <StackLayout x:DataType="model:AboutUsModel" Margin="15,15,15,24"
-                                             Spacing="0">
+                                <StackLayout x:DataType="model:AboutUsModel" Spacing="0">
 
                                     <!--  Profile image  -->
-                                    <Border
-                                        Margin="0,0,0,8"
-                                        StrokeThickness="0"
-                                        StrokeShape="RoundRectangle 32"
-                                        HorizontalOptions="Center"
+                                    <sfavatar:SfAvatarView BackgroundColor="{DynamicResource Gray-200}"
+                                        HeightRequest="220" ImageSource="{Binding Image}" ContentType="Custom"
+                                        WidthRequest="220" CornerRadius="100" HorizontalOptions="Center"
                                         VerticalOptions="Center">
-                                        <Image
-                                            BackgroundColor="{DynamicResource Gray-200}"
-                                            HeightRequest="64"
-                                            WidthRequest="64">
-                                            <Image.Source>
-                                                <UriImageSource
-                                                    CacheValidity="14"
-                                                    CachingEnabled="true"
-                                                    Uri="{Binding Image}"/>
-                                            </Image.Source>
-                                        </Image>
-                                    </Border>
+
+                                    </sfavatar:SfAvatarView>
 
                                     <!--  Employee name  -->
-                                    <Label
-                                        FontSize="14"
-                                        Style="{DynamicResource TitleLabelStyle}"
-                                        Text="{Binding EmployeeName}"
-                                        TextColor="{DynamicResource Gray-White}"/>
+                                    <Label Style="{DynamicResource TitleLabelStyle}" Text="{Binding EmployeeName}"
+                                        Margin="0,20,0,8" TextColor="{DynamicResource Gray-White}" LineHeight="1.5"
+                                        CharacterSpacing="0.15" FontFamily="Roboto-Medium" FontSize="16" />
 
                                     <!--  Designation  -->
-                                    <Label
-                                        HorizontalOptions="Center"
-                                        HorizontalTextAlignment="Center"
-                                        Style="{DynamicResource SimpleLabelStyle}"
-                                        Text="{Binding Designation}"
-                                        TextColor="White"
-                                        VerticalOptions="Start"
-                                        VerticalTextAlignment="Start"/>
+                                    <Label HorizontalOptions="Center" HorizontalTextAlignment="Center"
+                                        Style="{DynamicResource SimpleLabelStyle}" Text="{Binding Designation}"
+                                        LineHeight="1.42" TextColor="{DynamicResource Gray-White}"
+                                        FontFamily="Roboto-Regular" CharacterSpacing="0.25" FontSize="14"
+                                        VerticalOptions="Start" VerticalTextAlignment="Start" />
 
                                 </StackLayout>
                             </DataTemplate>
                         </listView:SfListView.ItemTemplate>
 
                         <listView:SfListView.ItemsLayout>
-                            <listView:GridLayout SpanCount="3"/>
+                            <listView:GridLayout SpanCount="{OnIdiom Phone=1, Default=  3}" />
                         </listView:SfListView.ItemsLayout>
                     </listView:SfListView>
                 </Border>
-
 
             </Grid>
         </ScrollView>

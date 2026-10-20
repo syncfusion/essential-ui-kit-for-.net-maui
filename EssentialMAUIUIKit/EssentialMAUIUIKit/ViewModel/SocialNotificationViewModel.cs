@@ -1,14 +1,22 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text.Json;
+using System.Windows.Input;
+using EssentialMAUIUIKit.ViewModel;
+using Microsoft.Maui.Controls;
 
 namespace EssentialMAUIUIKit
 {
+    /// <summary>
+    /// View model bind surface for the social notifications page.
+    /// All seed data lives in <see cref="NotificationMockDataService"/>.
+    /// </summary>
     public class SocialNotificationViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<SocialNotificationItem>? recentSocialNotifications;
         private ObservableCollection<SocialNotificationItem>? earlierSocialNotifications;
+        private string? statusMessage;
+        private ICommand? markAllAsReadCommand;
 
         public SocialNotificationViewModel()
         {
@@ -35,61 +43,67 @@ namespace EssentialMAUIUIKit
             }
         }
 
+        /// <summary>
+        /// Optional status message shown when the data load fails.
+        /// </summary>
+        public string? StatusMessage
+        {
+            get => statusMessage;
+            set
+            {
+                statusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
         public void PopulateData()
         {
-            string jsonData = @"
-        {
-            ""recentSocialNotificationList"": [
-                {
-                    ""name"": ""John Doe sent you a friend request."",
-                    ""receivedTime"": ""2 mins ago"",
-                    ""profileImage"": ""ProfileImage2.png"",
-                    ""isRead"": false
-                },
-                {
-                    ""name"": ""You have a new friend suggestion: John Doe"",
-                    ""receivedTime"": ""5 mins ago"",
-                    ""profileImage"": ""ProfileImage2.png"",
-                    ""isRead"": false
-                }
-            ],
-            ""earlierSocialNotificationList"": [
-                {
-                    ""name"": ""Milton Lane invited you to like Syncfusion."",
-                    ""receivedTime"": ""4 hours ago"",
-                    ""profileImage"": ""ProfileImage1.png"",
-                    ""isRead"": true
-                },
-                {
-                    ""name"": ""Stella Blake commented on your post."",
-                    ""receivedTime"": ""8 hours ago"",
-                    ""profileImage"": ""ProfileImage5.png"",
-                    ""isRead"": false
-                },
-                {
-                    ""name"": ""Rosetta Lane and Luella Green like your photo."",
-                    ""receivedTime"": ""9 hours ago"",
-                    ""profileImage"": ""ProfileImage7.png"",
-                    ""isRead"": true
-                },
-                {
-                    ""name"": ""Darrell Silva likes your photo."",
-                    ""receivedTime"": ""9 hours ago"",
-                    ""profileImage"": ""ProfileImage6.png"",
-                    ""isRead"": true
-                }
-            ]
-        }";
+            var recent = NotificationMockDataService.GetRecentSocialNotifications();
+            var earlier = NotificationMockDataService.GetEarlierSocialNotifications();
 
-            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            var data = JsonSerializer.Deserialize<SocialNotificationList>(jsonData, options);
-            if (data?.RecentSocialNotificationList == null || data?.EarlierSocialNotificationList == null)
+            if (recent is null || earlier is null)
+            {
+                StatusMessage = "Unable to load notifications.";
+                RecentSocialNotifications = new ObservableCollection<SocialNotificationItem>();
+                EarlierSocialNotifications = new ObservableCollection<SocialNotificationItem>();
+                return;
+            }
+
+            RecentSocialNotifications = new ObservableCollection<SocialNotificationItem>(recent);
+            EarlierSocialNotifications = new ObservableCollection<SocialNotificationItem>(earlier);
+            StatusMessage = string.Empty;
+        }
+
+        /// <summary>
+        /// Command-driven "mark all as read" action. Drives the page's
+        /// "Mark all as read" affordance via <c>Command="{Binding MarkAllAsReadCommand}"</c>
+        /// and normalizes the read state across both lists.
+        /// </summary>
+        public ICommand? MarkAllAsReadCommand
+        {
+            get
+            {
+                return markAllAsReadCommand ??= new Command(() =>
+                {
+                    MarkRead(RecentSocialNotifications);
+                    MarkRead(EarlierSocialNotifications);
+                    OnPropertyChanged(nameof(RecentSocialNotifications));
+                    OnPropertyChanged(nameof(EarlierSocialNotifications));
+                });
+            }
+        }
+
+        private static void MarkRead(ObservableCollection<SocialNotificationItem>? items)
+        {
+            if (items is null)
             {
                 return;
             }
 
-            RecentSocialNotifications = new ObservableCollection<SocialNotificationItem>(data.RecentSocialNotificationList);
-            EarlierSocialNotifications = new ObservableCollection<SocialNotificationItem>(data.EarlierSocialNotificationList);
+            foreach (var item in items)
+            {
+                item.IsRead = true;
+            }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -100,26 +114,87 @@ namespace EssentialMAUIUIKit
         }
     }
 
-    public class SocialNotificationItem
+    /// <summary>
+    /// Lightweight social notification payload. The image path is exposed
+    /// as a fully-qualified URL via <see cref="ProfileImage"/> so bindings
+    /// never need to concatenate the image server path on the page side.
+    /// </summary>
+    public class SocialNotificationItem : INotifyPropertyChanged
     {
         private string? profileImage;
+        private bool isRead;
+        private string? semanticDescription;
+
         public string? Name { get; set; }
         public string? ReceivedTime { get; set; }
+
         public string? ProfileImage
         {
             get
             {
+                if (string.IsNullOrWhiteSpace(profileImage))
+                {
+                    return null;
+                }
+
+                if (profileImage.StartsWith("http://", System.StringComparison.OrdinalIgnoreCase) ||
+                    profileImage.StartsWith("https://", System.StringComparison.OrdinalIgnoreCase))
+                {
+                    return profileImage;
+                }
+
                 return App.ImageServerPath + profileImage;
             }
-            set { this.profileImage = value; }
+            set
+            {
+                if (profileImage == value)
+                {
+                    return;
+                }
+
+                profileImage = value;
+                semanticDescription = null;
+                OnPropertyChanged();
+            }
         }
 
-        public bool IsRead { get; set; }
-    }
+        public bool IsRead
+        {
+            get => isRead;
+            set
+            {
+                if (isRead == value)
+                {
+                    return;
+                }
 
-    public class SocialNotificationList
-    {
-        public List<SocialNotificationItem>? RecentSocialNotificationList { get; set; }
-        public List<SocialNotificationItem>? EarlierSocialNotificationList { get; set; }
+                isRead = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(SemanticDescription));
+            }
+        }
+
+        /// <summary>
+        /// Screen reader friendly description combining the notification
+        /// text, time, and read state.
+        /// </summary>
+        public string SemanticDescription
+        {
+            get => semanticDescription ??= string.IsNullOrWhiteSpace(ReceivedTime)
+                ? $"{Name}, {(isRead ? "read" : "unread")}"
+                : $"{Name}, {ReceivedTime}, {(isRead ? "read" : "unread")}";
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (propertyName is nameof(Name) or nameof(ReceivedTime) or nameof(IsRead))
+            {
+                semanticDescription = null;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SemanticDescription)));
+            }
+        }
     }
 }

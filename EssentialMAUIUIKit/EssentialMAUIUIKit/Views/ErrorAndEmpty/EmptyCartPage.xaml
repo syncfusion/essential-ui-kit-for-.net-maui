@@ -1,64 +1,75 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="EssentialMAUIUIKit.Views.ErrorAndEmpty.EmptyCartPage"
-             xmlns:button="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit">
-    <Grid RowDefinitions="*, Auto">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="EssentialMAUIUIKit.Views.ErrorAndEmpty.EmptyCartPage" xmlns:local="clr-namespace:EssentialMAUIUIKit"
+    xmlns:button="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
+    x:DataType="local:CartPageViewModel">
+    <Grid RowDefinitions="Auto,*">
+        <button:SfButton Margin="8" FontSize="20" HorizontalOptions="End" Text="{DynamicResource Close}" Grid.Row="0"
+            Style="{DynamicResource IconButtonStyle}" VerticalOptions="Start" />
+        <ScrollView Grid.Row="1">
+            <StackLayout Spacing="0" VerticalOptions="Center">
 
-        <button:SfButton
-            Margin="8"
-            FontSize="20"
-            HorizontalOptions="End"
-            Text="{DynamicResource Close}"
-            Style="{DynamicResource IconButtonStyle}"
-            VerticalOptions="Start"/>
+                <!--  Display the svg illustration image  -->
+                <Grid RowDefinitions="Auto">
+                    <Image Grid.Row="0" Grid.Column="0"
+                        Source="{AppThemeBinding Light=emptycartbackgroundicon.png, Dark=emptycartbackgroundicondark.png}"
+                        VerticalOptions="Center" HeightRequest="213" WidthRequest="213" />
+                    <Border Grid.Row="0" Grid.Column="0" StrokeThickness="0" Padding="27.3,27.3,12.3,12.3" Margin="0">
+                        <Grid HeightRequest="{OnIdiom Phone=209, Default=194}" WidthRequest="194">
+                            <Grid.Shadow>
+                                <Shadow Brush="#000000" Offset="{OnIdiom Phone='0,7', Default='0,15'}" Opacity="0.1"
+                                    Radius="8" />
+                            </Grid.Shadow>
+                            <Border Background="{AppThemeBinding Light=white, Dark=#1C1B1D}" HeightRequest="184"
+                                WidthRequest="184" StrokeShape="RoundRectangle 40" Stroke="Transparent" />
+                            <Border StrokeThickness="0" Padding="50.3, 37">
 
-        <StackLayout
-            BackgroundColor="Transparent"
-            Spacing="0"
-            VerticalOptions="Center">
+                                <Image Source="bag.png" VerticalOptions="Center" WidthRequest="93"
+                                    HeightRequest="120" />
+                            </Border>
+                            <Border WidthRequest="50" HeightRequest="50" StrokeThickness="0"
+                                Margin="108.6, 122.3, 34.3,20.7" Background="#7633DA" StrokeShape="RoundRectangle 50">
+                                <Image Source="{AppThemeBinding Light=plusicon.png, Dark=plusicondark.png}"
+                                    VerticalOptions="Center" HeightRequest="18.7" WidthRequest="18.7" />
+                            </Border>
+                        </Grid>
 
-            <!--  Display the svg illustration image  -->
+                    </Border>
 
-            <Image
-                x:Name="ErrorImage"
-                Source="emptycart.png"
-                VerticalOptions="Center"
-                WidthRequest="{x:OnIdiom Phone=200,
-                                      Desktop=300,
-                                      Tablet=300}"/>
+                </Grid>
 
-            <!--  Label to display header  -->
-            <Label
-                Margin="0,32,0,8"
-                FontSize="22"
-                Style="{DynamicResource TitleLabelStyle}"
-                Text="Cart is empty"
-                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                HorizontalTextAlignment="Center"
-                VerticalTextAlignment="Center"/>
 
-            <!--  Label to display content  -->
-            <Label
-                Margin="8,0,8,0"
-                FontSize="16"
-                LineHeight="{OnPlatform Android=1.25,
-                                     Default=-1}"
-                Style="{DynamicResource DescriptionLabelStyle}"
-                Text="You don't have any items in your cart"
-                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                VerticalTextAlignment="Center"
-                HorizontalTextAlignment="Center"/>
+                <!--  Label to display header  -->
+                <StackLayout Padding="{OnIdiom Phone='0,27,0,0', Default='0,24,0,0'}" Margin="0">
+                    <Label FontSize="{x:OnIdiom Phone=22,
+                     Desktop=24,
+                     Tablet=24}" FontFamily="{x:OnIdiom Phone=Roboto-Medium,
+                     Desktop=Roboto-Regular, 
+                     Tablet=Roboto-Regular}" Style="{DynamicResource TitleLabelStyle}" LineHeight="1.33"
+                        Text="Your cart is currently empty"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                        HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
 
-            <!--  Try again button  -->
-            <button:SfButton
-                Grid.Row="1"
-                Margin="0,50,0,24"
-                Style="{DynamicResource FormsButtonStyle}"
-                Text="Add items"
-                VerticalOptions="Start"
-                WidthRequest="245"/>
-        </StackLayout>
+                    <!--  Label to display content  -->
+                    <Border StrokeThickness="0" Padding="{OnIdiom Phone='0,12,0,16', Default='0,8,0,24'}">
+                        <Label FontSize="16" FontFamily="Roboto-Regular"
+                            WidthRequest="{OnPlatform Android=308, WinUI=380, MacCatalyst=380, iOS=308}" LineHeight="{OnPlatform Android=1.25,
+                                     Default=1.5}" Style="{DynamicResource DescriptionLabelStyle}"
+                            Text="Discover our latest collections and find something you'll love."
+                            TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                            HeightRequest="{OnPlatform iOS=57, MacCatalyst=57, Default=48}" CharacterSpacing="0.5"
+                            VerticalTextAlignment="Center" HorizontalTextAlignment="Center" />
+                    </Border>
 
+
+                    <!--  Try again button  -->
+                    <button:SfButton FontFamily="Roboto-Medium" Padding="0" Margin="0"
+                        Style="{DynamicResource FormsButtonStyle}" Text="Add items" FontSize="14"
+                        VerticalOptions="Start" HeightRequest="40" WidthRequest="189" />
+                </StackLayout>
+
+            </StackLayout>
+        </ScrollView>
     </Grid>
 </ContentView>

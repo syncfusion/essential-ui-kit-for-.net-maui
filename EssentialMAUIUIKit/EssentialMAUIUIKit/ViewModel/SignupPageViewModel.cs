@@ -22,30 +22,29 @@ namespace EssentialMAUIUIKit
         {
             this.Name = string.Empty;
             this.Email = string.Empty;
+            this.PhoneNumber = string.Empty;
             this.Password = string.Empty;
-            this.ConfirmPassword = string.Empty;
         }
 
         [Display(Name = "Name")]
         [DataFormDisplayOptions(ColumnSpan = 3)]
-        [Required(ErrorMessage = "Enter your name")]
+        [Required(ErrorMessage = "Enter your Name")]
         public string Name { get; set; }
 
         [Display(Name = "Email")]
         [DataFormDisplayOptions(ColumnSpan = 3)]
-        [EmailAddress(ErrorMessage = "Enter your email")]
+        [Required(ErrorMessage = "Enter your Email")]
         public string Email { get; set; }
 
         [Display(Name = "Phone Number")]
-        [DataType(DataType.PhoneNumber)]
-        [Required(ErrorMessage = "Enter the phone number")]
         [DataFormDisplayOptions(ColumnSpan = 3)]
-        public string Password { get; set; }
+        [Required(ErrorMessage = "Enter your Number")]
+        public string PhoneNumber { get; set; }
 
         [Display(Name = "Password")]
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Enter the password")]
         [DataFormDisplayOptions(ColumnSpan = 3)]
-        public string ConfirmPassword { get; set; }
+        [Required(ErrorMessage = "Enter your Password")]
+        public string Password { get; set; }
     }
 }

@@ -1,80 +1,444 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="EssentialMAUIUIKit.Views.Forms.BusinessRegistrationForm"
-             xmlns:button="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
-             xmlns:dataForm="clr-namespace:Syncfusion.Maui.DataForm;assembly=Syncfusion.Maui.DataForm"
-             xmlns:local="clr-namespace:EssentialMAUIUIKit"
-             x:DataType="local:BusinessRegistrationFormViewModel">
-
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="EssentialMAUIUIKit.Views.Forms.BusinessRegistrationForm"
+    xmlns:button="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
+    xmlns:input="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+    xmlns:combobox="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+    xmlns:local="clr-namespace:EssentialMAUIUIKit" x:DataType="local:BusinessRegistrationFormViewModel">
     <ContentView.BindingContext>
-        <local:BusinessRegistrationFormViewModel/>
+        <local:BusinessRegistrationFormViewModel x:Name="ViewModel" />
     </ContentView.BindingContext>
-
     <ContentView.Content>
-        <ScrollView>
+        <ScrollView VerticalScrollBarVisibility="Never">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="0.5*" />
                 </Grid.ColumnDefinitions>
-                <Image Source="businessregistrationbackground.png"
-                       Aspect="Fill"
-                       IsVisible="{OnPlatform Default=false, WinUI=True, MacCatalyst=true}"/>
-                <VerticalStackLayout Grid.Column="{OnPlatform Default=1, Android=0, iOS=0}"
-                                     Grid.ColumnSpan="{OnPlatform Default=2, WinUI=0, MacCatalyst=0}"
-                                     VerticalOptions="Center"
-                                     HorizontalOptions="Center"
-                                     Margin="{OnPlatform Default=30, Android=10, iOS=10}">
-                    <Label Text="Registration Form"
-                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                           HorizontalOptions="Center"
-                           FontFamily="Roboto-Medium"
-                           FontSize="Medium"/>
-                    <dataForm:SfDataForm x:Name="dataForm"
-                                         DataObject="{Binding ContactsInfo}"
-                                         MinimumHeightRequest="600"
-                                         LayoutType="TextInputLayout"
-                                         ValidationMode="PropertyChanged"
-                                         ColumnCount="2">
-                        <dataForm:SfDataForm.TextInputLayoutSettings>
-                            <dataForm:TextInputLayoutSettings ShowHelperText="True"
-                                                              OutlineCornerRadius="5">
-                                <dataForm:TextInputLayoutSettings.HelperTextStyle>
-                                    <dataForm:DataFormTextStyle FontFamily="Roboto-Regular"/>
-                                </dataForm:TextInputLayoutSettings.HelperTextStyle>
-                            </dataForm:TextInputLayoutSettings>
-                        </dataForm:SfDataForm.TextInputLayoutSettings>
-                        <dataForm:SfDataForm.ErrorLabelTextStyle>
-                            <dataForm:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
-                                                        FontFamily="Roboto-Regular"/>
-                        </dataForm:SfDataForm.ErrorLabelTextStyle>
-                        <dataForm:SfDataForm.LabelTextStyle>
-                            <dataForm:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}"
-                                                        FontFamily="Roboto-Regular"/>
-                        </dataForm:SfDataForm.LabelTextStyle>
-                        <dataForm:SfDataForm.ValidMessageLabelTextStyle>
-                            <dataForm:DataFormTextStyle FontFamily="Roboto-Regular"/>
-                        </dataForm:SfDataForm.ValidMessageLabelTextStyle>
-                        <dataForm:SfDataForm.EditorTextStyle>
-                            <dataForm:DataFormTextStyle TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
-                                                        FontFamily="Roboto-Regular"/>
-                        </dataForm:SfDataForm.EditorTextStyle>
-                    </dataForm:SfDataForm>
-                    <button:SfButton x:Name="submitButton"
-                                     Text="SUBMIT"
-                                     HorizontalOptions="Fill"
-                                     Margin="20,0,20,30"
-                                     Style="{DynamicResource FormsButtonStyle}"/>
-                </VerticalStackLayout>
+                <Grid Margin="0" Padding="0">
+                    <Image Source="businessregistrationbackground.png" Aspect="Fill"
+                        IsVisible="{OnPlatform Default=false, WinUI=True, MacCatalyst=true}" />
+                    <Border Background="black" Opacity="0.5"
+                        IsVisible="{OnPlatform Default=false, WinUI=True, MacCatalyst=true}" StrokeThickness="0">
+                    </Border>
+                </Grid>
+                <StackLayout Grid.Column="{OnPlatform Default=1, Android=0, iOS=0}"
+                    Grid.ColumnSpan="{OnPlatform Default=2, WinUI=0, MacCatalyst=0}" VerticalOptions="Start"
+                    HorizontalOptions="Center">
+                    <Label Text="Registration Form" Margin="0,40,0,0"
+                        IsVisible="{OnPlatform Android=false,Default=true}"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                        HorizontalOptions="Center" FontSize="22" FontFamily="Roboto-Medium" LineHeight="1.42" />
+                    <StackLayout Margin="{OnIdiom Phone='16,24,15,12', Desktop='98,20,72,76', Tablet='319,20,319,40' }">
+                        <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill"
+                            Margin="{OnPlatform Android='0,0,0,16', Default='0,0,0,16'}">
+                            <Label Text="Business owner name" FontFamily="Roboto-Regular" FontSize="14"
+                                LineHeight="1.42" CharacterSpacing="0.25"
+                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                VerticalTextAlignment="Center" />
+                            <input:SfTextInputLayout x:Name="NameInputLayout" Hint="Full Name" ContainerType="Outlined"
+                                OutlineCornerRadius="4" FocusedStrokeThickness="1" UnfocusedStrokeThickness="1"
+                                InputViewPadding="16, 0, 16, 0" EnableFloating="False"
+                                ReserveSpaceForAssistiveLabels="{Binding ContactsInfo.ReserveBusinessOwnerNameError}"
+                                ShowHelperText="False" ShowHint="True"
+                                ErrorText="{Binding ContactsInfo.BusinessOwnerNameError}"
+                                HasError="{Binding ContactsInfo.HasBusinessOwnerNameError}"
+                                Stroke="{AppThemeBinding Light={DynamicResource ContentTextColorDark}, Dark={DynamicResource SecondaryTextColorLight}}"
+                                HorizontalOptions="Fill" VerticalOptions="Fill">
+                                <input:SfTextInputLayout.HintLabelStyle>
+                                    <input:LabelStyle FontSize="16" FontFamily="Roboto-Regular"
+                                        TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}" />
+                                </input:SfTextInputLayout.HintLabelStyle>
+                                <Entry x:Name="NameEntry" Text="{Binding ContactsInfo.BusinessOwnerName}" FontSize="16"
+                                    HorizontalOptions="Fill" />
+                                <input:SfTextInputLayout.ErrorLabelStyle>
+                                    <input:LabelStyle TextColor="#D32F2F" />
+                                </input:SfTextInputLayout.ErrorLabelStyle>
+                            </input:SfTextInputLayout>
+                        </StackLayout>
+
+
+                        <Grid ColumnSpacing="18" IsVisible="{OnPlatform Default=true, Android=false,iOS=false}"
+                            Margin="{OnPlatform Android='0,0,0,24', Default='0,0,0,16'}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <!-- Business Name - Left Column -->
+                            <StackLayout Grid.Column="0" HorizontalOptions="Fill" VerticalOptions="Fill">
+                                <Label Text="Business name" FontFamily="Roboto-Regular" FontSize="14"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                    VerticalTextAlignment="Center" LineHeight="1.42" CharacterSpacing="0.25" />
+                                <input:SfTextInputLayout x:Name="BusinessNameInputLayout" Hint="Name"
+                                    ReserveSpaceForAssistiveLabels="{Binding ContactsInfo.ReserveBusinessNameError}"
+                                    OutlineCornerRadius="4" FocusedStrokeThickness="1" UnfocusedStrokeThickness="1"
+                                    InputViewPadding="16, 0, 16, 0" EnableFloating="False" ContainerType="Outlined"
+                                    ShowHelperText="False" ShowHint="True"
+                                    ErrorText="{Binding ContactsInfo.BusinessNameError}"
+                                    HasError="{Binding ContactsInfo.HasBusinessNameError}"
+                                    Stroke="{AppThemeBinding Light={DynamicResource ContentTextColorDark}, Dark={DynamicResource SecondaryTextColorLight}}"
+                                    HorizontalOptions="Fill" VerticalOptions="Fill">
+                                    <input:SfTextInputLayout.HintLabelStyle>
+                                        <input:LabelStyle FontSize="16" FontFamily="Roboto-Regular"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}" />
+                                    </input:SfTextInputLayout.HintLabelStyle>
+                                    <Entry x:Name="BusinessNameEntry" Text="{Binding ContactsInfo.BusinessName}"
+                                        FontSize="16" HorizontalOptions="Fill" />
+                                    <input:SfTextInputLayout.ErrorLabelStyle>
+                                        <input:LabelStyle TextColor="#D32F2F" />
+                                    </input:SfTextInputLayout.ErrorLabelStyle>
+                                </input:SfTextInputLayout>
+
+                            </StackLayout>
+                            <!-- Type of Business - Right Column (ComboBox) -->
+                            <StackLayout Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill">
+                                <Label Text="Type of business" FontFamily="Roboto-Regular" FontSize="14"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                    VerticalTextAlignment="Center" LineHeight="1.42" CharacterSpacing="0.25" />
+                                <input:SfTextInputLayout x:Name="BusinessTypeInputLayout" Hint="Business Type"
+                                    ContainerType="Outlined" ShowHelperText="False" ShowHint="True"
+                                    OutlineCornerRadius="4" FocusedStrokeThickness="1" UnfocusedStrokeThickness="1"
+                                    InputViewPadding="16, 6, 16, 6" EnableFloating="False"
+                                    ReserveSpaceForAssistiveLabels="{Binding ContactsInfo.ReserveBusinessTypeError}"
+                                    ErrorText="{Binding ContactsInfo.BusinessTypeError}"
+                                    HasError="{Binding ContactsInfo.HasBusinessTypeError}"
+                                    Stroke="{AppThemeBinding Light={DynamicResource ContentTextColorDark}, Dark={DynamicResource SecondaryTextColorLight}}"
+                                    HorizontalOptions="Fill" VerticalOptions="Fill">
+                                    <input:SfTextInputLayout.HintLabelStyle>
+                                        <input:LabelStyle FontSize="16" FontFamily="Roboto-Regular"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}" />
+                                    </input:SfTextInputLayout.HintLabelStyle>
+                                    <combobox:SfComboBox x:Name="BusinessTypeComboBox"
+                                        Text="{Binding ContactsInfo.BusinessType}" FontSize="16"
+                                        DropDownBackground="white"
+                                        SelectedItem="{Binding ContactsInfo.BusinessType, Mode=TwoWay}">
+                                        <combobox:SfComboBox.ItemsSource>
+                                            <x:Array Type="{x:Type x:String}">
+                                                <x:String>Retail</x:String>
+                                                <x:String>Manufacturing</x:String>
+                                                <x:String>Services</x:String>
+                                            </x:Array>
+                                        </combobox:SfComboBox.ItemsSource>
+                                    </combobox:SfComboBox>
+                                    <input:SfTextInputLayout.ErrorLabelStyle>
+                                        <input:LabelStyle TextColor="#D32F2F" />
+                                    </input:SfTextInputLayout.ErrorLabelStyle>
+                                </input:SfTextInputLayout>
+
+                            </StackLayout>
+                        </Grid>
+
+
+                        <!-- Business Name & Type of Business - For Android (Vertical) -->
+                        <StackLayout Spacing="15" IsVisible="{OnPlatform Default=false, Android=true, iOS=true}"
+                            Margin="{OnPlatform Android='0,0,0,16', Default='0,0,0,16'}">
+                            <!-- Business Name -->
+                            <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill">
+                                <Label Text="Business name" FontFamily="Roboto-Regular" FontSize="14"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                    VerticalTextAlignment="Center" LineHeight="1.42" CharacterSpacing="0.25" />
+                                <input:SfTextInputLayout Hint="Name" ContainerType="Outlined" ShowHelperText="False"
+                                    ShowHint="True" OutlineCornerRadius="4" FocusedStrokeThickness="1"
+                                    UnfocusedStrokeThickness="1" InputViewPadding="16, 0, 16, 0" EnableFloating="False"
+                                    ReserveSpaceForAssistiveLabels="{Binding ContactsInfo.ReserveBusinessNameError}"
+                                    ErrorText="{Binding ContactsInfo.BusinessNameError}"
+                                    HasError="{Binding ContactsInfo.HasBusinessNameError}"
+                                    Stroke="{AppThemeBinding Light={DynamicResource ContentTextColorDark}, Dark={DynamicResource SecondaryTextColorLight}}"
+                                    HorizontalOptions="Fill" VerticalOptions="Fill">
+                                    <input:SfTextInputLayout.HintLabelStyle>
+                                        <input:LabelStyle FontSize="16" FontFamily="Roboto-Regular"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}" />
+                                    </input:SfTextInputLayout.HintLabelStyle>
+                                    <Entry Text="{Binding ContactsInfo.BusinessName}" FontSize="16"
+                                        HorizontalOptions="Fill" />
+                                    <input:SfTextInputLayout.ErrorLabelStyle>
+                                        <input:LabelStyle TextColor="#D32F2F" />
+                                    </input:SfTextInputLayout.ErrorLabelStyle>
+                                </input:SfTextInputLayout>
+
+                            </StackLayout>
+                            <!-- Type of Business -->
+                            <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill">
+                                <Label Text="Type of business" FontFamily="Roboto-Regular" FontSize="14"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                    VerticalTextAlignment="Center" LineHeight="1.42" CharacterSpacing="0.25" />
+                                <input:SfTextInputLayout Hint="Business Type" ContainerType="Outlined"
+                                    ShowHelperText="False" ShowHint="True" OutlineCornerRadius="4"
+                                    FocusedStrokeThickness="1" UnfocusedStrokeThickness="1"
+                                    InputViewPadding="16, 12, 16, 12" EnableFloating="False"
+                                    ReserveSpaceForAssistiveLabels="{Binding ContactsInfo.ReserveBusinessTypeError}"
+                                    ErrorText="{Binding ContactsInfo.BusinessTypeError}"
+                                    HasError="{Binding ContactsInfo.HasBusinessTypeError}"
+                                    Stroke="{AppThemeBinding Light={DynamicResource ContentTextColorDark}, Dark={DynamicResource SecondaryTextColorLight}}"
+                                    HorizontalOptions="Fill" VerticalOptions="Fill">
+                                    <input:SfTextInputLayout.HintLabelStyle>
+                                        <input:LabelStyle FontSize="16" FontFamily="Roboto-Regular"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}" />
+                                    </input:SfTextInputLayout.HintLabelStyle>
+                                    <combobox:SfComboBox Text="{Binding ContactsInfo.BusinessType}" FontSize="16"
+                                        DropDownCornerRadius="4" DropDownBackground="white"
+                                        SelectedItem="{Binding ContactsInfo.BusinessType, Mode=TwoWay}">
+                                        <combobox:SfComboBox.ItemsSource>
+                                            <x:Array Type="{x:Type x:String}">
+                                                <x:String>Retail</x:String>
+                                                <x:String>Manufacturing</x:String>
+                                                <x:String>Services</x:String>
+                                            </x:Array>
+                                        </combobox:SfComboBox.ItemsSource>
+                                    </combobox:SfComboBox>
+                                    <input:SfTextInputLayout.ErrorLabelStyle>
+                                        <input:LabelStyle TextColor="#D32F2F" />
+                                    </input:SfTextInputLayout.ErrorLabelStyle>
+                                </input:SfTextInputLayout>
+
+                            </StackLayout>
+                        </StackLayout>
+
+                        <!-- Email ID - Full Width -->
+                        <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill"
+                            Margin="{OnPlatform Android='0,0,0,16', Default='0,0,0,16'}">
+                            <Label Text="Email ID" FontFamily="Roboto-Regular" FontSize="14"
+                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                VerticalTextAlignment="Center" LineHeight="1.42" CharacterSpacing="0.25" />
+                            <input:SfTextInputLayout x:Name="EmailInputLayout" Hint="Email" ContainerType="Outlined"
+                                ShowHelperText="False" ShowHint="True"
+                                ReserveSpaceForAssistiveLabels="{Binding ContactsInfo.ReserveBusinessEmailError}"
+                                OutlineCornerRadius="4" FocusedStrokeThickness="1" UnfocusedStrokeThickness="1"
+                                InputViewPadding="16, 0, 16, 0" EnableFloating="False"
+                                ErrorText="{Binding ContactsInfo.BusinessEmailError}"
+                                HasError="{Binding ContactsInfo.HasBusinessEmailError}"
+                                Stroke="{AppThemeBinding Light={DynamicResource ContentTextColorDark}, Dark={DynamicResource SecondaryTextColorLight}}"
+                                HorizontalOptions="Fill" VerticalOptions="Fill">
+                                <input:SfTextInputLayout.HintLabelStyle>
+                                    <input:LabelStyle FontSize="16" FontFamily="Roboto-Regular"
+                                        TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}" />
+                                </input:SfTextInputLayout.HintLabelStyle>
+                                <Entry x:Name="EmailEntry" Text="{Binding ContactsInfo.BusinessEmail}" FontSize="16"
+                                    HorizontalOptions="Fill" Keyboard="Email" />
+                                <input:SfTextInputLayout.ErrorLabelStyle>
+                                    <input:LabelStyle TextColor="#D32F2F" />
+                                </input:SfTextInputLayout.ErrorLabelStyle>
+                            </input:SfTextInputLayout>
+
+                        </StackLayout>
+                        <!-- Phone Number & Country - For other platforms (2 Column Grid) -->
+
+                        <Grid ColumnSpacing="15" IsVisible="{OnPlatform Default=true, Android=false,iOS=false}"
+                            Margin="{OnPlatform Android='0,0,0,24', Default='0,0,0,16'}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <!-- Phone Number - Left Column -->
+                            <StackLayout Grid.Column="0" HorizontalOptions="Fill" VerticalOptions="Fill">
+                                <Label Text="Phone number" FontFamily="Roboto-Regular" FontSize="14"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                    VerticalTextAlignment="Center" LineHeight="1.42" CharacterSpacing="0.25" />
+                                <input:SfTextInputLayout x:Name="PhoneInputLayout" Hint="Phone Number"
+                                    ContainerType="Outlined" ShowHelperText="False" ShowHint="True"
+                                    ReserveSpaceForAssistiveLabels="{Binding ContactsInfo.ReserveBusinessPhoneError}"
+                                    OutlineCornerRadius="4" FocusedStrokeThickness="1" UnfocusedStrokeThickness="1"
+                                    InputViewPadding="16, 0, 16, 0" EnableFloating="False"
+                                    ErrorText="{Binding ContactsInfo.BusinessPhoneNumberError}"
+                                    HasError="{Binding ContactsInfo.HasBusinessPhoneNumberError}"
+                                    Stroke="{AppThemeBinding Light={DynamicResource ContentTextColorDark}, Dark={DynamicResource SecondaryTextColorLight}}"
+                                    HorizontalOptions="Fill" VerticalOptions="Fill">
+                                    <input:SfTextInputLayout.HintLabelStyle>
+                                        <input:LabelStyle FontSize="16" FontFamily="Roboto-Regular"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}" />
+                                    </input:SfTextInputLayout.HintLabelStyle>
+                                    <Entry x:Name="PhoneEntry" Text="{Binding ContactsInfo.BusinessPhoneNumber}"
+                                        FontSize="16" HorizontalOptions="Fill" Keyboard="Telephone"
+                                        TextChanged="PhoneNumber_TextChanged" MaxLength="10" />
+                                    <input:SfTextInputLayout.ErrorLabelStyle>
+                                        <input:LabelStyle TextColor="#D32F2F" />
+                                    </input:SfTextInputLayout.ErrorLabelStyle>
+                                </input:SfTextInputLayout>
+
+                            </StackLayout>
+                            <!-- Country - Right Column (ComboBox) -->
+                            <StackLayout Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill">
+                                <Label Text="Country" FontFamily="Roboto-Regular" FontSize="14"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                    VerticalTextAlignment="Center" LineHeight="1.42" CharacterSpacing="0.25" />
+                                <input:SfTextInputLayout x:Name="CountryInputLayout" Hint="Select country"
+                                    ContainerType="Outlined" ShowHelperText="False" ShowHint="True"
+                                    ReserveSpaceForAssistiveLabels="{Binding ContactsInfo.ReserveBusinessCountryError}"
+                                    OutlineCornerRadius="4" FocusedStrokeThickness="1" UnfocusedStrokeThickness="1"
+                                    InputViewPadding="16, 6, 16, 6" EnableFloating="False"
+                                    ErrorText="{Binding ContactsInfo.BusinessCountryError}"
+                                    HasError="{Binding ContactsInfo.HasBusinessCountryError}"
+                                    Stroke="{AppThemeBinding Light={DynamicResource ContentTextColorDark}, Dark={DynamicResource SecondaryTextColorLight}}"
+                                    HorizontalOptions="Fill" VerticalOptions="Fill">
+                                    <input:SfTextInputLayout.HintLabelStyle>
+                                        <input:LabelStyle FontSize="16" FontFamily="Roboto-Regular"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}" />
+                                    </input:SfTextInputLayout.HintLabelStyle>
+                                    <combobox:SfComboBox x:Name="CountryComboBox"
+                                        Text="{Binding ContactsInfo.BusinessCountry}" FontSize="16"
+                                        DropDownCornerRadius="4" DropDownBackground="white"
+                                        SelectedItem="{Binding ContactsInfo.BusinessCountry, Mode=TwoWay}">
+                                        <combobox:SfComboBox.ItemsSource>
+                                            <x:Array Type="{x:Type x:String}">
+                                                <x:String>United States</x:String>
+                                                <x:String>United Kingdom</x:String>
+                                                <x:String>Canada</x:String>
+                                            </x:Array>
+                                        </combobox:SfComboBox.ItemsSource>
+                                    </combobox:SfComboBox>
+                                    <input:SfTextInputLayout.ErrorLabelStyle>
+                                        <input:LabelStyle TextColor="#D32F2F" />
+                                    </input:SfTextInputLayout.ErrorLabelStyle>
+                                </input:SfTextInputLayout>
+
+                            </StackLayout>
+                        </Grid>
+                        <!-- Phone Number & Country - For Android (Vertical) -->
+                        <StackLayout Spacing="15" IsVisible="{OnPlatform Default=false, Android=true,iOS=true}"
+                            Margin="{OnPlatform Android='0,0,0,16', Default='0,0,0,16'}">
+                            <!-- Phone Number -->
+                            <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill">
+                                <Label Text="Phone number" FontFamily="Roboto-Regular" FontSize="14"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                    VerticalTextAlignment="Center" LineHeight="1.42" CharacterSpacing="0.25" />
+                                <input:SfTextInputLayout x:Name="PhoneInputLayoutAndroid" Hint="Phone Number"
+                                    ContainerType="Outlined" ShowHelperText="False" ShowHint="True"
+                                    ReserveSpaceForAssistiveLabels="{Binding ContactsInfo.ReserveBusinessPhoneError}" 
+                                    OutlineCornerRadius="4" FocusedStrokeThickness="1" UnfocusedStrokeThickness="1"
+                                    InputViewPadding="16, 0, 16, 0" EnableFloating="False"
+                                    ErrorText="{Binding ContactsInfo.BusinessPhoneNumberError}"
+                                    HasError="{Binding ContactsInfo.HasBusinessPhoneNumberError}"
+                                    Stroke="{AppThemeBinding Light={DynamicResource ContentTextColorDark}, Dark={DynamicResource SecondaryTextColorLight}}"
+                                    HorizontalOptions="Fill" VerticalOptions="Fill">
+                                    <input:SfTextInputLayout.HintLabelStyle>
+                                        <input:LabelStyle FontSize="16" FontFamily="Roboto-Regular"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}" />
+                                    </input:SfTextInputLayout.HintLabelStyle>
+                                    <Entry x:Name="PhoneEntryAndroid" Text="{Binding ContactsInfo.BusinessPhoneNumber}"
+                                        FontSize="16" HorizontalOptions="Fill" Keyboard="Telephone"
+                                        TextChanged="PhoneNumber_TextChanged" MaxLength="10" />
+                                    <input:SfTextInputLayout.ErrorLabelStyle>
+                                        <input:LabelStyle TextColor="#D32F2F" />
+                                    </input:SfTextInputLayout.ErrorLabelStyle>
+                                </input:SfTextInputLayout>
+
+                            </StackLayout>
+                            <!-- Country -->
+                            <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill">
+                                <Label Text="Country" FontFamily="Roboto-Regular" FontSize="14"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                    VerticalTextAlignment="Center" LineHeight="1.42" CharacterSpacing="0.25" />
+                                <input:SfTextInputLayout x:Name="CountryInputLayoutAndroid" Hint="Select country"
+                                    ContainerType="Outlined" ShowHelperText="False" ShowHint="True"
+                                    ReserveSpaceForAssistiveLabels="{Binding ContactsInfo.ReserveBusinessCountryError}"
+                                    OutlineCornerRadius="4" FocusedStrokeThickness="1" UnfocusedStrokeThickness="1"
+                                    InputViewPadding="16, 12, 16, 12" EnableFloating="False"
+                                    ErrorText="{Binding ContactsInfo.BusinessCountryError}"
+                                    HasError="{Binding ContactsInfo.HasBusinessCountryError}"
+                                    Stroke="{AppThemeBinding Light={DynamicResource ContentTextColorDark}, Dark={DynamicResource SecondaryTextColorLight}}"
+                                    HorizontalOptions="Fill" VerticalOptions="Fill">
+                                    <input:SfTextInputLayout.HintLabelStyle>
+                                        <input:LabelStyle FontSize="16" FontFamily="Roboto-Regular"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}" />
+                                    </input:SfTextInputLayout.HintLabelStyle>
+                                    <combobox:SfComboBox x:Name="CountryComboBoxAndroid"
+                                        Text="{Binding ContactsInfo.BusinessCountry}" FontSize="16"
+                                        DropDownCornerRadius="4" DropDownBackground="white"
+                                        SelectedItem="{Binding ContactsInfo.BusinessCountry, Mode=TwoWay}">
+                                        <combobox:SfComboBox.ItemsSource>
+                                            <x:Array Type="{x:Type x:String}">
+                                                <x:String>United States</x:String>
+                                                <x:String>United Kingdom</x:String>
+                                                <x:String>Canada</x:String>
+                                            </x:Array>
+                                        </combobox:SfComboBox.ItemsSource>
+                                    </combobox:SfComboBox>
+                                    <input:SfTextInputLayout.ErrorLabelStyle>
+                                        <input:LabelStyle TextColor="#D32F2F" />
+                                    </input:SfTextInputLayout.ErrorLabelStyle>
+                                </input:SfTextInputLayout>
+
+                            </StackLayout>
+                        </StackLayout>
+                        <!-- State & City (2 Column Grid) -->
+                        <Grid ColumnSpacing="15" Margin="{OnPlatform Android='0,0,0,28', Default='0,0,0,40'}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <!-- State - Left Column (Dropdown) -->
+                            <!-- State - Left Column (ComboBox) -->
+                            <StackLayout Grid.Column="0" HorizontalOptions="Fill" VerticalOptions="Fill">
+                                <Label Text="State" FontFamily="Roboto-Regular" FontSize="14"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                    VerticalTextAlignment="Center" LineHeight="1.42" CharacterSpacing="0.25" />
+                                <input:SfTextInputLayout x:Name="StateInputLayout" Hint="Select State"
+                                    ReserveSpaceForAssistiveLabels="{Binding ContactsInfo.ReserveBusinessStateError}"
+                                    OutlineCornerRadius="4" FocusedStrokeThickness="1" UnfocusedStrokeThickness="1"
+                                    InputViewPadding="{OnIdiom Phone='16,12,16,12', Desktop='16,6,16,6'}" EnableFloating="False"
+                                    ErrorText="{Binding ContactsInfo.BusinessStateError}"
+                                    HasError="{Binding ContactsInfo.HasBusinessStateError}" ContainerType="Outlined"
+                                    ShowHelperText="False" ShowHint="True"
+                                    Stroke="{AppThemeBinding Light={DynamicResource ContentTextColorDark}, Dark={DynamicResource SecondaryTextColorLight}}"
+                                    HorizontalOptions="Fill" VerticalOptions="Fill">
+                                    <input:SfTextInputLayout.HintLabelStyle>
+                                        <input:LabelStyle FontSize="16" FontFamily="Roboto-Regular"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}" />
+                                    </input:SfTextInputLayout.HintLabelStyle>
+                                    <combobox:SfComboBox x:Name="StateComboBox"
+                                        Text="{Binding ContactsInfo.BusinessState}" FontSize="16"
+                                        DropDownCornerRadius="4" DropDownBackground="white"
+                                        SelectedItem="{Binding ContactsInfo.BusinessState, Mode=TwoWay}">
+                                        <combobox:SfComboBox.ItemsSource>
+                                            <x:Array Type="{x:Type x:String}">
+                                                <x:String>California</x:String>
+                                                <x:String>Texas</x:String>
+                                                <x:String>New York</x:String>
+                                            </x:Array>
+                                        </combobox:SfComboBox.ItemsSource>
+                                    </combobox:SfComboBox>
+                                    <input:SfTextInputLayout.ErrorLabelStyle>
+                                        <input:LabelStyle TextColor="#D32F2F" />
+                                    </input:SfTextInputLayout.ErrorLabelStyle>
+                                </input:SfTextInputLayout>
+
+                            </StackLayout>
+                            <!-- City - Right Column -->
+                            <StackLayout Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill">
+                                <Label Text="City" FontFamily="Roboto-Regular" FontSize="14"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                    VerticalTextAlignment="Center" LineHeight="1.42" CharacterSpacing="0.25" />
+                                <input:SfTextInputLayout x:Name="CityInputLayout" Hint="City" ContainerType="Outlined"
+                                    ShowHelperText="False" ShowHint="True"
+                                    ReserveSpaceForAssistiveLabels="{Binding ContactsInfo.ReserveBusinessCityError}"
+                                    OutlineCornerRadius="4" FocusedStrokeThickness="1" UnfocusedStrokeThickness="1"
+                                    InputViewPadding="16, 0, 16, 0" EnableFloating="False"
+                                    ErrorText="{Binding ContactsInfo.BusinessCityError}"
+                                    HasError="{Binding ContactsInfo.HasBusinessCityError}"
+                                    Stroke="{AppThemeBinding Light={DynamicResource ContentTextColorDark}, Dark={DynamicResource SecondaryTextColorLight}}"
+                                    HorizontalOptions="Fill" VerticalOptions="Fill">
+                                    <input:SfTextInputLayout.HintLabelStyle>
+                                        <input:LabelStyle FontSize="16" FontFamily="Roboto-Regular"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PlaceholderTextColorLight}, Dark={DynamicResource PlaceholderTextColorDark}}" />
+                                    </input:SfTextInputLayout.HintLabelStyle>
+                                    <Entry x:Name="CityEntry" Text="{Binding ContactsInfo.BusinessCity}" FontSize="16"
+                                        HorizontalOptions="Fill" />
+                                    <input:SfTextInputLayout.ErrorLabelStyle>
+                                        <input:LabelStyle TextColor="#D32F2F" />
+                                    </input:SfTextInputLayout.ErrorLabelStyle>
+                                </input:SfTextInputLayout>
+                            </StackLayout>
+                        </Grid>
+                        <button:SfButton x:Name="submitButton" Text="Submit" HorizontalOptions="Fill" FontSize="14"
+                            Style="{DynamicResource FormsButtonStyle}" Command="{Binding SubmitCommand}" />
+                    </StackLayout>
+
+                </StackLayout>
             </Grid>
         </ScrollView>
-
-
     </ContentView.Content>
-
     <ContentView.Behaviors>
-        <local:BusinessRegistrationFormBehavior/>
+        <local:BusinessRegistrationFormBehavior />
     </ContentView.Behaviors>
-
 </ContentView>

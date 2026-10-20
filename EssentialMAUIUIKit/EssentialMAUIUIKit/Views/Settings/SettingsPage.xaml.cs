@@ -5,7 +5,8 @@ namespace EssentialMAUIUIKit.Views.Settings
         public SettingsPage()
         {
             InitializeComponent();
-            this.profileImage.Source = App.ImageServerPath + "ProfileImage1.png";
+            this.profileImage.ImageSource = App.ImageServerPath + "ProfileImage1.png";
+            this.HelpPage.Content = new HelpPage();
         }
     }
 }

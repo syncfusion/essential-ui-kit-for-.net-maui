@@ -36,7 +36,6 @@ namespace EssentialMAUIUIKit
 
         [Display(Name = "Phone Number")]
         [DataFormDisplayOptions(ColumnSpan = 2)]
-        [DataType(DataType.PhoneNumber)]
         [Required(ErrorMessage = "Enter your phone number")]
         public string PhoneNumber { get; set; }
 

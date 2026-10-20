@@ -25,14 +25,15 @@ namespace EssentialMAUIUIKit
         }
 
         [Display(Name = "New Password")]
+        [DataType(DataType.Password)]
         [DataFormDisplayOptions(ColumnSpan = 3)]
-        [EmailAddress(ErrorMessage = "Enter your new password")]
+        [Required(ErrorMessage = "Enter your new Password")]
         public string NewPassword { get; set; }
 
         [Display(Name = "Confirm New Password")]
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Enter the password")]
         [DataFormDisplayOptions(ColumnSpan = 3)]
+        [Required(ErrorMessage = "Enter your confirm Password")]
         public string ConfirmPassword { get; set; }
     }
 }

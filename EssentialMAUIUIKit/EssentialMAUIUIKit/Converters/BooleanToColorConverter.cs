@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using Microsoft.Maui.Graphics.Text;
+using System.Globalization;
 
 namespace EssentialMAUIUIKit.Converters
 {
@@ -8,6 +9,16 @@ namespace EssentialMAUIUIKit.Converters
     /// </summary>
     public class BooleanToColorConverter : IValueConverter
     {
+        public BooleanToColorConverter()
+        {
+            if (Application.Current != null)
+            {
+                Application.Current.RequestedThemeChanged += (s, e) => ThemeChanged?.Invoke();
+            }
+        }
+
+        public static event Action? ThemeChanged;
+
         /// <summary>
         /// This method is used to convert the bool to color.
         /// </summary>
@@ -40,11 +51,10 @@ namespace EssentialMAUIUIKit.Converters
                     Application.Current.Resources.TryGetValue("Gray-300", out var val);
                     return (Color)val;
                 case "4" when (bool)value:
-                    Application.Current.Resources.TryGetValue("PrimaryColorLight", out var retVal);
+                    Application.Current.Resources.TryGetValue("Red", out var retVal);
                     return (Color)retVal;
                 case "4":
-                    Application.Current.Resources.TryGetValue("Gray-600", out var outVal);
-                    return (Color)outVal;
+                    return Color.FromArgb("#474648");
                 case "5" when (bool)value:
                     Application.Current.Resources.TryGetValue("Green", out var retGreen);
                     return (Color)retGreen;
@@ -66,6 +76,18 @@ namespace EssentialMAUIUIKit.Converters
                 case "8":
                     Application.Current.Resources.TryGetValue("Gray-White", out var graywhite);
                     return (Color)graywhite;
+                case "9" when !(bool)value:
+                    return Color.FromArgb("#7633DA");
+                case "9" when (bool)value:
+                    return Color.FromArgb("#7633DA");
+                case "10" when (bool)value:
+					return Application.Current?.RequestedTheme == AppTheme.Dark
+						? Color.FromArgb("#D32F2F")
+						: Color.FromArgb("#FF0000");
+				case "10":
+					return Application.Current?.RequestedTheme == AppTheme.Dark
+						? Color.FromArgb("#C9C6C8")
+						: Color.FromArgb("#474648");
                 default:
                     return Colors.Transparent;
             }

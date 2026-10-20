@@ -24,67 +24,76 @@ namespace EssentialMAUIUIKit
                 {
                     ""itemImage"": ""ArticleImage2.png"",
                     ""author"": ""John Doe"",
-                    ""averageReadingTime"": ""5 min read"",
-                    ""date"": ""Aug 2010"",
-                    ""name"": ""Learning to Reset""
+                    ""averageReadingTime"": ""5 mins read"",
+                    ""date"": ""Aug 16, 2023"",
+                    ""name"": ""Learning to Reset"",
+                    ""description"": ""Discover techniques for resetting routines and improving focus in daily work.""
                 },
                 {
                     ""itemImage"": ""ArticleImage3.png"",
                     ""author"": ""John Doe"",
-                    ""averageReadingTime"": ""5 min read"",
-                    ""date"": ""Apr 16"",
-                    ""name"": ""Holistic Approach to UI Design""
+                    ""averageReadingTime"": ""5 mins read"",
+                    ""date"": ""Apr 16, 2023"",
+                    ""name"": ""Holistic Approach to UI Design"",
+                    ""description"": ""A holistic view of UI design that balances aesthetics and usability.""
                 },
                 {
                     ""itemImage"": ""ArticleImage4.png"",
                     ""author"": ""John Doe"",
-                    ""averageReadingTime"": ""5 min read"",
-                    ""date"": ""May 2012"",
-                    ""name"": ""Guiding Your Flock to Success""
+                    ""averageReadingTime"": ""5 mins read"",
+                    ""date"": ""May 24, 2023"",
+                    ""name"": ""Guiding Your Flock to Success"",
+                    ""description"": ""Leadership tips to help your team reach collective goals with empathy.""
                 },
                 {
                     ""itemImage"": ""ArticleImage5.png"",
                     ""author"": ""John Doe"",
-                    ""averageReadingTime"": ""5 min read"",
-                    ""date"": ""Apr 16"",
-                    ""name"": ""Be a Nurturing, Fierce Team Leader""
+                    ""averageReadingTime"": ""5 mins read"",
+                    ""date"": ""Apr 16, 2023"",
+                    ""name"": ""Be a Nurturing, Fierce Team Leader"",
+                    ""description"": ""Strategies for being both supportive and results-driven as a leader.""
                 },
                 {
                     ""itemImage"": ""ArticleImage6.png"",
                     ""author"": ""John Doe"",
                     ""averageReadingTime"": ""5 min read"",
-                    ""date"": ""Dec 2013"",
-                    ""name"": ""Holistic Approach to UI Design""
+                    ""date"": ""Dec 11, 2023"",
+                    ""name"": ""Holistic Approach to UI Design"",
+                    ""description"": ""Examples of integrating design systems for consistent product experiences.""
                 }
             ],
             ""latestStories"": [
                 {
                     ""itemImage"": ""ArticleImage2.png"",
                     ""author"": ""John Doe"",
-                    ""averageReadingTime"": ""5 min read"",
-                    ""date"": ""Apr 16"",
-                    ""name"": ""Learning to Reset""
+                    ""averageReadingTime"": ""5 mins read"",
+                    ""date"": ""Apr 16, 2023"",
+                    ""name"": ""Learning to Reset"",
+                    ""description"": ""Discover techniques for resetting routines and improving focus in daily work.""
                 },
                 {
                     ""itemImage"": ""ArticleImage3.png"",
                     ""author"": ""John Doe"",
-                    ""averageReadingTime"": ""5 min read"",
-                    ""date"": ""May 26"",
-                    ""name"": ""Holistic Approach to UI Design""
+                    ""averageReadingTime"": ""5 mins read"",
+                    ""date"": ""May 26, 2023"",
+                    ""name"": ""Holistic Approach to UI Design"",
+                    ""description"": ""A holistic view of UI design that balances aesthetics and usability.""
                 },
                 {
                     ""itemImage"": ""ArticleImage4.png"",
                     ""author"": ""John Doe"",
-                    ""averageReadingTime"": ""5 min read"",
-                    ""date"": ""Apr 10"",
-                    ""name"": ""Guiding Your Flock to Success""
+                    ""averageReadingTime"": ""5 mins read"",
+                    ""date"": ""Apr 10, 2023"",
+                    ""name"": ""Guiding Your Flock to Success"",
+                    ""description"": ""Leadership tips to help your team reach collective goals with empathy.""
                 },
                 {
                     ""itemImage"": ""ArticleImage5.png"",
                     ""author"": ""John Doe"",
-                    ""averageReadingTime"": ""5 min read"",
-                    ""date"": ""Apr 16"",
-                    ""name"": ""Holistic Approach to UI Design""
+                    ""averageReadingTime"": ""5 mins read"",
+                    ""date"": ""Apr 16, 2023"",
+                    ""name"": ""Holistic Approach to UI Design"",
+                    ""description"": ""Examples of integrating design systems for consistent product experiences.""
                 }
             ]
         }";
@@ -99,14 +108,14 @@ namespace EssentialMAUIUIKit
                 return;
             }
 
-            for (int i = 0; i < data.FeaturedStories?.Count; i++)
+            for (int i = 0; i < data.FeaturedStories?.Count && i < featuredStoryImages.Count; i++)
             {
                 var story = data.FeaturedStories[i];
                 story.ImagePath = featuredStoryImages[i];
                 FeaturedStories.Add(story);
             }
 
-            for (int i = 0; i < data.LatestStories?.Count; i++)
+            for (int i = 0; i < data.LatestStories?.Count && i < latestStoryImages.Count; i++)
             {
                 var story = data.LatestStories[i];
                 story.ImagePath = latestStoryImages[i];

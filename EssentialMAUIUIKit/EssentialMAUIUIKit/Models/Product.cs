@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Input;
 
 namespace EssentialMAUIUIKit.Models
 {
@@ -8,6 +9,16 @@ namespace EssentialMAUIUIKit.Models
     /// </summary>
     public class Product : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Gets the maximum allowed quantity per product in the cart.
+        /// </summary>
+        public const int MaxQuantity = 5;
+
+        /// <summary>
+        /// Gets the minimum allowed quantity per product in the cart.
+        /// </summary>
+        public const int MinQuantity = 1;
+
         #region Fields
 
         private bool isFavourite;
@@ -190,7 +201,6 @@ namespace EssentialMAUIUIKit.Models
             set
             {
                 this.isFavourite = value;
-                this.NotifyPropertyChanged(nameof(this.IsFavourite));
             }
         }
 
@@ -208,8 +218,58 @@ namespace EssentialMAUIUIKit.Models
             {
                 this.totalQuantity = value;
                 this.NotifyPropertyChanged(nameof(this.TotalQuantity));
+                this.NotifyPropertyChanged(nameof(this.CanIncreaseQuantity));
+                this.NotifyPropertyChanged(nameof(this.CanDecreaseQuantity));
             }
         }
+
+        /// <summary>
+        /// Gets a value indicating whether the quantity can be increased.
+        /// </summary>
+        public bool CanIncreaseQuantity
+        {
+            get
+            {
+                return this.TotalQuantity < MaxQuantity;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the quantity can be decreased.
+        /// </summary>
+        public bool CanDecreaseQuantity
+        {
+            get
+            {
+                return this.TotalQuantity > MinQuantity;
+            }
+        }
+
+        #endregion
+
+        #region Commands
+
+        /// <summary>
+        /// Gets the command that increments the total quantity.
+        /// </summary>
+        public ICommand IncreaseQuantityCommand => new Command(() =>
+        {
+            if (this.CanIncreaseQuantity)
+            {
+                this.TotalQuantity++;
+            }
+        });
+
+        /// <summary>
+        /// Gets the command that decrements the total quantity.
+        /// </summary>
+        public ICommand DecreaseQuantityCommand => new Command(() =>
+        {
+            if (this.CanDecreaseQuantity)
+            {
+                this.TotalQuantity--;
+            }
+        });
 
         #endregion
 

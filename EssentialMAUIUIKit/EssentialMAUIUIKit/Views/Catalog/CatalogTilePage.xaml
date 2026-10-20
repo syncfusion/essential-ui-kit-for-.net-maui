@@ -4,16 +4,20 @@
              x:Class="EssentialMAUIUIKit.Views.Catalog.CatalogTilePage"
              xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:button="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:local="clr-namespace:EssentialMAUIUIKit"
              xmlns:model="clr-namespace:EssentialMAUIUIKit.Models"
              xmlns:converter="clr-namespace:EssentialMAUIUIKit.Converters"
+             xmlns:sliders="clr-namespace:Syncfusion.Maui.Sliders;assembly=Syncfusion.Maui.Sliders"
+             xmlns:chip="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:popup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
              xmlns:badge="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
              xmlns:syncEffectsView="clr-namespace:Syncfusion.Maui.Toolkit.EffectsView;assembly=Syncfusion.Maui.Toolkit"
              xmlns:rating="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
              x:DataType="local:CartPageViewModel">
 
     <ContentView.BindingContext>
-        <local:CartPageViewModel/>
+        <local:CartPageViewModel />
     </ContentView.BindingContext>
     <ContentView.Resources>
         <Style TargetType="listView:ListViewItem">
@@ -23,242 +27,817 @@
                         <VisualState x:Name="Normal">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                        Value="Transparent" />
+                                        Value="Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                         <VisualState x:Name="PointerOver">
                             <VisualState.Setters>
                                 <Setter Property="Background"
-                        Value= "Transparent" />
+                                        Value="Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
                 </VisualStateGroupList>
             </Setter>
         </Style>
+        <Style x:Key="SideNavButtonStyle"
+               TargetType="buttons:SfButton">
+            <Setter Property="Background"
+                    Value="Transparent" />
+            <Setter Property="CornerRadius"
+                    Value="4" />
+            <Setter Property="TextColor"
+                    Value="{DynamicResource Gray-700}" />
+        </Style>
+        <Style x:Key="SideNavIconContainerStyle"
+               TargetType="StackLayout">
+            <Setter Property="Padding"
+                    Value="8,5,8,6" />
+            <Setter Property="VerticalOptions"
+                    Value="Center" />
+        </Style>
+        <Style x:Key="SideNavIconLabelStyle"
+               TargetType="Label">
+            <Setter Property="FontSize"
+                    Value="22" />
+            <Setter Property="FontAttributes"
+                    Value="Bold" />
+            <Setter Property="VerticalOptions"
+                    Value="Center" />
+            <Setter Property="VerticalTextAlignment"
+                    Value="Center" />
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}" />
+        </Style>
+        <Style x:Key="BottomNavButtonStyle"
+               TargetType="buttons:SfButton"
+               BasedOn="{StaticResource SideNavButtonStyle}" />
+        <Style x:Key="BottomNavItemContainerStyle"
+               TargetType="StackLayout">
+            <Setter Property="Padding"
+                    Value="8,5,8,6" />
+            <Setter Property="VerticalOptions"
+                    Value="Center" />
+        </Style>
+        <Style x:Key="BottomNavIconLabelStyle"
+               TargetType="Label"
+               BasedOn="{StaticResource SideNavIconLabelStyle}">
+            <Setter Property="HorizontalOptions"
+                    Value="Center" />
+        </Style>
+        <Style x:Key="BottomNavTextLabelStyle"
+               TargetType="Label">
+            <Setter Property="FontFamily"
+                    Value="Roboto-Medium" />
+            <Setter Property="VerticalOptions"
+                    Value="Center" />
+            <Setter Property="VerticalTextAlignment"
+                    Value="Center" />
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}" />
+        </Style>
         <ResourceDictionary>
 
             <OnIdiom x:Key="ListItemMargin"
-                     x:TypeArguments="Thickness"/>
-            <converter:BooleanToColorConverter x:Key="BoolToColorConverter"/>
-            <converter:BooleanToStringConverter x:Key="BoolToStringConverter"/>
-            <converter:DynamicResourceToColorConverter x:Key="DynamicResourceToColorConverter"/>
+                     x:TypeArguments="Thickness" />
+            <converter:BooleanToColorConverter x:Key="BoolToColorConverter" />
+            <converter:BooleanToStringConverter x:Key="BoolToStringConverter" />
+            <converter:DynamicResourceToColorConverter x:Key="DynamicResourceToColorConverter" />
 
             <!--  Header Template for Catalog SfListView  -->
             <DataTemplate x:Key="CatalogDefaultHeaderTemplate">
-                <StackLayout
-                    HorizontalOptions="End"
-                    Orientation="Horizontal"
-                    Spacing="8"
-                    VerticalOptions="Center">
+                <StackLayout>
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Label Text="Women's Dress"
+                               IsVisible="{OnIdiom Phone=False, Tablet=False, Desktop=True}"
+                               FontSize="16"
+                               Margin="6,0,0,0"
+                               FontFamily="Roboto-Medium"
+                               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                               VerticalOptions="End" />
+                        <StackLayout HorizontalOptions="End"
+                                     Grid.Column="1"
+                                     Orientation="Horizontal"
+                                     HeightRequest="33"
+                                     Margin="{OnIdiom Phone='0,0,20,0', Tablet='0,0,20,0', Desktop='0,15,35,0'}"
+                                     Spacing="0"
+                                     VerticalOptions="Center">
 
-                      <!--Filter Button-->  
-                    <buttons:SfButton
-                        Background="Transparent"
-                        CornerRadius="4"
-                        HeightRequest="32"
-                        WidthRequest="100"
-                        TextColor="{DynamicResource Gray-700}">
-                        <buttons:SfButton.Content>
-                            <DataTemplate>
-                                <StackLayout
-    Padding="8,5,8,6"
-    Orientation="Horizontal"
-    Spacing="8"
-    VerticalOptions="Center">
-                                    <Label
-        FontFamily="FontIcons"
-        FontSize="18"
-        Style="{DynamicResource DescriptionLabelStyle}"
-        Text="{DynamicResource Filter}"
-        VerticalOptions="Center"
-        VerticalTextAlignment="Center"/>
-                                    <Label
-        FontFamily="Roboto-Medium"
-        Style="{DynamicResource DescriptionLabelStyle}"
-        Text="Filter"
-        VerticalOptions="Center"
-        VerticalTextAlignment="Center"/>
-                                </StackLayout>
-                            </DataTemplate>
-                        </buttons:SfButton.Content>
-                        
-                    </buttons:SfButton>
+                            <!--Filter Button-->
+                            <buttons:SfButton Background="Transparent"
+                                              CornerRadius="4"
+                                              Clicked="OnFilterButtonClicked"
+                                              HeightRequest="32"
+                                              WidthRequest="80"
+                                              TextColor="{DynamicResource Gray-700}">
+                                <buttons:SfButton.Content>
+                                    <DataTemplate>
+                                        <StackLayout Padding="8,0,8,8"
+                                                     Orientation="Horizontal"
+                                                     Spacing="8"
+                                                     VerticalOptions="Center">
+                                            <Label FontFamily="FontIcons"
+                                                   FontSize="18"
+                                                   Style="{DynamicResource DescriptionLabelStyle}"
+                                                   Text="{DynamicResource Filter}"
+                                                   TextColor="{AppThemeBinding Light={DynamicResource ContentTextColorLight}, Dark={DynamicResource ContentTextColorDark}}"
+                                                   VerticalOptions="Center"
+                                                   VerticalTextAlignment="Center" />
+                                            <Label FontFamily="Roboto-Medium"
+                                                   FontSize="14"
+                                                   Text="Filter"
+                                                   TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                   VerticalOptions="Center"
+                                                   VerticalTextAlignment="Center" />
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </buttons:SfButton.Content>
+                            </buttons:SfButton>
 
-                      <!--Sort Button-->  
-                    <buttons:SfButton
-                        Background="Transparent"
-                        CornerRadius="4"
-                        HeightRequest="32"
-                        WidthRequest="100"
-                        TextColor="{DynamicResource Gray-700}">
-                        <buttons:SfButton.Content>
-                            <DataTemplate>
-                                <StackLayout
-    Padding="8,5,8,6"
-    Orientation="Horizontal"
-    VerticalOptions="Center"
-    Spacing="8">
-                                    <Label
-        FontFamily="FontIcons"
-        FontSize="18"
-        Style="{DynamicResource DescriptionLabelStyle}"
-        Text="{DynamicResource Sort}"
-        VerticalOptions="Center"
-        VerticalTextAlignment="End"/>
-                                    <Label
-        FontFamily="Roboto-Medium"
-        Style="{DynamicResource DescriptionLabelStyle}"
-        Text="Sorting"
-        VerticalOptions="Center"
-        VerticalTextAlignment="Center"/>
-                                </StackLayout>
-                            </DataTemplate>
-                        </buttons:SfButton.Content>
-                    </buttons:SfButton>
-
+                            <!--Sort Button-->
+                            <buttons:SfButton Background="Transparent"
+                                              CornerRadius="4"
+                                              HeightRequest="32"
+                                              Clicked="OnSortButtonClicked"
+                                              WidthRequest="80"
+                                              TextColor="{DynamicResource Gray-700}">
+                                <buttons:SfButton.Content>
+                                    <DataTemplate>
+                                        <StackLayout Padding="8,0,16,8"
+                                                     Orientation="Horizontal"
+                                                     VerticalOptions="Center"
+                                                     Spacing="8">
+                                            <Label FontFamily="FontIcons"
+                                                   FontSize="18"
+                                                   TextColor="{AppThemeBinding Light={DynamicResource ContentTextColorLight}, Dark={DynamicResource ContentTextColorDark}}"
+                                                   Style="{DynamicResource DescriptionLabelStyle}"
+                                                   Text="{DynamicResource Sort}"
+                                                   VerticalOptions="Center"
+                                                   VerticalTextAlignment="End" />
+                                            <Label FontFamily="Roboto-Medium"
+                                                   FontSize="14"
+                                                   Text="Sort by"
+                                                   TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                   VerticalOptions="Center"
+                                                   VerticalTextAlignment="Center" />
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </buttons:SfButton.Content>
+                            </buttons:SfButton>
+                        </StackLayout>
+                    </Grid>
+                    <BoxView HeightRequest="1"
+                             Margin="4,15,0,0"
+                             IsVisible="{OnIdiom Phone=False, Tablet=False, Desktop=True}"
+                             Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" />
                 </StackLayout>
             </DataTemplate>
-
         </ResourceDictionary>
     </ContentView.Resources>
 
     <ContentView.Content>
 
-        <Grid
-            ColumnSpacing="0"
-            RowSpacing="0">
-            <!--  ListView for catalog  -->
-            <listView:SfListView BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
-                                 x:Name="ListViewTile"
-                                 Padding="8"
-                                 AutoFitMode="Height"
-                                 HeaderTemplate="{DynamicResource CatalogDefaultHeaderTemplate}"
-                                 HorizontalOptions="Fill"
-                                 IsStickyHeader="False"
-                                 ItemSpacing="0, 8, 8, 8"
-                                 ItemsSource="{Binding Products}"
-                                 Style="{DynamicResource TransparentSelectionListView}">
+        <Grid RowDefinitions="Auto,Auto,*"
+              ColumnSpacing="0"
+              RowSpacing="0">
+            <Grid.Resources>
+                <ResourceDictionary>
+                    <converter:BooleanToStringConverter x:Key="boolToStringConverter" />
+                    <converter:BooleanToColorConverter x:Key="boolToColorConverter" />
+                </ResourceDictionary>
+            </Grid.Resources>
+            <Grid ColumnDefinitions="Auto,*"
+                  Padding="0,5,0,5">
+                <buttons:SfButton Background="Transparent"
+                                  CornerRadius="4"
+                                  Margin="{OnIdiom Desktop='0,0,0,0',Phone='0,7,0,9', Tablet='0,15,0,17'}"
+                                  HeightRequest="32"
+                                  WidthRequest="110"
+                                  TextColor="{DynamicResource Gray-700}">
+                    <buttons:SfButton.Content>
+                        <DataTemplate>
+                            <StackLayout Padding="8,5,8,6"
+                                         Orientation="Horizontal"
+                                         Spacing="8"
+                                         VerticalOptions="Center">
+                                <Label FontFamily="FontIcons"
+                                       Rotation="180"
+                                       FontSize="20"
+                                       Style="{DynamicResource DescriptionLabelStyle}"
+                                       IsVisible="{OnIdiom Phone=True, Tablet=True, Desktop=False}"
+                                       Text="{DynamicResource ArrowRight}"
+                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                       VerticalOptions="Center"
+                                       VerticalTextAlignment="Center" />
+                                <Label FontFamily="Roboto-Medium"
+                                       FontSize="16"
+                                       Text="Dress"
+                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                       VerticalOptions="Center"
+                                       VerticalTextAlignment="Center" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </buttons:SfButton.Content>
+                </buttons:SfButton>
+                <HorizontalStackLayout Grid.Column="1"
+                                       Margin="5"
+                                       Spacing="8"
+                                       HorizontalOptions="End">
+                    <buttons:SfButton Background="Transparent"
+                                      CornerRadius="4"
+                                      TextColor="{DynamicResource Gray-700}">
+                        <buttons:SfButton.Content>
+                            <DataTemplate>
+                                <StackLayout Padding="8,5,8,6"
+                                             VerticalOptions="Center">
+                                    <Label FontFamily="FontIcons"
+                                           FontSize="18"
+                                           FontAttributes="Bold"
+                                           Text="{DynamicResource Search}"
+                                           TextColor="{AppThemeBinding Light={DynamicResource ContentTextColorLight}, Dark={DynamicResource ContentTextColorDark}}"
+                                           VerticalOptions="Center"
+                                           VerticalTextAlignment="Center" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </buttons:SfButton.Content>
+                    </buttons:SfButton>
 
+                    <buttons:SfButton Background="Transparent"
+                                      CornerRadius="4"
+                                      TextColor="{DynamicResource Gray-700}">
+                        <buttons:SfButton.Content>
+                            <DataTemplate>
+                                <StackLayout Padding="8,5,8,6"
+                                             VerticalOptions="Center">
+                                    <Label FontFamily="FontIcons"
+                                           FontSize="18"
+                                           FontAttributes="Bold"
+                                           Text="{DynamicResource Cart}"
+                                           TextColor="{AppThemeBinding Light={DynamicResource ContentTextColorLight}, Dark={DynamicResource ContentTextColorDark}}"
+                                           VerticalOptions="Center"
+                                           VerticalTextAlignment="Center" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </buttons:SfButton.Content>
+                    </buttons:SfButton>
+                </HorizontalStackLayout>
+            </Grid>
+            <BoxView HeightRequest="1"
+                     Grid.Row="1"
+                     Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" />
 
-                <listView:SfListView.ItemTemplate>
-                    <DataTemplate x:DataType="model:Product">
-                        <syncEffectsView:SfEffectsView
-                            RippleBackground="{DynamicResource Gray-300}"
-                            TouchDownEffects="Ripple">
-                            <Grid>
-                                <Grid.Resources>
-                                    <ResourceDictionary>
-                                        <converter:BooleanToStringConverter x:Key="boolToStringConverter"/>
-                                        <converter:BooleanToColorConverter x:Key="boolToColorConverter"/>
-                                    </ResourceDictionary>
-                                </Grid.Resources>
+            <Grid Grid.Row="2"
+                  RowDefinitions="*,Auto"
+                  ColumnDefinitions="Auto,Auto,*">
 
-                                <Border Stroke="Transparent"
-                                        StrokeShape="RoundRectangle 10"
-                                        WidthRequest="178"
-                                        HeightRequest="280">
-                                    <Grid
-                                        Margin="0"
-                                        RowDefinitions="Auto, Auto, Auto, Auto"
-                                        RowSpacing="0">
+                <VerticalStackLayout Spacing="{OnIdiom Tablet=28, Desktop=24}"
+                                     Grid.Column="0"
+                                     Grid.Row="0"
+                                     Padding="0,8,0,0"
+                                     Margin="{OnIdiom Tablet='10,0,10,0', Desktop='0,0,20,0'}"
+                                     IsVisible="{OnIdiom Phone=False, Tablet=True, Desktop=True}">
+                    <buttons:SfButton Style="{StaticResource SideNavButtonStyle}"
+                                      Margin="0,20,0,0">
+                        <buttons:SfButton.Content>
+                            <DataTemplate>
+                                <StackLayout Style="{StaticResource SideNavIconContainerStyle}">
+                                    <Label FontFamily="UIKitIcons"
+                                           FontSize="26"
+                                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                           Text="&#xe701;"
+                                           VerticalOptions="Center"
+                                           VerticalTextAlignment="Center" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </buttons:SfButton.Content>
+                    </buttons:SfButton>
+                    <buttons:SfButton Style="{StaticResource SideNavButtonStyle}">
+                        <buttons:SfButton.Content>
+                            <DataTemplate>
+                                <StackLayout Style="{StaticResource SideNavIconContainerStyle}">
+                                    <Label Style="{StaticResource SideNavIconLabelStyle}"
+                                           FontFamily="FontIcons"
+                                           Text="{DynamicResource Category}"
+                                           HorizontalTextAlignment="Center" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </buttons:SfButton.Content>
+                    </buttons:SfButton>
 
-                                        <!--  Product Image  -->
-                                        <Image
-                                            Grid.Row="0"
-                                            Margin="0,0,0,8"
-                                            BackgroundColor="{DynamicResource Gray-200}"
-                                            HeightRequest="180"
-                                            Aspect="Fill"
-                                            HorizontalOptions="{OnPlatform Android=Fill, iOS=Fill, WinUI=Fill}"
-                                            WidthRequest="{OnIdiom Phone=183,
-                           Tablet=224,
-                           Desktop=178}">
-                                            <Image.Source>
-                                                <UriImageSource
-                                                    CacheValidity="14"
-                                                    CachingEnabled="true"
-                                                    Uri="{Binding PreviewImage}"/>
-                                            </Image.Source>
-                                        </Image>
+                    <buttons:SfButton Style="{StaticResource SideNavButtonStyle}">
+                        <buttons:SfButton.Content>
+                            <DataTemplate>
+                                <StackLayout Style="{StaticResource SideNavIconContainerStyle}">
+                                    <Label Style="{StaticResource SideNavIconLabelStyle}"
+                                           FontFamily="FontIcons"
+                                           Text="{DynamicResource Cart}"
+                                           HorizontalTextAlignment="Center" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </buttons:SfButton.Content>
+                    </buttons:SfButton>
 
-                                        <!--  Product Name  -->
-                                        <Label
-                                            Grid.Row="1"
-                                            Margin="8,0,0,4"
-                                            FontSize="14"
-                                            HorizontalOptions="Start"
-                                            LineBreakMode="TailTruncation"
-                                            MaxLines="1"
-                                            Style="{DynamicResource TitleLabelStyle}"
-                                            Text="{Binding Name}"/>
+                    <buttons:SfButton Style="{StaticResource SideNavButtonStyle}">
+                        <buttons:SfButton.Content>
+                            <DataTemplate>
+                                <StackLayout Style="{StaticResource SideNavIconContainerStyle}">
+                                    <Label Style="{StaticResource SideNavIconLabelStyle}"
+                                           FontFamily="FontIcons"
+                                           Text="{DynamicResource Settings}"
+                                           HorizontalTextAlignment="Center" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </buttons:SfButton.Content>
+                    </buttons:SfButton>
 
-                                        <StackLayout
-                                            Grid.Row="2"
-                                            Margin="8,0,0,8"
-                                            Orientation="Horizontal"
-                                            Spacing="2">
+                    <buttons:SfButton Style="{StaticResource SideNavButtonStyle}">
+                        <buttons:SfButton.Content>
+                            <DataTemplate>
+                                <StackLayout Style="{StaticResource SideNavIconContainerStyle}">
+                                    <Label Style="{StaticResource SideNavIconLabelStyle}"
+                                           FontFamily="FontIcons"
+                                           Text="{DynamicResource Account}"
+                                           HorizontalTextAlignment="Center" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </buttons:SfButton.Content>
+                    </buttons:SfButton>
+                </VerticalStackLayout>
 
-                                            <!--  Product Price  -->
-                                            <Label
-                                                FontFamily="Roboto-Medium"
-                                                FontSize="16"
-                                                LineHeight="{OnPlatform Android=1.25,
-                                Default=-1}"
-                                                Style="{DynamicResource SimpleLabelStyle}"
-                                                Text="{Binding DiscountPrice, StringFormat='${0:0 }'}"/>
+                <BoxView WidthRequest="1"
+                         Grid.Row="0"
+                         Grid.Column="1"
+                         IsVisible="{OnIdiom Phone=False, Tablet=True, Desktop=True}"
+                         Color="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}" />
+                <!--  ListView for catalog  -->
+                <ScrollView Grid.Column="2"
+                            Grid.Row="0">
+                    <VerticalStackLayout MaximumWidthRequest="{OnIdiom Desktop=1000, Tablet=850, Phone=390}"
+                                         HorizontalOptions="Center">
+                        <listView:SfListView BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundColorLight}, Dark={DynamicResource BackgroundColorDark}}"
+                                             x:Name="ListViewTile"
+                                             Padding="{OnIdiom Default='0,8,0,0', Desktop='0,0,0,10'}"
+                                             AutoFitMode="Height"
+                                             HeaderTemplate="{DynamicResource CatalogDefaultHeaderTemplate}"
+                                             HorizontalOptions="Fill"
+                                             Margin="0,0,0,10"
+                                             IsScrollingEnabled="False"
+                                             IsStickyHeader="False"
+                                             ItemSpacing="{OnIdiom Phone=5, Tablet=10, Desktop=5}"
+                                             ItemsSource="{Binding Products}"
+                                             Style="{DynamicResource TransparentSelectionListView}">
 
-                                            <Label
-                                                Margin="5,6,0,6"
-                                                Style="{DynamicResource SimpleLabelStyle}"
-                                                Text="{Binding ActualPrice, StringFormat='${0:0.00}'}"
-                                                FontSize="12"
-                                                TextDecorations="Strikethrough"/>
+                            <listView:SfListView.ItemTemplate>
+                                <DataTemplate x:DataType="model:Product">
 
+                                    <VerticalStackLayout Margin="{OnIdiom Phone='10,0,10,10', Tablet='0,0,0,10', Desktop='0'}"
+                                                         HeightRequest="{OnPlatform Android=245, iOS=245, WinUI=240, MacCatalyst=248}"
+                                                         WidthRequest="{OnIdiom Phone=187, Tablet=216, Desktop=178}">
 
-                                            <Label
-                                                Margin="10,6,0,6"
-                                                Style="{DynamicResource SimpleLabelStyle}"
-                                                Text="(49% off)"
-                                                FontSize="12"/>
+                                        <Border StrokeThickness="{OnIdiom Phone=0.8, Tablet=0.5, Desktop=0.5}"
+                                                StrokeShape="RoundRectangle 12"
+                                                BackgroundColor="{AppThemeBinding Light=White, Dark=#1C1B1D}"
+                                                HeightRequest="240"
+                                                WidthRequest="{OnIdiom Phone=187, Tablet=188, Desktop=178}">
+                                            <Border.Shadow>
+                                                <Shadow Brush="#80000000"
+                                                        Offset="0,2"
+                                                        Radius="3"
+                                                        Opacity="0.4" />
+                                            </Border.Shadow>
+                                            <syncEffectsView:SfEffectsView RippleBackground="{DynamicResource Gray-300}"
+                                                                           TouchDownEffects="Ripple">
 
-                                        </StackLayout>
+                                                <Grid RowDefinitions="*,Auto,Auto,Auto"
+                                                      RowSpacing="0">
+                                                    <Grid Grid.Row="0">
+                                                        <Image Grid.Row="0"
+                                                               Margin="0,0,0,8"
+                                                               BackgroundColor="{DynamicResource Gray-200}"
+                                                               Aspect="Fill"
+                                                               HorizontalOptions="{OnPlatform Android=Fill, iOS=Fill, WinUI=Fill}">
+                                                            <Image.Source>
+                                                                <UriImageSource Uri="{Binding PreviewImage}" />
+                                                            </Image.Source>
+                                                        </Image>
 
-                                        <StackLayout Grid.Row="3"
-                                                     Margin="6,0,0,0"
-                                                     Orientation="Horizontal">
-                                            <rating:SfRating BackgroundColor="Transparent"
-                                                             Grid.Row="3"
-                                                             Grid.Column="1"
-                                                             ItemSize="13"
-                                                             ItemSpacing="1"
-                                                             RatingSettings="{DynamicResource CommonRatingSettings}"
-                                                             Style="{DynamicResource RatingStyle}"
-                                                             Value="{Binding OverallRating}"/>
-                                            <Label Margin="10,0,0,0"
-                                                   Text="{Binding OverallRating}"
-                                                   Style="{DynamicResource SimpleLabelStyle}"/>
-                                            <Label Text="/5"
-                                                   Style="{DynamicResource SimpleLabelStyle}"/>
+                                                        <Border StrokeThickness="0"
+                                                                IsVisible="{OnIdiom Phone=True, Tablet=False, Desktop=False}"
+                                                                WidthRequest="30"
+                                                                HeightRequest="30"
+                                                                BackgroundColor="Transparent"
+                                                                StrokeShape="RoundRectangle 50"
+                                                                HorizontalOptions="End"
+                                                                VerticalOptions="Start"
+                                                                Margin="10">
 
-                                        </StackLayout>
+                                                            <buttons:SfButton Grid.Column="2"
+                                                                              Margin="0,0,1,0"
+                                                                              HeightRequest="25"
+                                                                              Style="{DynamicResource IconButtonStyle}"
+                                                                              Text="{Binding IsFavourite, Converter={StaticResource boolToStringConverter}, ConverterParameter=1}"
+                                                                              TextColor="{Binding IsFavourite, Converter={StaticResource boolToColorConverter}, ConverterParameter=4}"
+                                                                              Clicked="FavouriteButton_Clicked"
+                                                                              WidthRequest="25" />
+                                                        </Border>
+                                                    </Grid>
 
+                                                    <Border Grid.Row="1"
+                                                            StrokeThickness="0"
+                                                            StrokeShape="RoundRectangle 6"
+                                                            Padding="6,2"
+                                                            HorizontalOptions="Start"
+                                                            VerticalOptions="End"
+                                                            Margin="4,0,0,8">
+
+                                                        <StackLayout Orientation="Horizontal"
+                                                                     Spacing="10">
+
+                                                            <rating:SfRating Value="{Binding OverallRating}"
+                                                                             ItemSize="16"
+                                                                             Style="{DynamicResource RatingStyle}"
+                                                                             ItemSpacing="5">
+                                                                <rating:SfRating.RatingSettings>
+                                                                    <rating:RatingSettings RatedFill="#FFBE52"
+                                                                                           RatedStrokeThickness="0"
+                                                                                           UnratedStrokeThickness="0.5"
+                                                                                           UnratedStroke="#787678" />
+                                                                </rating:SfRating.RatingSettings>
+                                                            </rating:SfRating>
+
+                                                            <Label Text="(128)"
+                                                                   FontSize="12"
+                                                                   TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}" />
+                                                        </StackLayout>
+
+                                                    </Border>
+
+                                                    <Label Grid.Row="2"
+                                                           Margin="10,0,10,8"
+                                                           FontFamily="Roboto-Regular"
+                                                           FontSize="14"
+                                                           LineBreakMode="TailTruncation"
+                                                           MaxLines="1"
+                                                           Text="{Binding Name}"
+                                                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
+
+                                                    <StackLayout Grid.Row="3"
+                                                                 Orientation="Horizontal"
+                                                                 Spacing="{OnIdiom Phone=4, Tablet=5, Desktop=6}"
+                                                                 Margin="{OnIdiom Phone='10,0,5,10', Tablet='10', Desktop='10,0,10,14'}"
+                                                                 VerticalOptions="Center">
+
+                                                        <Label Text="{Binding DiscountPrice, StringFormat='${0:0.00}'}"
+                                                               FontSize="{OnIdiom Phone=14, Tablet=16, Desktop=16}"
+                                                               FontFamily="Roboto-Medium"
+                                                               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
+
+                                                        <Label Text="{Binding ActualPrice, StringFormat='${0:0.00}'}"
+                                                               FontSize="12"
+                                                               FontFamily="Roboto-Regular"
+                                                               VerticalOptions="Center"
+                                                               TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                                               TextDecorations="Strikethrough" />
+
+                                                        <Border BackgroundColor="{AppThemeBinding Light=#CEFFC9,Dark=Transparent}"
+                                                                StrokeThickness="0"
+                                                                Margin="{OnIdiom Phone='25,0,0,0', Tablet='5,0,0,0', Desktop='4,0,0,0'}"
+                                                                StrokeShape="RoundRectangle 12"
+                                                                HorizontalOptions="End"
+                                                                Padding="6,2"
+                                                                VerticalOptions="Center">
+
+                                                            <Label Text="30% OFF"
+                                                                   FontSize="11"
+                                                                   FontFamily="Roboto-Medium"
+                                                                   TextColor="{AppThemeBinding Light=#1C7E39, Dark=#3CB053}" />
+                                                        </Border>
+                                                    </StackLayout>
+                                                </Grid>
+                                            </syncEffectsView:SfEffectsView>
+                                        </Border>
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </listView:SfListView.ItemTemplate>
+                            
+                            <!--  Layout to customize number of columns in SfListView  -->
+                            <listView:SfListView.ItemsLayout>
+                                <listView:GridLayout SpanCount="{OnIdiom Phone=2, Tablet=4, Desktop=5}" />
+                            </listView:SfListView.ItemsLayout>
+                        </listView:SfListView>
+                    </VerticalStackLayout>
+                </ScrollView>
+               <HorizontalStackLayout HorizontalOptions="Center"
+                                       Padding="0,5,10,5"
+                                       Grid.Row="1"
+                                       Grid.Column="2"
+                                       IsVisible="{OnIdiom Phone=True, Tablet=False, Desktop=False}">
+                    <buttons:SfButton Style="{StaticResource BottomNavButtonStyle}" WidthRequest="76">
+                        <buttons:SfButton.Content>
+                            <DataTemplate>
+                                <StackLayout Style="{StaticResource BottomNavItemContainerStyle}">
+                                    <Label Style="{StaticResource BottomNavIconLabelStyle}"
+                                           FontFamily="UIKitIcons"
+                                           FontSize="26"
+                                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                           Text="&#xe701;"
+                                           HorizontalOptions="Center" />
+                                    <Label Style="{StaticResource BottomNavTextLabelStyle}"
+                                           Text="Home"
+                                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                           Margin="10,0,0,5" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </buttons:SfButton.Content>
+                    </buttons:SfButton>
+                    <buttons:SfButton Style="{StaticResource BottomNavButtonStyle}" WidthRequest="86">
+                        <buttons:SfButton.Content>
+                            <DataTemplate>
+                                <StackLayout Style="{StaticResource BottomNavItemContainerStyle}">
+                                    <Label Style="{StaticResource BottomNavIconLabelStyle}"
+                                           FontFamily="FontIcons" 
+                                           Text="{DynamicResource Category}"
+                                           HorizontalOptions="Center" />
+                                    <Label Style="{StaticResource BottomNavTextLabelStyle}"
+                                           Text="Categories"
+                                           HorizontalOptions="Center" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </buttons:SfButton.Content>
+                    </buttons:SfButton>
+
+                    <buttons:SfButton Style="{StaticResource BottomNavButtonStyle}" WidthRequest="76">
+                        <buttons:SfButton.Content>
+                            <DataTemplate>
+                                <StackLayout Style="{StaticResource BottomNavItemContainerStyle}">
+                                    <Label Style="{StaticResource BottomNavIconLabelStyle}"
+                                           FontFamily="FontIcons"
+                                           Text="{DynamicResource Cart}"
+                                           HorizontalOptions="Center" />
+                                    <Label Style="{StaticResource BottomNavTextLabelStyle}"
+                                           Text="Cart"
+                                           HorizontalOptions="Center" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </buttons:SfButton.Content>
+                    </buttons:SfButton>
+
+                    <buttons:SfButton Style="{StaticResource BottomNavButtonStyle}" WidthRequest="76">
+                        <buttons:SfButton.Content>
+                            <DataTemplate>
+                                <StackLayout Style="{StaticResource BottomNavItemContainerStyle}">
+                                    <Label Style="{StaticResource BottomNavIconLabelStyle}"
+                                           FontFamily="FontIcons"
+                                           Text="{DynamicResource Settings}"
+                                           TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                           HorizontalOptions="Center" />
+                                    <Label Style="{StaticResource BottomNavTextLabelStyle}"
+                                           Text="Settings"
+                                           HorizontalOptions="Center" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </buttons:SfButton.Content>
+                    </buttons:SfButton>
+
+                    <buttons:SfButton Style="{StaticResource BottomNavButtonStyle}" WidthRequest="76">
+                        <buttons:SfButton.Content>
+                            <DataTemplate>
+                                <StackLayout Style="{StaticResource BottomNavItemContainerStyle}">
+                                    <Label Style="{StaticResource BottomNavIconLabelStyle}"
+                                           FontFamily="FontIcons"
+                                           Text="{DynamicResource Account}"
+                                           HorizontalOptions="Center" />
+                                    <Label Style="{StaticResource BottomNavTextLabelStyle}"
+                                           Text="Account"
+                                           HorizontalOptions="Center" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </buttons:SfButton.Content>
+                    </buttons:SfButton>
+                </HorizontalStackLayout>
+
+                <!-- Floating chat button (overlay) -->
+                <buttons:SfButton CornerRadius="28"
+                                  Grid.Column="2"
+                                  Margin="{OnIdiom Phone='0,0,15,20', Tablet='0,0,30,20', Desktop='0,0,96,40'}"
+                                  WidthRequest="48"
+                                  HeightRequest="48"
+                                  Background="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"
+                                  TextColor="White"
+                                  HorizontalOptions="End"
+                                  VerticalOptions="End">
+                    <buttons:SfButton.Content>
+                        <DataTemplate>
+                            <Label FontFamily="UIKitIcons"
+                                   FontSize="22"
+                                   TextColor="#FFFFFF"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   Text="&#xe71b;" />
+                        </DataTemplate>
+                    </buttons:SfButton.Content>
+                </buttons:SfButton>
+
+                <popup:SfPopup x:Name="filterPopup"
+                               IsVisible="False"
+                               ShowHeader="False"
+                               ShowFooter="False"
+                               StaysOpen="False"
+                               WidthRequest="320"
+                               HeightRequest="{OnIdiom Phone=390, Tablet=380, Desktop=380}">
+                    <popup:SfPopup.ContentTemplate>
+                        <DataTemplate>
+                            <Border StrokeThickness="0"
+                                    Padding="20"
+                                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1C1B1D}"
+                                    StrokeShape="RoundRectangle 24">
+                                <Border.Shadow>
+                                    <Shadow Brush="#40000000"
+                                            Offset="0,10"
+                                            Radius="24"
+                                            Opacity="0.35" />
+                                </Border.Shadow>
+                                <VerticalStackLayout>
+                                    <Grid VerticalOptions="Center">
+                                        <VerticalStackLayout Spacing="4">
+                                            <Label Text="Filter"
+                                                   FontFamily="Roboto-Medium"
+                                                   FontSize="20"
+                                                   TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
+                                        </VerticalStackLayout>
                                     </Grid>
-                                </Border>
 
+                                    <VerticalStackLayout Spacing="12"
+                                                         Margin="0,20,0,0">
+                                        <Label Text="Categories"
+                                               FontFamily="Roboto-Medium"
+                                               FontSize="15"
+                                               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
 
-                            </Grid>
-                        </syncEffectsView:SfEffectsView>
-                    </DataTemplate>
-                </listView:SfListView.ItemTemplate>
+                                        <FlexLayout Direction="Row"
+                                                    Wrap="Wrap"
+                                                    JustifyContent="Start"
+                                                    AlignItems="Start">
+                                            <chip:SfChip Text="Women's dress"
+                                                                 CornerRadius="32"
+                                                                 HeightRequest="32"
+                                                                 WidthRequest="120"
+                                                                 Margin="0,0,8,8"
+                                                                 FontFamily="Roboto-Medium"
+                                                                 FontSize="14"
+                                                                 TextColor="#FFFFFF"
+                                                                 Background="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}" />
+                                                    <chip:SfChip Text="Men's dress"
+                                                                 CornerRadius="32"
+                                                                 WidthRequest="100"
+                                                                 Stroke="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}"
+                                                                 TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                                 HeightRequest="32"
+                                                                 Margin="0,0,8,8"
+                                                                 FontSize="14"
+                                                                 FontFamily="Roboto-Medium" />
+                                                    <chip:SfChip Text="Casual"
+                                                                 CornerRadius="32"
+                                                                 WidthRequest="70"
+                                                                 HeightRequest="32"
+                                                                 Margin="0,0,8,8"
+                                                                 Stroke="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}"
+                                                                 TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                                 FontSize="14"
+                                                                 FontFamily="Roboto-Medium" />
+                                                    <chip:SfChip Text="Tops"
+                                                                 CornerRadius="32"
+                                                                 WidthRequest="70"
+                                                                 IsVisible="{OnIdiom Phone=True,Desktop=True,Tablet=True}"
+                                                                 HeightRequest="32"
+                                                                 Stroke="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}"
+                                                                 TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                                 FontSize="14"
+                                                                 FontFamily="Roboto-Medium" />
+                                                    <chip:SfChip Text="Jackets"
+                                                                 IsVisible="{OnIdiom Phone=False,Desktop=True,Tablet=True}"
+                                                                 CornerRadius="32"
+                                                                 WidthRequest="80"
+                                                                 HeightRequest="32"
+                                                                 Margin="0,0,8,8"
+                                                                 Stroke="{AppThemeBinding Light={DynamicResource SeparatorColorLight}, Dark={DynamicResource SeparatorColorDark}}"
+                                                                 TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}"
+                                                                 FontSize="14"
+                                                                 FontFamily="Roboto-Medium" />
+                                              
+                                        </FlexLayout>
+                                    </VerticalStackLayout>
 
-                <!--  Layout to customize number of columns in SfListView  -->
-                <listView:SfListView.ItemsLayout>
-                    <listView:GridLayout SpanCount="{OnPlatform Default=5, Android=2, iOS=2}"/>
-                </listView:SfListView.ItemsLayout>
+                                    <VerticalStackLayout Spacing="12">
+                                        <Label Text="Price range ($)"
+                                               FontFamily="Roboto-Medium"
+                                               FontSize="15"
+                                               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
 
-            </listView:SfListView>
+                                        <sliders:SfRangeSlider Minimum="0"
+                                                               Maximum="200"
+                                                               RangeStart="50"
+                                                               ShowTicks="True"
+                                                               RangeEnd="180"
+                                                               Interval="50"
+                                                               ShowLabels="True">
+                                            <sliders:SfRangeSlider.TrackStyle>
+                                                <sliders:SliderTrackStyle ActiveFill="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}" />
+                                            </sliders:SfRangeSlider.TrackStyle>
 
+                                            <sliders:SfRangeSlider.ThumbStyle>
+                                                <sliders:SliderThumbStyle Fill="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}" />
+                                            </sliders:SfRangeSlider.ThumbStyle>
+
+                                            <sliders:SfRangeSlider.Tooltip>
+                                                <sliders:SliderTooltip Padding="5,5,5,10" NumberFormat="0" />
+                                            </sliders:SfRangeSlider.Tooltip>
+                                        </sliders:SfRangeSlider>
+
+                                    </VerticalStackLayout>
+
+                                    <Grid ColumnDefinitions="*,*"
+                                          Margin="0,30,0,0"
+                                          ColumnSpacing="12">
+                                        <Button Text="Cancel"
+                                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}"
+                                                BackgroundColor="Transparent"
+                                                Clicked="FilterClose_Button_Clicked"
+                                                CornerRadius="20"/>
+                                        <Button Text="Apply" 
+                                                Grid.Column="1"
+                                                Clicked="FilterClose_Button_Clicked"
+                                                CornerRadius="20" 
+                                                BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryColorLight}, Dark={DynamicResource PrimaryColorDark}}"/>
+                                    </Grid>
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </popup:SfPopup.ContentTemplate>
+                </popup:SfPopup>
+
+                <popup:SfPopup x:Name="sortPopup"
+                               IsVisible="False"
+                               ShowHeader="False"
+                               ShowFooter="False"
+                               StaysOpen="False"
+                               WidthRequest="280"
+                               HeightRequest="300">
+                    <popup:SfPopup.ContentTemplate>
+                        <DataTemplate>
+                            <Border StrokeThickness="0"
+                                    Padding="20"
+                                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1C1B1D}"
+                                    StrokeShape="RoundRectangle 24">
+                                <Border.Shadow>
+                                    <Shadow Brush="#40000000"
+                                            Offset="0,10"
+                                            Radius="24"
+                                            Opacity="0.35" />
+                                </Border.Shadow>
+                                <VerticalStackLayout Spacing="10">
+                                    <VerticalStackLayout Spacing="4">
+                                        <Label Text="Sort by"
+                                               FontFamily="Roboto-Medium"
+                                               FontSize="20"
+                                               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorDark}}" />
+                                        <Label Text="Choose how products are arranged."
+                                               FontFamily="Roboto-Regular"
+                                               FontSize="13"
+                                               TextColor="{AppThemeBinding Light={DynamicResource SecondaryTextColorLight}, Dark={DynamicResource SecondaryTextColorDark}}" />
+                                    </VerticalStackLayout>
+
+                                    <button:SfRadioGroup x:Name="radioGroup">
+                                        <button:SfRadioButton x:Name="mostSale"
+                                                              FontFamily="Roboto-Regular"
+                                                              StateChanged="On_StateChanged"
+                                                              Text="Most Sale" />
+                                        <button:SfRadioButton x:Name="newArrivals"
+                                                              FontFamily="Roboto-Regular"
+                                                              StateChanged="On_StateChanged"
+                                                              Text="New Arrivals" />
+                                        <button:SfRadioButton x:Name="lowtoHigh"
+                                                              StateChanged="On_StateChanged"
+                                                              FontFamily="Roboto-Regular"
+                                                              Text="Price: Low to High" />
+                                        <button:SfRadioButton x:Name="hightoLow"
+                                                              FontFamily="Roboto-Regular"
+                                                              StateChanged="On_StateChanged"
+                                                              Text="Price: High to Low" />
+                                    </button:SfRadioGroup>
+
+                                    <Button Text="Cancel"
+                                            HorizontalOptions="End"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextColorLight}, Dark={DynamicResource PrimaryTextColorLight}}"
+                                            Clicked="SortClose_Button_Clicked"
+                                            BackgroundColor="Transparent"
+                                            CornerRadius="20" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </popup:SfPopup.ContentTemplate>
+                </popup:SfPopup>
+            </Grid>
         </Grid>
     </ContentView.Content>
 </ContentView>
